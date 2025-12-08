@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Febri Nahdatun | Enterprise Systems & Data Analyst</title>
+    <title>Febri Nahdatun - Enterprise Systems & Data Analyst Portfolio</title>
     
     <!-- FAVICON -->
     <link rel="icon" href="https://lh3.googleusercontent.com/d/1T2Q8QHpeETmrkz6SS5T1CrZilVGWFAJs=w100" type="image/png">
@@ -32,12 +32,12 @@
                         sans: ['Poppins', 'sans-serif'],
                     },
                     colors: {
-                        // KEMBALI KE WARNA PREMIUM (Violet & Sky Blue)
-                        primary: '#8B5CF6',   // Violet 500 (Main Accent)
-                        secondary: '#0EA5E9', // Sky 500 (Secondary Accent)
+                        // PREMIUM THEME (Violet & Sky Blue)
+                        primary: '#8B5CF6',   // Violet 500
+                        secondary: '#0EA5E9', // Sky 500
                         
-                        dark: '#0F172A',      // Slate 900 (Background)
-                        surface: '#1E293B',   // Slate 800 (Card Background)
+                        dark: '#0F172A',      // Slate 900
+                        surface: '#1E293B',   // Slate 800
                         surfaceHover: '#334155', // Slate 700
                         
                         microsoft: '#00a4ef', 
@@ -65,7 +65,7 @@
         ::-webkit-scrollbar-thumb:hover { background: #8B5CF6; }
         
         .gradient-text {
-            background: linear-gradient(to right, #8B5CF6, #0EA5E9); /* Violet to Sky Blue */
+            background: linear-gradient(to right, #8B5CF6, #0EA5E9);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -86,27 +86,23 @@
             cursor: not-allowed;
         }
 
-        /* --- CUSTOM CURSOR STYLES (Color Updated) --- */
+        /* CUSTOM CURSOR */
         body { cursor: none; }
-        
         .cursor-dot {
             width: 8px; height: 8px; background-color: #8B5CF6;
             border-radius: 50%; position: fixed; top: 0; left: 0;
             transform: translate(-50%, -50%); z-index: 9999; pointer-events: none;
         }
-
         .cursor-outline {
             width: 40px; height: 40px; border: 2px solid rgba(139, 92, 246, 0.5);
             border-radius: 50%; position: fixed; top: 0; left: 0;
             transform: translate(-50%, -50%); z-index: 9998; pointer-events: none;
             transition: width 0.2s, height 0.2s, background-color 0.2s, border-color 0.2s;
         }
-
         body.hovering .cursor-outline {
             width: 60px; height: 60px;
             background-color: rgba(139, 92, 246, 0.1); border-color: #0EA5E9;
         }
-        
         @media (max-width: 768px) {
             body { cursor: auto; }
             .cursor-dot, .cursor-outline { display: none; }
@@ -117,11 +113,10 @@
         }
         #scrollToTopBtn.show { opacity: 1; visibility: visible; }
 
-        /* --- FLOWING ELECTRIC BORDER ANIMATION (Color Updated) --- */
+        /* ELECTRIC BORDER ANIMATION */
         .electric-container { position: relative; z-index: 1; }
         .electric-container::before {
             content: ''; position: absolute; inset: -4px; border-radius: 50%;
-            /* Violet - Sky Blue - Violet Flow */
             background: conic-gradient(from 0deg, transparent 0%, #8B5CF6 20%, transparent 40%, #0EA5E9 60%, transparent 80%, #8B5CF6 100%);
             filter: blur(12px); animation: spin 4s linear infinite; z-index: -1;
         }
@@ -130,7 +125,7 @@
 </head>
 <body class="bg-dark text-gray-300 font-sans antialiased overflow-x-hidden">
 
-    <!-- CUSTOM CURSOR ELEMENTS -->
+    <!-- CUSTOM CURSOR -->
     <div class="cursor-dot" id="cursor-dot"></div>
     <div class="cursor-outline" id="cursor-outline"></div>
 
@@ -139,7 +134,6 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
                 <div class="flex-shrink-0 flex items-center gap-3">
-                    <!-- Logo Border Color Updated -->
                     <div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary shadow-[0_0_15px_rgba(139,92,246,0.4)]">
                         <img src="https://lh3.googleusercontent.com/d/1T2Q8QHpeETmrkz6SS5T1CrZilVGWFAJs=w100" alt="Febri Nahdatun" class="w-full h-full object-cover">
                     </div>
@@ -148,7 +142,7 @@
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-8">
                         <a href="#about" class="hover-trigger hover:text-primary transition-colors text-sm font-medium">Profile</a>
-                        <a href="#expertise" class="hover-trigger hover:text-primary transition-colors text-sm font-medium">Tech Stacks</a>
+                        <a href="#expertise" class="hover-trigger hover:text-primary transition-colors text-sm font-medium">Expertise</a>
                         <a href="#dashboard" class="hover-trigger hover:text-primary transition-colors text-sm font-medium">Analytics</a>
                         <a href="#certifications" class="hover-trigger hover:text-primary transition-colors text-sm font-medium">Certifications</a>
                     </div>
@@ -161,88 +155,94 @@
     </nav>
 
     <!-- Hero Section -->
-    <section id="about" class="pt-32 pb-20 md:pt-48 md:pb-32 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-        <!-- Background Orbs Updated -->
+    <section id="about" class="min-h-screen flex items-center justify-center pt-24 pb-12 relative overflow-hidden">
+        <!-- Background Orbs -->
         <div class="absolute top-20 right-0 w-[500px] h-[500px] bg-primary/10 rounded-full blur-[100px] animate-pulse"></div>
         <div class="absolute bottom-0 left-0 w-[400px] h-[400px] bg-secondary/10 rounded-full blur-[100px]"></div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center relative z-10">
-            <div class="space-y-6">
-                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-surface border border-gray-700 text-sm font-medium text-gray-300">
-                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                    Available for new projects
-                </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
                 
-                <h1 class="text-5xl md:text-7xl font-extrabold text-white leading-tight">
-                    Architecting <br>
-                    <span class="gradient-text">Intelligent Systems</span>
-                </h1>
-                
-                <p class="text-lg text-gray-400 max-w-xl leading-relaxed">
-                    I bridge the gap between <strong>Enterprise Infrastructure</strong> (Microsoft 365 & Google Workspace) and <strong>Data Intelligence</strong>. Transforming raw data into strategic assets.
-                </p>
-                
-                <div class="flex flex-wrap gap-4 pt-4">
-                    <button onclick="openCertModal('Curriculum Vitae', 'Professional Profile', '1OWPqMmCXq8hELHnErhm4pXcIo7MVJd7S')" class="hover-trigger px-8 py-4 bg-primary text-white font-bold rounded-xl hover:bg-violet-600 transition-all shadow-[0_10px_20px_-10px_rgba(139,92,246,0.5)] flex items-center gap-2">
-                        <i class="fas fa-eye"></i> View CV
-                    </button>
-                    
-                    <a href="https://www.linkedin.com/in/febri-nahdatun-49b437126/" target="_blank" class="hover-trigger px-8 py-4 bg-surface border border-gray-700 text-white font-bold rounded-xl hover:border-primary hover:text-primary transition-all flex items-center gap-2">
-                        <i class="fab fa-linkedin"></i> LinkedIn
-                    </a>
-                </div>
-
-                <div class="flex items-center gap-4 text-sm text-gray-500 border-l-4 border-primary pl-4 py-1 italic">
-                    "Bereksperimen dengan hal-hal menarik yang memantik rasa penasaran."
-                </div>
-            </div>
-
-            <!-- Profile Image with 4-Corner Skills & Electric Border -->
-            <div class="relative flex justify-center lg:justify-end mt-12 lg:mt-0">
-                <div class="relative w-[300px] h-[300px] md:w-[380px] md:h-[380px] animate-float">
-                    <!-- Background Decoration -->
-                    <div class="absolute inset-0 border-2 border-primary/20 rounded-full scale-110"></div>
-                    <div class="absolute inset-0 border border-secondary/20 rounded-full scale-125 border-dashed animate-spin-slow"></div>
-                    
-                    <!-- Profile Image Container -->
-                    <div class="relative w-full h-full rounded-full electric-container shadow-2xl">
-                        <img src="https://lh3.googleusercontent.com/d/1T2Q8QHpeETmrkz6SS5T1CrZilVGWFAJs=w800" alt="Febri Nahdatun" class="w-full h-full object-cover rounded-full">
+                <!-- Text Content -->
+                <div class="space-y-6 lg:text-left text-center order-2 lg:order-1">
+                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-surface border border-gray-700 text-sm font-medium text-gray-300 mx-auto lg:mx-0">
+                        <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                        Available for new projects
                     </div>
                     
-                    <!-- Skill 1: Google Workspace (Top Left) -->
-                    <div class="absolute -top-6 -left-12 md:-left-24 bg-surface/90 backdrop-blur-md p-3 md:p-4 rounded-xl border border-gray-700 shadow-xl flex items-center gap-3 animate-bounce hover-trigger hover:border-google/50 transition-all cursor-default z-20" style="animation-duration: 4s;">
-                        <div class="bg-blue-500/20 p-2 rounded-lg text-google text-lg md:text-xl"><i class="fab fa-google"></i></div>
-                        <div>
-                            <p class="text-[10px] text-gray-400 uppercase tracking-wider font-bold">Expert</p>
-                            <p class="text-xs md:text-sm font-bold text-white whitespace-nowrap">Google Workspace</p>
-                        </div>
+                    <h1 class="text-4xl md:text-6xl lg:text-7xl font-extrabold text-white leading-tight">
+                        Architecting <br>
+                        <span class="gradient-text">Intelligent Systems</span>
+                    </h1>
+                    
+                    <p class="text-lg text-gray-400 max-w-xl leading-relaxed mx-auto lg:mx-0">
+                        I bridge the gap between <strong>Enterprise Infrastructure</strong> (Microsoft 365 & Google Workspace) and <strong>Data Intelligence</strong>. Transforming raw data into strategic assets.
+                    </p>
+                    
+                    <div class="flex flex-wrap gap-4 pt-4 justify-center lg:justify-start">
+                        <button onclick="openCertModal('Curriculum Vitae', 'Professional Profile', '1OWPqMmCXq8hELHnErhm4pXcIo7MVJd7S')" class="hover-trigger px-8 py-4 bg-primary text-white font-bold rounded-xl hover:bg-violet-600 transition-all shadow-[0_10px_20px_-10px_rgba(139,92,246,0.5)] flex items-center gap-2">
+                            <i class="fas fa-eye"></i> View CV
+                        </button>
+                        
+                        <a href="https://www.linkedin.com/in/febri-nahdatun-49b437126/" target="_blank" class="hover-trigger px-8 py-4 bg-surface border border-gray-700 text-white font-bold rounded-xl hover:border-primary hover:text-primary transition-all flex items-center gap-2">
+                            <i class="fab fa-linkedin"></i> LinkedIn
+                        </a>
                     </div>
 
-                    <!-- Skill 2: Microsoft Ecosystem (Top Right) -->
-                    <div class="absolute -top-6 -right-12 md:-right-20 bg-surface/90 backdrop-blur-md p-3 md:p-4 rounded-xl border border-gray-700 shadow-xl flex items-center gap-3 animate-bounce hover-trigger hover:border-microsoft/50 transition-all cursor-default z-20" style="animation-duration: 5s; animation-delay: 1s;">
-                        <div class="bg-microsoft/20 p-2 rounded-lg text-microsoft text-lg md:text-xl"><i class="fab fa-microsoft"></i></div>
-                        <div>
-                            <p class="text-[10px] text-gray-400 uppercase tracking-wider font-bold">Super Admin</p>
-                            <p class="text-xs md:text-sm font-bold text-white whitespace-nowrap">Microsoft 365</p>
-                        </div>
+                    <div class="flex items-center gap-4 text-sm text-gray-500 border-l-4 border-primary pl-4 py-1 italic justify-center lg:justify-start">
+                        "Bereksperimen dengan hal-hal menarik yang memantik rasa penasaran."
                     </div>
+                </div>
 
-                    <!-- Skill 3: AI & Automation (Bottom Left) -->
-                    <div class="absolute -bottom-6 -left-12 md:-left-20 bg-surface/90 backdrop-blur-md p-3 md:p-4 rounded-xl border border-gray-700 shadow-xl flex items-center gap-3 animate-bounce hover-trigger hover:border-emerald-500/50 transition-all cursor-default z-20" style="animation-duration: 4.5s; animation-delay: 0.5s;">
-                        <div class="bg-emerald-500/20 p-2 rounded-lg text-emerald-400 text-lg md:text-xl"><i class="fas fa-robot"></i></div>
-                        <div>
-                            <p class="text-[10px] text-gray-400 uppercase tracking-wider font-bold">Specialist</p>
-                            <p class="text-xs md:text-sm font-bold text-white whitespace-nowrap">AI & Automation</p>
+                <!-- Profile Image & 4 Badges -->
+                <div class="relative flex justify-center lg:justify-end order-1 lg:order-2">
+                    <div class="relative w-[300px] h-[300px] md:w-[400px] md:h-[400px] animate-float">
+                        
+                        <!-- Decoration -->
+                        <div class="absolute inset-0 border-2 border-primary/20 rounded-full scale-110"></div>
+                        <div class="absolute inset-0 border border-secondary/20 rounded-full scale-125 border-dashed animate-spin-slow"></div>
+                        
+                        <!-- Image -->
+                        <div class="relative w-full h-full rounded-full electric-container shadow-2xl">
+                            <img src="https://lh3.googleusercontent.com/d/1T2Q8QHpeETmrkz6SS5T1CrZilVGWFAJs=w800" alt="Febri Nahdatun" class="w-full h-full object-cover rounded-full">
                         </div>
-                    </div>
+                        
+                        <!-- BADGE 1: Google (Top Left) -->
+                        <div class="absolute -top-4 -left-12 md:top-0 md:-left-28 bg-surface/95 backdrop-blur-md p-3 md:p-4 rounded-xl border border-gray-700 shadow-xl flex items-center gap-3 animate-bounce hover-trigger hover:border-google/50 transition-all cursor-default z-30" style="animation-duration: 4s;">
+                            <div class="bg-blue-500/20 p-2 rounded-lg text-google text-lg md:text-xl"><i class="fab fa-google"></i></div>
+                            <div>
+                                <p class="text-[10px] text-gray-400 uppercase tracking-wider font-bold">Expert</p>
+                                <p class="text-xs md:text-sm font-bold text-white whitespace-nowrap">Google Workspace</p>
+                            </div>
+                        </div>
 
-                    <!-- Skill 4: Data Insights (Bottom Right) -->
-                    <div class="absolute -bottom-6 -right-12 md:-right-24 bg-surface/90 backdrop-blur-md p-3 md:p-4 rounded-xl border border-gray-700 shadow-xl flex items-center gap-3 animate-bounce hover-trigger hover:border-primary/50 transition-all cursor-default z-20" style="animation-duration: 6s; animation-delay: 1.5s;">
-                        <div class="bg-primary/20 p-2 rounded-lg text-primary text-lg md:text-xl"><i class="fas fa-chart-line"></i></div>
-                        <div>
-                            <p class="text-[10px] text-gray-400 uppercase tracking-wider font-bold">Analyst</p>
-                            <p class="text-xs md:text-sm font-bold text-white whitespace-nowrap">Data Insights</p>
+                        <!-- BADGE 2: Microsoft (Top Right - FIXED WORDING) -->
+                        <div class="absolute -top-4 -right-12 md:top-0 md:-right-24 bg-surface/95 backdrop-blur-md p-3 md:p-4 rounded-xl border border-gray-700 shadow-xl flex items-center gap-3 animate-bounce hover-trigger hover:border-microsoft/50 transition-all cursor-default z-30" style="animation-duration: 5s; animation-delay: 1s;">
+                            <div class="bg-blue-400/20 p-2 rounded-lg text-microsoft text-lg md:text-xl"><i class="fab fa-microsoft"></i></div>
+                            <div>
+                                <p class="text-[10px] text-gray-400 uppercase tracking-wider font-bold">Specialist</p>
+                                <p class="text-xs md:text-sm font-bold text-white whitespace-nowrap">Microsoft 365</p>
+                            </div>
                         </div>
+
+                        <!-- BADGE 3: AI (Bottom Left) -->
+                        <div class="absolute bottom-10 -left-12 md:bottom-12 md:-left-24 bg-surface/95 backdrop-blur-md p-3 md:p-4 rounded-xl border border-gray-700 shadow-xl flex items-center gap-3 animate-bounce hover-trigger hover:border-green-500/50 transition-all cursor-default z-30" style="animation-duration: 4.5s; animation-delay: 0.5s;">
+                            <div class="bg-green-500/20 p-2 rounded-lg text-green-400 text-lg md:text-xl"><i class="fas fa-robot"></i></div>
+                            <div>
+                                <p class="text-[10px] text-gray-400 uppercase tracking-wider font-bold">Innovator</p>
+                                <p class="text-xs md:text-sm font-bold text-white whitespace-nowrap">AI & Automation</p>
+                            </div>
+                        </div>
+
+                        <!-- BADGE 4: Data (Bottom Right) -->
+                        <div class="absolute bottom-10 -right-12 md:bottom-12 md:-right-20 bg-surface/95 backdrop-blur-md p-3 md:p-4 rounded-xl border border-gray-700 shadow-xl flex items-center gap-3 animate-bounce hover-trigger hover:border-primary/50 transition-all cursor-default z-30" style="animation-duration: 6s; animation-delay: 1.5s;">
+                            <div class="bg-primary/20 p-2 rounded-lg text-primary text-lg md:text-xl"><i class="fas fa-chart-line"></i></div>
+                            <div>
+                                <p class="text-[10px] text-gray-400 uppercase tracking-wider font-bold">Analyst</p>
+                                <p class="text-xs md:text-sm font-bold text-white whitespace-nowrap">Data Intelligence</p>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -259,13 +259,13 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Cards Updated with new hover colors -->
+                <!-- Cards -->
                 <div class="hover-trigger bg-dark p-8 rounded-2xl border border-gray-800 hover:border-microsoft/50 transition-all hover:-translate-y-1 group">
                     <div class="flex items-center gap-4 mb-6">
                         <div class="w-14 h-14 bg-blue-500/10 rounded-xl flex items-center justify-center text-blue-400 text-3xl group-hover:scale-110 transition-transform"><i class="fab fa-microsoft"></i></div>
                         <h3 class="text-xl font-bold text-white">Microsoft 365</h3>
                     </div>
-                    <p class="text-gray-400 text-sm leading-relaxed mb-4">Super Admin management for enterprise environments. Managing users, security, and compliance.</p>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-4">Expert-level management for enterprise environments. Managing users, security, and compliance.</p>
                     <div class="flex flex-wrap gap-2">
                         <span class="text-xs bg-surface px-2 py-1 rounded text-gray-500">Admin Center</span>
                         <span class="text-xs bg-surface px-2 py-1 rounded text-gray-500">Azure Entra</span>
@@ -309,9 +309,9 @@
                     </div>
                 </div>
 
-                <div class="hover-trigger bg-dark p-8 rounded-2xl border border-gray-800 hover:border-emerald-500/50 transition-all hover:-translate-y-1 group">
+                <div class="hover-trigger bg-dark p-8 rounded-2xl border border-gray-800 hover:border-green-500/50 transition-all hover:-translate-y-1 group">
                     <div class="flex items-center gap-4 mb-6">
-                        <div class="w-14 h-14 bg-emerald-500/10 rounded-xl flex items-center justify-center text-emerald-400 text-3xl group-hover:scale-110 transition-transform"><i class="fas fa-file-excel"></i></div>
+                        <div class="w-14 h-14 bg-green-500/10 rounded-xl flex items-center justify-center text-green-400 text-3xl group-hover:scale-110 transition-transform"><i class="fas fa-file-excel"></i></div>
                         <h3 class="text-xl font-bold text-white">Advanced Excel</h3>
                     </div>
                     <p class="text-gray-400 text-sm leading-relaxed mb-4">Complex formulas, VBA macros, and data visualization for quick business insights.</p>
@@ -337,7 +337,7 @@
     </section>
 
     <!-- SuperStore Analytics Section -->
-    <section id="dashboard" class="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="dashboard" class="py-24 max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
             <div>
                 <span class="text-primary font-bold tracking-wider uppercase text-sm">Portfolio Project</span>
@@ -355,7 +355,7 @@
             </div>
         </div>
 
-        <!-- Dashboard UI -->
+        <!-- Dashboard UI with Card Style -->
         <div class="bg-surface rounded-3xl border border-gray-800 shadow-2xl overflow-hidden">
             <div class="bg-dark/50 border-b border-gray-800 p-4 flex justify-between items-center">
                 <div class="flex items-center gap-2">
@@ -390,7 +390,7 @@
                     </div>
                 </div>
 
-                <!-- Main Chart -->
+                <!-- Main Chart (FIXED COLORS) -->
                 <div class="lg:col-span-3 bg-dark p-6 rounded-2xl border border-gray-800">
                     <h5 class="text-white font-bold text-sm mb-6 flex items-center gap-2"><i class="fas fa-chart-bar text-primary"></i> Monthly Sales vs Profit Trend</h5>
                     <div class="h-80">
@@ -398,7 +398,7 @@
                     </div>
                 </div>
 
-                <!-- Segment Chart -->
+                <!-- Segment Chart (FIXED COLORS) -->
                 <div class="lg:col-span-1 bg-dark p-6 rounded-2xl border border-gray-800">
                     <h5 class="text-white font-bold text-sm mb-6 flex items-center gap-2"><i class="fas fa-chart-pie text-secondary"></i> Sales by Segment</h5>
                     <div class="h-64 flex items-center justify-center">
@@ -742,8 +742,8 @@
                             label: 'Profit ($)', 
                             data: data.trend.profit, 
                             type: 'line', 
-                            borderColor: '#0EA5E9', // Sky Blue
-                            backgroundColor: 'rgba(14, 165, 233, 0.1)',
+                            borderColor: '#22D3EE', // Bright Cyan (Kontras Tinggi)
+                            backgroundColor: 'rgba(34, 211, 238, 0.1)',
                             borderWidth: 3,
                             tension: 0.4,
                             pointRadius: 3,
@@ -752,7 +752,7 @@
                         { 
                             label: 'Sales ($)', 
                             data: data.trend.sales, 
-                            backgroundColor: '#8B5CF6', // Violet
+                            backgroundColor: '#8B5CF6', // Primary Violet
                             borderRadius: 4,
                             yAxisID: 'y'
                         }
@@ -772,7 +772,7 @@
                         y1: { 
                             type: 'linear', display: true, position: 'right', 
                             grid: { drawOnChartArea: false }, 
-                            ticks: { color: '#0EA5E9', font: { family: 'Poppins' } } 
+                            ticks: { color: '#22D3EE', font: { family: 'Poppins' } } 
                         },
                         x: { grid: { display: false }, ticks: { color: '#94a3b8', font: { family: 'Poppins' } } }
                     }
@@ -786,7 +786,7 @@
                     labels: data.segment.labels,
                     datasets: [{ 
                         data: data.segment.data, 
-                        backgroundColor: ['#8B5CF6', '#0EA5E9', '#6366F1'], // Updated Theme Colors
+                        backgroundColor: ['#8B5CF6', '#22D3EE', '#F472B6'], // Violet, Cyan, Pink
                         borderWidth: 0
                     }]
                 },
