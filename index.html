@@ -20,8 +20,8 @@
     <!-- PapaParse -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 
-    <!-- Google Fonts: POPPINS -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Google Fonts: POPPINS (Web) & NOTO SANS (CV) -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Noto+Sans:wght@400;700&display=swap" rel="stylesheet">
 
     <script>
         tailwind.config = {
@@ -30,6 +30,7 @@
                 extend: {
                     fontFamily: {
                         sans: ['Poppins', 'sans-serif'],
+                        cv: ['Noto Sans', 'sans-serif'], // Font khusus CV ATS
                     },
                     colors: {
                         // PREMIUM THEME (Violet & Sky Blue)
@@ -59,6 +60,7 @@
     </script>
 
     <style>
+        /* SCROLLBAR */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #0F172A; }
         ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
@@ -76,16 +78,6 @@
             pointer-events: none;
         }
         
-        .protection-layer {
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 100%; 
-            height: 60px; 
-            z-index: 50;
-            cursor: not-allowed;
-        }
-
         /* CUSTOM CURSOR */
         body { cursor: none; }
         .cursor-dot {
@@ -113,7 +105,7 @@
         }
         #scrollToTopBtn.show { opacity: 1; visibility: visible; }
 
-        /* ELECTRIC BORDER ANIMATION */
+        /* ELECTRIC BORDER */
         .electric-container { position: relative; z-index: 1; }
         .electric-container::before {
             content: ''; position: absolute; inset: -4px; border-radius: 50%;
@@ -121,6 +113,17 @@
             filter: blur(12px); animation: spin 4s linear infinite; z-index: -1;
         }
         .electric-container img { position: relative; z-index: 2; border: 3px solid #1E293B; }
+
+        /* --- PRINT STYLES FOR CV --- */
+        @media print {
+            body * { visibility: hidden; }
+            #atsCvContent, #atsCvContent * { visibility: visible; position: absolute; left: 0; top: 0; width: 100%; margin: 0; padding: 0; background: white; color: black; }
+            .no-print { display: none !important; }
+            /* Reset Tailwind for Print */
+            .text-gray-700 { color: #374151 !important; }
+            .text-gray-800 { color: #1f2937 !important; }
+            .border-black { border-color: #000 !important; }
+        }
     </style>
 </head>
 <body class="bg-dark text-gray-300 font-sans antialiased overflow-x-hidden">
@@ -142,7 +145,7 @@
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-8">
                         <a href="#about" class="hover-trigger hover:text-primary transition-colors text-sm font-medium">Profile</a>
-                        <a href="#expertise" class="hover-trigger hover:text-primary transition-colors text-sm font-medium">Expertise</a>
+                        <a href="#expertise" class="hover-trigger hover:text-primary transition-colors text-sm font-medium">Tech Stacks</a>
                         <a href="#dashboard" class="hover-trigger hover:text-primary transition-colors text-sm font-medium">Analytics</a>
                         <a href="#certifications" class="hover-trigger hover:text-primary transition-colors text-sm font-medium">Certifications</a>
                     </div>
@@ -156,14 +159,12 @@
 
     <!-- Hero Section -->
     <section id="about" class="min-h-screen flex items-center justify-center pt-24 pb-12 relative overflow-hidden">
-        <!-- Background Orbs -->
-        <div class="absolute top-20 right-0 w-[500px] h-[500px] bg-primary/10 rounded-full blur-[100px] animate-pulse"></div>
-        <div class="absolute bottom-0 left-0 w-[400px] h-[400px] bg-secondary/10 rounded-full blur-[100px]"></div>
+        <div class="absolute top-20 right-0 w-[500px] h-[500px] bg-secondary/10 rounded-full blur-[100px] animate-pulse"></div>
+        <div class="absolute bottom-0 left-0 w-[400px] h-[400px] bg-primary/10 rounded-full blur-[100px]"></div>
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
                 
-                <!-- Text Content -->
                 <div class="space-y-6 lg:text-left text-center order-2 lg:order-1">
                     <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-surface border border-gray-700 text-sm font-medium text-gray-300 mx-auto lg:mx-0">
                         <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
@@ -180,8 +181,10 @@
                     </p>
                     
                     <div class="flex flex-wrap gap-4 pt-4 justify-center lg:justify-start">
-                        <button onclick="openCertModal('Curriculum Vitae', 'Professional Profile', '1OWPqMmCXq8hELHnErhm4pXcIo7MVJd7S')" class="hover-trigger px-8 py-4 bg-primary text-white font-bold rounded-xl hover:bg-violet-600 transition-all shadow-[0_10px_20px_-10px_rgba(139,92,246,0.5)] flex items-center gap-2">
-                            <i class="fas fa-eye"></i> View CV
+                        
+                        <!-- BUTTON VIEW CV (Triggers Local CV Modal) -->
+                        <button onclick="openCertModal('Curriculum Vitae', 'Professional Profile', 'CV_MODE')" class="hover-trigger px-8 py-4 bg-primary text-white font-bold rounded-xl hover:bg-violet-600 transition-all shadow-[0_10px_20px_-10px_rgba(139,92,246,0.5)] flex items-center gap-2">
+                            <i class="fas fa-file-alt"></i> View CV
                         </button>
                         
                         <a href="https://www.linkedin.com/in/febri-nahdatun-49b437126/" target="_blank" class="hover-trigger px-8 py-4 bg-surface border border-gray-700 text-white font-bold rounded-xl hover:border-primary hover:text-primary transition-all flex items-center gap-2">
@@ -194,21 +197,21 @@
                     </div>
                 </div>
 
-                <!-- Profile Image & 4 Badges -->
-                <div class="relative flex justify-center lg:justify-end order-1 lg:order-2">
-                    <div class="relative w-[300px] h-[300px] md:w-[400px] md:h-[400px] animate-float">
-                        
-                        <!-- Decoration -->
+                <!-- Profile Image & Badges (ADJUSTED POSITIONS AGAIN) -->
+                <div class="relative flex justify-center lg:justify-end order-1 lg:order-2 my-12 lg:my-0">
+                    <!-- Adjusted size slightly smaller on mobile to fit badges -->
+                    <div class="relative w-[280px] h-[280px] md:w-[380px] md:h-[380px] animate-float">
                         <div class="absolute inset-0 border-2 border-primary/20 rounded-full scale-110"></div>
                         <div class="absolute inset-0 border border-secondary/20 rounded-full scale-125 border-dashed animate-spin-slow"></div>
                         
-                        <!-- Image -->
                         <div class="relative w-full h-full rounded-full electric-container shadow-2xl">
                             <img src="https://lh3.googleusercontent.com/d/1T2Q8QHpeETmrkz6SS5T1CrZilVGWFAJs=w800" alt="Febri Nahdatun" class="w-full h-full object-cover rounded-full">
                         </div>
                         
-                        <!-- BADGE 1: Google (Top Left) -->
-                        <div class="absolute -top-4 -left-12 md:top-0 md:-left-28 bg-surface/95 backdrop-blur-md p-3 md:p-4 rounded-xl border border-gray-700 shadow-xl flex items-center gap-3 animate-bounce hover-trigger hover:border-google/50 transition-all cursor-default z-30" style="animation-duration: 4s;">
+                        <!-- Floating Badges (POSITIONS MOVED FURTHER OUT) -->
+                        
+                        <!-- 1. Google (Top Left - Moved further left & up) -->
+                        <div class="absolute -top-4 -left-12 md:-top-6 md:-left-28 bg-surface/95 backdrop-blur-md p-3 md:p-4 rounded-xl border border-gray-700 shadow-xl flex items-center gap-3 animate-bounce hover-trigger hover:border-google/50 transition-all cursor-default z-30" style="animation-duration: 4s;">
                             <div class="bg-blue-500/20 p-2 rounded-lg text-google text-lg md:text-xl"><i class="fab fa-google"></i></div>
                             <div>
                                 <p class="text-[10px] text-gray-400 uppercase tracking-wider font-bold">Expert</p>
@@ -216,8 +219,8 @@
                             </div>
                         </div>
 
-                        <!-- BADGE 2: Microsoft (Top Right - FIXED WORDING) -->
-                        <div class="absolute -top-4 -right-12 md:top-0 md:-right-24 bg-surface/95 backdrop-blur-md p-3 md:p-4 rounded-xl border border-gray-700 shadow-xl flex items-center gap-3 animate-bounce hover-trigger hover:border-microsoft/50 transition-all cursor-default z-30" style="animation-duration: 5s; animation-delay: 1s;">
+                        <!-- 2. Microsoft (Top Right - Moved further right & up) -->
+                        <div class="absolute -top-4 -right-12 md:-top-6 md:-right-24 bg-surface/95 backdrop-blur-md p-3 md:p-4 rounded-xl border border-gray-700 shadow-xl flex items-center gap-3 animate-bounce hover-trigger hover:border-microsoft/50 transition-all cursor-default z-30" style="animation-duration: 5s; animation-delay: 1s;">
                             <div class="bg-blue-400/20 p-2 rounded-lg text-microsoft text-lg md:text-xl"><i class="fab fa-microsoft"></i></div>
                             <div>
                                 <p class="text-[10px] text-gray-400 uppercase tracking-wider font-bold">Specialist</p>
@@ -225,8 +228,8 @@
                             </div>
                         </div>
 
-                        <!-- BADGE 3: AI (Bottom Left) -->
-                        <div class="absolute bottom-10 -left-12 md:bottom-12 md:-left-24 bg-surface/95 backdrop-blur-md p-3 md:p-4 rounded-xl border border-gray-700 shadow-xl flex items-center gap-3 animate-bounce hover-trigger hover:border-green-500/50 transition-all cursor-default z-30" style="animation-duration: 4.5s; animation-delay: 0.5s;">
+                        <!-- 3. AI (Bottom Left - Moved further left & down) -->
+                        <div class="absolute -bottom-4 -left-12 md:-bottom-6 md:-left-24 bg-surface/95 backdrop-blur-md p-3 md:p-4 rounded-xl border border-gray-700 shadow-xl flex items-center gap-3 animate-bounce hover-trigger hover:border-green-500/50 transition-all cursor-default z-30" style="animation-duration: 4.5s; animation-delay: 0.5s;">
                             <div class="bg-green-500/20 p-2 rounded-lg text-green-400 text-lg md:text-xl"><i class="fas fa-robot"></i></div>
                             <div>
                                 <p class="text-[10px] text-gray-400 uppercase tracking-wider font-bold">Innovator</p>
@@ -234,8 +237,8 @@
                             </div>
                         </div>
 
-                        <!-- BADGE 4: Data (Bottom Right) -->
-                        <div class="absolute bottom-10 -right-12 md:bottom-12 md:-right-20 bg-surface/95 backdrop-blur-md p-3 md:p-4 rounded-xl border border-gray-700 shadow-xl flex items-center gap-3 animate-bounce hover-trigger hover:border-primary/50 transition-all cursor-default z-30" style="animation-duration: 6s; animation-delay: 1.5s;">
+                        <!-- 4. Data (Bottom Right - Moved further right & down) -->
+                        <div class="absolute -bottom-4 -right-12 md:-bottom-6 md:-right-24 bg-surface/95 backdrop-blur-md p-3 md:p-4 rounded-xl border border-gray-700 shadow-xl flex items-center gap-3 animate-bounce hover-trigger hover:border-primary/50 transition-all cursor-default z-30" style="animation-duration: 6s; animation-delay: 1.5s;">
                             <div class="bg-primary/20 p-2 rounded-lg text-primary text-lg md:text-xl"><i class="fas fa-chart-line"></i></div>
                             <div>
                                 <p class="text-[10px] text-gray-400 uppercase tracking-wider font-bold">Analyst</p>
@@ -249,250 +252,74 @@
         </div>
     </section>
 
-    <!-- Tech Stacks Section -->
+    <!-- Tech Stacks -->
     <section id="expertise" class="py-24 bg-surface border-y border-gray-800/50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <span class="text-primary font-bold tracking-wider uppercase text-sm">Tech Stacks</span>
-                <h2 class="text-4xl font-bold text-white mt-2">What Tools I Use</h2>
-                <div class="w-20 h-1 bg-primary mx-auto mt-4 rounded-full"></div>
-            </div>
-
+            <div class="text-center mb-16"><span class="text-primary font-bold tracking-wider uppercase text-sm">Tech Stacks</span><h2 class="text-4xl font-bold text-white mt-2">What Tools I Use</h2><div class="w-20 h-1 bg-primary mx-auto mt-4 rounded-full"></div></div>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Cards -->
-                <div class="hover-trigger bg-dark p-8 rounded-2xl border border-gray-800 hover:border-microsoft/50 transition-all hover:-translate-y-1 group">
-                    <div class="flex items-center gap-4 mb-6">
-                        <div class="w-14 h-14 bg-blue-500/10 rounded-xl flex items-center justify-center text-blue-400 text-3xl group-hover:scale-110 transition-transform"><i class="fab fa-microsoft"></i></div>
-                        <h3 class="text-xl font-bold text-white">Microsoft 365</h3>
-                    </div>
-                    <p class="text-gray-400 text-sm leading-relaxed mb-4">Expert-level management for enterprise environments. Managing users, security, and compliance.</p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="text-xs bg-surface px-2 py-1 rounded text-gray-500">Admin Center</span>
-                        <span class="text-xs bg-surface px-2 py-1 rounded text-gray-500">Azure Entra</span>
-                    </div>
-                </div>
-
-                <div class="hover-trigger bg-dark p-8 rounded-2xl border border-gray-800 hover:border-google/50 transition-all hover:-translate-y-1 group">
-                    <div class="flex items-center gap-4 mb-6">
-                        <div class="w-14 h-14 bg-red-500/10 rounded-xl flex items-center justify-center text-red-400 text-3xl group-hover:scale-110 transition-transform"><i class="fab fa-google"></i></div>
-                        <h3 class="text-xl font-bold text-white">Google Workspace</h3>
-                    </div>
-                    <p class="text-gray-400 text-sm leading-relaxed mb-4">End-to-end administration and automation scripting using Apps Script for efficiency.</p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="text-xs bg-surface px-2 py-1 rounded text-gray-500">Admin Console</span>
-                        <span class="text-xs bg-surface px-2 py-1 rounded text-gray-500">Apps Script</span>
-                    </div>
-                </div>
-
-                <div class="hover-trigger bg-dark p-8 rounded-2xl border border-gray-800 hover:border-primary/50 transition-all hover:-translate-y-1 group">
-                    <div class="flex items-center gap-4 mb-6">
-                        <div class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center text-primary text-3xl group-hover:scale-110 transition-transform"><i class="fas fa-database"></i></div>
-                        <h3 class="text-xl font-bold text-white">Data Analytics</h3>
-                    </div>
-                    <p class="text-gray-400 text-sm leading-relaxed mb-4">Transforming raw data into predictive insights using SQL, Python, and BI tools.</p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="text-xs bg-surface px-2 py-1 rounded text-gray-500">SQL</span>
-                        <span class="text-xs bg-surface px-2 py-1 rounded text-gray-500">Python</span>
-                        <span class="text-xs bg-surface px-2 py-1 rounded text-gray-500">Looker</span>
-                    </div>
-                </div>
-
-                <div class="hover-trigger bg-dark p-8 rounded-2xl border border-gray-800 hover:border-secondary/50 transition-all hover:-translate-y-1 group">
-                    <div class="flex items-center gap-4 mb-6">
-                        <div class="w-14 h-14 bg-secondary/10 rounded-xl flex items-center justify-center text-secondary text-3xl group-hover:scale-110 transition-transform"><i class="fas fa-brain"></i></div>
-                        <h3 class="text-xl font-bold text-white">AI Integration</h3>
-                    </div>
-                    <p class="text-gray-400 text-sm leading-relaxed mb-4">Implementing Generative AI for document analysis and automated reporting workflows.</p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="text-xs bg-surface px-2 py-1 rounded text-gray-500">Gemini</span>
-                        <span class="text-xs bg-surface px-2 py-1 rounded text-gray-500">ChatGPT</span>
-                    </div>
-                </div>
-
-                <div class="hover-trigger bg-dark p-8 rounded-2xl border border-gray-800 hover:border-green-500/50 transition-all hover:-translate-y-1 group">
-                    <div class="flex items-center gap-4 mb-6">
-                        <div class="w-14 h-14 bg-green-500/10 rounded-xl flex items-center justify-center text-green-400 text-3xl group-hover:scale-110 transition-transform"><i class="fas fa-file-excel"></i></div>
-                        <h3 class="text-xl font-bold text-white">Advanced Excel</h3>
-                    </div>
-                    <p class="text-gray-400 text-sm leading-relaxed mb-4">Complex formulas, VBA macros, and data visualization for quick business insights.</p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="text-xs bg-surface px-2 py-1 rounded text-gray-500">Pivot Table</span>
-                        <span class="text-xs bg-surface px-2 py-1 rounded text-gray-500">Power Query</span>
-                    </div>
-                </div>
-
-                <div class="hover-trigger bg-dark p-8 rounded-2xl border border-gray-800 hover:border-teal-500/50 transition-all hover:-translate-y-1 group">
-                    <div class="flex items-center gap-4 mb-6">
-                        <div class="w-14 h-14 bg-teal-500/10 rounded-xl flex items-center justify-center text-teal-400 text-3xl group-hover:scale-110 transition-transform"><i class="fas fa-sitemap"></i></div>
-                        <h3 class="text-xl font-bold text-white">KMS</h3>
-                    </div>
-                    <p class="text-gray-400 text-sm leading-relaxed mb-4">Designing Knowledge Management Systems to centralize and secure organizational assets.</p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="text-xs bg-surface px-2 py-1 rounded text-gray-500">SharePoint</span>
-                        <span class="text-xs bg-surface px-2 py-1 rounded text-gray-500">Google Sites</span>
-                    </div>
-                </div>
+                <!-- Stacks Cards -->
+                <div class="hover-trigger bg-dark p-8 rounded-2xl border border-gray-800 hover:border-microsoft/50 transition-all hover:-translate-y-1 group"><div class="flex items-center gap-4 mb-6"><div class="w-14 h-14 bg-blue-500/10 rounded-xl flex items-center justify-center text-blue-400 text-3xl group-hover:scale-110 transition-transform"><i class="fab fa-microsoft"></i></div><h3 class="text-xl font-bold text-white">Microsoft 365</h3></div><p class="text-gray-400 text-sm leading-relaxed mb-4">Specialist management for enterprise environments. Managing users, security, and compliance.</p></div>
+                <div class="hover-trigger bg-dark p-8 rounded-2xl border border-gray-800 hover:border-google/50 transition-all hover:-translate-y-1 group"><div class="flex items-center gap-4 mb-6"><div class="w-14 h-14 bg-red-500/10 rounded-xl flex items-center justify-center text-red-400 text-3xl group-hover:scale-110 transition-transform"><i class="fab fa-google"></i></div><h3 class="text-xl font-bold text-white">Google Workspace</h3></div><p class="text-gray-400 text-sm leading-relaxed mb-4">End-to-end administration and automation scripting using Apps Script for efficiency.</p></div>
+                <div class="hover-trigger bg-dark p-8 rounded-2xl border border-gray-800 hover:border-primary/50 transition-all hover:-translate-y-1 group"><div class="flex items-center gap-4 mb-6"><div class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center text-primary text-3xl group-hover:scale-110 transition-transform"><i class="fas fa-database"></i></div><h3 class="text-xl font-bold text-white">Data Analytics</h3></div><p class="text-gray-400 text-sm leading-relaxed mb-4">Transforming raw data into predictive insights using SQL, Python, and BI tools.</p></div>
+                <div class="hover-trigger bg-dark p-8 rounded-2xl border border-gray-800 hover:border-secondary/50 transition-all hover:-translate-y-1 group"><div class="flex items-center gap-4 mb-6"><div class="w-14 h-14 bg-secondary/10 rounded-xl flex items-center justify-center text-secondary text-3xl group-hover:scale-110 transition-transform"><i class="fas fa-brain"></i></div><h3 class="text-xl font-bold text-white">AI Integration</h3></div><p class="text-gray-400 text-sm leading-relaxed mb-4">Implementing Generative AI for document analysis and automated reporting workflows.</p></div>
+                <div class="hover-trigger bg-dark p-8 rounded-2xl border border-gray-800 hover:border-green-500/50 transition-all hover:-translate-y-1 group"><div class="flex items-center gap-4 mb-6"><div class="w-14 h-14 bg-green-500/10 rounded-xl flex items-center justify-center text-green-400 text-3xl group-hover:scale-110 transition-transform"><i class="fas fa-file-excel"></i></div><h3 class="text-xl font-bold text-white">Advanced Excel</h3></div><p class="text-gray-400 text-sm leading-relaxed mb-4">Complex formulas, VBA macros, and data visualization for quick business insights.</p></div>
+                <div class="hover-trigger bg-dark p-8 rounded-2xl border border-gray-800 hover:border-teal-500/50 transition-all hover:-translate-y-1 group"><div class="flex items-center gap-4 mb-6"><div class="w-14 h-14 bg-teal-500/10 rounded-xl flex items-center justify-center text-teal-400 text-3xl group-hover:scale-110 transition-transform"><i class="fas fa-sitemap"></i></div><h3 class="text-xl font-bold text-white">KMS</h3></div><p class="text-gray-400 text-sm leading-relaxed mb-4">Designing Knowledge Management Systems to centralize and secure organizational assets.</p></div>
             </div>
         </div>
     </section>
 
-    <!-- SuperStore Analytics Section -->
+    <!-- Dashboard -->
     <section id="dashboard" class="py-24 max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
-            <div>
-                <span class="text-primary font-bold tracking-wider uppercase text-sm">Portfolio Project</span>
-                <h2 class="text-4xl font-bold text-white mt-2">SuperStore Analytics</h2>
-                <p class="text-gray-400 mt-2 max-w-xl">
-                    Dashboard interaktif ini menyajikan wawasan bisnis strategis yang diolah dari dataset penjualan 'SuperStore'. <br>
-                    <span class="text-xs text-gray-500">Note: Data diambil LIVE dari Google Sheets CSV Publik.</span>
-                </p>
-            </div>
-            
-            <div class="flex gap-3">
-                <a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vSXxXA21f-Q3MUn1A7jyrxNiZ-wD9x4RGfwnqMJrVZuKmhKJKluXsqqkNf2dDvnSJVpdnRBBHQCiLeS/pub?gid=1555337350&single=true&output=csv" class="hover-trigger px-6 py-3 bg-surface border border-gray-600 rounded-lg text-sm text-white hover:border-primary hover:text-primary transition-colors flex items-center gap-2 font-medium">
-                    <i class="fas fa-file-csv"></i> Download Source Data
-                </a>
-            </div>
+            <div><span class="text-primary font-bold tracking-wider uppercase text-sm">Portfolio Project</span><h2 class="text-4xl font-bold text-white mt-2">SuperStore Analytics</h2><p class="text-gray-400 mt-2 max-w-xl">Dashboard interaktif ini menyajikan wawasan bisnis strategis yang diolah dari dataset penjualan 'SuperStore'. <br><span class="text-xs text-gray-500">Note: Data diambil LIVE dari Google Sheets CSV Publik.</span></p></div>
+            <div class="flex gap-3"><a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vSXxXA21f-Q3MUn1A7jyrxNiZ-wD9x4RGfwnqMJrVZuKmhKJKluXsqqkNf2dDvnSJVpdnRBBHQCiLeS/pub?gid=1555337350&single=true&output=csv" class="hover-trigger px-6 py-3 bg-surface border border-gray-600 rounded-lg text-sm text-white hover:border-primary hover:text-primary transition-colors flex items-center gap-2 font-medium"><i class="fas fa-file-csv"></i> Download Source Data</a></div>
         </div>
-
-        <!-- Dashboard UI with Card Style -->
         <div class="bg-surface rounded-3xl border border-gray-800 shadow-2xl overflow-hidden">
             <div class="bg-dark/50 border-b border-gray-800 p-4 flex justify-between items-center">
-                <div class="flex items-center gap-2">
-                    <div class="flex gap-1.5">
-                        <div class="w-3 h-3 rounded-full bg-red-500"></div>
-                        <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
-                        <div class="w-3 h-3 rounded-full bg-green-500"></div>
-                    </div>
-                    <span class="text-xs font-mono text-gray-500 ml-2">Connected to: <span class="text-gray-300">SuperStore Master Data</span></span>
-                </div>
-                <div class="text-xs text-gray-500 font-mono">Status: <span class="text-green-400" id="status-indicator">Initializing...</span></div>
+                <div class="flex items-center gap-2"><span class="text-xs font-mono text-gray-500 ml-2">Connected to: <span class="text-gray-300">SuperStore Master Data</span></span></div><div class="text-xs text-gray-500 font-mono">Status: <span class="text-green-400" id="status-indicator">Initializing...</span></div>
             </div>
-
             <div class="p-8 grid grid-cols-1 lg:grid-cols-4 gap-6">
-                <!-- KPI Cards -->
                 <div class="lg:col-span-4 grid grid-cols-1 sm:grid-cols-4 gap-4">
-                    <div class="hover-trigger bg-dark p-6 rounded-2xl border border-gray-800 hover:border-primary/30 transition-colors">
-                        <p class="text-xs text-gray-500 uppercase font-bold tracking-wider">Total Sales</p>
-                        <h4 class="text-2xl font-bold text-white mt-2 tracking-tight" id="kpi-sales">$0</h4>
-                    </div>
-                    <div class="hover-trigger bg-dark p-6 rounded-2xl border border-gray-800 hover:border-primary/30 transition-colors">
-                        <p class="text-xs text-gray-500 uppercase font-bold tracking-wider">Total Profit</p>
-                        <h4 class="text-2xl font-bold text-white mt-2 tracking-tight" id="kpi-profit">$0</h4>
-                    </div>
-                     <div class="hover-trigger bg-dark p-6 rounded-2xl border border-gray-800 hover:border-primary/30 transition-colors">
-                        <p class="text-xs text-gray-500 uppercase font-bold tracking-wider">Orders</p>
-                        <h4 class="text-2xl font-bold text-white mt-2 tracking-tight" id="kpi-orders">0</h4>
-                    </div>
-                    <div class="hover-trigger bg-dark p-6 rounded-2xl border border-gray-800 hover:border-primary/30 transition-colors">
-                        <p class="text-xs text-gray-500 uppercase font-bold tracking-wider">Margin</p>
-                        <h4 class="text-2xl font-bold text-white mt-2 tracking-tight" id="avg-discount">0%</h4>
-                    </div>
+                    <div class="hover-trigger bg-dark p-6 rounded-2xl border border-gray-800 hover:border-primary/30 transition-colors"><p class="text-xs text-gray-500 uppercase font-bold tracking-wider">Total Sales</p><h4 class="text-2xl font-bold text-white mt-2 tracking-tight" id="kpi-sales">$0</h4></div>
+                    <div class="hover-trigger bg-dark p-6 rounded-2xl border border-gray-800 hover:border-primary/30 transition-colors"><p class="text-xs text-gray-500 uppercase font-bold tracking-wider">Total Profit</p><h4 class="text-2xl font-bold text-white mt-2 tracking-tight" id="kpi-profit">$0</h4></div>
+                    <div class="hover-trigger bg-dark p-6 rounded-2xl border border-gray-800 hover:border-primary/30 transition-colors"><p class="text-xs text-gray-500 uppercase font-bold tracking-wider">Orders</p><h4 class="text-2xl font-bold text-white mt-2 tracking-tight" id="kpi-orders">0</h4></div>
+                    <div class="hover-trigger bg-dark p-6 rounded-2xl border border-gray-800 hover:border-primary/30 transition-colors"><p class="text-xs text-gray-500 uppercase font-bold tracking-wider">Margin</p><h4 class="text-2xl font-bold text-white mt-2 tracking-tight" id="avg-discount">0%</h4></div>
                 </div>
-
-                <!-- Main Chart (FIXED COLORS) -->
-                <div class="lg:col-span-3 bg-dark p-6 rounded-2xl border border-gray-800">
-                    <h5 class="text-white font-bold text-sm mb-6 flex items-center gap-2"><i class="fas fa-chart-bar text-primary"></i> Monthly Sales vs Profit Trend</h5>
-                    <div class="h-80">
-                        <canvas id="trendChart"></canvas>
-                    </div>
-                </div>
-
-                <!-- Segment Chart (FIXED COLORS) -->
-                <div class="lg:col-span-1 bg-dark p-6 rounded-2xl border border-gray-800">
-                    <h5 class="text-white font-bold text-sm mb-6 flex items-center gap-2"><i class="fas fa-chart-pie text-secondary"></i> Sales by Segment</h5>
-                    <div class="h-64 flex items-center justify-center">
-                        <canvas id="segmentChart"></canvas>
-                    </div>
-                </div>
+                <div class="lg:col-span-3 bg-dark p-6 rounded-2xl border border-gray-800"><h5 class="text-white font-bold text-sm mb-6 flex items-center gap-2"><i class="fas fa-chart-bar text-primary"></i> Monthly Sales vs Profit Trend</h5><div class="h-80"><canvas id="trendChart"></canvas></div></div>
+                <div class="lg:col-span-1 bg-dark p-6 rounded-2xl border border-gray-800"><h5 class="text-white font-bold text-sm mb-6 flex items-center gap-2"><i class="fas fa-chart-pie text-secondary"></i> Sales by Segment</h5><div class="h-64 flex items-center justify-center"><canvas id="segmentChart"></canvas></div></div>
             </div>
         </div>
     </section>
 
-    <!-- Certifications Section -->
+    <!-- Certifications -->
     <section id="certifications" class="py-24 bg-surface/50 border-t border-gray-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <span class="text-primary font-bold tracking-wider uppercase text-sm">Validations</span>
-                <h2 class="text-4xl font-bold text-white mt-2">Professional Certifications</h2>
-            </div>
-            
+            <div class="text-center mb-16"><span class="text-primary font-bold tracking-wider uppercase text-sm">Validations</span><h2 class="text-4xl font-bold text-white mt-2">Professional Certifications</h2></div>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <!-- Cert Cards -->
-                <div onclick="openCertModal('BNSP Certified', 'Badan Nasional Sertifikasi Profesi', '1cG7mouvxEbI7HjEd2Mih3IE00M7ZVK1x')" 
-                     class="hover-trigger bg-dark p-8 rounded-2xl border border-gray-800 cursor-pointer hover:border-primary transition-all hover:-translate-y-2 group text-center">
-                    <div class="w-20 h-20 bg-white rounded-full flex items-center justify-center mx-auto mb-6 p-2 border-2 border-gray-700 group-hover:border-primary transition-colors">
-                         <img src="https://www.hpi.or.id/wp-content/uploads/2021/08/Logo-BNSP.png" alt="BNSP" class="w-full h-full object-contain rounded-full">
-                    </div>
-                    <h4 class="text-white font-bold text-lg group-hover:text-primary transition-colors">BNSP Certified</h4>
-                    <p class="text-gray-500 text-sm mt-2">Amil Zakat Qualification</p>
-                    <div class="mt-6">
-                        <span class="text-xs bg-surface px-4 py-2 rounded-full text-gray-400 group-hover:bg-primary group-hover:text-white transition-colors">View Document</span>
-                    </div>
-                </div>
-
-                <div onclick="openCertModal('Dicoding AI', 'Dicoding Indonesia', '1GEeSOrNDvOCIGP2QUX8lAVlDTJIgwOrF')" 
-                     class="hover-trigger bg-dark p-8 rounded-2xl border border-gray-800 cursor-pointer hover:border-primary transition-all hover:-translate-y-2 group text-center">
-                    <div class="w-20 h-20 bg-surface rounded-full flex items-center justify-center mx-auto mb-6 text-3xl text-white group-hover:text-primary transition-colors"><i class="fas fa-robot"></i></div>
-                    <h4 class="text-white font-bold text-lg group-hover:text-primary transition-colors">Dicoding AI</h4>
-                    <p class="text-gray-500 text-sm mt-2">Artificial Intelligence Basic</p>
-                    <div class="mt-6"><span class="text-xs bg-surface px-4 py-2 rounded-full text-gray-400 group-hover:bg-primary group-hover:text-white transition-colors">View Document</span></div>
-                </div>
-
-                <div onclick="openCertModal('DQLab Analyst', 'DQLab', '1TLdVFDWCmFs4yR_sVtpEFPSQWIHkIict')" 
-                     class="hover-trigger bg-dark p-8 rounded-2xl border border-gray-800 cursor-pointer hover:border-primary transition-all hover:-translate-y-2 group text-center">
-                    <div class="w-20 h-20 bg-surface rounded-full flex items-center justify-center mx-auto mb-6 text-3xl text-white group-hover:text-primary transition-colors"><i class="fas fa-chart-bar"></i></div>
-                    <h4 class="text-white font-bold text-lg group-hover:text-primary transition-colors">DQLab Analyst</h4>
-                    <p class="text-gray-500 text-sm mt-2">Data Analyst Career Track</p>
-                    <div class="mt-6"><span class="text-xs bg-surface px-4 py-2 rounded-full text-gray-400 group-hover:bg-primary group-hover:text-white transition-colors">View Document</span></div>
-                </div>
-
-                <div onclick="openCertModal('Taalenta AI', 'Taalenta Digital', '1cn6_8zBFR9ieeSMKpixVpprTxbJ6CLBg')" 
-                     class="hover-trigger bg-dark p-8 rounded-2xl border border-gray-800 cursor-pointer hover:border-primary transition-all hover:-translate-y-2 group text-center">
-                    <div class="w-20 h-20 bg-surface rounded-full flex items-center justify-center mx-auto mb-6 text-3xl text-white group-hover:text-primary transition-colors"><i class="fas fa-brain"></i></div>
-                    <h4 class="text-white font-bold text-lg group-hover:text-primary transition-colors">Taalenta AI</h4>
-                    <p class="text-gray-500 text-sm mt-2">Generative AI Expert</p>
-                    <div class="mt-6"><span class="text-xs bg-surface px-4 py-2 rounded-full text-gray-400 group-hover:bg-primary group-hover:text-white transition-colors">View Document</span></div>
-                </div>
+                <div onclick="openCertModal('BNSP Certified', 'Badan Nasional Sertifikasi Profesi', '1cG7mouvxEbI7HjEd2Mih3IE00M7ZVK1x')" class="hover-trigger bg-dark p-8 rounded-2xl border border-gray-800 cursor-pointer hover:border-primary transition-all hover:-translate-y-2 group text-center"><div class="w-20 h-20 bg-white rounded-full flex items-center justify-center mx-auto mb-6 p-2 border-2 border-gray-700 group-hover:border-primary transition-colors"><img src="https://www.hpi.or.id/wp-content/uploads/2021/08/Logo-BNSP.png" alt="BNSP" class="w-full h-full object-contain rounded-full"></div><h4 class="text-white font-bold text-lg group-hover:text-primary transition-colors">BNSP Certified</h4><p class="text-gray-500 text-sm mt-2">Amil Zakat Qualification</p><div class="mt-6"><span class="text-xs bg-surface px-4 py-2 rounded-full text-gray-400 group-hover:bg-primary group-hover:text-white transition-colors">View Document</span></div></div>
+                <div onclick="openCertModal('Dicoding AI', 'Dicoding Indonesia', '1GEeSOrNDvOCIGP2QUX8lAVlDTJIgwOrF')" class="hover-trigger bg-dark p-8 rounded-2xl border border-gray-800 cursor-pointer hover:border-primary transition-all hover:-translate-y-2 group text-center"><div class="w-20 h-20 bg-surface rounded-full flex items-center justify-center mx-auto mb-6 text-3xl text-white group-hover:text-primary transition-colors"><i class="fas fa-robot"></i></div><h4 class="text-white font-bold text-lg group-hover:text-primary transition-colors">Dicoding AI</h4><p class="text-gray-500 text-sm mt-2">Artificial Intelligence Basic</p><div class="mt-6"><span class="text-xs bg-surface px-4 py-2 rounded-full text-gray-400 group-hover:bg-primary group-hover:text-white transition-colors">View Document</span></div></div>
+                <div onclick="openCertModal('DQLab Analyst', 'DQLab', '1TLdVFDWCmFs4yR_sVtpEFPSQWIHkIict')" class="hover-trigger bg-dark p-8 rounded-2xl border border-gray-800 cursor-pointer hover:border-primary transition-all hover:-translate-y-2 group text-center"><div class="w-20 h-20 bg-surface rounded-full flex items-center justify-center mx-auto mb-6 text-3xl text-white group-hover:text-primary transition-colors"><i class="fas fa-chart-bar"></i></div><h4 class="text-white font-bold text-lg group-hover:text-primary transition-colors">DQLab Analyst</h4><p class="text-gray-500 text-sm mt-2">Data Analyst Career Track</p><div class="mt-6"><span class="text-xs bg-surface px-4 py-2 rounded-full text-gray-400 group-hover:bg-primary group-hover:text-white transition-colors">View Document</span></div></div>
+                <div onclick="openCertModal('Taalenta AI', 'Taalenta Digital', '1cn6_8zBFR9ieeSMKpixVpprTxbJ6CLBg')" class="hover-trigger bg-dark p-8 rounded-2xl border border-gray-800 cursor-pointer hover:border-primary transition-all hover:-translate-y-2 group text-center"><div class="w-20 h-20 bg-surface rounded-full flex items-center justify-center mx-auto mb-6 text-3xl text-white group-hover:text-primary transition-colors"><i class="fas fa-brain"></i></div><h4 class="text-white font-bold text-lg group-hover:text-primary transition-colors">Taalenta AI</h4><p class="text-gray-500 text-sm mt-2">Generative AI Expert</p><div class="mt-6"><span class="text-xs bg-surface px-4 py-2 rounded-full text-gray-400 group-hover:bg-primary group-hover:text-white transition-colors">View Document</span></div></div>
             </div>
         </div>
     </section>
 
-    <!-- CONTACT SECTION -->
+    <!-- CONTACT -->
     <section id="contact" class="py-20 bg-dark relative overflow-hidden">
         <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <h2 class="text-4xl font-bold text-white mb-8 text-center">Get in Touch</h2>
-            
             <div class="bg-surface p-8 rounded-2xl border border-gray-800 shadow-2xl">
-                <!-- FORM -->
                 <form id="contactForm" action="mailto:febri.nahdatun@gmail.com" method="post" enctype="text/plain" class="space-y-6">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label for="name" class="block text-sm font-medium text-gray-400 mb-2">Your Name</label>
-                            <input type="text" id="name" name="name" class="w-full bg-dark border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary transition-colors" placeholder="John Doe">
-                        </div>
-                        <div>
-                            <label for="email" class="block text-sm font-medium text-gray-400 mb-2">Your Email</label>
-                            <input type="email" id="email" name="email" class="w-full bg-dark border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary transition-colors" placeholder="john@example.com">
-                        </div>
+                        <div><label for="name" class="block text-sm font-medium text-gray-400 mb-2">Your Name</label><input type="text" id="name" name="name" class="w-full bg-dark border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary transition-colors" placeholder="John Doe"></div>
+                        <div><label for="email" class="block text-sm font-medium text-gray-400 mb-2">Your Email</label><input type="email" id="email" name="email" class="w-full bg-dark border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary transition-colors" placeholder="john@example.com"></div>
                     </div>
-                    <div>
-                        <label for="message" class="block text-sm font-medium text-gray-400 mb-2">Message</label>
-                        <textarea id="message" name="message" rows="5" class="w-full bg-dark border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary transition-colors" placeholder="Hi Febri, I'd like to discuss a project..."></textarea>
-                    </div>
-                    <button type="submit" class="hover-trigger w-full bg-primary hover:bg-violet-600 text-white font-bold py-4 rounded-xl transition-all shadow-lg hover:shadow-primary/30 flex items-center justify-center gap-2">
-                        <i class="fas fa-paper-plane"></i> Send Message
-                    </button>
+                    <div><label for="message" class="block text-sm font-medium text-gray-400 mb-2">Message</label><textarea id="message" name="message" rows="5" class="w-full bg-dark border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary transition-colors" placeholder="Hi Febri, I'd like to discuss a project..."></textarea></div>
+                    <button type="submit" class="hover-trigger w-full bg-primary hover:bg-violet-600 text-white font-bold py-4 rounded-xl transition-all shadow-lg hover:shadow-primary/30 flex items-center justify-center gap-2"><i class="fas fa-paper-plane"></i> Send Message</button>
                 </form>
-
-                <!-- Divider -->
-                <div class="relative my-8">
-                    <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-gray-700"></div></div>
-                    <div class="relative flex justify-center text-sm"><span class="px-2 bg-surface text-gray-500">Or connect via</span></div>
-                </div>
-
-                <!-- Direct Links -->
+                <div class="relative my-8"><div class="absolute inset-0 flex items-center"><div class="w-full border-t border-gray-700"></div></div><div class="relative flex justify-center text-sm"><span class="px-2 bg-surface text-gray-500">Or connect via</span></div></div>
                 <div class="flex justify-center gap-6">
                     <a href="https://wa.me/6287888893111" target="_blank" class="hover-trigger text-2xl text-gray-400 hover:text-green-500 transition-colors"><i class="fab fa-whatsapp"></i></a>
                     <a href="https://t.me/+6287888893111" target="_blank" class="hover-trigger text-2xl text-gray-400 hover:text-blue-400 transition-colors"><i class="fab fa-telegram-plane"></i></a>
@@ -500,29 +327,126 @@
                     <a href="https://github.com/febrinahdatun-lab" target="_blank" class="hover-trigger text-2xl text-gray-400 hover:text-white transition-colors"><i class="fab fa-github"></i></a>
                 </div>
             </div>
-            
-            <p class="text-sm text-gray-600 text-center mt-12">
-                &copy; 2025 Febri Nahdatun. Built with <span class="text-red-500">♥</span> & Experiment.
-            </p>
+            <p class="text-sm text-gray-600 text-center mt-12">&copy; 2025 Febri Nahdatun. Built with <span class="text-red-500">♥</span> & Experiment.</p>
         </div>
     </section>
 
-    <!-- SECURE MODAL POPUP -->
+    <!-- UNIFIED MODAL POPUP -->
     <div id="certModal" class="modal hidden fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm p-4">
         <div class="modal-content bg-surface w-full max-w-4xl h-[85vh] rounded-2xl border border-gray-700 shadow-2xl overflow-hidden relative flex flex-col">
+            <!-- Header -->
             <div class="p-4 border-b border-gray-700 flex justify-between items-center bg-dark z-50 relative">
-                <div><h3 id="modalTitle" class="text-lg font-bold text-white">Certification Title</h3><p id="modalOrg" class="text-gray-400 text-xs">Organization Name</p></div>
-                <button onclick="closeModal()" class="hover-trigger text-gray-400 hover:text-white bg-slate-800 hover:bg-red-500/20 rounded-full w-8 h-8 flex items-center justify-center transition-colors"><i class="fas fa-times"></i></button>
-            </div>
-            <div class="flex-1 bg-dark relative">
-                <div class="absolute top-0 right-0 w-full h-16 z-40 flex justify-end pr-14 pt-2 pointer-events-auto cursor-not-allowed">
-                    <div class="absolute inset-0 bg-transparent"></div>
-                    <div class="relative bg-slate-800/90 backdrop-blur text-xs text-gray-400 px-3 py-1.5 rounded-full border border-gray-700 flex items-center gap-2 shadow-lg h-fit"><i class="fas fa-shield-alt text-green-500"></i><span>Protected View</span></div>
+                <div><h3 id="modalTitle" class="text-lg font-bold text-white">Document Viewer</h3><p id="modalOrg" class="text-gray-400 text-xs">Preview Mode</p></div>
+                <!-- Action Buttons -->
+                <div class="flex gap-3">
+                    <button id="downloadCvBtn" onclick="printCV()" class="hidden text-xs bg-primary hover:bg-violet-600 text-white px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1"><i class="fas fa-download"></i> Save as PDF</button>
+                    <button onclick="closeModal()" class="hover-trigger text-gray-400 hover:text-white bg-slate-800 hover:bg-red-500/20 rounded-full w-8 h-8 flex items-center justify-center transition-colors"><i class="fas fa-times"></i></button>
                 </div>
-                <div id="loadingSpinner" class="absolute inset-0 flex items-center justify-center z-30">
+            </div>
+            <!-- Content -->
+            <div class="flex-1 bg-white relative overflow-auto custom-scrollbar-light">
+                
+                <!-- 1. Shield Layer (PROTECTS PDF DOWNLOAD) -->
+                <div id="pdfShield" class="absolute top-0 right-0 w-full h-16 z-40 flex justify-end pr-14 pt-2 pointer-events-auto cursor-not-allowed hidden">
+                    <div class="absolute inset-0 bg-transparent"></div>
+                    <div class="relative bg-slate-800/90 backdrop-blur text-xs text-slate-400 px-3 py-1.5 rounded-full border border-slate-700 flex items-center gap-2 shadow-lg h-fit">
+                        <i class="fas fa-shield-alt text-green-500"></i><span>Protected View</span>
+                    </div>
+                </div>
+
+                <!-- 2. Iframe for Google Drive PDF (Certificates) -->
+                <iframe id="pdfFrame" class="w-full h-full relative z-20 hidden" src="" frameborder="0"></iframe>
+
+                <!-- 3. NATIVE ATS CV HTML (Hidden by default) -->
+                <div id="atsCvContent" class="hidden w-full max-w-[21cm] mx-auto bg-white text-black p-8 sm:p-12 text-left font-cv text-sm leading-snug">
+                    <!-- HEADER -->
+                    <div class="text-center border-b-2 border-black pb-4 mb-4">
+                        <h1 class="text-3xl font-bold uppercase tracking-wide">Febri Nahdatun</h1>
+                        <p class="mt-1 text-gray-700">Depok, Indonesia | (+62) 878-8889-3111 | febri.nahdatun@gmail.com</p>
+                        <p class="text-blue-700 underline text-xs mt-1">linkedin.com/in/febri-nahdatun | febrinahdatun-lab.github.io</p>
+                    </div>
+
+                    <!-- SUMMARY -->
+                    <div class="mb-4">
+                        <h2 class="text-base font-bold uppercase border-b border-black mb-2 tracking-wider">Professional Summary</h2>
+                        <p class="text-justify text-gray-800">Tech & Data Specialist with over 10 years of experience in the non-profit and Islamic philanthropy sector, specializing in Knowledge Management Systems (KMS), Data Analytics, and Enterprise Automation. Proven track record in transforming scattered organizational data into strategic intelligence using Google & Microsoft ecosystems. Expert in bridging the gap between high-level management strategy and technical execution, implementing AI-driven solutions for document analysis, and ensuring data integrity for critical decision-making.</p>
+                    </div>
+
+                    <!-- EXPERIENCE -->
+                    <div class="mb-4">
+                        <h2 class="text-base font-bold uppercase border-b border-black mb-2 tracking-wider">Experience</h2>
+                        <div class="mb-3">
+                            <div class="flex justify-between font-bold"><span>Knowledge Management Systems (KMS) Specialist</span><span>Nov 2023 -- Present</span></div>
+                            <div class="flex justify-between italic text-gray-700 mb-1"><span>YBM BRILiaN</span><span>Jakarta Pusat, Indonesia</span></div>
+                            <ul class="list-disc list-outside ml-4 text-gray-800 space-y-1">
+                                <li>Serving as the technical bridge between organizational strategy and digital implementation, translating leadership directives into functional KMS solutions that align with business goals.</li>
+                                <li>Designed and deployed a centralized Knowledge Management portal, eliminating information silos and ensuring seamless access to organizational assets for 100+ employees.</li>
+                                <li>Operationalized <strong>Generative AI integration</strong> within document workflows, enabling instant summarization and chat-with-data capabilities to accelerate research and reporting processes.</li>
+                                <li>Developed interactive Business Intelligence dashboards to visualize real-time operational metrics (fundraising & distribution), empowering leadership with data-backed insights.</li>
+                                <li>Engineered custom automation scripts using Google Apps Script to streamline administrative processes, reducing manual reporting time by approximately 40%.</li>
+                            </ul>
+                        </div>
+                        <div class="mb-3">
+                            <div class="flex justify-between font-bold"><span>Database Management Staff</span><span>Dec 2016 -- Jun 2023</span></div>
+                            <div class="flex justify-between italic text-gray-700 mb-1"><span>YBM BRILiaN</span><span>Jabodetabek, Indonesia</span></div>
+                            <ul class="list-disc list-outside ml-4 text-gray-800 space-y-1">
+                                <li>Managed the central Program Division database, ensuring high integrity and accuracy for regional reporting and stakeholder updates.</li>
+                                <li>Conducted <strong>Business Feasibility Analysis</strong> and due diligence for program submissions, verifying beneficiary eligibility to ensure targeted fund distribution.</li>
+                                <li>Evaluated Fund Usage Reports and Program Support Reports to monitor compliance, effectiveness, and financial accountability of division budgets.</li>
+                                <li>Facilitated strategic planning by documenting key decisions in Annual Budget Plan meetings and drafting official correspondence and cooperation agreements.</li>
+                                <li>Transformed manual archiving processes into a structured digital filing system, significantly improving information retrieval efficiency.</li>
+                            </ul>
+                        </div>
+                        <div class="mb-3">
+                            <div class="flex justify-between font-bold"><span>Frontliner Staff</span><span>Dec 2014 -- Nov 2016</span></div>
+                            <div class="flex justify-between italic text-gray-700 mb-1"><span>YBM BRILiaN</span><span>Jabodetabek, Indonesia</span></div>
+                            <ul class="list-disc list-outside ml-4 text-gray-800 space-y-1">
+                                <li>Acted as the primary point of data collection and quality assurance, verifying incoming information to minimize errors at the input stage.</li>
+                                <li>Conducted structured interviews and preliminary assessments of prospective beneficiaries to determine eligibility for program assistance.</li>
+                                <li>Served as the liaison between external parties and internal divisions, ensuring swift and accurate information flow across electronic and direct channels.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- SKILLS -->
+                    <div class="mb-4">
+                        <h2 class="text-base font-bold uppercase border-b border-black mb-2 tracking-wider">Technical Skills</h2>
+                        <ul class="list-none text-gray-800 space-y-1">
+                            <li><strong>Data Analytics & Visualization:</strong> SQL, Python (Pandas/NumPy), R, Google Looker Studio, Microsoft Power BI, Advanced Excel.</li>
+                            <li><strong>Cloud Ecosystems:</strong> Google Workspace (Super Admin, Apps Script, AppSheet), Microsoft 365 (Admin Center, Entra ID/Azure, SharePoint, Power Platform).</li>
+                            <li><strong>AI & Automation:</strong> Generative AI Integration (Gemini/ChatGPT), Prompt Engineering, Process Automation, Chatbot Integration.</li>
+                            <li><strong>Core Competencies:</strong> Knowledge Management, Digital Transformation, Business Intelligence, Data Governance, Strategic Reporting.</li>
+                        </ul>
+                    </div>
+
+                    <!-- CERTIFICATIONS -->
+                    <div class="mb-4">
+                        <h2 class="text-base font-bold uppercase border-b border-black mb-2 tracking-wider">Training & Certifications</h2>
+                        <ul class="list-none text-gray-800 space-y-1">
+                            <li class="flex justify-between"><span><strong>Amil Zakat Organisations (Lvl 3)</strong> | BNSP</span> <span class="italic">2025-2028</span></li>
+                            <li class="flex justify-between"><span><strong>Data Science: Probability & Statistics</strong> | Dicoding</span> <span class="italic">Oct 2025</span></li>
+                            <li class="flex justify-between"><span><strong>Basic Artificial Intelligence (AI)</strong> | Dicoding</span> <span class="italic">Oct 2025</span></li>
+                            <li class="flex justify-between"><span><strong>Data Analyst Career Track</strong> | DQLab</span> <span class="italic">Oct 2025</span></li>
+                            <li class="flex justify-between"><span><strong>Machine Learning & AI for Beginner</strong> | DQLab</span> <span class="italic">Oct 2025</span></li>
+                            <li class="flex justify-between"><span><strong>Introduction to Data Science with R</strong> | DQLab</span> <span class="italic">Apr 2025</span></li>
+                            <li class="flex justify-between"><span><strong>DevCoach 159: Database 101</strong> | Dicoding</span> <span class="italic">Jul 2024</span></li>
+                            <li class="flex justify-between"><span><strong>AI & ChatGPT for Academic & Office</strong> | Taalenta</span> <span class="italic">Dec 2023</span></li>
+                        </ul>
+                    </div>
+
+                    <!-- EDUCATION -->
+                    <div class="mb-4">
+                        <h2 class="text-base font-bold uppercase border-b border-black mb-2 tracking-wider">Education</h2>
+                        <div class="flex justify-between font-bold"><span>Universitas Pamulang</span><span>Tangerang Selatan</span></div>
+                        <div class="flex justify-between italic text-gray-700"><span>Bachelor of Informatics Engineering (S.Kom)</span><span></span></div>
+                        <div class="text-sm text-gray-600">Focus: Network Security, Information Systems.</div>
+                    </div>
+                </div>
+
+                <!-- Loading Spinner for PDF -->
+                <div id="loadingSpinner" class="absolute inset-0 flex items-center justify-center z-30 hidden">
                     <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
                 </div>
-                <iframe id="pdfFrame" class="w-full h-full relative z-20" src="" frameborder="0" allow="autoplay" onload="document.getElementById('loadingSpinner').style.display='none'"></iframe>
             </div>
         </div>
     </div>
@@ -532,89 +456,69 @@
         <i class="fas fa-arrow-up"></i>
     </button>
 
-    <!-- JAVASCRIPT LOGIC (CURSOR, SCROLL-TOP & DATA) -->
+    <!-- JAVASCRIPT -->
     <script>
-        // --- CUSTOM CURSOR LOGIC ---
-        const cursorDot = document.getElementById("cursor-dot");
-        const cursorOutline = document.getElementById("cursor-outline");
-
-        window.addEventListener("mousemove", function (e) {
-            const posX = e.clientX;
-            const posY = e.clientY;
-
-            // Dot moves instantly
-            cursorDot.style.left = `${posX}px`;
-            cursorDot.style.top = `${posY}px`;
-
-            // Outline moves with delay
-            cursorOutline.animate({
-                left: `${posX}px`,
-                top: `${posY}px`
-            }, { duration: 500, fill: "forwards" });
-        });
-
-        const hoverTriggers = document.querySelectorAll('a, button, .hover-trigger');
-        
-        hoverTriggers.forEach(trigger => {
-            trigger.addEventListener('mouseenter', () => {
-                document.body.classList.add('hovering');
-            });
-            trigger.addEventListener('mouseleave', () => {
-                document.body.classList.remove('hovering');
-            });
-        });
-        
-        // --- FORM HANDLING (MAILTO ENHANCED) ---
-        const contactForm = document.getElementById('contactForm');
-        if(contactForm){
-            contactForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                const name = document.getElementById('name').value;
-                const email = document.getElementById('email').value;
-                const message = document.getElementById('message').value;
-                
-                const subject = `Portfolio Inquiry from ${name}`;
-                const body = `Name: ${name}%0D%0AEmail: ${email}%0D%0A%0D%0AMessage:%0D%0A${message}`;
-                
-                window.location.href = `mailto:febri.nahdatun@gmail.com?subject=${subject}&body=${body}`;
-            });
-        }
-        
-        // --- SCROLL TO TOP LOGIC ---
-        const scrollToTopBtn = document.getElementById("scrollToTopBtn");
-        
-        window.onscroll = function() {
-            if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
-                scrollToTopBtn.classList.add("show");
-            } else {
-                scrollToTopBtn.classList.remove("show");
-            }
-        };
-        
-        scrollToTopBtn.addEventListener("click", function() {
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            });
-        });
-
-        // --- DATA FETCHING & DASHBOARD ---
+        // CONFIG
         const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSXxXA21f-Q3MUn1A7jyrxNiZ-wD9x4RGfwnqMJrVZuKmhKJKluXsqqkNf2dDvnSJVpdnRBBHQCiLeS/pub?gid=1555337350&single=true&output=csv';
 
-        // Modal Logic
+        // CURSOR
+        const cursorDot = document.getElementById("cursor-dot");
+        const cursorOutline = document.getElementById("cursor-outline");
+        window.addEventListener("mousemove", (e) => {
+            cursorDot.style.left = `${e.clientX}px`; cursorDot.style.top = `${e.clientY}px`;
+            cursorOutline.animate({ left: `${e.clientX}px`, top: `${e.clientY}px` }, { duration: 500, fill: "forwards" });
+        });
+        document.querySelectorAll('a, button, .hover-trigger').forEach(el => {
+            el.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
+            el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
+        });
+
+        // MODAL LOGIC (UNIFIED)
         const modal = document.getElementById('certModal');
+        const pdfFrame = document.getElementById('pdfFrame');
+        const atsCvContent = document.getElementById('atsCvContent');
+        const downloadCvBtn = document.getElementById('downloadCvBtn');
         const modalTitle = document.getElementById('modalTitle');
         const modalOrg = document.getElementById('modalOrg');
-        const pdfFrame = document.getElementById('pdfFrame');
-        const loadingSpinner = document.getElementById('loadingSpinner');
+        const spinner = document.getElementById('loadingSpinner');
+        const pdfShield = document.getElementById('pdfShield');
 
         function openCertModal(title, org, fileId) {
             modalTitle.innerText = title;
             modalOrg.innerText = org;
-            const embedUrl = `https://drive.google.com/file/d/${fileId}/preview`;
-            loadingSpinner.style.display = 'flex';
-            pdfFrame.src = embedUrl;
             modal.classList.remove('hidden');
+
+            if (fileId === 'CV_MODE') {
+                // Show Native HTML CV (Allow Download)
+                pdfFrame.classList.add('hidden');
+                pdfFrame.src = '';
+                atsCvContent.classList.remove('hidden');
+                downloadCvBtn.classList.remove('hidden'); 
+                spinner.classList.add('hidden');
+                pdfShield.classList.add('hidden'); // Disable shield for CV so download button works
+            } else {
+                // Show Google Drive PDF (Protected Certs)
+                atsCvContent.classList.add('hidden');
+                downloadCvBtn.classList.add('hidden');
+                pdfFrame.classList.remove('hidden');
+                spinner.classList.remove('hidden');
+                pdfShield.classList.remove('hidden'); // Enable shield for Certs
+                pdfFrame.src = `https://drive.google.com/file/d/${fileId}/preview`;
+                pdfFrame.onload = () => spinner.classList.add('hidden');
+            }
+        }
+
+        // PRINT CV FUNCTION
+        function printCV() {
+            const cvContents = document.getElementById('atsCvContent').innerHTML;
+            const printWindow = window.open('', '', 'height=600,width=800');
+            printWindow.document.write('<html><head><title>Febri_Nahdatun_CV_ATS</title>');
+            printWindow.document.write('<link href="https://cdn.tailwindcss.com" rel="stylesheet">');
+            printWindow.document.write('</head><body class="p-8">');
+            printWindow.document.write(cvContents);
+            printWindow.document.write('</body></html>');
+            printWindow.document.close();
+            setTimeout(() => { printWindow.print(); }, 1000);
         }
 
         function closeModal() {
@@ -623,19 +527,17 @@
         }
         modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
 
-        // Helper Format
+        // DASHBOARD LOGIC
         function formatLargeNumber(num) {
             if (num >= 1000000) return '$' + (num / 1000000).toFixed(1) + 'M';
             if (num >= 1000) return '$' + (num / 1000).toFixed(1) + 'k';
             return '$' + num.toLocaleString();
         }
-
         function cleanNumber(strVal) {
             if (typeof strVal !== 'string') return Number(strVal) || 0;
             return parseFloat(strVal.replace(/[^0-9.-]+/g, '')) || 0;
         }
 
-        // Fetch CSV
         async function fetchDashboardData() {
             try {
                 document.getElementById('status-indicator').innerText = 'Downloading CSV...';
@@ -645,19 +547,10 @@
                 if (!response.ok) throw new Error("Failed to fetch CSV");
                 const csvText = await response.text();
                 
-                const results = Papa.parse(csvText, {
-                    header: true,
-                    skipEmptyLines: true,
-                    dynamicTyping: false 
-                });
-
+                const results = Papa.parse(csvText, { header: true, skipEmptyLines: true, dynamicTyping: false });
                 document.getElementById('status-indicator').innerText = 'Processing...';
                 
-                let totalSales = 0;
-                let totalProfit = 0;
-                let uniqueOrders = new Set();
-                let monthlyStats = Array(12).fill(0).map(() => ({ sales: 0, profit: 0 }));
-                let segmentStats = {};
+                let totalSales = 0, totalProfit = 0, uniqueOrders = new Set(), monthlyStats = Array(12).fill(0).map(() => ({ sales: 0, profit: 0 })), segmentStats = {};
 
                 results.data.forEach(row => {
                     const sales = cleanNumber(row['Sales']);
@@ -666,8 +559,7 @@
                     const segment = row['Segment'];
                     const orderId = row['Order_ID'];
 
-                    totalSales += sales;
-                    totalProfit += profit;
+                    totalSales += sales; totalProfit += profit;
                     if(orderId) uniqueOrders.add(orderId);
 
                     if (!isNaN(orderDate.getTime())) {
@@ -675,133 +567,53 @@
                         monthlyStats[month].sales += sales;
                         monthlyStats[month].profit += profit;
                     }
-
-                    if(segment) {
-                        segmentStats[segment] = (segmentStats[segment] || 0) + sales;
-                    }
+                    if(segment) segmentStats[segment] = (segmentStats[segment] || 0) + sales;
                 });
 
                 const margin = totalSales ? ((totalProfit / totalSales) * 100).toFixed(1) + '%' : '0%';
-
                 document.getElementById('status-indicator').innerText = 'Connected (Live CSV)';
                 document.getElementById('status-indicator').classList.replace('text-yellow-400', 'text-green-400');
 
-                return {
-                    kpi: {
-                        sales: Math.round(totalSales),
-                        profit: Math.round(totalProfit),
-                        orders: uniqueOrders.size,
-                        discount: margin 
-                    },
-                    trend: {
-                        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-                        sales: monthlyStats.map(m => Math.round(m.sales)),
-                        profit: monthlyStats.map(m => Math.round(m.profit))
-                    },
-                    segment: {
-                        labels: Object.keys(segmentStats),
-                        data: Object.values(segmentStats).map(v => Math.round(v))
-                    }
-                };
-
+                return { kpi: { sales: Math.round(totalSales), profit: Math.round(totalProfit), orders: uniqueOrders.size, discount: margin }, trend: { labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'], sales: monthlyStats.map(m => Math.round(m.sales)), profit: monthlyStats.map(m => Math.round(m.profit)) }, segment: { labels: Object.keys(segmentStats), data: Object.values(segmentStats).map(v => Math.round(v)) } };
             } catch (error) {
                 console.error("Fetch Error:", error);
                 document.getElementById('status-indicator').innerText = 'Connection Failed (Sim)';
                 document.getElementById('status-indicator').classList.replace('text-yellow-400', 'text-red-400');
-                
-                return {
-                    kpi: { sales: 2297200, profit: 286397, orders: 9994, discount: "12.4%" },
-                    trend: {
-                        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-                        sales: [15000, 18000, 12000, 22000, 28000, 24000, 32000, 29000, 41000, 48000, 52000, 68000],
-                        profit: [2800, 3200, 1500, 4800, 5200, 4900, 6100, 5800, 8200, 9500, 10200, 14500]
-                    },
-                    segment: {
-                        labels: ['Consumer', 'Corporate', 'Home Office'],
-                        data: [50, 30, 20]
-                    }
-                };
+                return { kpi: { sales: 0, profit: 0, orders: 0, discount: "0%" }, trend: { labels: [], sales: [], profit: [] }, segment: { labels: [], data: [] } };
             }
         }
 
-        // Render Charts with Updated Colors
         function renderDashboard(data) {
             document.getElementById('kpi-sales').innerText = formatLargeNumber(data.kpi.sales);
             document.getElementById('kpi-profit').innerText = formatLargeNumber(data.kpi.profit);
             document.getElementById('kpi-orders').innerText = data.kpi.orders.toLocaleString();
             document.getElementById('avg-discount').innerText = data.kpi.discount; 
 
-            // Mixed Chart
             const ctxTrend = document.getElementById('trendChart').getContext('2d');
             new Chart(ctxTrend, {
                 type: 'bar',
-                data: {
-                    labels: data.trend.labels,
-                    datasets: [
-                        { 
-                            label: 'Profit ($)', 
-                            data: data.trend.profit, 
-                            type: 'line', 
-                            borderColor: '#22D3EE', // Bright Cyan (Kontras Tinggi)
-                            backgroundColor: 'rgba(34, 211, 238, 0.1)',
-                            borderWidth: 3,
-                            tension: 0.4,
-                            pointRadius: 3,
-                            yAxisID: 'y1'
-                        },
-                        { 
-                            label: 'Sales ($)', 
-                            data: data.trend.sales, 
-                            backgroundColor: '#8B5CF6', // Primary Violet
-                            borderRadius: 4,
-                            yAxisID: 'y'
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    interaction: { mode: 'index', intersect: false },
-                    plugins: { legend: { labels: { color: '#94a3b8', font: { family: 'Poppins' } } } },
-                    scales: {
-                        y: { 
-                            type: 'linear', display: true, position: 'left', 
-                            grid: { color: '#1E293B' },
-                            ticks: { color: '#94a3b8', font: { family: 'Poppins' }, callback: function(value) { return '$' + value/1000 + 'k'; } } 
-                        },
-                        y1: { 
-                            type: 'linear', display: true, position: 'right', 
-                            grid: { drawOnChartArea: false }, 
-                            ticks: { color: '#22D3EE', font: { family: 'Poppins' } } 
-                        },
-                        x: { grid: { display: false }, ticks: { color: '#94a3b8', font: { family: 'Poppins' } } }
-                    }
-                }
+                data: { labels: data.trend.labels, datasets: [{ label: 'Profit ($)', data: data.trend.profit, type: 'line', borderColor: '#0EA5E9', backgroundColor: 'rgba(14, 165, 233, 0.1)', borderWidth: 3, tension: 0.4, pointRadius: 3, yAxisID: 'y1' }, { label: 'Sales ($)', data: data.trend.sales, backgroundColor: '#8B5CF6', borderRadius: 4, yAxisID: 'y' }] },
+                options: { responsive: true, maintainAspectRatio: false, interaction: { mode: 'index', intersect: false }, plugins: { legend: { labels: { color: '#94a3b8', font: { family: 'Poppins' } } } }, scales: { y: { type: 'linear', display: true, position: 'left', grid: { color: '#1E293B' }, ticks: { color: '#94a3b8', font: { family: 'Poppins' }, callback: function(value) { return '$' + value/1000 + 'k'; } } }, y1: { type: 'linear', display: true, position: 'right', grid: { drawOnChartArea: false }, ticks: { color: '#0EA5E9', font: { family: 'Poppins' } } }, x: { grid: { display: false }, ticks: { color: '#94a3b8', font: { family: 'Poppins' } } } } }
             });
 
             const ctxSeg = document.getElementById('segmentChart').getContext('2d');
             new Chart(ctxSeg, {
                 type: 'doughnut',
-                data: {
-                    labels: data.segment.labels,
-                    datasets: [{ 
-                        data: data.segment.data, 
-                        backgroundColor: ['#8B5CF6', '#22D3EE', '#F472B6'], // Violet, Cyan, Pink
-                        borderWidth: 0
-                    }]
-                },
-                options: { 
-                    responsive: true, 
-                    cutout: '75%', 
-                    plugins: { legend: { position: 'bottom', labels: { color: '#94a3b8', font: { family: 'Poppins' } } } } 
-                }
+                data: { labels: data.segment.labels, datasets: [{ data: data.segment.data, backgroundColor: ['#8B5CF6', '#0EA5E9', '#6366F1'], borderWidth: 0 }] },
+                options: { responsive: true, cutout: '75%', plugins: { legend: { position: 'bottom', labels: { color: '#94a3b8', font: { family: 'Poppins' } } } } }
             });
         }
 
-        document.addEventListener('DOMContentLoaded', async () => {
-            const data = await fetchDashboardData();
-            renderDashboard(data);
-        });
+        // SCROLL TO TOP
+        const scrollToTopBtn = document.getElementById("scrollToTopBtn");
+        window.onscroll = function() { if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) { scrollToTopBtn.classList.add("show"); } else { scrollToTopBtn.classList.remove("show"); } };
+        scrollToTopBtn.addEventListener("click", function() { window.scrollTo({ top: 0, behavior: "smooth" }); });
+
+        // FORM MAILTO
+        const contactForm = document.getElementById('contactForm');
+        if(contactForm){ contactForm.addEventListener('submit', function(e) { e.preventDefault(); const name = document.getElementById('name').value; const email = document.getElementById('email').value; const message = document.getElementById('message').value; const subject = `Portfolio Inquiry from ${name}`; const body = `Name: ${name}%0D%0AEmail: ${email}%0D%0A%0D%0AMessage:%0D%0A${message}`; window.location.href = `mailto:febri.nahdatun@gmail.com?subject=${subject}&body=${body}`; }); }
+
+        document.addEventListener('DOMContentLoaded', async () => { const data = await fetchDashboardData(); renderDashboard(data); });
     </script>
 </body>
 </html>
