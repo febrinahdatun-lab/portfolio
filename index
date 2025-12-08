@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Febri Nahdatun | Enterprise Systems & Data Analyst</title>
+    
+    <!-- FAVICON (Foto Profil) -->
+    <link rel="icon" href="https://lh3.googleusercontent.com/d/1T2Q8QHpeETmrkz6SS5T1CrZilVGWFAJs=w100" type="image/png">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- PapaParse (Untuk membaca CSV dengan mudah) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#0ea5e9', // Sky Blue
+                        microsoft: '#00a4ef', // Microsoft Blue
+                        google: '#ea4335',    // Google Red
+                        dark: '#020617',    // Slate 950
+                        surface: '#0f172a', // Slate 900
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #020617; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #0ea5e9; }
+        
+        .gradient-text {
+            background: linear-gradient(to right, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .modal.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        
+        /* Protection Layer Style */
+        .protection-layer {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%; 
+            height: 60px; 
+            z-index: 50;
+            cursor: not-allowed;
+        }
+
+        /* AI Loading Pulse */
+        @keyframes ai-pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .ai-loading {
+            animation: ai-pulse 1.5s infinite;
+        }
+    </style>
+</head>
+<body class="bg-dark text-slate-300 font-sans antialiased overflow-x-hidden">
+
+    <!-- Navbar -->
+    <nav class="fixed w-full z-40 bg-dark/80 backdrop-blur-md border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex-shrink-0 flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary shadow-lg shadow-primary/20">
+                        <img src="https://lh3.googleusercontent.com/d/1T2Q8QHpeETmrkz6SS5T1CrZilVGWFAJs=w100" alt="Febri Nahdatun" class="w-full h-full object-cover">
+                    </div>
+                    <span class="text-lg font-bold text-white tracking-tight hidden sm:block">Febri Nahdatun</span>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="#about" class="hover:text-primary transition-colors text-sm font-medium">Profile</a>
+                        <a href="#expertise" class="hover:text-primary transition-colors text-sm font-medium">Expertise</a>
+                        <a href="#dashboard" class="hover:text-primary transition-colors text-sm font-medium">SuperStore Analytics</a>
+                        <a href="#certifications" class="hover:text-primary transition-colors text-sm font-medium">Certifications</a>
+                    </div>
+                </div>
+                <a href="#contact" class="px-5 py-2.5 bg-white text-dark font-bold rounded-full text-sm hover:bg-slate-200 transition-all transform hover:scale-105">
+                    Contact Me
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="about" class="pt-32 pb-20 md:pt-48 md:pb-32 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+        <div class="absolute top-0 right-0 -translate-y-1/2 translate-x-1/3 w-[600px] h-[600px] bg-primary/10 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-0 left-0 translate-y-1/3 -translate-x-1/3 w-[500px] h-[500px] bg-purple-500/10 rounded-full blur-3xl"></div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center relative z-10">
+            <div class="space-y-8">
+                <div class="inline-flex items-center px-4 py-2 rounded-full border border-slate-700 bg-surface/50 text-slate-300 text-sm font-medium backdrop-blur-sm shadow-xl">
+                    <i class="fab fa-microsoft text-blue-400 mr-2 text-lg"></i>
+                    <span class="mx-2 text-slate-600">|</span>
+                    <i class="fab fa-google text-red-400 mr-2 text-lg"></i>
+                    Dual-Ecosystem Administrator
+                </div>
+                
+                <h1 class="text-5xl md:text-7xl font-bold text-white leading-tight">
+                    Architecting <br>
+                    <span class="gradient-text">Intelligent Systems</span>
+                </h1>
+                
+                <p class="text-xl text-slate-400 max-w-xl leading-relaxed">
+                    I bridge the gap between <strong>Enterprise Infrastructure</strong> (Microsoft 365 & Google Workspace) and <strong>Data Intelligence</strong>. Transforming raw data into strategic assets.
+                </p>
+                
+                <div class="flex flex-wrap gap-4">
+                    <button onclick="openCertModal('Curriculum Vitae', 'Professional Profile', '1OWPqMmCXq8hELHnErhm4pXcIo7MVJd7S')" class="px-8 py-4 bg-primary text-white font-bold rounded-xl hover:bg-sky-600 transition-all shadow-lg shadow-primary/25 flex items-center gap-2">
+                        <i class="fas fa-eye"></i> View CV
+                    </button>
+                    
+                    <a href="https://www.linkedin.com/in/febri-nahdatun-49b437126/" target="_blank" class="px-8 py-4 border border-slate-600 text-white font-bold rounded-xl hover:bg-surface hover:border-primary transition-all flex items-center gap-2">
+                        <i class="fab fa-linkedin"></i> LinkedIn
+                    </a>
+                    <a href="https://github.com/febrinahdatun-lab" target="_blank" class="px-8 py-4 border border-slate-600 text-white font-bold rounded-xl hover:bg-surface hover:border-white transition-all flex items-center gap-2">
+                        <i class="fab fa-github"></i> GitHub
+                    </a>
+                </div>
+
+                <div class="flex items-center gap-4 text-sm text-slate-500 border-l-2 border-slate-700 pl-4">
+                    <i class="fas fa-quote-left text-slate-600"></i>
+                    Bereksperimen dengan hal-hal menarik yang memantik rasa penasaran.
+                </div>
+            </div>
+
+            <div class="relative group">
+                <div class="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-600 rounded-[2rem] blur-2xl opacity-30 group-hover:opacity-50 transition-opacity duration-500"></div>
+                <div class="relative rounded-[2rem] overflow-hidden border border-slate-700 bg-surface shadow-2xl">
+                    <img src="https://lh3.googleusercontent.com/d/1T2Q8QHpeETmrkz6SS5T1CrZilVGWFAJs=w800" alt="Febri Nahdatun" class="w-full object-cover transform transition-transform duration-700 group-hover:scale-105">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Expertise Section -->
+    <section id="expertise" class="py-24 bg-surface border-y border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <span class="text-primary font-bold tracking-wider uppercase text-sm">Core Competencies</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-white mt-2">The Ecosystem I Master</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Microsoft -->
+                <div class="bg-dark p-8 rounded-2xl border border-slate-800 hover:border-microsoft/50 transition-all group">
+                    <div class="w-14 h-14 bg-microsoft/10 rounded-xl flex items-center justify-center text-microsoft text-3xl mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fab fa-windows"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-4">Microsoft Ecosystem</h3>
+                    <ul class="space-y-2 text-sm text-slate-400">
+                        <li class="flex items-center"><i class="fas fa-check-circle text-microsoft mr-2"></i> Microsoft 365 Admin Center</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-microsoft mr-2"></i> Azure Entra ID (Identity)</li>
+                    </ul>
+                </div>
+
+                <!-- Google -->
+                <div class="bg-dark p-8 rounded-2xl border border-slate-800 hover:border-google/50 transition-all group">
+                    <div class="w-14 h-14 bg-google/10 rounded-xl flex items-center justify-center text-google text-3xl mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fab fa-google"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-4">Google Workspace</h3>
+                    <ul class="space-y-2 text-sm text-slate-400">
+                        <li class="flex items-center"><i class="fas fa-check-circle text-google mr-2"></i> Google Admin Console</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-google mr-2"></i> Apps Script Automation</li>
+                    </ul>
+                </div>
+
+                <!-- Data & AI -->
+                <div class="bg-dark p-8 rounded-2xl border border-slate-800 hover:border-purple-500/50 transition-all group">
+                    <div class="w-14 h-14 bg-purple-500/10 rounded-xl flex items-center justify-center text-purple-400 text-3xl mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-4">Data Intelligence & AI</h3>
+                    <ul class="space-y-2 text-sm text-slate-400">
+                        <li class="flex items-center"><i class="fas fa-check-circle text-purple-400 mr-2"></i> Python & SQL</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-purple-400 mr-2"></i> Generative AI Integration</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SuperStore Analytics Section -->
+    <section id="dashboard" class="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
+            <div>
+                <span class="text-primary font-bold tracking-wider uppercase text-sm">Portfolio Project</span>
+                <h2 class="text-3xl font-bold text-white mt-2">SuperStore Sales Analytics</h2>
+                <p class="text-slate-400 mt-2 max-w-xl">
+                    Dashboard interaktif ini menyajikan wawasan bisnis strategis yang diolah dari dataset penjualan 'SuperStore'. <br>
+                    <span class="text-xs text-slate-500">Note: Visualisasi dioptimalkan untuk performa web (simulasi). Dataset sumber (CSV) tersedia untuk diunduh.</span>
+                </p>
+            </div>
+            
+            <div class="flex gap-3">
+                <!-- AI Button -->
+                <button onclick="triggerAIAnalysis()" id="aiButton" class="px-5 py-2.5 bg-purple-600 border border-purple-500 rounded-lg text-sm text-white hover:bg-purple-700 transition-colors flex items-center gap-2 shadow-lg shadow-purple-500/20">
+                    <i class="fas fa-sparkles"></i> Ask AI Analyst
+                </button>
+                
+                <!-- CSV Download -->
+                <a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vSXxXA21f-Q3MUn1A7jyrxNiZ-wD9x4RGfwnqMJrVZuKmhKJKluXsqqkNf2dDvnSJVpdnRBBHQCiLeS/pub?gid=1555337350&single=true&output=csv" class="px-5 py-2.5 bg-surface border border-slate-600 rounded-lg text-sm text-white hover:bg-slate-700 transition-colors flex items-center gap-2">
+                    <i class="fas fa-file-csv"></i> Source Data
+                </a>
+            </div>
+        </div>
+
+        <!-- Executive Summary Panel (AI Target) -->
+        <div class="bg-surface rounded-2xl border-l-4 border-primary p-6 mb-8 shadow-lg relative overflow-hidden">
+            <h3 class="text-lg font-bold text-white mb-3 flex items-center gap-2">
+                <i class="fas fa-file-alt text-primary"></i> Executive Summary
+                <span id="aiStatus" class="text-xs font-normal text-slate-500 ml-2 hidden"></span>
+            </h3>
+            
+            <div id="summaryContent" class="text-sm text-slate-300 leading-relaxed">
+                <!-- Default Static Content -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <p class="mb-2"><strong class="text-white">1. Profitabilitas Produk:</strong> Kategori <span class="text-blue-400">Teknologi</span> menjadi penyumbang profit terbesar (~50% total profit) meskipun volume penjualannya moderat.</p>
+                        <p><strong class="text-white">2. Tren Musiman:</strong> Data menunjukkan pola peningkatan penjualan signifikan di Q4 (Oktober-Desember), mengindikasikan peluang promosi akhir tahun yang efektif.</p>
+                    </div>
+                    <div>
+                        <p class="mb-2"><strong class="text-white">3. Analisis Regional:</strong> Wilayah <span class="text-yellow-400">West</span> mendominasi penjualan dan profit, sementara wilayah <span class="text-slate-400">South</span> memerlukan strategi penetrasi pasar baru.</p>
+                        <p><strong class="text-white">4. Rekomendasi:</strong> Kurangi rata-rata diskon pada kategori Furniture di atas 20% untuk menghindari kerugian (negative profit).</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard UI -->
+        <div class="bg-surface rounded-2xl border border-slate-800 shadow-2xl overflow-hidden">
+            <div class="bg-dark/50 border-b border-slate-800 p-4 flex justify-between items-center">
+                <div class="flex items-center gap-2">
+                    <span class="text-xs font-mono text-slate-500">Connected to: <span class="text-slate-300">SuperStore Master Data</span></span>
+                </div>
+                <div class="text-xs text-slate-500 font-mono">Status: <span class="text-green-400" id="status-indicator">Initializing...</span></div>
+            </div>
+
+            <div class="p-6 grid grid-cols-1 lg:grid-cols-4 gap-6">
+                <!-- KPI Cards -->
+                <div class="lg:col-span-4 grid grid-cols-1 sm:grid-cols-4 gap-4">
+                    <div class="bg-dark p-5 rounded-xl border border-slate-800">
+                        <p class="text-xs text-slate-500 uppercase font-bold">Total Sales</p>
+                        <h4 class="text-xl md:text-2xl font-bold text-white mt-1 break-all" id="kpi-sales">$0</h4>
+                    </div>
+                    <div class="bg-dark p-5 rounded-xl border border-slate-800">
+                        <p class="text-xs text-slate-500 uppercase font-bold">Total Profit</p>
+                        <h4 class="text-xl md:text-2xl font-bold text-white mt-1 break-all" id="kpi-profit">$0</h4>
+                    </div>
+                     <div class="bg-dark p-5 rounded-xl border border-slate-800">
+                        <p class="text-xs text-slate-500 uppercase font-bold">Orders</p>
+                        <h4 class="text-xl md:text-2xl font-bold text-white mt-1" id="kpi-orders">0</h4>
+                    </div>
+                    <div class="bg-dark p-5 rounded-xl border border-slate-800">
+                        <p class="text-xs text-slate-500 uppercase font-bold">Margin</p>
+                        <h4 class="text-xl md:text-2xl font-bold text-white mt-1" id="avg-discount">0%</h4>
+                    </div>
+                </div>
+
+                <!-- Main Chart (FIXED: Bar & Line) -->
+                <div class="lg:col-span-3 bg-dark p-5 rounded-xl border border-slate-800">
+                    <h5 class="text-white font-bold text-sm mb-4">Monthly Sales vs Profit Trend</h5>
+                    <div class="h-64">
+                        <canvas id="trendChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Segment Chart -->
+                <div class="lg:col-span-1 bg-dark p-5 rounded-xl border border-slate-800">
+                    <h5 class="text-white font-bold text-sm mb-4">Sales by Segment</h5>
+                    <div class="h-48 flex items-center justify-center">
+                        <canvas id="segmentChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Certifications Section -->
+    <section id="certifications" class="py-24 bg-surface/50 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-white mb-12 text-center">Professional Certifications</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- BNSP -->
+                <div onclick="openCertModal('BNSP Certified', 'Badan Nasional Sertifikasi Profesi', '1cG7mouvxEbI7HjEd2Mih3IE00M7ZVK1x')" class="bg-dark p-6 rounded-2xl border border-slate-800 cursor-pointer hover:border-primary transition-all hover:-translate-y-2 group">
+                    <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4 overflow-hidden border-2 border-slate-700 group-hover:border-primary transition-colors">
+                         <img src="https://www.hpi.or.id/wp-content/uploads/2021/08/Logo-BNSP.png" alt="BNSP" class="w-full h-full object-cover rounded-full p-0.5">
+                    </div>
+                    <h4 class="text-white font-bold text-center group-hover:text-primary transition-colors">BNSP Certified</h4>
+                    <p class="text-slate-500 text-xs text-center mt-2">Amil Zakat Qualification</p>
+                    <div class="mt-4 text-center"><span class="text-xs bg-slate-800 text-slate-300 px-3 py-1 rounded-full group-hover:bg-primary group-hover:text-white transition-colors"><i class="fas fa-eye mr-1"></i> View Document</span></div>
+                </div>
+                
+                <!-- Dicoding -->
+                <div onclick="openCertModal('Dicoding AI', 'Dicoding Indonesia', '1GEeSOrNDvOCIGP2QUX8lAVlDTJIgwOrF')" class="bg-dark p-6 rounded-2xl border border-slate-800 cursor-pointer hover:border-primary transition-all hover:-translate-y-2 group">
+                    <div class="w-16 h-16 bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl text-white"><i class="fas fa-robot"></i></div>
+                    <h4 class="text-white font-bold text-center group-hover:text-primary transition-colors">Dicoding AI</h4>
+                    <p class="text-slate-500 text-xs text-center mt-2">Artificial Intelligence Basic</p>
+                    <div class="mt-4 text-center"><span class="text-xs bg-slate-800 text-slate-300 px-3 py-1 rounded-full group-hover:bg-primary group-hover:text-white transition-colors"><i class="fas fa-eye mr-1"></i> View Document</span></div>
+                </div>
+
+                <!-- DQLab -->
+                <div onclick="openCertModal('DQLab Analyst', 'DQLab', '1TLdVFDWCmFs4yR_sVtpEFPSQWIHkIict')" class="bg-dark p-6 rounded-2xl border border-slate-800 cursor-pointer hover:border-primary transition-all hover:-translate-y-2 group">
+                    <div class="w-16 h-16 bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl text-white"><i class="fas fa-chart-bar"></i></div>
+                    <h4 class="text-white font-bold text-center group-hover:text-primary transition-colors">DQLab Analyst</h4>
+                    <p class="text-slate-500 text-xs text-center mt-2">Data Analyst Career Track</p>
+                    <div class="mt-4 text-center"><span class="text-xs bg-slate-800 text-slate-300 px-3 py-1 rounded-full group-hover:bg-primary group-hover:text-white transition-colors"><i class="fas fa-eye mr-1"></i> View Document</span></div>
+                </div>
+
+                <!-- Taalenta -->
+                <div onclick="openCertModal('Taalenta AI', 'Taalenta Digital', '1cn6_8zBFR9ieeSMKpixVpprTxbJ6CLBg')" class="bg-dark p-6 rounded-2xl border border-slate-800 cursor-pointer hover:border-primary transition-all hover:-translate-y-2 group">
+                    <div class="w-16 h-16 bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl text-white"><i class="fas fa-brain"></i></div>
+                    <h4 class="text-white font-bold text-center group-hover:text-primary transition-colors">Taalenta AI</h4>
+                    <p class="text-slate-500 text-xs text-center mt-2">Generative AI Expert</p>
+                    <div class="mt-4 text-center"><span class="text-xs bg-slate-800 text-slate-300 px-3 py-1 rounded-full group-hover:bg-primary group-hover:text-white transition-colors"><i class="fas fa-eye mr-1"></i> View Document</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section id="contact" class="py-24 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center bg-gradient-to-b from-dark to-slate-900/50">
+        <h2 class="text-3xl font-bold text-white mb-6">Let's Connect</h2>
+        <p class="text-slate-400 mb-12 max-w-2xl mx-auto">
+            Ready to optimize your organizational data or streamline your ecosystem? <br>
+            Feel free to reach out via any of these platforms.
+        </p>
+
+        <div class="flex flex-wrap justify-center gap-6 mb-16">
+            <a href="mailto:febri.nahdatun@gmail.com" class="flex items-center gap-4 bg-surface px-6 py-4 rounded-2xl border border-slate-700 hover:border-primary hover:bg-primary/5 transition-all group w-full sm:w-auto min-w-[280px]">
+                <div class="bg-slate-800 p-3 rounded-xl group-hover:bg-white group-hover:text-black transition-colors text-xl"><i class="fas fa-envelope"></i></div>
+                <div class="text-left"><p class="text-xs text-slate-500 uppercase tracking-wide font-bold">Email</p><p class="text-sm font-bold text-white break-all">febri.nahdatun@gmail.com</p></div>
+            </a>
+             <a href="https://wa.me/6287888893111" target="_blank" class="flex items-center gap-4 bg-surface px-6 py-4 rounded-2xl border border-slate-700 hover:border-green-500 hover:bg-green-500/5 transition-all group w-full sm:w-auto min-w-[280px]">
+                <div class="bg-slate-800 p-3 rounded-xl group-hover:bg-green-500 group-hover:text-white transition-colors text-xl"><i class="fab fa-whatsapp"></i></div>
+                <div class="text-left"><p class="text-xs text-slate-500 uppercase tracking-wide font-bold">WhatsApp</p><p class="text-sm font-bold text-white">+62 878-8889-3111</p></div>
+            </a>
+            <a href="https://t.me/+6287888893111" target="_blank" class="flex items-center gap-4 bg-surface px-6 py-4 rounded-2xl border border-slate-700 hover:border-blue-400 hover:bg-blue-400/5 transition-all group w-full sm:w-auto min-w-[280px]">
+                <div class="bg-slate-800 p-3 rounded-xl group-hover:bg-blue-400 group-hover:text-white transition-colors text-xl"><i class="fab fa-telegram-plane"></i></div>
+                <div class="text-left"><p class="text-xs text-slate-500 uppercase tracking-wide font-bold">Telegram</p><p class="text-sm font-bold text-white">Chat Now</p></div>
+            </a>
+        </div>
+
+        <div class="border-t border-slate-800 pt-12">
+            <p class="text-slate-400 text-sm mb-6">Find me on social media</p>
+            <div class="flex flex-wrap justify-center gap-6">
+                <a href="https://www.linkedin.com/in/febri-nahdatun-49b437126/" target="_blank" class="flex flex-col items-center gap-2 group">
+                    <div class="w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center text-slate-400 group-hover:bg-[#0077b5] group-hover:text-white transition-all text-xl"><i class="fab fa-linkedin-in"></i></div>
+                    <span class="text-xs text-slate-500 group-hover:text-[#0077b5] transition-colors">LinkedIn</span>
+                </a>
+                <a href="https://github.com/febrinahdatun-lab" target="_blank" class="flex flex-col items-center gap-2 group">
+                    <div class="w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center text-slate-400 group-hover:bg-white group-hover:text-black transition-all text-xl"><i class="fab fa-github"></i></div>
+                    <span class="text-xs text-slate-500 group-hover:text-white transition-colors">GitHub</span>
+                </a>
+                <a href="https://www.instagram.com/fbrnhdtn/" target="_blank" class="flex flex-col items-center gap-2 group">
+                    <div class="w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center text-slate-400 group-hover:bg-gradient-to-tr from-yellow-400 via-red-500 to-purple-500 group-hover:text-white transition-all text-xl"><i class="fab fa-instagram"></i></div>
+                    <span class="text-xs text-slate-500 group-hover:text-pink-500 transition-colors">Instagram</span>
+                </a>
+                <a href="https://www.facebook.com/febrinahdatun/" target="_blank" class="flex flex-col items-center gap-2 group">
+                    <div class="w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center text-slate-400 group-hover:bg-[#1877F2] group-hover:text-white transition-all text-xl"><i class="fab fa-facebook-f"></i></div>
+                    <span class="text-xs text-slate-500 group-hover:text-[#1877F2] transition-colors">Facebook</span>
+                </a>
+            </div>
+            <p class="mt-12 text-sm text-slate-600">&copy; 2025 Febri Nahdatun. Built with <span class="text-red-500">♥</span> & Experiment.</p>
+        </div>
+    </section>
+
+    <!-- SECURE MODAL POPUP -->
+    <div id="certModal" class="modal hidden fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm p-4">
+        <div class="modal-content bg-surface w-full max-w-4xl h-[85vh] rounded-2xl border border-slate-700 shadow-2xl overflow-hidden relative flex flex-col">
+            <div class="p-4 border-b border-slate-700 flex justify-between items-center bg-dark z-50 relative">
+                <div><h3 id="modalTitle" class="text-lg font-bold text-white">Certification Title</h3><p id="modalOrg" class="text-slate-400 text-xs">Organization Name</p></div>
+                <button onclick="closeModal()" class="text-slate-400 hover:text-white bg-slate-800 hover:bg-red-500/20 rounded-full w-8 h-8 flex items-center justify-center transition-colors"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="flex-1 bg-slate-900 relative">
+                <div class="absolute top-0 right-0 w-full h-16 z-40 flex justify-end pr-14 pt-2 pointer-events-auto cursor-not-allowed">
+                    <div class="absolute inset-0 bg-transparent"></div>
+                    <div class="relative bg-slate-800/90 backdrop-blur text-xs text-slate-400 px-3 py-1.5 rounded-full border border-slate-700 flex items-center gap-2 shadow-lg h-fit"><i class="fas fa-shield-alt text-green-500"></i><span>Protected View</span></div>
+                </div>
+                <div id="loadingSpinner" class="absolute inset-0 flex items-center justify-center z-30">
+                    <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+                </div>
+                <iframe id="pdfFrame" class="w-full h-full relative z-20" src="" frameborder="0" allow="autoplay" onload="document.getElementById('loadingSpinner').style.display='none'"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPT -->
+    <script>
+        // CONFIGURATION: 
+        const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSXxXA21f-Q3MUn1A7jyrxNiZ-wD9x4RGfwnqMJrVZuKmhKJKluXsqqkNf2dDvnSJVpdnRBBHQCiLeS/pub?gid=1555337350&single=true&output=csv';
+        // PASTE YOUR GAS WEB APP URL HERE:
+        const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbwh_2yMlVoJ67hTco9FaVhDMk6TFqSSUEixRnbY5X3MdZuKRoUsHWiPh5tNFyFBOd8XPA/exec';
+
+        // --- GLOBAL DATA STORE ---
+        let currentDashboardData = null;
+
+        // Modal Logic
+        const modal = document.getElementById('certModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalOrg = document.getElementById('modalOrg');
+        const pdfFrame = document.getElementById('pdfFrame');
+        const loadingSpinner = document.getElementById('loadingSpinner');
+
+        function openCertModal(title, org, fileId) {
+            modalTitle.innerText = title;
+            modalOrg.innerText = org;
+            loadingSpinner.style.display = 'flex';
+            pdfFrame.src = `https://drive.google.com/file/d/${fileId}/preview`;
+            modal.classList.remove('hidden');
+        }
+
+        function closeModal() {
+            modal.classList.add('hidden');
+            setTimeout(() => { pdfFrame.src = ''; }, 300);
+        }
+        modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+
+        // Helper Format Angka
+        function formatLargeNumber(num) {
+            if (num >= 1000000) return '$' + (num / 1000000).toFixed(2) + 'M';
+            return '$' + num.toLocaleString();
+        }
+
+        function cleanNumber(strVal) {
+            if (typeof strVal !== 'string') return Number(strVal) || 0;
+            return parseFloat(strVal.replace(/[^0-9.-]+/g, '')) || 0;
+        }
+
+        // --- AI LOGIC ---
+        async function triggerAIAnalysis() {
+            if (!currentDashboardData) {
+                alert("Please wait for data to load.");
+                return;
+            }
+
+            const aiStatus = document.getElementById('aiStatus');
+            const summaryContent = document.getElementById('summaryContent');
+            const btnIcon = document.querySelector('#aiButton i');
+            
+            // UI Loading State
+            aiStatus.classList.remove('hidden');
+            aiStatus.innerText = "Connecting to Gemini AI...";
+            aiStatus.classList.add('text-purple-400', 'ai-loading');
+            summaryContent.classList.add('opacity-50');
+            btnIcon.classList.remove('fa-sparkles');
+            btnIcon.classList.add('fa-spinner', 'fa-spin');
+
+            try {
+                // Prepare Payload (Send only Summary Stats, not full CSV)
+                const payload = {
+                    sales: '$' + currentDashboardData.kpi.sales.toLocaleString(),
+                    profit: '$' + currentDashboardData.kpi.profit.toLocaleString(),
+                    orders: currentDashboardData.kpi.orders,
+                    margin: currentDashboardData.kpi.discount, // Reusing field for visualization
+                    trend: {
+                        months: currentDashboardData.trend.labels,
+                        profit: currentDashboardData.trend.profit
+                    },
+                    segment: {
+                        labels: currentDashboardData.segment.labels,
+                        data: currentDashboardData.segment.data
+                    }
+                };
+
+                const response = await fetch(GAS_API_URL, {
+                    method: 'POST',
+                    mode: 'cors', // Ensure backend has CORS headers
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) throw new Error("AI Backend Error");
+                const result = await response.json();
+
+                if (result.status === 'success') {
+                    // Update UI with AI Result
+                    summaryContent.innerHTML = `<div class="prose prose-invert prose-sm max-w-none text-slate-300">${result.analysis}</div>`;
+                    aiStatus.innerText = "Generated by Gemini 1.5 Flash";
+                    aiStatus.classList.remove('ai-loading', 'text-purple-400');
+                    aiStatus.classList.add('text-green-400');
+                } else {
+                    throw new Error(result.message || "Unknown error");
+                }
+
+            } catch (error) {
+                console.error("AI Error:", error);
+                aiStatus.innerText = "AI Service Unavailable";
+                aiStatus.classList.remove('ai-loading', 'text-purple-400');
+                aiStatus.classList.add('text-red-400');
+                alert("AI Analysis Failed: " + error.message);
+            } finally {
+                summaryContent.classList.remove('opacity-50');
+                btnIcon.classList.remove('fa-spinner', 'fa-spin');
+                btnIcon.classList.add('fa-sparkles');
+            }
+        }
+
+        // --- CSV DATA FETCH ---
+        async function fetchDashboardData() {
+            try {
+                document.getElementById('status-indicator').innerText = 'Downloading CSV...';
+                document.getElementById('status-indicator').classList.add('text-yellow-400');
+                
+                const response = await fetch(CSV_URL);
+                if (!response.ok) throw new Error("Failed to fetch CSV");
+                const csvText = await response.text();
+                
+                const results = Papa.parse(csvText, {
+                    header: true,
+                    skipEmptyLines: true,
+                    dynamicTyping: false 
+                });
+
+                document.getElementById('status-indicator').innerText = 'Processing...';
+                
+                let totalSales = 0;
+                let totalProfit = 0;
+                let uniqueOrders = new Set();
+                let monthlyStats = Array(12).fill(0).map(() => ({ sales: 0, profit: 0 }));
+                let segmentStats = {};
+
+                results.data.forEach(row => {
+                    const sales = cleanNumber(row['Sales']);
+                    const profit = cleanNumber(row['Profit']);
+                    const orderDate = new Date(row['Order_Date']);
+                    const segment = row['Segment'];
+                    const orderId = row['Order_ID'];
+
+                    totalSales += sales;
+                    totalProfit += profit;
+                    if(orderId) uniqueOrders.add(orderId);
+
+                    if (!isNaN(orderDate.getTime())) {
+                        const month = orderDate.getMonth();
+                        monthlyStats[month].sales += sales;
+                        monthlyStats[month].profit += profit;
+                    }
+
+                    if(segment) {
+                        segmentStats[segment] = (segmentStats[segment] || 0) + sales;
+                    }
+                });
+
+                // Calculate Margin (Profit/Sales)
+                const margin = totalSales ? ((totalProfit / totalSales) * 100).toFixed(1) + '%' : '0%';
+
+                document.getElementById('status-indicator').innerText = 'Connected (Live CSV)';
+                document.getElementById('status-indicator').classList.replace('text-yellow-400', 'text-green-400');
+
+                // Store in Global Variable for AI
+                currentDashboardData = {
+                    kpi: {
+                        sales: Math.round(totalSales),
+                        profit: Math.round(totalProfit),
+                        orders: uniqueOrders.size,
+                        discount: margin // Mapping margin to discount slot for display
+                    },
+                    trend: {
+                        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                        sales: monthlyStats.map(m => Math.round(m.sales)),
+                        profit: monthlyStats.map(m => Math.round(m.profit))
+                    },
+                    segment: {
+                        labels: Object.keys(segmentStats),
+                        data: Object.values(segmentStats).map(v => Math.round(v))
+                    }
+                };
+
+                return currentDashboardData;
+
+            } catch (error) {
+                console.error("Fetch Error:", error);
+                document.getElementById('status-indicator').innerText = 'Connection Failed (Sim)';
+                document.getElementById('status-indicator').classList.replace('text-yellow-400', 'text-red-400');
+                
+                // Fallback Mock Data
+                currentDashboardData = {
+                    kpi: { sales: 2297200, profit: 286397, orders: 9994, discount: "12.4%" },
+                    trend: {
+                        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                        sales: [15000, 18000, 12000, 22000, 28000, 24000, 32000, 29000, 41000, 48000, 52000, 68000],
+                        profit: [2800, 3200, 1500, 4800, 5200, 4900, 6100, 5800, 8200, 9500, 10200, 14500]
+                    },
+                    segment: {
+                        labels: ['Consumer', 'Corporate', 'Home Office'],
+                        data: [50, 30, 20]
+                    }
+                };
+                return currentDashboardData;
+            }
+        }
+
+        function renderDashboard(data) {
+            document.getElementById('kpi-sales').innerText = formatLargeNumber(data.kpi.sales);
+            document.getElementById('kpi-profit').innerText = formatLargeNumber(data.kpi.profit);
+            document.getElementById('kpi-orders').innerText = data.kpi.orders.toLocaleString();
+            document.getElementById('avg-discount').innerText = data.kpi.discount; // Actually Margin now
+
+            const ctxTrend = document.getElementById('trendChart').getContext('2d');
+            new Chart(ctxTrend, {
+                type: 'bar',
+                data: {
+                    labels: data.trend.labels,
+                    datasets: [
+                        { 
+                            label: 'Profit ($)', 
+                            data: data.trend.profit, 
+                            type: 'line', 
+                            borderColor: '#4ade80', 
+                            backgroundColor: 'rgba(74, 222, 128, 0.1)',
+                            borderWidth: 3,
+                            tension: 0.4,
+                            pointRadius: 3,
+                            yAxisID: 'y1'
+                        },
+                        { 
+                            label: 'Sales ($)', 
+                            data: data.trend.sales, 
+                            backgroundColor: '#0ea5e9',
+                            borderRadius: 4,
+                            yAxisID: 'y'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: { mode: 'index', intersect: false },
+                    plugins: { legend: { labels: { color: '#94a3b8' } } },
+                    scales: {
+                        y: { type: 'linear', display: true, position: 'left', grid: { color: '#1e293b' }, ticks: { color: '#94a3b8' } },
+                        y1: { type: 'linear', display: true, position: 'right', grid: { drawOnChartArea: false }, ticks: { color: '#4ade80' } },
+                        x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+                    }
+                }
+            });
+
+            const ctxSeg = document.getElementById('segmentChart').getContext('2d');
+            new Chart(ctxSeg, {
+                type: 'doughnut',
+                data: {
+                    labels: data.segment.labels,
+                    datasets: [{ 
+                        data: data.segment.data, 
+                        backgroundColor: ['#0ea5e9', '#6366f1', '#a855f7'],
+                        borderWidth: 0
+                    }]
+                },
+                options: { responsive: true, cutout: '75%', plugins: { legend: { display: false } } }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            const data = await fetchDashboardData();
+            renderDashboard(data);
+        });
+    </script>
+</body>
+</html>
