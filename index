@@ -61,7 +61,6 @@
             pointer-events: none;
         }
         
-        /* Protection Layer Style */
         .protection-layer {
             position: absolute;
             top: 0;
@@ -72,7 +71,6 @@
             cursor: not-allowed;
         }
 
-        /* AI Loading Pulse */
         @keyframes ai-pulse {
             0%, 100% { opacity: 1; }
             50% { opacity: 0.5; }
@@ -216,7 +214,7 @@
                 <h2 class="text-3xl font-bold text-white mt-2">SuperStore Sales Analytics</h2>
                 <p class="text-slate-400 mt-2 max-w-xl">
                     Dashboard interaktif ini menyajikan wawasan bisnis strategis yang diolah dari dataset penjualan 'SuperStore'. <br>
-                    <span class="text-xs text-slate-500">Note: Visualisasi dioptimalkan untuk performa web (simulasi). Dataset sumber (CSV) tersedia untuk diunduh.</span>
+                    <span class="text-xs text-slate-500">Note: Data diambil LIVE dari Google Sheets CSV Publik.</span>
                 </p>
             </div>
             
@@ -226,7 +224,7 @@
                     <i class="fas fa-sparkles"></i> Ask AI Analyst
                 </button>
                 
-                <!-- CSV Download -->
+                <!-- Source Data Button -->
                 <a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vSXxXA21f-Q3MUn1A7jyrxNiZ-wD9x4RGfwnqMJrVZuKmhKJKluXsqqkNf2dDvnSJVpdnRBBHQCiLeS/pub?gid=1555337350&single=true&output=csv" class="px-5 py-2.5 bg-surface border border-slate-600 rounded-lg text-sm text-white hover:bg-slate-700 transition-colors flex items-center gap-2">
                     <i class="fas fa-file-csv"></i> Source Data
                 </a>
@@ -244,12 +242,12 @@
                 <!-- Default Static Content -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                        <p class="mb-2"><strong class="text-white">1. Profitabilitas Produk:</strong> Kategori <span class="text-blue-400">Teknologi</span> menjadi penyumbang profit terbesar (~50% total profit) meskipun volume penjualannya moderat.</p>
-                        <p><strong class="text-white">2. Tren Musiman:</strong> Data menunjukkan pola peningkatan penjualan signifikan di Q4 (Oktober-Desember), mengindikasikan peluang promosi akhir tahun yang efektif.</p>
+                        <p class="mb-2"><strong class="text-white">1. Profitabilitas Produk:</strong> Kategori <span class="text-blue-400">Teknologi</span> menjadi penyumbang profit terbesar meskipun volume penjualan moderat.</p>
+                        <p><strong class="text-white">2. Tren Musiman:</strong> Data menunjukkan pola peningkatan penjualan signifikan di Q4, mengindikasikan peluang promosi akhir tahun.</p>
                     </div>
                     <div>
-                        <p class="mb-2"><strong class="text-white">3. Analisis Regional:</strong> Wilayah <span class="text-yellow-400">West</span> mendominasi penjualan dan profit, sementara wilayah <span class="text-slate-400">South</span> memerlukan strategi penetrasi pasar baru.</p>
-                        <p><strong class="text-white">4. Rekomendasi:</strong> Kurangi rata-rata diskon pada kategori Furniture di atas 20% untuk menghindari kerugian (negative profit).</p>
+                        <p class="mb-2"><strong class="text-white">3. Analisis Regional:</strong> Wilayah <span class="text-yellow-400">West</span> mendominasi penjualan dan profit, sementara wilayah <span class="text-slate-400">South</span> memerlukan strategi baru.</p>
+                        <p><strong class="text-white">4. Rekomendasi:</strong> Kurangi rata-rata diskon pada kategori Furniture di atas 20% untuk menghindari kerugian.</p>
                     </div>
                 </div>
             </div>
@@ -350,11 +348,6 @@
     <!-- CONTACT SECTION -->
     <section id="contact" class="py-24 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center bg-gradient-to-b from-dark to-slate-900/50">
         <h2 class="text-3xl font-bold text-white mb-6">Let's Connect</h2>
-        <p class="text-slate-400 mb-12 max-w-2xl mx-auto">
-            Ready to optimize your organizational data or streamline your ecosystem? <br>
-            Feel free to reach out via any of these platforms.
-        </p>
-
         <div class="flex flex-wrap justify-center gap-6 mb-16">
             <a href="mailto:febri.nahdatun@gmail.com" class="flex items-center gap-4 bg-surface px-6 py-4 rounded-2xl border border-slate-700 hover:border-primary hover:bg-primary/5 transition-all group w-full sm:w-auto min-w-[280px]">
                 <div class="bg-slate-800 p-3 rounded-xl group-hover:bg-white group-hover:text-black transition-colors text-xl"><i class="fas fa-envelope"></i></div>
@@ -369,9 +362,7 @@
                 <div class="text-left"><p class="text-xs text-slate-500 uppercase tracking-wide font-bold">Telegram</p><p class="text-sm font-bold text-white">Chat Now</p></div>
             </a>
         </div>
-
         <div class="border-t border-slate-800 pt-12">
-            <p class="text-slate-400 text-sm mb-6">Find me on social media</p>
             <div class="flex flex-wrap justify-center gap-6">
                 <a href="https://www.linkedin.com/in/febri-nahdatun-49b437126/" target="_blank" class="flex flex-col items-center gap-2 group">
                     <div class="w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center text-slate-400 group-hover:bg-[#0077b5] group-hover:text-white transition-all text-xl"><i class="fab fa-linkedin-in"></i></div>
@@ -416,9 +407,9 @@
 
     <!-- SCRIPT -->
     <script>
-        // CONFIGURATION: 
+        // CONFIGURATION
         const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSXxXA21f-Q3MUn1A7jyrxNiZ-wD9x4RGfwnqMJrVZuKmhKJKluXsqqkNf2dDvnSJVpdnRBBHQCiLeS/pub?gid=1555337350&single=true&output=csv';
-        // PASTE YOUR GAS WEB APP URL HERE:
+        // Link Apps Script (Hanya untuk fitur AI, tidak untuk render chart)
         const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbwh_2yMlVoJ67hTco9FaVhDMk6TFqSSUEixRnbY5X3MdZuKRoUsHWiPh5tNFyFBOd8XPA/exec';
 
         // --- GLOBAL DATA STORE ---
@@ -434,8 +425,9 @@
         function openCertModal(title, org, fileId) {
             modalTitle.innerText = title;
             modalOrg.innerText = org;
+            const embedUrl = `https://drive.google.com/file/d/${fileId}/preview`;
             loadingSpinner.style.display = 'flex';
-            pdfFrame.src = `https://drive.google.com/file/d/${fileId}/preview`;
+            pdfFrame.src = embedUrl;
             modal.classList.remove('hidden');
         }
 
@@ -447,12 +439,15 @@
 
         // Helper Format Angka
         function formatLargeNumber(num) {
-            if (num >= 1000000) return '$' + (num / 1000000).toFixed(2) + 'M';
+            if (num >= 1000000) return '$' + (num / 1000000).toFixed(1) + 'M'; // Format Jutaan ($1.2M)
+            if (num >= 1000) return '$' + (num / 1000).toFixed(1) + 'k'; // Format Ribuan ($500k)
             return '$' + num.toLocaleString();
         }
 
+        // CSV Helper: Bersihkan Angka dari Format Aneh (contoh: $1,200.50 -> 1200.50)
         function cleanNumber(strVal) {
             if (typeof strVal !== 'string') return Number(strVal) || 0;
+            // Hapus semua karakter kecuali angka, titik, minus
             return parseFloat(strVal.replace(/[^0-9.-]+/g, '')) || 0;
         }
 
@@ -524,7 +519,7 @@
             }
         }
 
-        // --- CSV DATA FETCH ---
+        // --- FETCH DATA FROM CSV DIRECTLY ---
         async function fetchDashboardData() {
             try {
                 document.getElementById('status-indicator').innerText = 'Downloading CSV...';
@@ -534,6 +529,7 @@
                 if (!response.ok) throw new Error("Failed to fetch CSV");
                 const csvText = await response.text();
                 
+                // Parse CSV using PapaParse
                 const results = Papa.parse(csvText, {
                     header: true,
                     skipEmptyLines: true,
@@ -603,7 +599,7 @@
                 document.getElementById('status-indicator').classList.replace('text-yellow-400', 'text-red-400');
                 
                 // Fallback Mock Data
-                currentDashboardData = {
+                return {
                     kpi: { sales: 2297200, profit: 286397, orders: 9994, discount: "12.4%" },
                     trend: {
                         labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
@@ -615,26 +611,28 @@
                         data: [50, 30, 20]
                     }
                 };
-                return currentDashboardData;
             }
         }
 
+        // --- RENDER CHARTS ---
         function renderDashboard(data) {
+            // Update KPIs with safe formatting
             document.getElementById('kpi-sales').innerText = formatLargeNumber(data.kpi.sales);
             document.getElementById('kpi-profit').innerText = formatLargeNumber(data.kpi.profit);
             document.getElementById('kpi-orders').innerText = data.kpi.orders.toLocaleString();
             document.getElementById('avg-discount').innerText = data.kpi.discount; // Actually Margin now
 
+            // Render Mixed Chart (Visual Restore from Index.txt)
             const ctxTrend = document.getElementById('trendChart').getContext('2d');
             new Chart(ctxTrend, {
-                type: 'bar',
+                type: 'bar', // Default Base
                 data: {
                     labels: data.trend.labels,
                     datasets: [
                         { 
                             label: 'Profit ($)', 
                             data: data.trend.profit, 
-                            type: 'line', 
+                            type: 'line', // Override to Line
                             borderColor: '#4ade80', 
                             backgroundColor: 'rgba(74, 222, 128, 0.1)',
                             borderWidth: 3,
@@ -657,8 +655,16 @@
                     interaction: { mode: 'index', intersect: false },
                     plugins: { legend: { labels: { color: '#94a3b8' } } },
                     scales: {
-                        y: { type: 'linear', display: true, position: 'left', grid: { color: '#1e293b' }, ticks: { color: '#94a3b8' } },
-                        y1: { type: 'linear', display: true, position: 'right', grid: { drawOnChartArea: false }, ticks: { color: '#4ade80' } },
+                        y: { 
+                            type: 'linear', display: true, position: 'left', 
+                            grid: { color: '#1e293b' },
+                            ticks: { color: '#94a3b8', callback: function(value) { return '$' + value/1000 + 'k'; } } 
+                        },
+                        y1: { 
+                            type: 'linear', display: true, position: 'right', 
+                            grid: { drawOnChartArea: false }, 
+                            ticks: { color: '#4ade80' } 
+                        },
                         x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
                     }
                 }
