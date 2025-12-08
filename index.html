@@ -70,14 +70,6 @@
             z-index: 50;
             cursor: not-allowed;
         }
-
-        @keyframes ai-pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-        .ai-loading {
-            animation: ai-pulse 1.5s infinite;
-        }
     </style>
 </head>
 <body class="bg-dark text-slate-300 font-sans antialiased overflow-x-hidden">
@@ -211,9 +203,7 @@
             </div>
             
             <div class="flex gap-3">
-                <button onclick="triggerAIAnalysis()" id="aiButton" class="px-5 py-2.5 bg-purple-600 border border-purple-500 rounded-lg text-sm text-white hover:bg-purple-700 transition-colors flex items-center gap-2 shadow-lg shadow-purple-500/20">
-                    <i class="fas fa-sparkles"></i> Ask AI Analyst
-                </button>
+                <!-- Source Data Button Only -->
                 <a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vSXxXA21f-Q3MUn1A7jyrxNiZ-wD9x4RGfwnqMJrVZuKmhKJKluXsqqkNf2dDvnSJVpdnRBBHQCiLeS/pub?gid=1555337350&single=true&output=csv" class="px-5 py-2.5 bg-surface border border-slate-600 rounded-lg text-sm text-white hover:bg-slate-700 transition-colors flex items-center gap-2">
                     <i class="fas fa-file-csv"></i> Source Data
                 </a>
@@ -224,10 +214,8 @@
         <div class="bg-surface rounded-2xl border-l-4 border-primary p-6 mb-8 shadow-lg relative overflow-hidden">
             <h3 class="text-lg font-bold text-white mb-3 flex items-center gap-2">
                 <i class="fas fa-file-alt text-primary"></i> Executive Summary
-                <span id="aiStatus" class="text-xs font-normal text-slate-500 ml-2 hidden"></span>
             </h3>
             <div id="summaryContent" class="text-sm text-slate-300 leading-relaxed">
-                <!-- Default Static Content -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <p class="mb-2"><strong class="text-white">1. Profitabilitas Produk:</strong> Kategori <span class="text-blue-400">Teknologi</span> menjadi penyumbang profit terbesar meskipun volume penjualan moderat.</p>
@@ -386,13 +374,8 @@
 
     <!-- SCRIPT -->
     <script>
-        // CONFIGURATION: DIRECT CSV LINK (Google Sheets Publish)
+        // CONFIGURATION
         const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSXxXA21f-Q3MUn1A7jyrxNiZ-wD9x4RGfwnqMJrVZuKmhKJKluXsqqkNf2dDvnSJVpdnRBBHQCiLeS/pub?gid=1555337350&single=true&output=csv';
-        // PASTE YOUR GAS WEB APP URL HERE:
-        const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbxYkcma2WpuIEL8I7D4163wwWj2u8pspyk601Z_Tn6L6rwTs2jXq6XZN9BvU0O1mdQm/exec';
-
-        // --- GLOBAL DATA STORE ---
-        let currentDashboardData = null;
 
         // Modal Logic
         const modal = document.getElementById('certModal');
@@ -404,8 +387,9 @@
         function openCertModal(title, org, fileId) {
             modalTitle.innerText = title;
             modalOrg.innerText = org;
+            const embedUrl = `https://drive.google.com/file/d/${fileId}/preview`;
             loadingSpinner.style.display = 'flex';
-            pdfFrame.src = `https://drive.google.com/file/d/${fileId}/preview`;
+            pdfFrame.src = embedUrl;
             modal.classList.remove('hidden');
         }
 
@@ -427,74 +411,6 @@
             if (typeof strVal !== 'string') return Number(strVal) || 0;
             // Hapus semua karakter kecuali angka, titik, minus
             return parseFloat(strVal.replace(/[^0-9.-]+/g, '')) || 0;
-        }
-
-        // --- AI LOGIC ---
-        async function triggerAIAnalysis() {
-            if (!currentDashboardData) {
-                alert("Please wait for data to load.");
-                return;
-            }
-
-            const aiStatus = document.getElementById('aiStatus');
-            const summaryContent = document.getElementById('summaryContent');
-            const btnIcon = document.querySelector('#aiButton i');
-            
-            // UI Loading State
-            aiStatus.classList.remove('hidden');
-            aiStatus.innerText = "Connecting to Gemini AI...";
-            aiStatus.classList.add('text-purple-400', 'ai-loading');
-            summaryContent.classList.add('opacity-50');
-            btnIcon.classList.remove('fa-sparkles');
-            btnIcon.classList.add('fa-spinner', 'fa-spin');
-
-            try {
-                // Send Summary Data Only (Efficient)
-                const payload = {
-                    sales: '$' + currentDashboardData.kpi.sales.toLocaleString(),
-                    profit: '$' + currentDashboardData.kpi.profit.toLocaleString(),
-                    orders: currentDashboardData.kpi.orders,
-                    margin: currentDashboardData.kpi.discount, // Reusing field for visualization
-                    trend: {
-                        months: currentDashboardData.trend.labels,
-                        profit: currentDashboardData.trend.profit
-                    },
-                    segment: {
-                        labels: currentDashboardData.segment.labels,
-                        data: currentDashboardData.segment.data
-                    }
-                };
-
-                const response = await fetch(GAS_API_URL, {
-                    method: 'POST',
-                    mode: 'cors', // Ensure backend has CORS headers
-                    body: JSON.stringify(payload)
-                });
-
-                if (!response.ok) throw new Error("AI Backend Error");
-                const result = await response.json();
-
-                if (result.status === 'success') {
-                    // Update UI with AI Result
-                    summaryContent.innerHTML = `<div class="prose prose-invert prose-sm max-w-none text-slate-300">${result.analysis}</div>`;
-                    aiStatus.innerText = "Generated by Gemini 1.5 Flash";
-                    aiStatus.classList.remove('ai-loading', 'text-purple-400');
-                    aiStatus.classList.add('text-green-400');
-                } else {
-                    throw new Error(result.message || "Unknown error");
-                }
-
-            } catch (error) {
-                console.error("AI Error:", error);
-                aiStatus.innerText = "AI Service Unavailable";
-                aiStatus.classList.remove('ai-loading', 'text-purple-400');
-                aiStatus.classList.add('text-red-400');
-                alert("AI Analysis Failed: " + error.message);
-            } finally {
-                summaryContent.classList.remove('opacity-50');
-                btnIcon.classList.remove('fa-spinner', 'fa-spin');
-                btnIcon.classList.add('fa-sparkles');
-            }
         }
 
         // --- FETCH DATA FROM CSV DIRECTLY ---
@@ -550,8 +466,8 @@
                 document.getElementById('status-indicator').innerText = 'Connected (Live CSV)';
                 document.getElementById('status-indicator').classList.replace('text-yellow-400', 'text-green-400');
 
-                // Store in Global Variable for AI
-                currentDashboardData = {
+                // Return Data Object
+                return {
                     kpi: {
                         sales: Math.round(totalSales),
                         profit: Math.round(totalProfit),
@@ -568,8 +484,6 @@
                         data: Object.values(segmentStats).map(v => Math.round(v))
                     }
                 };
-
-                return currentDashboardData;
 
             } catch (error) {
                 console.error("Fetch Error:", error);
