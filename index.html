@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Febri Nahdatun | Enterprise Systems & Data Analyst</title>
     
-    <!-- FAVICON (Foto Profil) -->
+    <!-- FAVICON -->
     <link rel="icon" href="https://lh3.googleusercontent.com/d/1T2Q8QHpeETmrkz6SS5T1CrZilVGWFAJs=w100" type="image/png">
     
     <!-- Tailwind CSS -->
@@ -17,7 +17,7 @@
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <!-- PapaParse (Untuk membaca CSV dengan mudah) -->
+    <!-- PapaParse (Untuk membaca CSV) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 
     <!-- Google Fonts -->
@@ -169,33 +169,25 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <!-- Microsoft -->
                 <div class="bg-dark p-8 rounded-2xl border border-slate-800 hover:border-microsoft/50 transition-all group">
-                    <div class="w-14 h-14 bg-microsoft/10 rounded-xl flex items-center justify-center text-microsoft text-3xl mb-6 group-hover:scale-110 transition-transform">
-                        <i class="fab fa-windows"></i>
-                    </div>
+                    <div class="w-14 h-14 bg-microsoft/10 rounded-xl flex items-center justify-center text-microsoft text-3xl mb-6 group-hover:scale-110 transition-transform"><i class="fab fa-windows"></i></div>
                     <h3 class="text-xl font-bold text-white mb-4">Microsoft Ecosystem</h3>
                     <ul class="space-y-2 text-sm text-slate-400">
                         <li class="flex items-center"><i class="fas fa-check-circle text-microsoft mr-2"></i> Microsoft 365 Admin Center</li>
                         <li class="flex items-center"><i class="fas fa-check-circle text-microsoft mr-2"></i> Azure Entra ID (Identity)</li>
                     </ul>
                 </div>
-
                 <!-- Google -->
                 <div class="bg-dark p-8 rounded-2xl border border-slate-800 hover:border-google/50 transition-all group">
-                    <div class="w-14 h-14 bg-google/10 rounded-xl flex items-center justify-center text-google text-3xl mb-6 group-hover:scale-110 transition-transform">
-                        <i class="fab fa-google"></i>
-                    </div>
+                    <div class="w-14 h-14 bg-google/10 rounded-xl flex items-center justify-center text-google text-3xl mb-6 group-hover:scale-110 transition-transform"><i class="fab fa-google"></i></div>
                     <h3 class="text-xl font-bold text-white mb-4">Google Workspace</h3>
                     <ul class="space-y-2 text-sm text-slate-400">
                         <li class="flex items-center"><i class="fas fa-check-circle text-google mr-2"></i> Google Admin Console</li>
                         <li class="flex items-center"><i class="fas fa-check-circle text-google mr-2"></i> Apps Script Automation</li>
                     </ul>
                 </div>
-
                 <!-- Data & AI -->
                 <div class="bg-dark p-8 rounded-2xl border border-slate-800 hover:border-purple-500/50 transition-all group">
-                    <div class="w-14 h-14 bg-purple-500/10 rounded-xl flex items-center justify-center text-purple-400 text-3xl mb-6 group-hover:scale-110 transition-transform">
-                        <i class="fas fa-brain"></i>
-                    </div>
+                    <div class="w-14 h-14 bg-purple-500/10 rounded-xl flex items-center justify-center text-purple-400 text-3xl mb-6 group-hover:scale-110 transition-transform"><i class="fas fa-brain"></i></div>
                     <h3 class="text-xl font-bold text-white mb-4">Data Intelligence & AI</h3>
                     <ul class="space-y-2 text-sm text-slate-400">
                         <li class="flex items-center"><i class="fas fa-check-circle text-purple-400 mr-2"></i> Python & SQL</li>
@@ -219,25 +211,21 @@
             </div>
             
             <div class="flex gap-3">
-                <!-- AI Button -->
                 <button onclick="triggerAIAnalysis()" id="aiButton" class="px-5 py-2.5 bg-purple-600 border border-purple-500 rounded-lg text-sm text-white hover:bg-purple-700 transition-colors flex items-center gap-2 shadow-lg shadow-purple-500/20">
                     <i class="fas fa-sparkles"></i> Ask AI Analyst
                 </button>
-                
-                <!-- Source Data Button -->
                 <a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vSXxXA21f-Q3MUn1A7jyrxNiZ-wD9x4RGfwnqMJrVZuKmhKJKluXsqqkNf2dDvnSJVpdnRBBHQCiLeS/pub?gid=1555337350&single=true&output=csv" class="px-5 py-2.5 bg-surface border border-slate-600 rounded-lg text-sm text-white hover:bg-slate-700 transition-colors flex items-center gap-2">
                     <i class="fas fa-file-csv"></i> Source Data
                 </a>
             </div>
         </div>
 
-        <!-- Executive Summary Panel (AI Target) -->
+        <!-- Executive Summary Panel -->
         <div class="bg-surface rounded-2xl border-l-4 border-primary p-6 mb-8 shadow-lg relative overflow-hidden">
             <h3 class="text-lg font-bold text-white mb-3 flex items-center gap-2">
                 <i class="fas fa-file-alt text-primary"></i> Executive Summary
                 <span id="aiStatus" class="text-xs font-normal text-slate-500 ml-2 hidden"></span>
             </h3>
-            
             <div id="summaryContent" class="text-sm text-slate-300 leading-relaxed">
                 <!-- Default Static Content -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -306,35 +294,26 @@
     <section id="certifications" class="py-24 bg-surface/50 border-t border-slate-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 class="text-3xl font-bold text-white mb-12 text-center">Professional Certifications</h2>
-            
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- BNSP -->
+                <!-- Cert Cards -->
                 <div onclick="openCertModal('BNSP Certified', 'Badan Nasional Sertifikasi Profesi', '1cG7mouvxEbI7HjEd2Mih3IE00M7ZVK1x')" class="bg-dark p-6 rounded-2xl border border-slate-800 cursor-pointer hover:border-primary transition-all hover:-translate-y-2 group">
-                    <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4 overflow-hidden border-2 border-slate-700 group-hover:border-primary transition-colors">
-                         <img src="https://www.hpi.or.id/wp-content/uploads/2021/08/Logo-BNSP.png" alt="BNSP" class="w-full h-full object-cover rounded-full p-0.5">
-                    </div>
+                    <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4 overflow-hidden border-2 border-slate-700 group-hover:border-primary transition-colors"><img src="https://www.hpi.or.id/wp-content/uploads/2021/08/Logo-BNSP.png" alt="BNSP" class="w-full h-full object-cover rounded-full p-0.5"></div>
                     <h4 class="text-white font-bold text-center group-hover:text-primary transition-colors">BNSP Certified</h4>
                     <p class="text-slate-500 text-xs text-center mt-2">Amil Zakat Qualification</p>
                     <div class="mt-4 text-center"><span class="text-xs bg-slate-800 text-slate-300 px-3 py-1 rounded-full group-hover:bg-primary group-hover:text-white transition-colors"><i class="fas fa-eye mr-1"></i> View Document</span></div>
                 </div>
-                
-                <!-- Dicoding -->
                 <div onclick="openCertModal('Dicoding AI', 'Dicoding Indonesia', '1GEeSOrNDvOCIGP2QUX8lAVlDTJIgwOrF')" class="bg-dark p-6 rounded-2xl border border-slate-800 cursor-pointer hover:border-primary transition-all hover:-translate-y-2 group">
                     <div class="w-16 h-16 bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl text-white"><i class="fas fa-robot"></i></div>
                     <h4 class="text-white font-bold text-center group-hover:text-primary transition-colors">Dicoding AI</h4>
                     <p class="text-slate-500 text-xs text-center mt-2">Artificial Intelligence Basic</p>
                     <div class="mt-4 text-center"><span class="text-xs bg-slate-800 text-slate-300 px-3 py-1 rounded-full group-hover:bg-primary group-hover:text-white transition-colors"><i class="fas fa-eye mr-1"></i> View Document</span></div>
                 </div>
-
-                <!-- DQLab -->
                 <div onclick="openCertModal('DQLab Analyst', 'DQLab', '1TLdVFDWCmFs4yR_sVtpEFPSQWIHkIict')" class="bg-dark p-6 rounded-2xl border border-slate-800 cursor-pointer hover:border-primary transition-all hover:-translate-y-2 group">
                     <div class="w-16 h-16 bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl text-white"><i class="fas fa-chart-bar"></i></div>
                     <h4 class="text-white font-bold text-center group-hover:text-primary transition-colors">DQLab Analyst</h4>
                     <p class="text-slate-500 text-xs text-center mt-2">Data Analyst Career Track</p>
                     <div class="mt-4 text-center"><span class="text-xs bg-slate-800 text-slate-300 px-3 py-1 rounded-full group-hover:bg-primary group-hover:text-white transition-colors"><i class="fas fa-eye mr-1"></i> View Document</span></div>
                 </div>
-
-                <!-- Taalenta -->
                 <div onclick="openCertModal('Taalenta AI', 'Taalenta Digital', '1cn6_8zBFR9ieeSMKpixVpprTxbJ6CLBg')" class="bg-dark p-6 rounded-2xl border border-slate-800 cursor-pointer hover:border-primary transition-all hover:-translate-y-2 group">
                     <div class="w-16 h-16 bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl text-white"><i class="fas fa-brain"></i></div>
                     <h4 class="text-white font-bold text-center group-hover:text-primary transition-colors">Taalenta AI</h4>
@@ -407,9 +386,9 @@
 
     <!-- SCRIPT -->
     <script>
-        // CONFIGURATION
+        // CONFIGURATION: DIRECT CSV LINK (Google Sheets Publish)
         const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSXxXA21f-Q3MUn1A7jyrxNiZ-wD9x4RGfwnqMJrVZuKmhKJKluXsqqkNf2dDvnSJVpdnRBBHQCiLeS/pub?gid=1555337350&single=true&output=csv';
-        // Link Apps Script (Hanya untuk fitur AI, tidak untuk render chart)
+        // PASTE YOUR GAS WEB APP URL HERE:
         const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbwh_2yMlVoJ67hTco9FaVhDMk6TFqSSUEixRnbY5X3MdZuKRoUsHWiPh5tNFyFBOd8XPA/exec';
 
         // --- GLOBAL DATA STORE ---
@@ -425,9 +404,8 @@
         function openCertModal(title, org, fileId) {
             modalTitle.innerText = title;
             modalOrg.innerText = org;
-            const embedUrl = `https://drive.google.com/file/d/${fileId}/preview`;
             loadingSpinner.style.display = 'flex';
-            pdfFrame.src = embedUrl;
+            pdfFrame.src = `https://drive.google.com/file/d/${fileId}/preview`;
             modal.classList.remove('hidden');
         }
 
@@ -471,7 +449,7 @@
             btnIcon.classList.add('fa-spinner', 'fa-spin');
 
             try {
-                // Prepare Payload (Send only Summary Stats, not full CSV)
+                // Send Summary Data Only (Efficient)
                 const payload = {
                     sales: '$' + currentDashboardData.kpi.sales.toLocaleString(),
                     profit: '$' + currentDashboardData.kpi.profit.toLocaleString(),
