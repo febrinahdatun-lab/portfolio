@@ -33,26 +33,16 @@
                         cv: ['Noto Sans', 'sans-serif'], // Font khusus CV ATS
                     },
                     colors: {
-                        // PREMIUM THEME (Violet & Sky Blue)
-                        primary: '#8B5CF6',   // Violet 500
-                        secondary: '#0EA5E9', // Sky 500
-                        
-                        dark: '#0F172A',      // Slate 900
-                        surface: '#1E293B',   // Slate 800
-                        surfaceHover: '#334155', // Slate 700
-                        
-                        microsoft: '#00a4ef', 
-                        google: '#ea4335',    
+                        primary: '#8B5CF6', secondary: '#0EA5E9',
+                        dark: '#0F172A', surface: '#1E293B', surfaceHover: '#334155',
+                        microsoft: '#00a4ef', google: '#ea4335',
                     },
                     animation: {
                         'float': 'float 6s ease-in-out infinite',
                         'spin-slow': 'spin 15s linear infinite', 
                     },
                     keyframes: {
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-20px)' },
-                        }
+                        float: { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-20px)' } }
                     }
                 }
             }
@@ -68,50 +58,24 @@
         
         .gradient-text {
             background: linear-gradient(to right, #8B5CF6, #0EA5E9);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
         
-        .modal.hidden {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-        }
+        .modal.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
         
         /* CUSTOM CURSOR */
         body { cursor: none; }
-        .cursor-dot {
-            width: 8px; height: 8px; background-color: #8B5CF6;
-            border-radius: 50%; position: fixed; top: 0; left: 0;
-            transform: translate(-50%, -50%); z-index: 9999; pointer-events: none;
-        }
-        .cursor-outline {
-            width: 40px; height: 40px; border: 2px solid rgba(139, 92, 246, 0.5);
-            border-radius: 50%; position: fixed; top: 0; left: 0;
-            transform: translate(-50%, -50%); z-index: 9998; pointer-events: none;
-            transition: width 0.2s, height 0.2s, background-color 0.2s, border-color 0.2s;
-        }
-        body.hovering .cursor-outline {
-            width: 60px; height: 60px;
-            background-color: rgba(139, 92, 246, 0.1); border-color: #0EA5E9;
-        }
-        @media (max-width: 768px) {
-            body { cursor: auto; }
-            .cursor-dot, .cursor-outline { display: none; }
-        }
+        .cursor-dot { width: 8px; height: 8px; background-color: #8B5CF6; border-radius: 50%; position: fixed; top: 0; left: 0; transform: translate(-50%, -50%); z-index: 9999; pointer-events: none; }
+        .cursor-outline { width: 40px; height: 40px; border: 2px solid rgba(139, 92, 246, 0.5); border-radius: 50%; position: fixed; top: 0; left: 0; transform: translate(-50%, -50%); z-index: 9998; pointer-events: none; transition: width 0.2s, height 0.2s, background-color 0.2s, border-color 0.2s; }
+        body.hovering .cursor-outline { width: 60px; height: 60px; background-color: rgba(139, 92, 246, 0.1); border-color: #0EA5E9; }
+        @media (max-width: 768px) { body { cursor: auto; } .cursor-dot, .cursor-outline { display: none; } }
         
-        #scrollToTopBtn {
-            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
-        }
+        #scrollToTopBtn { transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out; }
         #scrollToTopBtn.show { opacity: 1; visibility: visible; }
 
         /* ELECTRIC BORDER */
         .electric-container { position: relative; z-index: 1; }
-        .electric-container::before {
-            content: ''; position: absolute; inset: -4px; border-radius: 50%;
-            background: conic-gradient(from 0deg, transparent 0%, #8B5CF6 20%, transparent 40%, #0EA5E9 60%, transparent 80%, #8B5CF6 100%);
-            filter: blur(12px); animation: spin 4s linear infinite; z-index: -1;
-        }
+        .electric-container::before { content: ''; position: absolute; inset: -4px; border-radius: 50%; background: conic-gradient(from 0deg, transparent 0%, #8B5CF6 20%, transparent 40%, #0EA5E9 60%, transparent 80%, #8B5CF6 100%); filter: blur(12px); animation: spin 4s linear infinite; z-index: -1; }
         .electric-container img { position: relative; z-index: 2; border: 3px solid #1E293B; }
 
         /* --- PRINT STYLES FOR CV --- */
@@ -123,6 +87,8 @@
             .text-gray-700 { color: #374151 !important; }
             .text-gray-800 { color: #1f2937 !important; }
             .border-black { border-color: #000 !important; }
+            /* Ensure links are readable */
+            a { text-decoration: none; color: black !important; }
         }
     </style>
 </head>
@@ -197,9 +163,8 @@
                     </div>
                 </div>
 
-                <!-- Profile Image & Badges (ADJUSTED POSITIONS AGAIN) -->
+                <!-- Profile Image & Badges -->
                 <div class="relative flex justify-center lg:justify-end order-1 lg:order-2 my-12 lg:my-0">
-                    <!-- Adjusted size slightly smaller on mobile to fit badges -->
                     <div class="relative w-[280px] h-[280px] md:w-[380px] md:h-[380px] animate-float">
                         <div class="absolute inset-0 border-2 border-primary/20 rounded-full scale-110"></div>
                         <div class="absolute inset-0 border border-secondary/20 rounded-full scale-125 border-dashed animate-spin-slow"></div>
@@ -208,10 +173,10 @@
                             <img src="https://lh3.googleusercontent.com/d/1T2Q8QHpeETmrkz6SS5T1CrZilVGWFAJs=w800" alt="Febri Nahdatun" class="w-full h-full object-cover rounded-full">
                         </div>
                         
-                        <!-- Floating Badges (POSITIONS MOVED FURTHER OUT) -->
+                        <!-- Floating Badges (ADJUSTED POSITIONS AGAIN) -->
                         
                         <!-- 1. Google (Top Left - Moved further left & up) -->
-                        <div class="absolute -top-4 -left-12 md:-top-6 md:-left-28 bg-surface/95 backdrop-blur-md p-3 md:p-4 rounded-xl border border-gray-700 shadow-xl flex items-center gap-3 animate-bounce hover-trigger hover:border-google/50 transition-all cursor-default z-30" style="animation-duration: 4s;">
+                        <div class="absolute -top-4 -left-20 md:-top-8 md:-left-32 bg-surface/95 backdrop-blur-md p-3 md:p-4 rounded-xl border border-gray-700 shadow-xl flex items-center gap-3 animate-bounce hover-trigger hover:border-google/50 transition-all cursor-default z-30" style="animation-duration: 4s;">
                             <div class="bg-blue-500/20 p-2 rounded-lg text-google text-lg md:text-xl"><i class="fab fa-google"></i></div>
                             <div>
                                 <p class="text-[10px] text-gray-400 uppercase tracking-wider font-bold">Expert</p>
@@ -220,7 +185,7 @@
                         </div>
 
                         <!-- 2. Microsoft (Top Right - Moved further right & up) -->
-                        <div class="absolute -top-4 -right-12 md:-top-6 md:-right-24 bg-surface/95 backdrop-blur-md p-3 md:p-4 rounded-xl border border-gray-700 shadow-xl flex items-center gap-3 animate-bounce hover-trigger hover:border-microsoft/50 transition-all cursor-default z-30" style="animation-duration: 5s; animation-delay: 1s;">
+                        <div class="absolute -top-4 -right-20 md:-top-8 md:-right-28 bg-surface/95 backdrop-blur-md p-3 md:p-4 rounded-xl border border-gray-700 shadow-xl flex items-center gap-3 animate-bounce hover-trigger hover:border-microsoft/50 transition-all cursor-default z-30" style="animation-duration: 5s; animation-delay: 1s;">
                             <div class="bg-blue-400/20 p-2 rounded-lg text-microsoft text-lg md:text-xl"><i class="fab fa-microsoft"></i></div>
                             <div>
                                 <p class="text-[10px] text-gray-400 uppercase tracking-wider font-bold">Specialist</p>
@@ -229,7 +194,7 @@
                         </div>
 
                         <!-- 3. AI (Bottom Left - Moved further left & down) -->
-                        <div class="absolute -bottom-4 -left-12 md:-bottom-6 md:-left-24 bg-surface/95 backdrop-blur-md p-3 md:p-4 rounded-xl border border-gray-700 shadow-xl flex items-center gap-3 animate-bounce hover-trigger hover:border-green-500/50 transition-all cursor-default z-30" style="animation-duration: 4.5s; animation-delay: 0.5s;">
+                        <div class="absolute bottom-10 -left-20 md:bottom-12 md:-left-28 bg-surface/95 backdrop-blur-md p-3 md:p-4 rounded-xl border border-gray-700 shadow-xl flex items-center gap-3 animate-bounce hover-trigger hover:border-green-500/50 transition-all cursor-default z-30" style="animation-duration: 4.5s; animation-delay: 0.5s;">
                             <div class="bg-green-500/20 p-2 rounded-lg text-green-400 text-lg md:text-xl"><i class="fas fa-robot"></i></div>
                             <div>
                                 <p class="text-[10px] text-gray-400 uppercase tracking-wider font-bold">Innovator</p>
@@ -238,7 +203,7 @@
                         </div>
 
                         <!-- 4. Data (Bottom Right - Moved further right & down) -->
-                        <div class="absolute -bottom-4 -right-12 md:-bottom-6 md:-right-24 bg-surface/95 backdrop-blur-md p-3 md:p-4 rounded-xl border border-gray-700 shadow-xl flex items-center gap-3 animate-bounce hover-trigger hover:border-primary/50 transition-all cursor-default z-30" style="animation-duration: 6s; animation-delay: 1.5s;">
+                        <div class="absolute bottom-10 -right-20 md:bottom-12 md:-right-24 bg-surface/95 backdrop-blur-md p-3 md:p-4 rounded-xl border border-gray-700 shadow-xl flex items-center gap-3 animate-bounce hover-trigger hover:border-primary/50 transition-all cursor-default z-30" style="animation-duration: 6s; animation-delay: 1.5s;">
                             <div class="bg-primary/20 p-2 rounded-lg text-primary text-lg md:text-xl"><i class="fas fa-chart-line"></i></div>
                             <div>
                                 <p class="text-[10px] text-gray-400 uppercase tracking-wider font-bold">Analyst</p>
@@ -331,33 +296,38 @@
         </div>
     </section>
 
-    <!-- UNIFIED MODAL POPUP -->
+    <!-- UNIFIED MODAL POPUP (Handles PDF & Native ATS CV) -->
     <div id="certModal" class="modal hidden fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm p-4">
         <div class="modal-content bg-surface w-full max-w-4xl h-[85vh] rounded-2xl border border-gray-700 shadow-2xl overflow-hidden relative flex flex-col">
             <!-- Header -->
             <div class="p-4 border-b border-gray-700 flex justify-between items-center bg-dark z-50 relative">
                 <div><h3 id="modalTitle" class="text-lg font-bold text-white">Document Viewer</h3><p id="modalOrg" class="text-gray-400 text-xs">Preview Mode</p></div>
+                
                 <!-- Action Buttons -->
                 <div class="flex gap-3">
-                    <button id="downloadCvBtn" onclick="printCV()" class="hidden text-xs bg-primary hover:bg-violet-600 text-white px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1"><i class="fas fa-download"></i> Save as PDF</button>
+                    <button id="downloadCvBtn" onclick="printCV()" class="hidden text-xs bg-primary hover:bg-violet-600 text-white px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1">
+                        <i class="fas fa-download"></i> Save as PDF
+                    </button>
                     <button onclick="closeModal()" class="hover-trigger text-gray-400 hover:text-white bg-slate-800 hover:bg-red-500/20 rounded-full w-8 h-8 flex items-center justify-center transition-colors"><i class="fas fa-times"></i></button>
                 </div>
             </div>
-            <!-- Content -->
+
+            <!-- Content Area -->
             <div class="flex-1 bg-white relative overflow-auto custom-scrollbar-light">
                 
                 <!-- 1. Shield Layer (PROTECTS PDF DOWNLOAD) -->
                 <div id="pdfShield" class="absolute top-0 right-0 w-full h-16 z-40 flex justify-end pr-14 pt-2 pointer-events-auto cursor-not-allowed hidden">
                     <div class="absolute inset-0 bg-transparent"></div>
                     <div class="relative bg-slate-800/90 backdrop-blur text-xs text-slate-400 px-3 py-1.5 rounded-full border border-slate-700 flex items-center gap-2 shadow-lg h-fit">
-                        <i class="fas fa-shield-alt text-green-500"></i><span>Protected View</span>
+                        <i class="fas fa-shield-alt text-green-500"></i>
+                        <span>Protected View</span>
                     </div>
                 </div>
 
                 <!-- 2. Iframe for Google Drive PDF (Certificates) -->
                 <iframe id="pdfFrame" class="w-full h-full relative z-20 hidden" src="" frameborder="0"></iframe>
 
-                <!-- 3. NATIVE ATS CV HTML (Hidden by default) -->
+                <!-- 3. NATIVE ATS CV HTML (Hidden by default, shown via JS) -->
                 <div id="atsCvContent" class="hidden w-full max-w-[21cm] mx-auto bg-white text-black p-8 sm:p-12 text-left font-cv text-sm leading-snug">
                     <!-- HEADER -->
                     <div class="text-center border-b-2 border-black pb-4 mb-4">
@@ -369,15 +339,24 @@
                     <!-- SUMMARY -->
                     <div class="mb-4">
                         <h2 class="text-base font-bold uppercase border-b border-black mb-2 tracking-wider">Professional Summary</h2>
-                        <p class="text-justify text-gray-800">Tech & Data Specialist with over 10 years of experience in the non-profit and Islamic philanthropy sector, specializing in Knowledge Management Systems (KMS), Data Analytics, and Enterprise Automation. Proven track record in transforming scattered organizational data into strategic intelligence using Google & Microsoft ecosystems. Expert in bridging the gap between high-level management strategy and technical execution, implementing AI-driven solutions for document analysis, and ensuring data integrity for critical decision-making.</p>
+                        <p class="text-justify text-gray-800">
+                            Tech & Data Specialist with over 10 years of experience in the non-profit and Islamic philanthropy sector, specializing in Knowledge Management Systems (KMS), Data Analytics, and Enterprise Automation. Proven track record in transforming scattered organizational data into strategic intelligence using Google & Microsoft ecosystems. Expert in bridging the gap between high-level management strategy and technical execution, implementing AI-driven solutions for document analysis, and ensuring data integrity for critical decision-making.
+                        </p>
                     </div>
 
                     <!-- EXPERIENCE -->
                     <div class="mb-4">
                         <h2 class="text-base font-bold uppercase border-b border-black mb-2 tracking-wider">Experience</h2>
+                        
                         <div class="mb-3">
-                            <div class="flex justify-between font-bold"><span>Knowledge Management Systems (KMS) Specialist</span><span>Nov 2023 -- Present</span></div>
-                            <div class="flex justify-between italic text-gray-700 mb-1"><span>YBM BRILiaN</span><span>Jakarta Pusat, Indonesia</span></div>
+                            <div class="flex justify-between font-bold">
+                                <span>Knowledge Management Systems (KMS) Specialist</span>
+                                <span>Nov 2023 -- Present</span>
+                            </div>
+                            <div class="flex justify-between italic text-gray-700 mb-1">
+                                <span>YBM BRILiaN</span>
+                                <span>Jakarta Pusat, Indonesia</span>
+                            </div>
                             <ul class="list-disc list-outside ml-4 text-gray-800 space-y-1">
                                 <li>Serving as the technical bridge between organizational strategy and digital implementation, translating leadership directives into functional KMS solutions that align with business goals.</li>
                                 <li>Designed and deployed a centralized Knowledge Management portal, eliminating information silos and ensuring seamless access to organizational assets for 100+ employees.</li>
@@ -386,9 +365,16 @@
                                 <li>Engineered custom automation scripts using Google Apps Script to streamline administrative processes, reducing manual reporting time by approximately 40%.</li>
                             </ul>
                         </div>
+
                         <div class="mb-3">
-                            <div class="flex justify-between font-bold"><span>Database Management Staff</span><span>Dec 2016 -- Jun 2023</span></div>
-                            <div class="flex justify-between italic text-gray-700 mb-1"><span>YBM BRILiaN</span><span>Jabodetabek, Indonesia</span></div>
+                            <div class="flex justify-between font-bold">
+                                <span>Database Management Staff</span>
+                                <span>Dec 2016 -- Jun 2023</span>
+                            </div>
+                            <div class="flex justify-between italic text-gray-700 mb-1">
+                                <span>YBM BRILiaN</span>
+                                <span>Jabodetabek, Indonesia</span>
+                            </div>
                             <ul class="list-disc list-outside ml-4 text-gray-800 space-y-1">
                                 <li>Managed the central Program Division database, ensuring high integrity and accuracy for regional reporting and stakeholder updates.</li>
                                 <li>Conducted <strong>Business Feasibility Analysis</strong> and due diligence for program submissions, verifying beneficiary eligibility to ensure targeted fund distribution.</li>
@@ -397,9 +383,16 @@
                                 <li>Transformed manual archiving processes into a structured digital filing system, significantly improving information retrieval efficiency.</li>
                             </ul>
                         </div>
+                        
                         <div class="mb-3">
-                            <div class="flex justify-between font-bold"><span>Frontliner Staff</span><span>Dec 2014 -- Nov 2016</span></div>
-                            <div class="flex justify-between italic text-gray-700 mb-1"><span>YBM BRILiaN</span><span>Jabodetabek, Indonesia</span></div>
+                            <div class="flex justify-between font-bold">
+                                <span>Frontliner Staff</span>
+                                <span>Dec 2014 -- Nov 2016</span>
+                            </div>
+                            <div class="flex justify-between italic text-gray-700 mb-1">
+                                <span>YBM BRILiaN</span>
+                                <span>Jabodetabek, Indonesia</span>
+                            </div>
                             <ul class="list-disc list-outside ml-4 text-gray-800 space-y-1">
                                 <li>Acted as the primary point of data collection and quality assurance, verifying incoming information to minimize errors at the input stage.</li>
                                 <li>Conducted structured interviews and preliminary assessments of prospective beneficiaries to determine eligibility for program assistance.</li>
@@ -423,7 +416,7 @@
                     <div class="mb-4">
                         <h2 class="text-base font-bold uppercase border-b border-black mb-2 tracking-wider">Training & Certifications</h2>
                         <ul class="list-none text-gray-800 space-y-1">
-                            <li class="flex justify-between"><span><strong>Amil Zakat Organisations (Lvl 3)</strong> | BNSP</span> <span class="italic">2025-2028</span></li>
+                            <li class="flex justify-between"><span><strong>Amil Zakat Organisations (Lvl 3)</strong> | BNSP</span> <span class="italic">Jul 2025</span></li>
                             <li class="flex justify-between"><span><strong>Data Science: Probability & Statistics</strong> | Dicoding</span> <span class="italic">Oct 2025</span></li>
                             <li class="flex justify-between"><span><strong>Basic Artificial Intelligence (AI)</strong> | Dicoding</span> <span class="italic">Oct 2025</span></li>
                             <li class="flex justify-between"><span><strong>Data Analyst Career Track</strong> | DQLab</span> <span class="italic">Oct 2025</span></li>
@@ -437,15 +430,21 @@
                     <!-- EDUCATION -->
                     <div class="mb-4">
                         <h2 class="text-base font-bold uppercase border-b border-black mb-2 tracking-wider">Education</h2>
-                        <div class="flex justify-between font-bold"><span>Universitas Pamulang</span><span>Tangerang Selatan</span></div>
-                        <div class="flex justify-between italic text-gray-700"><span>Bachelor of Informatics Engineering (S.Kom)</span><span></span></div>
-                        <div class="text-sm text-gray-600">Focus: Network Security, Information Systems.</div>
+                        <div class="flex justify-between font-bold">
+                            <span>Universitas Indraprasta PGRI (UNINDRA)</span>
+                            <span>Jakarta Timur, Indonesia</span>
+                        </div>
+                        <div class="flex justify-between italic text-gray-700">
+                            <span>Bachelor of Informatics Engineering (S.Kom)</span>
+                            <span></span>
+                        </div>
+                        <div class="text-sm text-gray-600">Focus: Software Engineering, Data Structures.</div>
                     </div>
                 </div>
 
                 <!-- Loading Spinner for PDF -->
                 <div id="loadingSpinner" class="absolute inset-0 flex items-center justify-center z-30 hidden">
-                    <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+                    <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-primary"></div>
                 </div>
             </div>
         </div>
@@ -489,7 +488,7 @@
             modal.classList.remove('hidden');
 
             if (fileId === 'CV_MODE') {
-                // Show Native HTML CV (Allow Download)
+                // Show Native HTML CV
                 pdfFrame.classList.add('hidden');
                 pdfFrame.src = '';
                 atsCvContent.classList.remove('hidden');
