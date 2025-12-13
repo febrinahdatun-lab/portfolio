@@ -329,6 +329,21 @@
                         <button class="tab-btn px-4 py-2 rounded-lg bg-dark border border-gray-800 text-sm text-gray-300 hover:border-primary hover:text-primary" data-tab="products">Products</button>
                     </div>
                 </div>
+                <!-- SuperStore AI Analyst -->
+                <div class="lg:col-span-4">
+                    <div class="bg-dark p-6 rounded-2xl border border-gray-800 shadow-lg">
+                        <div class="flex flex-wrap justify-between items-center gap-3 mb-3">
+                            <div class="flex items-center gap-2 text-white font-semibold text-sm"><i class="fas fa-robot text-primary"></i><span>AI Analyst • SuperStore</span></div>
+                            <div id="ai-status-superstore" class="text-xs text-gray-400">Siap menganalisis data CSV live</div>
+                        </div>
+                        <textarea id="ai-input-superstore" class="w-full bg-surface border border-gray-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-primary transition-colors" rows="3" placeholder="Tanyakan insight, anomali, atau strategi bisnis... (ID/EN)"></textarea>
+                        <div class="flex justify-between items-center mt-3 gap-3">
+                            <button onclick="askAI('superstore')" class="hover-trigger px-4 py-2 bg-primary hover:bg-violet-600 text-white rounded-lg text-sm font-semibold flex items-center gap-2 transition-colors"><i class="fas fa-paper-plane"></i> Ask AI</button>
+                            <span class="text-xs text-gray-500">Jawaban mengikuti bahasa pertanyaan</span>
+                        </div>
+                        <div id="ai-output-superstore" class="mt-3 bg-surface border border-gray-800 rounded-xl p-4 text-sm text-gray-200 min-h-[90px]">Output akan muncul di sini.</div>
+                    </div>
+                </div>
                 <!-- Tab Panels -->
                 <div class="lg:col-span-4">
                     <div id="tab-overview" class="tab-panel grid grid-cols-1 lg:grid-cols-4 gap-6">
@@ -389,6 +404,22 @@
                             <button class="marketing-tab-btn px-4 py-2 rounded-lg bg-dark border border-gray-800 text-sm text-gray-300 hover:border-primary hover:text-primary transition-all" data-tab="marketing-calendar">Calendar</button>
                             <button class="marketing-tab-btn px-4 py-2 rounded-lg bg-dark border border-gray-800 text-sm text-gray-300 hover:border-primary hover:text-primary transition-all" data-tab="marketing-funnel">Funnel</button>
                             <button class="marketing-tab-btn px-4 py-2 rounded-lg bg-dark border border-gray-800 text-sm text-gray-300 hover:border-primary hover:text-primary transition-all" data-tab="marketing-insights">Insights</button>
+                        </div>
+                    </div>
+
+                    <!-- Marketing AI Analyst -->
+                    <div class="lg:col-span-4">
+                        <div class="bg-dark p-6 rounded-2xl border border-gray-800 shadow-lg">
+                            <div class="flex flex-wrap justify-between items-center gap-3 mb-3">
+                                <div class="flex items-center gap-2 text-white font-semibold text-sm"><i class="fas fa-robot text-secondary"></i><span>AI Analyst • Marketing</span></div>
+                                <div id="ai-status-marketing" class="text-xs text-gray-400">Siap menganalisis data CSV live</div>
+                            </div>
+                            <textarea id="ai-input-marketing" class="w-full bg-surface border border-gray-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-primary transition-colors" rows="3" placeholder="Contoh: channel mana dengan ROI terbaik? (ID/EN)"></textarea>
+                            <div class="flex justify-between items-center mt-3 gap-3">
+                                <button onclick="askAI('marketing')" class="hover-trigger px-4 py-2 bg-primary hover:bg-violet-600 text-white rounded-lg text-sm font-semibold flex items-center gap-2 transition-colors"><i class="fas fa-paper-plane"></i> Ask AI</button>
+                                <span class="text-xs text-gray-500">Jawaban mengikuti bahasa pertanyaan</span>
+                            </div>
+                            <div id="ai-output-marketing" class="mt-3 bg-surface border border-gray-800 rounded-xl p-4 text-sm text-gray-200 min-h-[90px]">Output akan muncul di sini.</div>
                         </div>
                     </div>
 
@@ -499,6 +530,20 @@
                             <button class="tab-btn px-4 py-2 rounded-lg bg-dark border border-gray-800 text-sm text-gray-300 hover:border-secondary hover:text-secondary transition-colors font-medium" data-tab="rig-fuel"><i class="fas fa-gas-pump mr-2"></i>Fuel</button>
                             <button class="tab-btn px-4 py-2 rounded-lg bg-dark border border-gray-800 text-sm text-gray-300 hover:border-secondary hover:text-secondary transition-colors font-medium" data-tab="rig-ddr"><i class="fas fa-list mr-2"></i>DDR</button>
                         </div>
+                    </div>
+
+                    <!-- Rig AI Analyst -->
+                    <div class="bg-dark p-6 rounded-2xl border border-gray-800 shadow-lg mb-6">
+                        <div class="flex flex-wrap justify-between items-center gap-3 mb-3">
+                            <div class="flex items-center gap-2 text-white font-semibold text-sm"><i class="fas fa-robot text-cyan-300"></i><span>AI Analyst • Rig Operations</span></div>
+                            <div id="ai-status-rig" class="text-xs text-gray-400">Siap menganalisis 5 sumber CSV</div>
+                        </div>
+                        <textarea id="ai-input-rig" class="w-full bg-surface border border-gray-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-secondary transition-colors" rows="3" placeholder="Tanyakan efisiensi, produktivitas, atau DDR... (ID/EN)"></textarea>
+                        <div class="flex justify-between items-center mt-3 gap-3">
+                            <button onclick="askAI('rig')" class="hover-trigger px-4 py-2 bg-primary hover:bg-violet-600 text-white rounded-lg text-sm font-semibold flex items-center gap-2 transition-colors"><i class="fas fa-paper-plane"></i> Ask AI</button>
+                            <span class="text-xs text-gray-500">Jawaban mengikuti bahasa pertanyaan</span>
+                        </div>
+                        <div id="ai-output-rig" class="mt-3 bg-surface border border-gray-800 rounded-xl p-4 text-sm text-gray-200 min-h-[90px]">Output akan muncul di sini.</div>
                     </div>
                     
                     <!-- Tab Content Panels -->
@@ -764,6 +809,49 @@
         const params = new URLSearchParams(window.location.search);
         const useLocal = params.get('source') === 'local';
         const CSV_URL = useLocal ? LOCAL_CSV_URL : REMOTE_CSV_URL;
+        const AI_ENDPOINT = 'https://script.google.com/macros/s/AKfycbytFmzguZ0XlR7gDuDB1Tt5GvhtNsoOox6MdIAcWi79JFjKR4UUCd305HE-b4BxPWRHiA/exec'; // Web App URL
+        const AI_SHARED_SECRET = '08HIiooknoh080H80h$#$D;ks__='; // Shared secret must match Script Property
+
+        function setAIStatus(project, text, color) {
+            const el = document.getElementById(`ai-status-${project}`);
+            if (!el) return;
+            el.textContent = text;
+            el.classList.remove('text-gray-400', 'text-yellow-400', 'text-green-400', 'text-red-400');
+            el.classList.add(color || 'text-gray-400');
+        }
+
+        async function askAI(project) {
+            const input = document.getElementById(`ai-input-${project}`);
+            const output = document.getElementById(`ai-output-${project}`);
+            if (!input || !output) return;
+            const question = (input.value || '').trim();
+            if (!question) { output.textContent = 'Tuliskan pertanyaan terlebih dahulu.'; return; }
+            if (!AI_ENDPOINT || AI_ENDPOINT.includes('YOUR_APPS_SCRIPT_WEB_APP_URL')) {
+                output.textContent = 'Set AI_ENDPOINT (URL Web App Apps Script) terlebih dahulu.';
+                return;
+            }
+
+            setAIStatus(project, 'Memproses pertanyaan...', 'text-yellow-400');
+            output.textContent = '⏳ Memproses...';
+            try {
+                const headers = { 'Content-Type': 'application/json' };
+                if (AI_SHARED_SECRET) headers['X-API-KEY'] = AI_SHARED_SECRET;
+                const resp = await fetch(AI_ENDPOINT, {
+                    method: 'POST',
+                    headers,
+                    body: JSON.stringify({ project, question })
+                });
+                if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+                const data = await resp.json();
+                const answer = data.answer || data.message || 'Tidak ada jawaban.';
+                output.textContent = answer;
+                setAIStatus(project, 'Selesai', 'text-green-400');
+            } catch (err) {
+                console.error('AI request error', err);
+                output.textContent = 'Terjadi kesalahan saat memproses pertanyaan.';
+                setAIStatus(project, 'Gagal', 'text-red-400');
+            }
+        }
 
         // CURSOR
         const cursorDot = document.getElementById("cursor-dot");
