@@ -1625,9 +1625,11 @@
             // 1. ACTIVE RIGS: Count unique Code_Unit from datasetRig
             const activeRigs = new Set(data.rigs.map(r => (r['Code_Unit'] || r.Rig || r.RIG || r.Name || '').trim()).filter(x => x && x !== '#N/A')).size;
 
-            // 2. PRODUCTIVITY: Average daily METER_PRODUCT from datasetRig
+            // 2. PRODUCTIVITY: Average daily METER_PRODUCT from datasetRig (per rig per day)
             const prodByDate = {};
             const meterByRigDate = {}; // Track per-rig-per-day for efficiency calculation
+            const allMeterProducts = []; // Collect all individual meter_product values
+            
             data.rigs.forEach(r => {
                 const d = r.Date;
                 if (!(d instanceof Date)) return;
@@ -1638,7 +1640,10 @@
                 const meter = Number(r.METER_PRODUCT || r.TOTAL_METER || 0);
                 if (!isFinite(meter)) return;
                 
-                // Sum meters per day (across all rigs)
+                // Collect individual meter products for true average
+                allMeterProducts.push(meter);
+                
+                // Sum meters per day (across all rigs) for chart display
                 prodByDate[key] = (prodByDate[key] || 0) + meter;
                 
                 // Track per-rig-per-day for fuel efficiency
@@ -1705,7 +1710,7 @@
             });
 
             // Calculate averages
-            const avgProd = Object.values(prodByDate).length ? (Object.values(prodByDate).reduce((a,b)=>a+b) / Object.values(prodByDate).length) : 0;
+            const avgProd = allMeterProducts.length ? (allMeterProducts.reduce((a,b)=>a+b) / allMeterProducts.length) : 0;
             const avgFuelEff = fuelEffArr.length ? (fuelEffArr.reduce((a,b)=>a+b) / fuelEffArr.length) : 0;
             const ddrCount = Object.values(ddrTypes).reduce((a,b)=>a+b,0);
             
