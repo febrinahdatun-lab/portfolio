@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- =========================================
+         META TAGS SEO & SOCIAL MEDIA
+    ========================================== -->
+    <!-- Primary Meta Tags -->
+    <title>Febri Nahdatun - Portfolio</title>
+    <meta name="title" content="Febri Nahdatun - Portfolio">
+    <meta name="description" content="Portfolio Profesional Febri Nahdatun. Spesialis Knowledge Management System (KMS), Microsoft 365, Google Workspace, dan Data Analytics. Mengubah data menjadi aset strategis.">
+    <meta name="keywords" content="Febri Nahdatun, Data Analyst, Enterprise Systems, Google Workspace Expert, Microsoft 365 Specialist, Knowledge Management, Business Intelligence, Dashboard Portfolio">
+    <meta name="author" content="Febri Nahdatun">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph / Facebook / LinkedIn -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://febrinahdatun-lab.github.io/"> <!-- Ganti dengan URL asli jika sudah deploy -->
+    <meta property="og:title" content="Febri Nahdatun - Portfolio">
+    <meta property="og:description" content="Transformasi data menjadi insight bisnis. Lihat portfolio Data Analytics, Automasi AI, dan Manajemen Sistem Enterprise saya di sini.">
+    <meta property="og:image" content="https://lh3.googleusercontent.com/d/1T2Q8QHpeETmrkz6SS5T1CrZilVGWFAJs=w800">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://febrinahdatun-lab.github.io/">
+    <meta property="twitter:title" content="Febri Nahdatun - Portfolio">
+    <meta property="twitter:description" content="Transformasi data menjadi insight bisnis. Lihat portfolio Data Analytics, Automasi AI, dan Manajemen Sistem Enterprise saya di sini.">
+    <meta property="twitter:image" content="https://lh3.googleusercontent.com/d/1T2Q8QHpeETmrkz6SS5T1CrZilVGWFAJs=w800">
+
+    <!-- FAVICON -->
+    <link rel="icon" href="https://lh3.googleusercontent.com/d/1T2Q8QHpeETmrkz6SS5T1CrZilVGWFAJs=w100" type="image/png">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- PapaParse -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+
+    <!-- Google Fonts: POPPINS (Web) & NOTO SANS (CV) -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Noto+Sans:wght@400;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                        cv: ['Noto Sans', 'sans-serif'], // Font khusus CV ATS
+                    },
+                    colors: {
+                        primary: '#8B5CF6', secondary: '#0EA5E9',
+                        dark: '#0F172A', surface: '#1E293B', surfaceHover: '#334155',
+                        microsoft: '#00a4ef', google: '#ea4335',
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'spin-slow': 'spin 15s linear infinite', 
+                    },
+                    keyframes: {
+                        float: { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-20px)' } }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* SCROLLBAR */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0F172A; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #8B5CF6; }
+        
+        .gradient-text {
+            background: linear-gradient(to right, #8B5CF6, #0EA5E9);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        
+        .modal.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+        
+        /* CUSTOM CURSOR */
+        body { cursor: none; }
+        .cursor-dot { width: 8px; height: 8px; background-color: #8B5CF6; border-radius: 50%; position: fixed; top: 0; left: 0; transform: translate(-50%, -50%); z-index: 9999; pointer-events: none; }
+        .cursor-outline { width: 40px; height: 40px; border: 2px solid rgba(139, 92, 246, 0.5); border-radius: 50%; position: fixed; top: 0; left: 0; transform: translate(-50%, -50%); z-index: 9998; pointer-events: none; transition: width 0.2s, height 0.2s, background-color 0.2s, border-color 0.2s; }
+        body.hovering .cursor-outline { width: 60px; height: 60px; background-color: rgba(139, 92, 246, 0.1); border-color: #0EA5E9; }
+        @media (max-width: 768px) { body { cursor: auto; } .cursor-dot, .cursor-outline { display: none; } }
+        
+        #scrollToTopBtn { transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out; }
+        #scrollToTopBtn.show { opacity: 1; visibility: visible; }
+
+        /* ELECTRIC BORDER */
+        .electric-container { position: relative; z-index: 1; }
+        .electric-container::before { content: ''; position: absolute; inset: -4px; border-radius: 50%; background: conic-gradient(from 0deg, transparent 0%, #8B5CF6 20%, transparent 40%, #0EA5E9 60%, transparent 80%, #8B5CF6 100%); filter: blur(12px); animation: spin 4s linear infinite; z-index: -1; }
+        .electric-container img { position: relative; z-index: 2; border: 3px solid #1E293B; }
+
+        /* --- PRINT STYLES FOR CV --- */
+        @media print {
+            body * { visibility: hidden; }
+            #atsCvContent, #atsCvContent * { visibility: visible; position: absolute; left: 0; top: 0; width: 100%; margin: 0; padding: 0; background: white; color: black; }
+            .no-print { display: none !important; }
+            /* Reset Tailwind for Print */
+            .text-gray-700 { color: #374151 !important; }
+            .text-gray-800 { color: #1f2937 !important; }
+            .border-black { border-color: #000 !important; }
+            /* Ensure links are readable */
+            a { text-decoration: none; color: black !important; }
+        }
+    </style>
+</head>
+<body class="bg-dark text-gray-300 font-sans antialiased overflow-x-hidden">
+
+    <!-- CUSTOM CURSOR -->
+    <div class="cursor-dot" id="cursor-dot"></div>
+    <div class="cursor-outline" id="cursor-outline"></div>
+
+    <!-- Navbar -->
+    <nav class="fixed w-full z-40 bg-dark/80 backdrop-blur-md border-b border-gray-800/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex-shrink-0 flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary shadow-[0_0_15px_rgba(139,92,246,0.4)]">
+                        <img src="https://lh3.googleusercontent.com/d/1T2Q8QHpeETmrkz6SS5T1CrZilVGWFAJs=w100" alt="Febri Nahdatun" class="w-full h-full object-cover">
+                    </div>
+                    <span class="text-lg font-bold text-white tracking-wide hidden sm:block">Febri Nahdatun</span>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="#about" class="hover-trigger hover:text-primary transition-colors text-sm font-medium">Profile</a>
+                        <a href="#expertise" class="hover-trigger hover:text-primary transition-colors text-sm font-medium">Tech Stacks</a>
+                        <a href="#dashboard" class="hover-trigger hover:text-primary transition-colors text-sm font-medium">Analytics</a>
+                        <a href="#certifications" class="hover-trigger hover:text-primary transition-colors text-sm font-medium">Certifications</a>
+                    </div>
+                </div>
+                <a href="#contact" class="hover-trigger px-6 py-2.5 bg-primary text-white font-semibold rounded-full text-sm hover:bg-violet-600 transition-all shadow-[0_4px_14px_0_rgba(139,92,246,0.39)] transform hover:-translate-y-0.5">
+                    Contact Me
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="about" class="min-h-screen flex items-center justify-center pt-24 pb-12 relative overflow-hidden">
+        <div class="absolute top-20 right-0 w-[500px] h-[500px] bg-secondary/10 rounded-full blur-[100px] animate-pulse"></div>
+        <div class="absolute bottom-0 left-0 w-[400px] h-[400px] bg-primary/10 rounded-full blur-[100px]"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+                
+                <div class="space-y-6 lg:text-left text-center order-2 lg:order-1">
+                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-surface border border-gray-700 text-sm font-medium text-gray-300 mx-auto lg:mx-0">
+                        <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                        Available for new projects
+                    </div>
+                    
+                    <h1 class="text-4xl md:text-6xl lg:text-7xl font-extrabold text-white leading-tight">
+                        Architecting <br>
+                        <span class="gradient-text">Intelligent Systems</span>
+                    </h1>
+                    
+                    <p class="text-lg text-gray-400 max-w-xl leading-relaxed mx-auto lg:mx-0">
+                        I bridge the gap between <strong>Enterprise Infrastructure</strong> (Microsoft 365 & Google Workspace) and <strong>Data Intelligence</strong>. Transforming raw data into strategic assets.
+                    </p>
+                    
+                    <div class="flex flex-wrap gap-4 pt-4 justify-center lg:justify-start">
+                        
+                        <!-- BUTTON VIEW CV (Triggers Local CV Modal) -->
+                        <button onclick="openCertModal('Curriculum Vitae', 'Professional Profile', 'CV_MODE')" class="hover-trigger px-8 py-4 bg-primary text-white font-bold rounded-xl hover:bg-violet-600 transition-all shadow-[0_10px_20px_-10px_rgba(139,92,246,0.5)] flex items-center gap-2">
+                            <i class="fas fa-file-alt"></i> View CV
+                        </button>
+                        
+                        <a href="https://www.linkedin.com/in/febri-nahdatun-49b437126/" target="_blank" class="hover-trigger px-8 py-4 bg-surface border border-gray-700 text-white font-bold rounded-xl hover:border-primary hover:text-primary transition-all flex items-center gap-2">
+                            <i class="fab fa-linkedin"></i> LinkedIn
+                        </a>
+                    </div>
+
+                    <div class="flex items-center gap-4 text-sm text-gray-500 border-l-4 border-primary pl-4 py-1 italic justify-center lg:justify-start">
+                        "Bereksperimen dengan hal-hal menarik yang memantik rasa penasaran."
+                    </div>
+                </div>
+
+                <!-- Profile Image & Badges -->
+                <div class="relative flex justify-center lg:justify-end order-1 lg:order-2 my-12 lg:my-0">
+                    <div class="relative w-[280px] h-[280px] md:w-[380px] md:h-[380px] animate-float">
+                        <div class="absolute inset-0 border-2 border-primary/20 rounded-full scale-110"></div>
+                        <div class="absolute inset-0 border border-secondary/20 rounded-full scale-125 border-dashed animate-spin-slow"></div>
+                        
+                        <div class="relative w-full h-full rounded-full electric-container shadow-2xl">
+                            <img src="https://lh3.googleusercontent.com/d/1T2Q8QHpeETmrkz6SS5T1CrZilVGWFAJs=w800" alt="Febri Nahdatun" class="w-full h-full object-cover rounded-full">
+                        </div>
+                        
+                        <!-- Floating Badges (ADJUSTED POSITIONS AGAIN) -->
+                        
+                        <!-- 1. Google (Top Left - Moved further left & up) -->
+                        <div class="absolute -top-4 -left-20 md:-top-8 md:-left-32 bg-surface/95 backdrop-blur-md p-3 md:p-4 rounded-xl border border-gray-700 shadow-xl flex items-center gap-3 animate-bounce hover-trigger hover:border-google/50 transition-all cursor-default z-30" style="animation-duration: 4s;">
+                            <div class="bg-blue-500/20 p-2 rounded-lg text-google text-lg md:text-xl"><i class="fab fa-google"></i></div>
+                            <div>
+                                <p class="text-[10px] text-gray-400 uppercase tracking-wider font-bold">Expert</p>
+                                <p class="text-xs md:text-sm font-bold text-white whitespace-nowrap">Google Workspace</p>
+                            </div>
+                        </div>
+
+                        <!-- 2. Microsoft (Top Right - Moved further right & up) -->
+                        <div class="absolute -top-4 -right-20 md:-top-8 md:-right-28 bg-surface/95 backdrop-blur-md p-3 md:p-4 rounded-xl border border-gray-700 shadow-xl flex items-center gap-3 animate-bounce hover-trigger hover:border-microsoft/50 transition-all cursor-default z-30" style="animation-duration: 5s; animation-delay: 1s;">
+                            <div class="bg-blue-400/20 p-2 rounded-lg text-microsoft text-lg md:text-xl"><i class="fab fa-microsoft"></i></div>
+                            <div>
+                                <p class="text-[10px] text-gray-400 uppercase tracking-wider font-bold">Specialist</p>
+                                <p class="text-xs md:text-sm font-bold text-white whitespace-nowrap">Microsoft 365</p>
+                            </div>
+                        </div>
+
+                        <!-- 3. AI (Bottom Left - Moved further left & down) -->
+                        <div class="absolute bottom-10 -left-20 md:bottom-12 md:-left-28 bg-surface/95 backdrop-blur-md p-3 md:p-4 rounded-xl border border-gray-700 shadow-xl flex items-center gap-3 animate-bounce hover-trigger hover:border-green-500/50 transition-all cursor-default z-30" style="animation-duration: 4.5s; animation-delay: 0.5s;">
+                            <div class="bg-green-500/20 p-2 rounded-lg text-green-400 text-lg md:text-xl"><i class="fas fa-robot"></i></div>
+                            <div>
+                                <p class="text-[10px] text-gray-400 uppercase tracking-wider font-bold">Innovator</p>
+                                <p class="text-xs md:text-sm font-bold text-white whitespace-nowrap">AI & Automation</p>
+                            </div>
+                        </div>
+
+                        <!-- 4. Data (Bottom Right - Moved further right & down) -->
+                        <div class="absolute bottom-10 -right-20 md:bottom-12 md:-right-24 bg-surface/95 backdrop-blur-md p-3 md:p-4 rounded-xl border border-gray-700 shadow-xl flex items-center gap-3 animate-bounce hover-trigger hover:border-primary/50 transition-all cursor-default z-30" style="animation-duration: 6s; animation-delay: 1.5s;">
+                            <div class="bg-primary/20 p-2 rounded-lg text-primary text-lg md:text-xl"><i class="fas fa-chart-line"></i></div>
+                            <div>
+                                <p class="text-[10px] text-gray-400 uppercase tracking-wider font-bold">Analyst</p>
+                                <p class="text-xs md:text-sm font-bold text-white whitespace-nowrap">Data Intelligence</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Stacks -->
+    <section id="expertise" class="py-24 bg-surface border-y border-gray-800/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16"><span class="text-primary font-bold tracking-wider uppercase text-sm">Tech Stacks</span><h2 class="text-4xl font-bold text-white mt-2">What Tools I Use</h2><div class="w-20 h-1 bg-primary mx-auto mt-4 rounded-full"></div></div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Stacks Cards -->
+                <div class="hover-trigger bg-dark p-8 rounded-2xl border border-gray-800 hover:border-microsoft/50 transition-all hover:-translate-y-1 group"><div class="flex items-center gap-4 mb-6"><div class="w-14 h-14 bg-blue-500/10 rounded-xl flex items-center justify-center text-blue-400 text-3xl group-hover:scale-110 transition-transform"><i class="fab fa-microsoft"></i></div><h3 class="text-xl font-bold text-white">Microsoft 365</h3></div><p class="text-gray-400 text-sm leading-relaxed mb-4">Specialist management for enterprise environments. Managing users, security, and compliance.</p></div>
+                <div class="hover-trigger bg-dark p-8 rounded-2xl border border-gray-800 hover:border-google/50 transition-all hover:-translate-y-1 group"><div class="flex items-center gap-4 mb-6"><div class="w-14 h-14 bg-red-500/10 rounded-xl flex items-center justify-center text-red-400 text-3xl group-hover:scale-110 transition-transform"><i class="fab fa-google"></i></div><h3 class="text-xl font-bold text-white">Google Workspace</h3></div><p class="text-gray-400 text-sm leading-relaxed mb-4">End-to-end administration and automation scripting using Apps Script for efficiency.</p></div>
+                <div class="hover-trigger bg-dark p-8 rounded-2xl border border-gray-800 hover:border-primary/50 transition-all hover:-translate-y-1 group"><div class="flex items-center gap-4 mb-6"><div class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center text-primary text-3xl group-hover:scale-110 transition-transform"><i class="fas fa-database"></i></div><h3 class="text-xl font-bold text-white">Data Analytics</h3></div><p class="text-gray-400 text-sm leading-relaxed mb-4">Transforming raw data into predictive insights using SQL, Python, and BI tools.</p></div>
+                <div class="hover-trigger bg-dark p-8 rounded-2xl border border-gray-800 hover:border-secondary/50 transition-all hover:-translate-y-1 group"><div class="flex items-center gap-4 mb-6"><div class="w-14 h-14 bg-secondary/10 rounded-xl flex items-center justify-center text-secondary text-3xl group-hover:scale-110 transition-transform"><i class="fas fa-brain"></i></div><h3 class="text-xl font-bold text-white">AI Integration</h3></div><p class="text-gray-400 text-sm leading-relaxed mb-4">Implementing Generative AI for document analysis and automated reporting workflows.</p></div>
+                <div class="hover-trigger bg-dark p-8 rounded-2xl border border-gray-800 hover:border-green-500/50 transition-all hover:-translate-y-1 group"><div class="flex items-center gap-4 mb-6"><div class="w-14 h-14 bg-green-500/10 rounded-xl flex items-center justify-center text-green-400 text-3xl group-hover:scale-110 transition-transform"><i class="fas fa-file-excel"></i></div><h3 class="text-xl font-bold text-white">Advanced Excel</h3></div><p class="text-gray-400 text-sm leading-relaxed mb-4">Complex formulas, VBA macros, and data visualization for quick business insights.</p></div>
+                <div class="hover-trigger bg-dark p-8 rounded-2xl border border-gray-800 hover:border-teal-500/50 transition-all hover:-translate-y-1 group"><div class="flex items-center gap-4 mb-6"><div class="w-14 h-14 bg-teal-500/10 rounded-xl flex items-center justify-center text-teal-400 text-3xl group-hover:scale-110 transition-transform"><i class="fas fa-sitemap"></i></div><h3 class="text-xl font-bold text-white">KMS</h3></div><p class="text-gray-400 text-sm leading-relaxed mb-4">Designing Knowledge Management Systems to centralize and secure organizational assets.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dashboard -->
+    <section id="dashboard" class="py-24 max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Marketing Analytics Dashboard -->
+        <div class="mb-20">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
+                <div>
+                    <span class="text-secondary font-bold tracking-wider uppercase text-sm">Portfolio Project #1</span>
+                    <h2 class="text-4xl font-bold text-white mt-2">Marketing <span class="gradient-text">Analytics</span> Dashboard</h2>
+                    <p class="text-gray-400 mt-2 max-w-xl">Dashboard komprehensif untuk tracking performa social media marketing dengan insight strategis, funnel analysis, dan rekomendasi berbasis AI.</p>
+                </div>
+                <div class="flex gap-3">
+                    <a href="marketing-analytics.html" target="_blank" class="hover-trigger px-6 py-3 bg-primary rounded-lg text-sm text-white hover:bg-violet-600 transition-all flex items-center gap-2 font-semibold shadow-[0_4px_14px_0_rgba(139,92,246,0.39)]">
+                        <i class="fas fa-external-link-alt"></i> Open Dashboard
+                    </a>
+                </div>
+            </div>
+            <div class="bg-surface rounded-3xl border border-gray-800 shadow-2xl overflow-hidden hover:border-primary/30 transition-colors">
+                <div class="bg-dark/50 border-b border-gray-800 p-4">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-mono text-gray-500">Project Type: <span class="text-gray-300">Social Media Analytics</span></span>
+                        <span class="text-xs text-gray-500 font-mono">Tech Stack: <span class="text-primary">Chart.js • PapaParse • Tailwind</span></span>
+                    </div>
+                </div>
+                <div class="p-8">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                        <div class="bg-dark p-5 rounded-xl border border-gray-800">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-full bg-blue-500/10 flex items-center justify-center">
+                                    <i class="fas fa-eye text-blue-400"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-gray-500">Total Impressions</p>
+                                    <h4 class="text-lg font-bold text-white">442K+</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-dark p-5 rounded-xl border border-gray-800">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-full bg-green-500/10 flex items-center justify-center">
+                                    <i class="fas fa-mouse-pointer text-green-400"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-gray-500">Total Clicks</p>
+                                    <h4 class="text-lg font-bold text-white">25K+</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-dark p-5 rounded-xl border border-gray-800">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-full bg-purple-500/10 flex items-center justify-center">
+                                    <i class="fas fa-chart-line text-purple-400"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-gray-500">Avg CTR</p>
+                                    <h4 class="text-lg font-bold text-white">5.7%</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-dark p-5 rounded-xl border border-gray-800">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-full bg-pink-500/10 flex items-center justify-center">
+                                    <i class="fas fa-lightbulb text-pink-400"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-gray-500">Key Features</p>
+                                    <h4 class="text-lg font-bold text-white">7 Tabs</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-dark border border-gray-800 rounded-full text-xs text-gray-400">📊 Multi-channel Analysis</span>
+                        <span class="px-3 py-1 bg-dark border border-gray-800 rounded-full text-xs text-gray-400">🎯 Funnel Conversion</span>
+                        <span class="px-3 py-1 bg-dark border border-gray-800 rounded-full text-xs text-gray-400">💡 AI Insights</span>
+                        <span class="px-3 py-1 bg-dark border border-gray-800 rounded-full text-xs text-gray-400">📈 ROI Calculator</span>
+                        <span class="px-3 py-1 bg-dark border border-gray-800 rounded-full text-xs text-gray-400">🌍 Multi-language Support</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SuperStore Analytics Dashboard -->
+        <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
+            <div><span class="text-primary font-bold tracking-wider uppercase text-sm">Portfolio Project #2</span><h2 class="text-4xl font-bold text-white mt-2">SuperStore Analytics</h2><p class="text-gray-400 mt-2 max-w-xl">Dashboard interaktif ini menyajikan wawasan bisnis strategis yang diolah dari dataset penjualan 'SuperStore'. <br><span class="text-xs text-gray-500">Note: Data diambil LIVE dari Google Sheets CSV Publik.</span></p></div>
+            <div class="flex gap-3"><a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vSXxXA21f-Q3MUn1A7jyrxNiZ-wD9x4RGfwnqMJrVZuKmhKJKluXsqqkNf2dDvnSJVpdnRBBHQCiLeS/pub?gid=1555337350&single=true&output=csv" class="hover-trigger px-6 py-3 bg-surface border border-gray-600 rounded-lg text-sm text-white hover:border-primary hover:text-primary transition-colors flex items-center gap-2 font-medium"><i class="fas fa-file-csv"></i> Download Source Data</a></div>
+        </div>
+        <div class="bg-surface rounded-3xl border border-gray-800 shadow-2xl overflow-hidden">
+            <div class="bg-dark/50 border-b border-gray-800 p-4 flex justify-between items-center">
+                <div class="flex items-center gap-2"><span class="text-xs font-mono text-gray-500 ml-2">Connected to: <span class="text-gray-300">SuperStore Master Data</span></span></div><div class="text-xs text-gray-500 font-mono">Status: <span class="text-green-400" id="status-indicator">Initializing...</span></div>
+            </div>
+            <div class="p-8 grid grid-cols-1 lg:grid-cols-4 gap-6">
+                <div class="lg:col-span-4 grid grid-cols-1 sm:grid-cols-4 gap-4">
+                    <div class="hover-trigger bg-dark p-6 rounded-2xl border border-gray-800 hover:border-primary/30 transition-colors"><p class="text-xs text-gray-500 uppercase font-bold tracking-wider">Total Sales</p><h4 class="text-2xl font-bold text-white mt-2 tracking-tight" id="kpi-sales">$0</h4></div>
+                    <div class="hover-trigger bg-dark p-6 rounded-2xl border border-gray-800 hover:border-primary/30 transition-colors"><p class="text-xs text-gray-500 uppercase font-bold tracking-wider">Total Profit</p><h4 class="text-2xl font-bold text-white mt-2 tracking-tight" id="kpi-profit">$0</h4></div>
+                    <div class="hover-trigger bg-dark p-6 rounded-2xl border border-gray-800 hover:border-primary/30 transition-colors"><p class="text-xs text-gray-500 uppercase font-bold tracking-wider">Orders</p><h4 class="text-2xl font-bold text-white mt-2 tracking-tight" id="kpi-orders">0</h4></div>
+                    <div class="hover-trigger bg-dark p-6 rounded-2xl border border-gray-800 hover:border-primary/30 transition-colors"><p class="text-xs text-gray-500 uppercase font-bold tracking-wider">Margin</p><h4 class="text-2xl font-bold text-white mt-2 tracking-tight" id="avg-discount">0%</h4></div>
+                </div>
+                <!-- Tab Navigation -->
+                <div class="lg:col-span-4 mt-4">
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        <button class="tab-btn px-4 py-2 rounded-lg bg-dark border border-gray-800 text-sm text-gray-300 hover:border-primary hover:text-primary" data-tab="overview">Overview</button>
+                        <button class="tab-btn px-4 py-2 rounded-lg bg-dark border border-gray-800 text-sm text-gray-300 hover:border-primary hover:text-primary" data-tab="category">Category</button>
+                        <button class="tab-btn px-4 py-2 rounded-lg bg-dark border border-gray-800 text-sm text-gray-300 hover:border-primary hover:text-primary" data-tab="region">Region</button>
+                        <button class="tab-btn px-4 py-2 rounded-lg bg-dark border border-gray-800 text-sm text-gray-300 hover:border-primary hover:text-primary" data-tab="ship">Shipping</button>
+                        <button class="tab-btn px-4 py-2 rounded-lg bg-dark border border-gray-800 text-sm text-gray-300 hover:border-primary hover:text-primary" data-tab="products">Products</button>
+                    </div>
+                </div>
+                <!-- Tab Panels -->
+                <div class="lg:col-span-4">
+                    <div id="tab-overview" class="tab-panel grid grid-cols-1 lg:grid-cols-4 gap-6">
+                        <div class="lg:col-span-3 bg-dark p-6 rounded-2xl border border-gray-800"><h5 class="text-white font-bold text-sm mb-6 flex items-center gap-2"><i class="fas fa-chart-bar text-primary"></i> Monthly Sales vs Profit Trend</h5><div class="h-80"><canvas id="trendChart"></canvas></div></div>
+                        <div class="lg:col-span-1 bg-dark p-6 rounded-2xl border border-gray-800"><h5 class="text-white font-bold text-sm mb-6 flex items-center gap-2"><i class="fas fa-chart-pie text-secondary"></i> Sales by Segment</h5><div class="h-64 flex items-center justify-center"><canvas id="segmentChart"></canvas></div></div>
+                    </div>
+                    <div id="tab-category" class="tab-panel hidden grid grid-cols-1 lg:grid-cols-4 gap-6">
+                        <div class="lg:col-span-2 bg-dark p-6 rounded-2xl border border-gray-800"><h5 class="text-white font-bold text-sm mb-6 flex items-center gap-2"><i class="fas fa-layer-group text-primary"></i> Sales by Category</h5><div class="h-72"><canvas id="categoryChart"></canvas></div></div>
+                        <div class="lg:col-span-2 bg-dark p-6 rounded-2xl border border-gray-800"><h5 class="text-white font-bold text-sm mb-6 flex items-center gap-2"><i class="fas fa-sitemap text-secondary"></i> Profit by Sub-Category</h5><div class="h-72"><canvas id="subCategoryChart"></canvas></div></div>
+                    </div>
+                    <div id="tab-region" class="tab-panel hidden grid grid-cols-1 lg:grid-cols-4 gap-6">
+                        <div class="lg:col-span-2 bg-dark p-6 rounded-2xl border border-gray-800"><h5 class="text-white font-bold text-sm mb-6 flex items-center gap-2"><i class="fas fa-globe-asia text-primary"></i> Sales by Region</h5><div class="h-72"><canvas id="regionChart"></canvas></div></div>
+                        <div class="lg:col-span-2 bg-dark p-6 rounded-2xl border border-gray-800"><h5 class="text-white font-bold text-sm mb-6 flex items-center gap-2"><i class="fas fa-city text-secondary"></i> Profit by State</h5><div class="h-72"><canvas id="stateChart"></canvas></div></div>
+                    </div>
+                    <div id="tab-ship" class="tab-panel hidden grid grid-cols-1 lg:grid-cols-4 gap-6">
+                        <div class="lg:col-span-2 bg-dark p-6 rounded-2xl border border-gray-800"><h5 class="text-white font-bold text-sm mb-6 flex items-center gap-2"><i class="fas fa-truck-fast text-primary"></i> Orders by Ship Mode</h5><div class="h-72"><canvas id="shipModeChart"></canvas></div></div>
+                        <div class="lg:col-span-2 bg-dark p-6 rounded-2xl border border-gray-800"><h5 class="text-white font-bold text-sm mb-6 flex items-center gap-2"><i class="fas fa-clock text-secondary"></i> Sales by Ship Date (Monthly)</h5><div class="h-72"><canvas id="shipMonthlyChart"></canvas></div></div>
+                    </div>
+                    <div id="tab-products" class="tab-panel hidden grid grid-cols-1 lg:grid-cols-4 gap-6">
+                        <div class="lg:col-span-3 bg-dark p-6 rounded-2xl border border-gray-800"><h5 class="text-white font-bold text-sm mb-6 flex items-center gap-2"><i class="fas fa-star text-primary"></i> Top 10 Products by Sales</h5><div class="overflow-auto"><table class="min-w-full text-sm"><thead><tr class="text-gray-400"><th class="text-left py-2 pr-4">Product Name</th><th class="text-right py-2 pr-4">Sales</th><th class="text-right py-2">Profit</th></tr></thead><tbody id="topProductsTable"></tbody></table></div></div>
+                        <div class="lg:col-span-1 bg-dark p-6 rounded-2xl border border-gray-800"><h5 class="text-white font-bold text-sm mb-6 flex items-center gap-2"><i class="fas fa-tags text-secondary"></i> Sales by Segment (Detail)</h5><div class="h-64"><canvas id="segmentBarChart"></canvas></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Certifications -->
+    <section id="certifications" class="py-24 bg-surface/50 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16"><span class="text-primary font-bold tracking-wider uppercase text-sm">Validations</span><h2 class="text-4xl font-bold text-white mt-2">Professional Certifications</h2></div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Cert Cards -->
+                <div onclick="openCertModal('BNSP Certified', 'Badan Nasional Sertifikasi Profesi', '1cG7mouvxEbI7HjEd2Mih3IE00M7ZVK1x')" class="hover-trigger bg-dark p-8 rounded-2xl border border-gray-800 cursor-pointer hover:border-primary transition-all hover:-translate-y-2 group text-center"><div class="w-20 h-20 bg-white rounded-full flex items-center justify-center mx-auto mb-6 p-2 border-2 border-gray-700 group-hover:border-primary transition-colors"><img src="https://www.hpi.or.id/wp-content/uploads/2021/08/Logo-BNSP.png" alt="BNSP" class="w-full h-full object-contain rounded-full"></div><h4 class="text-white font-bold text-lg group-hover:text-primary transition-colors">BNSP Certified</h4><p class="text-gray-500 text-sm mt-2">Amil Zakat Qualification</p><div class="mt-6"><span class="text-xs bg-surface px-4 py-2 rounded-full text-gray-400 group-hover:bg-primary group-hover:text-white transition-colors">View Document</span></div></div>
+                <div onclick="openCertModal('Dicoding AI', 'Dicoding Indonesia', '1GEeSOrNDvOCIGP2QUX8lAVlDTJIgwOrF')" class="hover-trigger bg-dark p-8 rounded-2xl border border-gray-800 cursor-pointer hover:border-primary transition-all hover:-translate-y-2 group text-center"><div class="w-20 h-20 bg-surface rounded-full flex items-center justify-center mx-auto mb-6 text-3xl text-white group-hover:text-primary transition-colors"><i class="fas fa-robot"></i></div><h4 class="text-white font-bold text-lg group-hover:text-primary transition-colors">Dicoding AI</h4><p class="text-gray-500 text-sm mt-2">Artificial Intelligence Basic</p><div class="mt-6"><span class="text-xs bg-surface px-4 py-2 rounded-full text-gray-400 group-hover:bg-primary group-hover:text-white transition-colors">View Document</span></div></div>
+                <div onclick="openCertModal('DQLab Analyst', 'DQLab', '1TLdVFDWCmFs4yR_sVtpEFPSQWIHkIict')" class="hover-trigger bg-dark p-8 rounded-2xl border border-gray-800 cursor-pointer hover:border-primary transition-all hover:-translate-y-2 group text-center"><div class="w-20 h-20 bg-surface rounded-full flex items-center justify-center mx-auto mb-6 text-3xl text-white group-hover:text-primary transition-colors"><i class="fas fa-chart-bar"></i></div><h4 class="text-white font-bold text-lg group-hover:text-primary transition-colors">DQLab Analyst</h4><p class="text-gray-500 text-sm mt-2">Data Analyst Career Track</p><div class="mt-6"><span class="text-xs bg-surface px-4 py-2 rounded-full text-gray-400 group-hover:bg-primary group-hover:text-white transition-colors">View Document</span></div></div>
+                <div onclick="openCertModal('Taalenta AI', 'Taalenta Digital', '1cn6_8zBFR9ieeSMKpixVpprTxbJ6CLBg')" class="hover-trigger bg-dark p-8 rounded-2xl border border-gray-800 cursor-pointer hover:border-primary transition-all hover:-translate-y-2 group text-center"><div class="w-20 h-20 bg-surface rounded-full flex items-center justify-center mx-auto mb-6 text-3xl text-white group-hover:text-primary transition-colors"><i class="fas fa-brain"></i></div><h4 class="text-white font-bold text-lg group-hover:text-primary transition-colors">Taalenta AI</h4><p class="text-gray-500 text-sm mt-2">Generative AI Expert</p><div class="mt-6"><span class="text-xs bg-surface px-4 py-2 rounded-full text-gray-400 group-hover:bg-primary group-hover:text-white transition-colors">View Document</span></div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="py-20 bg-dark relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <h2 class="text-4xl font-bold text-white mb-8 text-center">Get in Touch</h2>
+            <div class="bg-surface p-8 rounded-2xl border border-gray-800 shadow-2xl">
+                <form id="contactForm" action="mailto:febri.nahdatun@gmail.com" method="post" enctype="text/plain" class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div><label for="name" class="block text-sm font-medium text-gray-400 mb-2">Your Name</label><input type="text" id="name" name="name" class="w-full bg-dark border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary transition-colors" placeholder="John Doe"></div>
+                        <div><label for="email" class="block text-sm font-medium text-gray-400 mb-2">Your Email</label><input type="email" id="email" name="email" class="w-full bg-dark border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary transition-colors" placeholder="john@example.com"></div>
+                    </div>
+                    <div><label for="message" class="block text-sm font-medium text-gray-400 mb-2">Message</label><textarea id="message" name="message" rows="5" class="w-full bg-dark border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary transition-colors" placeholder="Hi Febri, I'd like to discuss a project..."></textarea></div>
+                    <button type="submit" class="hover-trigger w-full bg-primary hover:bg-violet-600 text-white font-bold py-4 rounded-xl transition-all shadow-lg hover:shadow-primary/30 flex items-center justify-center gap-2"><i class="fas fa-paper-plane"></i> Send Message</button>
+                </form>
+                <div class="relative my-8"><div class="absolute inset-0 flex items-center"><div class="w-full border-t border-gray-700"></div></div><div class="relative flex justify-center text-sm"><span class="px-2 bg-surface text-gray-500">Or connect via</span></div></div>
+                <div class="flex justify-center gap-6">
+                    <a href="https://wa.me/6287888893111" target="_blank" class="hover-trigger text-2xl text-gray-400 hover:text-green-500 transition-colors"><i class="fab fa-whatsapp"></i></a>
+                    <a href="https://t.me/+6287888893111" target="_blank" class="hover-trigger text-2xl text-gray-400 hover:text-blue-400 transition-colors"><i class="fab fa-telegram-plane"></i></a>
+                    <a href="https://www.linkedin.com/in/febri-nahdatun-49b437126/" target="_blank" class="hover-trigger text-2xl text-gray-400 hover:text-[#0077b5] transition-colors"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://github.com/febrinahdatun-lab" target="_blank" class="hover-trigger text-2xl text-gray-400 hover:text-white transition-colors"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+            <p class="text-sm text-gray-600 text-center mt-12">&copy; 2025 Febri Nahdatun. Built with <span class="text-red-500">♥</span> & Experiment.</p>
+        </div>
+    </section>
+
+    <!-- UNIFIED MODAL POPUP (Handles PDF & Native ATS CV) -->
+    <div id="certModal" class="modal hidden fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm p-4">
+        <div class="modal-content bg-surface w-full max-w-4xl h-[85vh] rounded-2xl border border-gray-700 shadow-2xl overflow-hidden relative flex flex-col">
+            <!-- Header -->
+            <div class="p-4 border-b border-gray-700 flex justify-between items-center bg-dark z-50 relative">
+                <div><h3 id="modalTitle" class="text-lg font-bold text-white">Document Viewer</h3><p id="modalOrg" class="text-gray-400 text-xs">Preview Mode</p></div>
+                
+                <!-- Action Buttons -->
+                <div class="flex gap-3">
+                    <button id="downloadCvBtn" onclick="printCV()" class="hidden text-xs bg-primary hover:bg-violet-600 text-white px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1">
+                        <i class="fas fa-download"></i> Save as PDF
+                    </button>
+                    <button onclick="closeModal()" class="hover-trigger text-gray-400 hover:text-white bg-slate-800 hover:bg-red-500/20 rounded-full w-8 h-8 flex items-center justify-center transition-colors"><i class="fas fa-times"></i></button>
+                </div>
+            </div>
+
+            <!-- Content Area -->
+            <div class="flex-1 bg-white relative overflow-auto custom-scrollbar-light">
+                
+                <!-- 1. Shield Layer (PROTECTS PDF DOWNLOAD) -->
+                <div id="pdfShield" class="absolute top-0 right-0 w-full h-16 z-40 flex justify-end pr-14 pt-2 pointer-events-auto cursor-not-allowed hidden">
+                    <div class="absolute inset-0 bg-transparent"></div>
+                    <div class="relative bg-slate-800/90 backdrop-blur text-xs text-slate-400 px-3 py-1.5 rounded-full border border-slate-700 flex items-center gap-2 shadow-lg h-fit">
+                        <i class="fas fa-shield-alt text-green-500"></i>
+                        <span>Protected View</span>
+                    </div>
+                </div>
+
+                <!-- 2. Iframe for Google Drive PDF (Certificates) -->
+                <iframe id="pdfFrame" class="w-full h-full relative z-20 hidden" src="" frameborder="0"></iframe>
+
+                <!-- 3. NATIVE ATS CV HTML (Hidden by default, shown via JS) -->
+                <div id="atsCvContent" class="hidden w-full max-w-[21cm] mx-auto bg-white text-black p-8 sm:p-12 text-left font-cv text-sm leading-snug">
+                    <!-- HEADER -->
+                    <div class="text-center border-b-2 border-black pb-4 mb-4">
+                        <h1 class="text-3xl font-bold uppercase tracking-wide">Febri Nahdatun</h1>
+                        <p class="mt-1 text-gray-700">Depok, Indonesia | (+62) 878-8889-3111 | febri.nahdatun@gmail.com</p>
+                        <p class="text-blue-700 underline text-xs mt-1">linkedin.com/in/febri-nahdatun | febrinahdatun-lab.github.io</p>
+                    </div>
+
+                    <!-- SUMMARY -->
+                    <div class="mb-4">
+                        <h2 class="text-base font-bold uppercase border-b border-black mb-2 tracking-wider">Professional Summary</h2>
+                        <p class="text-justify text-gray-800">
+                            Tech & Data Specialist with over 10 years of experience in the non-profit and Islamic philanthropy sector, specializing in Knowledge Management Systems (KMS), Data Analytics, and Enterprise Automation. Proven track record in transforming scattered organizational data into strategic intelligence using Google & Microsoft ecosystems. Expert in bridging the gap between high-level management strategy and technical execution, implementing AI-driven solutions for document analysis, and ensuring data integrity for critical decision-making.
+                        </p>
+                    </div>
+
+                    <!-- EXPERIENCE -->
+                    <div class="mb-4">
+                        <h2 class="text-base font-bold uppercase border-b border-black mb-2 tracking-wider">Experience</h2>
+                        
+                        <div class="mb-3">
+                            <div class="flex justify-between font-bold">
+                                <span>Knowledge Management Systems (KMS) Specialist</span>
+                                <span>Nov 2023 -- Present</span>
+                            </div>
+                            <div class="flex justify-between italic text-gray-700 mb-1">
+                                <span>YBM BRILiaN</span>
+                                <span>Jakarta Pusat, Indonesia</span>
+                            </div>
+                            <ul class="list-disc list-outside ml-4 text-gray-800 space-y-1">
+                                <li>Serving as the technical bridge between organizational strategy and digital implementation, translating leadership directives into functional KMS solutions that align with business goals.</li>
+                                <li>Designed and deployed a centralized Knowledge Management portal, eliminating information silos and ensuring seamless access to organizational assets for 100+ employees.</li>
+                                <li>Operationalized <strong>Generative AI integration</strong> within document workflows, enabling instant summarization and chat-with-data capabilities to accelerate research and reporting processes.</li>
+                                <li>Developed interactive Business Intelligence dashboards to visualize real-time operational metrics (fundraising & distribution), empowering leadership with data-backed insights.</li>
+                                <li>Engineered custom automation scripts using Google Apps Script to streamline administrative processes, reducing manual reporting time by approximately 40%.</li>
+                            </ul>
+                        </div>
+
+                        <div class="mb-3">
+                            <div class="flex justify-between font-bold">
+                                <span>Database Management Staff</span>
+                                <span>Dec 2016 -- Jun 2023</span>
+                            </div>
+                            <div class="flex justify-between italic text-gray-700 mb-1">
+                                <span>YBM BRILiaN</span>
+                                <span>Jabodetabek, Indonesia</span>
+                            </div>
+                            <ul class="list-disc list-outside ml-4 text-gray-800 space-y-1">
+                                <li>Managed the central Program Division database, ensuring high integrity and accuracy for regional reporting and stakeholder updates.</li>
+                                <li>Conducted <strong>Business Feasibility Analysis</strong> and due diligence for program submissions, verifying beneficiary eligibility to ensure targeted fund distribution.</li>
+                                <li>Evaluated Fund Usage Reports and Program Support Reports to monitor compliance, effectiveness, and financial accountability of division budgets.</li>
+                                <li>Facilitated strategic planning by documenting key decisions in Annual Budget Plan meetings and drafting official correspondence and cooperation agreements.</li>
+                                <li>Transformed manual archiving processes into a structured digital filing system, significantly improving information retrieval efficiency.</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <div class="flex justify-between font-bold">
+                                <span>Frontliner Staff</span>
+                                <span>Dec 2014 -- Nov 2016</span>
+                            </div>
+                            <div class="flex justify-between italic text-gray-700 mb-1">
+                                <span>YBM BRILiaN</span>
+                                <span>Jabodetabek, Indonesia</span>
+                            </div>
+                            <ul class="list-disc list-outside ml-4 text-gray-800 space-y-1">
+                                <li>Acted as the primary point of data collection and quality assurance, verifying incoming information to minimize errors at the input stage.</li>
+                                <li>Conducted structured interviews and preliminary assessments of prospective beneficiaries to determine eligibility for program assistance.</li>
+                                <li>Served as the liaison between external parties and internal divisions, ensuring swift and accurate information flow across electronic and direct channels.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- SKILLS -->
+                    <div class="mb-4">
+                        <h2 class="text-base font-bold uppercase border-b border-black mb-2 tracking-wider">Technical Skills</h2>
+                        <ul class="list-none text-gray-800 space-y-1">
+                            <li><strong>Data Analytics & Visualization:</strong> SQL, Python (Pandas/NumPy), R, Google Looker Studio, Microsoft Power BI, Advanced Excel.</li>
+                            <li><strong>Cloud Ecosystems:</strong> Google Workspace (Super Admin, Apps Script, AppSheet), Microsoft 365 (Admin Center, Entra ID/Azure, SharePoint, Power Platform).</li>
+                            <li><strong>AI & Automation:</strong> Generative AI Integration (Gemini/ChatGPT), Prompt Engineering, Process Automation, Chatbot Integration.</li>
+                            <li><strong>Core Competencies:</strong> Knowledge Management, Digital Transformation, Business Intelligence, Data Governance, Strategic Reporting.</li>
+                        </ul>
+                    </div>
+
+                    <!-- CERTIFICATIONS -->
+                    <div class="mb-4">
+                        <h2 class="text-base font-bold uppercase border-b border-black mb-2 tracking-wider">Training & Certifications</h2>
+                        <ul class="list-none text-gray-800 space-y-1">
+                            <li class="flex justify-between"><span><strong>Amil Zakat Organisations (Lvl 3)</strong> | BNSP</span> <span class="italic">Jul 2025</span></li>
+                            <li class="flex justify-between"><span><strong>Data Science: Probability & Statistics</strong> | Dicoding</span> <span class="italic">Oct 2025</span></li>
+                            <li class="flex justify-between"><span><strong>Basic Artificial Intelligence (AI)</strong> | Dicoding</span> <span class="italic">Oct 2025</span></li>
+                            <li class="flex justify-between"><span><strong>Data Analyst Career Track</strong> | DQLab</span> <span class="italic">Oct 2025</span></li>
+                            <li class="flex justify-between"><span><strong>Machine Learning & AI for Beginner</strong> | DQLab</span> <span class="italic">Oct 2025</span></li>
+                            <li class="flex justify-between"><span><strong>Introduction to Data Science with R</strong> | DQLab</span> <span class="italic">Apr 2025</span></li>
+                            <li class="flex justify-between"><span><strong>DevCoach 159: Database 101</strong> | Dicoding</span> <span class="italic">Jul 2024</span></li>
+                            <li class="flex justify-between"><span><strong>AI & ChatGPT for Academic & Office</strong> | Taalenta</span> <span class="italic">Dec 2023</span></li>
+                        </ul>
+                    </div>
+
+                    <!-- EDUCATION -->
+                    <div class="mb-4">
+                        <h2 class="text-base font-bold uppercase border-b border-black mb-2 tracking-wider">Education</h2>
+                        <div class="flex justify-between font-bold">
+                            <span>Universitas Indraprasta PGRI (UNINDRA)</span>
+                            <span>Jakarta Timur, Indonesia</span>
+                        </div>
+                        <div class="flex justify-between italic text-gray-700">
+                            <span>Bachelor of Informatics Engineering (S.Kom)</span>
+                            <span></span>
+                        </div>
+                        <div class="text-sm text-gray-600">Focus: Software Engineering, Data Structures.</div>
+                    </div>
+                </div>
+
+                <!-- Loading Spinner for PDF -->
+                <div id="loadingSpinner" class="absolute inset-0 flex items-center justify-center z-30 hidden">
+                    <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-primary"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- SCROLL TO TOP BUTTON -->
+    <button id="scrollToTopBtn" class="hover-trigger fixed bottom-8 right-8 w-12 h-12 bg-primary hover:bg-violet-600 text-white rounded-full flex items-center justify-center shadow-lg shadow-primary/20 transition-all transform hover:scale-110 opacity-0 invisible z-50">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        // CONFIG
+        const REMOTE_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSXxXA21f-Q3MUn1A7jyrxNiZ-wD9x4RGfwnqMJrVZuKmhKJKluXsqqkNf2dDvnSJVpdnRBBHQCiLeS/pub?gid=1555337350&single=true&output=csv';
+        const LOCAL_CSV_URL = 'SuperStore - SuperStore (3).csv';
+        const params = new URLSearchParams(window.location.search);
+        const useLocal = params.get('source') === 'local';
+        const CSV_URL = useLocal ? LOCAL_CSV_URL : REMOTE_CSV_URL;
+
+        // CURSOR
+        const cursorDot = document.getElementById("cursor-dot");
+        const cursorOutline = document.getElementById("cursor-outline");
+        window.addEventListener("mousemove", (e) => {
+            cursorDot.style.left = `${e.clientX}px`; cursorDot.style.top = `${e.clientY}px`;
+            cursorOutline.animate({ left: `${e.clientX}px`, top: `${e.clientY}px` }, { duration: 500, fill: "forwards" });
+        });
+        document.querySelectorAll('a, button, .hover-trigger').forEach(el => {
+            el.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
+            el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
+        });
+
+        // MODAL LOGIC (UNIFIED)
+        const modal = document.getElementById('certModal');
+        const pdfFrame = document.getElementById('pdfFrame');
+        const atsCvContent = document.getElementById('atsCvContent');
+        const downloadCvBtn = document.getElementById('downloadCvBtn');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalOrg = document.getElementById('modalOrg');
+        const spinner = document.getElementById('loadingSpinner');
+        const pdfShield = document.getElementById('pdfShield');
+
+        function openCertModal(title, org, fileId) {
+            modalTitle.innerText = title;
+            modalOrg.innerText = org;
+            modal.classList.remove('hidden');
+
+            if (fileId === 'CV_MODE') {
+                // Show Native HTML CV
+                pdfFrame.classList.add('hidden');
+                pdfFrame.src = '';
+                atsCvContent.classList.remove('hidden');
+                downloadCvBtn.classList.remove('hidden'); 
+                spinner.classList.add('hidden');
+                pdfShield.classList.add('hidden'); // Disable shield for CV so download button works
+            } else {
+                // Show Google Drive PDF (Protected Certs)
+                atsCvContent.classList.add('hidden');
+                downloadCvBtn.classList.add('hidden');
+                pdfFrame.classList.remove('hidden');
+                spinner.classList.remove('hidden');
+                pdfShield.classList.remove('hidden'); // Enable shield for Certs
+                pdfFrame.src = `https://drive.google.com/file/d/${fileId}/preview`;
+                pdfFrame.onload = () => spinner.classList.add('hidden');
+            }
+        }
+
+        // PRINT CV FUNCTION
+        function printCV() {
+            const cvContents = document.getElementById('atsCvContent').innerHTML;
+            const printWindow = window.open('', '', 'height=600,width=800');
+            printWindow.document.write('<html><head><title>Febri_Nahdatun_CV_ATS</title>');
+            printWindow.document.write('<link href="https://cdn.tailwindcss.com" rel="stylesheet">');
+            printWindow.document.write('</head><body class="p-8">');
+            printWindow.document.write(cvContents);
+            printWindow.document.write('</body></html>');
+            printWindow.document.close();
+            setTimeout(() => { printWindow.print(); }, 1000);
+        }
+
+        function closeModal() {
+            modal.classList.add('hidden');
+            setTimeout(() => { pdfFrame.src = ''; }, 300);
+        }
+        modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+
+        // DASHBOARD LOGIC
+        function formatLargeNumber(num) {
+            if (num >= 1000000) return '$' + (num / 1000000).toFixed(1) + 'M';
+            if (num >= 1000) return '$' + (num / 1000).toFixed(1) + 'k';
+            return '$' + num.toLocaleString();
+        }
+        function cleanNumber(strVal, columnName = '') {
+            // Handles Indonesian locale numbers in CSV: dots as thousands, commas as decimals
+            if (strVal === null || strVal === undefined) return 0;
+            if (typeof strVal !== 'string') return Number(strVal) || 0;
+            let s = strVal.trim();
+            if (!s) return 0;
+            // Remove percent sign and spaces
+            s = s.replace(/%/g, '').replace(/\s/g, '');
+            
+            // SPECIAL CASE: Sales column is in CENTS (pure integer, no decimal comma)
+            // e.g., "9.575.775" = 9,575,775 cents = $95,757.75
+            if (columnName === 'Sales') {
+                // Remove all dots (thousands separators only in Sales)
+                s = s.replace(/\./g, '');
+                // Remove any non-numeric except leading minus
+                s = s.replace(/[^0-9.-]/g, '');
+                const cents = parseFloat(s);
+                // Convert cents to dollars
+                return isNaN(cents) ? 0 : cents / 100;
+            }
+            
+            // For other columns (Profit, Quantity, etc.): Indonesian format with comma decimal
+            // Count separators
+            const dotCount = (s.match(/\./g) || []).length;
+            const commaCount = (s.match(/,/g) || []).length;
+            
+            if (dotCount > 0 && commaCount > 0) {
+                // Both exist: dots are thousands, comma is decimal (e.g., "2.488.915,00")
+                s = s.replace(/\./g, '');
+                s = s.replace(/,/g, '.');
+            } else if (commaCount > 0) {
+                // Only comma: decimal separator (e.g., "419,14")
+                s = s.replace(/,/g, '.');
+            } else if (dotCount > 1) {
+                // Multiple dots: thousands separators (e.g., "9.575.775")
+                s = s.replace(/\./g, '');
+            } else if (dotCount === 1) {
+                // Single dot: keep as decimal point (e.g., "262" or could be "1.5")
+                // No change needed
+            }
+            
+            // Remove any non-numeric except leading minus and decimal point
+            s = s.replace(/[^0-9.-]/g, '');
+            const n = parseFloat(s);
+            return isNaN(n) ? 0 : n;
+        }
+
+        function cleanPercent(strVal) {
+            // Returns percent as 0..1
+            const n = cleanNumber(strVal);
+            return n / 100;
+        }
+
+        async function fetchDashboardData() {
+            try {
+                document.getElementById('status-indicator').innerText = 'Downloading CSV...';
+                document.getElementById('status-indicator').classList.add('text-yellow-400');
+                
+                const response = await fetch(CSV_URL);
+                if (!response.ok) throw new Error("Failed to fetch CSV");
+                const csvText = await response.text();
+                
+                const results = Papa.parse(csvText, { header: true, skipEmptyLines: true, dynamicTyping: false });
+                document.getElementById('status-indicator').innerText = 'Processing...';
+                
+                let totalSales = 0, totalProfit = 0, uniqueOrders = new Set(), monthlyStats = Array(12).fill(0).map(() => ({ sales: 0, profit: 0 })), segmentStats = {};
+                const categoryStats = {}; const subCategoryStats = {}; const regionStats = {}; const stateStats = {}; const shipModeStats = {}; const shipMonthlySales = Array(12).fill(0); const productStats = {};
+
+                let skippedRows = 0;
+                results.data.forEach(row => {
+                    const sales = cleanNumber(row['Sales'], 'Sales');  // Sales in CENTS format
+                    const profit = cleanNumber(row['Profit'], 'Profit');  // Profit in Indonesian format
+                    
+                    // DATA VALIDATION: Skip rows with impossible profit/sales ratios
+                    // Profit should not exceed 10x of sales; for tiny sales, use a $50 floor to avoid false flags
+                    const salesFloor = Math.max(Math.abs(sales), 50);
+                    if (Math.abs(profit) > salesFloor * 10) {
+                        skippedRows++;
+                        return; // Skip this corrupt row
+                    }
+                    // Hard anomaly cap: if profit is absurdly large while sales are small, skip
+                    if (Math.abs(profit) > 1_000_000 && Math.abs(sales) < 500) {
+                        skippedRows++;
+                        return;
+                    }
+                    
+                    const orderDate = new Date(row['Order_Date']);
+                    const segment = row['Segment'];
+                    const orderId = row['Order_ID'];
+                    const category = row['Category'];
+                    const subCategory = row['Sub-Category'];
+                    const region = row['Region'];
+                    const state = row['State'];
+                    const shipMode = row['Ship_Mode'];
+                    const shipDate = new Date(row['Ship_Date']);
+                    const productName = row['Product_Name'];
+
+                    totalSales += sales; totalProfit += profit;
+                    if(orderId) uniqueOrders.add(orderId);
+
+                    if (!isNaN(orderDate.getTime())) {
+                        const month = orderDate.getMonth();
+                        monthlyStats[month].sales += sales;
+                        monthlyStats[month].profit += profit;
+                    }
+                    if(segment) segmentStats[segment] = (segmentStats[segment] || 0) + sales;
+                    if(category) categoryStats[category] = (categoryStats[category] || 0) + sales;
+                    if(subCategory) subCategoryStats[subCategory] = { profit: (subCategoryStats[subCategory]?.profit || 0) + profit };
+                    if(region) regionStats[region] = (regionStats[region] || 0) + sales;
+                    if(state) stateStats[state] = { profit: (stateStats[state]?.profit || 0) + profit };
+                    if(shipMode) shipModeStats[shipMode] = (shipModeStats[shipMode] || 0) + 1;
+                    if (!isNaN(shipDate.getTime())) { shipMonthlySales[shipDate.getMonth()] += sales; }
+                    if(productName) { productStats[productName] = { sales: (productStats[productName]?.sales || 0) + sales, profit: (productStats[productName]?.profit || 0) + profit }; }
+                });
+
+                const margin = totalSales ? ((totalProfit / totalSales) * 100).toFixed(1) + '%' : '0%';
+                
+                if (skippedRows > 0) {
+                    console.warn(`⚠️ Data Quality: ${skippedRows} corrupt rows filtered (profit/sales ratio > 10x)`);
+                }
+                
+                document.getElementById('status-indicator').innerText = 'Connected (Live CSV)';
+                document.getElementById('status-indicator').classList.replace('text-yellow-400', 'text-green-400');
+
+                const topProducts = Object.entries(productStats).map(([name, v]) => ({ name, sales: Math.round(v.sales), profit: Math.round(v.profit) })).sort((a,b) => b.sales - a.sales).slice(0, 10);
+                return {
+                    kpi: { sales: Math.round(totalSales), profit: Math.round(totalProfit), orders: uniqueOrders.size, discount: margin },
+                    trend: { labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'], sales: monthlyStats.map(m => Math.round(m.sales)), profit: monthlyStats.map(m => Math.round(m.profit)) },
+                    segment: { labels: Object.keys(segmentStats), data: Object.values(segmentStats).map(v => Math.round(v)) },
+                    category: { labels: Object.keys(categoryStats), sales: Object.values(categoryStats).map(v => Math.round(v)) },
+                    subCategory: { labels: Object.keys(subCategoryStats), profit: Object.values(subCategoryStats).map(v => Math.round(v.profit)) },
+                    region: { labels: Object.keys(regionStats), sales: Object.values(regionStats).map(v => Math.round(v)) },
+                    state: { labels: Object.keys(stateStats), profit: Object.values(stateStats).map(v => Math.round(v.profit)) },
+                    ship: { labels: Object.keys(shipModeStats), orders: Object.values(shipModeStats), monthlySales: shipMonthlySales.map(v => Math.round(v)) },
+                    topProducts
+                };
+            } catch (error) {
+                console.error("Fetch Error:", error);
+                document.getElementById('status-indicator').innerText = 'Connection Failed (Sim)';
+                document.getElementById('status-indicator').classList.replace('text-yellow-400', 'text-red-400');
+                return { kpi: { sales: 0, profit: 0, orders: 0, discount: "0%" }, trend: { labels: [], sales: [], profit: [] }, segment: { labels: [], data: [] } };
+            }
+        }
+
+        function renderDashboard(data) {
+            document.getElementById('kpi-sales').innerText = formatLargeNumber(data.kpi.sales);
+            document.getElementById('kpi-profit').innerText = formatLargeNumber(data.kpi.profit);
+            document.getElementById('kpi-orders').innerText = data.kpi.orders.toLocaleString();
+            document.getElementById('avg-discount').innerText = data.kpi.discount; 
+
+            const ctxTrend = document.getElementById('trendChart').getContext('2d');
+            new Chart(ctxTrend, {
+                type: 'bar',
+                data: { labels: data.trend.labels, datasets: [{ label: 'Profit ($)', data: data.trend.profit, type: 'line', borderColor: '#0EA5E9', backgroundColor: 'rgba(14, 165, 233, 0.1)', borderWidth: 3, tension: 0.4, pointRadius: 3, yAxisID: 'y1' }, { label: 'Sales ($)', data: data.trend.sales, backgroundColor: '#8B5CF6', borderRadius: 4, yAxisID: 'y' }] },
+                options: { responsive: true, maintainAspectRatio: false, interaction: { mode: 'index', intersect: false }, plugins: { legend: { labels: { color: '#94a3b8', font: { family: 'Poppins' } } } }, scales: { y: { type: 'linear', display: true, position: 'left', grid: { color: '#1E293B' }, ticks: { color: '#94a3b8', font: { family: 'Poppins' }, callback: function(value) { return '$' + value/1000 + 'k'; } } }, y1: { type: 'linear', display: true, position: 'right', grid: { drawOnChartArea: false }, ticks: { color: '#0EA5E9', font: { family: 'Poppins' } } }, x: { grid: { display: false }, ticks: { color: '#94a3b8', font: { family: 'Poppins' } } } } }
+            });
+
+            const ctxSeg = document.getElementById('segmentChart').getContext('2d');
+            new Chart(ctxSeg, {
+                type: 'doughnut',
+                data: { labels: data.segment.labels, datasets: [{ data: data.segment.data, backgroundColor: ['#8B5CF6', '#0EA5E9', '#6366F1'], borderWidth: 0 }] },
+                options: { responsive: true, cutout: '75%', plugins: { legend: { position: 'bottom', labels: { color: '#94a3b8', font: { family: 'Poppins' } } } } }
+            });
+
+            // Additional charts
+            if (data.category) {
+                const ctxCat = document.getElementById('categoryChart')?.getContext('2d');
+                if (ctxCat) new Chart(ctxCat, {
+                    type: 'bar',
+                    data: { labels: data.category.labels, datasets: [{ label: 'Sales ($)', data: data.category.sales, backgroundColor: ['#8B5CF6', '#0EA5E9', '#6366F1'] }] },
+                    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { ticks: { color: '#94a3b8' } }, y: { ticks: { color: '#94a3b8', callback: v => '$' + (v/1000) + 'k' }, grid: { color: '#1E293B' } } } }
+                });
+            }
+
+            if (data.subCategory) {
+                const ctxSub = document.getElementById('subCategoryChart')?.getContext('2d');
+                if (ctxSub) new Chart(ctxSub, {
+                    type: 'bar',
+                    data: { labels: data.subCategory.labels, datasets: [{ label: 'Profit ($)', data: data.subCategory.profit, backgroundColor: '#0EA5E9' }] },
+                    options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { ticks: { color: '#94a3b8', callback: v => '$' + (v/1000) + 'k' }, grid: { color: '#1E293B' } }, y: { ticks: { color: '#94a3b8' } } } }
+                });
+            }
+
+            if (data.region) {
+                const ctxRegion = document.getElementById('regionChart')?.getContext('2d');
+                if (ctxRegion) new Chart(ctxRegion, {
+                    type: 'bar',
+                    data: { labels: data.region.labels, datasets: [{ label: 'Sales ($)', data: data.region.sales, backgroundColor: '#8B5CF6' }] },
+                    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { ticks: { color: '#94a3b8' } }, y: { ticks: { color: '#94a3b8', callback: v => '$' + (v/1000) + 'k' }, grid: { color: '#1E293B' } } } }
+                });
+
+                const ctxState = document.getElementById('stateChart')?.getContext('2d');
+                if (ctxState) new Chart(ctxState, {
+                    type: 'bar',
+                    data: { labels: data.state.labels, datasets: [{ label: 'Profit ($)', data: data.state.profit, backgroundColor: '#6366F1' }] },
+                    options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { ticks: { color: '#94a3b8', callback: v => '$' + (v/1000) + 'k' }, grid: { color: '#1E293B' } }, y: { ticks: { color: '#94a3b8' } } } }
+                });
+            }
+
+            if (data.ship) {
+                const ctxShip = document.getElementById('shipModeChart')?.getContext('2d');
+                if (ctxShip) new Chart(ctxShip, {
+                    type: 'pie',
+                    data: { labels: data.ship.labels, datasets: [{ data: data.ship.orders, backgroundColor: ['#8B5CF6', '#0EA5E9', '#6366F1', '#22D3EE'] }] },
+                    options: { responsive: true, plugins: { legend: { position: 'bottom', labels: { color: '#94a3b8' } } } }
+                });
+
+                const ctxShipMonthly = document.getElementById('shipMonthlyChart')?.getContext('2d');
+                if (ctxShipMonthly) new Chart(ctxShipMonthly, {
+                    type: 'line',
+                    data: { labels: data.trend.labels, datasets: [{ label: 'Shipped ($)', data: data.ship.monthlySales, borderColor: '#22D3EE', backgroundColor: 'rgba(34, 211, 238, 0.2)', tension: 0.4 }] },
+                    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: '#94a3b8' } } }, scales: { x: { ticks: { color: '#94a3b8' } }, y: { ticks: { color: '#94a3b8', callback: v => '$' + (v/1000) + 'k' }, grid: { color: '#1E293B' } } } }
+                });
+            }
+
+            if (data.topProducts) {
+                const tbody = document.getElementById('topProductsTable');
+                if (tbody) {
+                    tbody.innerHTML = '';
+                    data.topProducts.forEach(p => {
+                        const tr = document.createElement('tr');
+                        tr.className = 'border-t border-gray-800 hover:bg-slate-800/40';
+                        tr.innerHTML = `<td class="py-2 pr-4 text-gray-300">${p.name}</td><td class="py-2 pr-4 text-right text-gray-300">${formatLargeNumber(p.sales)}</td><td class="py-2 text-right text-gray-300">${formatLargeNumber(p.profit)}</td>`;
+                        tbody.appendChild(tr);
+                    });
+                }
+
+                const ctxSegBar = document.getElementById('segmentBarChart')?.getContext('2d');
+                if (ctxSegBar) new Chart(ctxSegBar, {
+                    type: 'bar',
+                    data: { labels: data.segment.labels, datasets: [{ label: 'Sales ($)', data: data.segment.data, backgroundColor: '#8B5CF6' }] },
+                    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { ticks: { color: '#94a3b8' } }, y: { ticks: { color: '#94a3b8', callback: v => '$' + (v/1000) + 'k' }, grid: { color: '#1E293B' } } } }
+                });
+            }
+
+            // Basic tabs logic
+            const tabs = document.querySelectorAll('.tab-btn');
+            const panels = { overview: document.getElementById('tab-overview'), category: document.getElementById('tab-category'), region: document.getElementById('tab-region'), ship: document.getElementById('tab-ship'), products: document.getElementById('tab-products') };
+            function activate(tab) { Object.keys(panels).forEach(k => { const p = panels[k]; if (p) p.classList.add('hidden'); }); const target = panels[tab]; if (target) target.classList.remove('hidden'); tabs.forEach(btn => { if (btn.dataset.tab === tab) { btn.classList.add('border-primary','text-primary'); } else { btn.classList.remove('border-primary','text-primary'); } }); }
+            activate('overview');
+            tabs.forEach(btn => btn.addEventListener('click', () => activate(btn.dataset.tab)));
+        }
+
+        // SCROLL TO TOP
+        const scrollToTopBtn = document.getElementById("scrollToTopBtn");
+        window.onscroll = function() { if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) { scrollToTopBtn.classList.add("show"); } else { scrollToTopBtn.classList.remove("show"); } };
+        scrollToTopBtn.addEventListener("click", function() { window.scrollTo({ top: 0, behavior: "smooth" }); });
+
+        // FORM MAILTO
+        const contactForm = document.getElementById('contactForm');
+        if(contactForm){ contactForm.addEventListener('submit', function(e) { e.preventDefault(); const name = document.getElementById('name').value; const email = document.getElementById('email').value; const message = document.getElementById('message').value; const subject = `Portfolio Inquiry from ${name}`; const body = `Name: ${name}%0D%0AEmail: ${email}%0D%0A%0D%0AMessage:%0D%0A${message}`; window.location.href = `mailto:febri.nahdatun@gmail.com?subject=${subject}&body=${body}`; }); }
+
+        document.addEventListener('DOMContentLoaded', async () => { const data = await fetchDashboardData(); renderDashboard(data); });
+    </script>
+</body>
+</html>
