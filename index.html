@@ -344,7 +344,7 @@
                         <div class="lg:col-span-2 bg-dark p-6 rounded-2xl border border-gray-800"><h5 class="text-white font-bold text-sm mb-6 flex items-center gap-2"><i class="fas fa-city text-secondary"></i> Profit by State</h5><div class="h-72"><canvas id="stateChart"></canvas></div></div>
                     </div>
                     <div id="tab-ship" class="tab-panel hidden grid grid-cols-1 lg:grid-cols-4 gap-6">
-                        <div class="lg:col-span-2 bg-dark p-6 rounded-2xl border border-gray-800"><h5 class="text-white font-bold text-sm mb-6 flex items-center gap-2"><i class="fas fa-truck-fast text-primary"></i> Orders by Ship Mode</h5><div class="h-72"><canvas id="shipModeChart"></canvas></div></div>
+                        <div class="lg:col-span-2 bg-dark p-6 rounded-2xl border border-gray-800"><h5 class="text-white font-bold text-sm mb-6 flex items-center gap-2"><i class="fas fa-truck-fast text-primary"></i> Orders by Ship Mode</h5><div class="h-72"><canvas id="shipModeChart" class="w-full h-full"></canvas></div></div>
                         <div class="lg:col-span-2 bg-dark p-6 rounded-2xl border border-gray-800"><h5 class="text-white font-bold text-sm mb-6 flex items-center gap-2"><i class="fas fa-clock text-secondary"></i> Sales by Ship Date (Monthly)</h5><div class="h-72"><canvas id="shipMonthlyChart"></canvas></div></div>
                     </div>
                     <div id="tab-products" class="tab-panel hidden grid grid-cols-1 lg:grid-cols-4 gap-6">
@@ -1041,7 +1041,17 @@
                 if (ctxShip) new Chart(ctxShip, {
                     type: 'pie',
                     data: { labels: data.ship.labels, datasets: [{ data: data.ship.orders, backgroundColor: ['#8B5CF6', '#0EA5E9', '#6366F1', '#22D3EE'] }] },
-                    options: { responsive: true, plugins: { legend: { position: 'bottom', labels: { color: '#94a3b8' } } } }
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        layout: { padding: 0 },
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: { color: '#94a3b8', boxWidth: 12, padding: 10 }
+                            }
+                        }
+                    }
                 });
 
                 const ctxShipMonthly = document.getElementById('shipMonthlyChart')?.getContext('2d');
