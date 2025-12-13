@@ -1,0 +1,1396 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marketing Analytics Dashboard | Febri Nahdatun Portfolio</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- PapaParse -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+
+    <!-- Google Fonts: POPPINS -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#8B5CF6', secondary: '#0EA5E9',
+                        dark: '#0F172A', surface: '#1E293B', surfaceHover: '#334155',
+                    },
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* SCROLLBAR */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0F172A; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #8B5CF6; }
+        
+        .gradient-text {
+            background: linear-gradient(to right, #8B5CF6, #0EA5E9);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        
+        /* CUSTOM CURSOR */
+        body { cursor: none; }
+        .cursor-dot { width: 8px; height: 8px; background-color: #8B5CF6; border-radius: 50%; position: fixed; top: 0; left: 0; transform: translate(-50%, -50%); z-index: 9999; pointer-events: none; }
+        .cursor-outline { width: 40px; height: 40px; border: 2px solid rgba(139, 92, 246, 0.5); border-radius: 50%; position: fixed; top: 0; left: 0; transform: translate(-50%, -50%); z-index: 9998; pointer-events: none; transition: width 0.2s, height 0.2s, background-color 0.2s, border-color 0.2s; }
+        body.hovering .cursor-outline { width: 60px; height: 60px; background-color: rgba(139, 92, 246, 0.1); border-color: #0EA5E9; }
+        @media (max-width: 768px) { body { cursor: auto; } .cursor-dot, .cursor-outline { display: none; } }
+
+        .glass-card { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(139, 92, 246, 0.2); border-radius: 12px; }
+        .stat-card { background: rgba(30, 41, 59, 0.5); backdrop-filter: blur(10px); border: 1px solid rgba(139, 92, 246, 0.15); border-radius: 12px; transition: all 0.3s ease; }
+        .stat-card:hover { transform: translateY(-2px); border-color: rgba(139, 92, 246, 0.4); box-shadow: 0 8px 16px rgba(139, 92, 246, 0.1); }
+
+        .tab-btn { transition: all 0.3s; background: rgba(30, 41, 59, 0.5); border: 1px solid rgba(139, 92, 246, 0.1); }
+        .tab-btn.active { background: linear-gradient(to right, #8B5CF6, #0EA5E9); border-color: transparent; }
+        
+        .chart-container { position: relative; height: 350px; }
+    </style>
+</head>
+<body class="bg-dark text-gray-300 font-sans antialiased overflow-x-hidden">
+
+    <!-- CUSTOM CURSOR -->
+    <div class="cursor-dot" id="cursor-dot"></div>
+    <div class="cursor-outline" id="cursor-outline"></div>
+
+    <!-- Navbar -->
+    <nav class="fixed w-full z-40 bg-dark/80 backdrop-blur-md border-b border-gray-800/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex-shrink-0 flex items-center gap-3">
+                    <h1 class="text-lg font-bold text-white tracking-wide">
+                        <span class="gradient-text">Marketing</span> Analytics
+                    </h1>
+                </div>
+                <div class="hidden md:block">
+                    <a href="index.html" class="text-sm font-medium text-gray-300 hover:text-primary transition-colors">← Back to Portfolio</a>
+                </div>
+                <a href="index.html" class="px-6 py-2.5 bg-primary text-white font-semibold rounded-full text-sm hover:bg-violet-600 transition-all shadow-[0_4px_14px_0_rgba(139,92,246,0.39)] transform hover:-translate-y-0.5">
+                    My Profile
+                </a>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="pt-24 pb-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Header -->
+            <div class="mb-8">
+                <h2 class="text-4xl font-bold text-white mb-2">
+                    Marketing <span class="gradient-text">Analytics</span> Dashboard
+                </h2>
+                <p class="text-gray-400 text-lg">Social Media Performance Tracking & Strategic Insights</p>
+                <p class="text-gray-500 text-sm mt-2"><i class="fas fa-database"></i> <span id="status">Loading data...</span></p>
+            </div>
+
+            <!-- KPI Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+                <div class="stat-card p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-400 text-sm font-medium">Total Impressions</p>
+                            <h3 class="text-3xl font-bold text-white mt-2" id="kpi-impressions">0</h3>
+                        </div>
+                        <div class="w-14 h-14 rounded-full bg-blue-500/10 flex items-center justify-center border border-blue-500/30">
+                            <i class="fas fa-eye text-blue-400 text-2xl"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stat-card p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-400 text-sm font-medium">Total Clicks</p>
+                            <h3 class="text-3xl font-bold text-white mt-2" id="kpi-clicks">0</h3>
+                        </div>
+                        <div class="w-14 h-14 rounded-full bg-green-500/10 flex items-center justify-center border border-green-500/30">
+                            <i class="fas fa-mouse-pointer text-green-400 text-2xl"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stat-card p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-400 text-sm font-medium">Average CTR</p>
+                            <h3 class="text-3xl font-bold text-white mt-2" id="kpi-ctr">0%</h3>
+                        </div>
+                        <div class="w-14 h-14 rounded-full bg-purple-500/10 flex items-center justify-center border border-purple-500/30">
+                            <i class="fas fa-percentage text-purple-400 text-2xl"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stat-card p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-400 text-sm font-medium">Total Posts</p>
+                            <h3 class="text-3xl font-bold text-white mt-2" id="kpi-posts">0</h3>
+                        </div>
+                        <div class="w-14 h-14 rounded-full bg-pink-500/10 flex items-center justify-center border border-pink-500/30">
+                            <i class="fas fa-share-alt text-pink-400 text-2xl"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        <!-- Tab Navigation -->
+        <div class="glass-card p-2 mb-8 overflow-x-auto">
+            <div class="flex flex-wrap gap-2">
+                <button class="tab-btn px-6 py-3 rounded-lg text-gray-300 hover:text-white whitespace-nowrap" data-tab="overview">
+                    <i class="fas fa-chart-line mr-2"></i>Overview
+                </button>
+                <button class="tab-btn px-6 py-3 rounded-lg text-white" data-tab="channels">
+                    <i class="fas fa-share-nodes mr-2"></i>Channels
+                </button>
+                <button class="tab-btn px-6 py-3 rounded-lg text-white" data-tab="content">
+                    <i class="fas fa-file-alt mr-2"></i>Content
+                </button>
+                <button class="tab-btn px-6 py-3 rounded-lg text-white" data-tab="languages">
+                    <i class="fas fa-globe mr-2"></i>Languages
+                </button>
+                <button class="tab-btn px-6 py-3 rounded-lg text-white" data-tab="calendar">
+                    <i class="fas fa-calendar mr-2"></i>Calendar
+                </button>
+                <button class="tab-btn px-6 py-3 rounded-lg text-white" data-tab="funnel">
+                    <i class="fas fa-funnel mr-2"></i>Funnel
+                </button>
+                <button class="tab-btn px-6 py-3 rounded-lg text-white" data-tab="insights">
+                    <i class="fas fa-lightbulb mr-2"></i>Insights
+                </button>
+            </div>
+        </div>
+
+        <!-- Tab Panels -->
+        <div id="tab-overview" class="tab-panel hidden">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="glass-card p-6">
+                    <h3 class="text-white font-bold text-lg mb-4"><i class="fas fa-chart-area text-blue-300 mr-2"></i>Monthly Impressions Trend</h3>
+                    <div class="chart-container"><canvas id="impressionsTrendChart"></canvas></div>
+                </div>
+                <div class="glass-card p-6">
+                    <h3 class="text-white font-bold text-lg mb-4"><i class="fas fa-chart-line text-green-300 mr-2"></i>CTR Performance Over Time</h3>
+                    <div class="chart-container"><canvas id="ctrTrendChart"></canvas></div>
+                </div>
+                <div class="glass-card p-6">
+                    <h3 class="text-white font-bold text-lg mb-4"><i class="fas fa-chart-pie text-purple-300 mr-2"></i>Channel Distribution</h3>
+                    <div class="chart-container"><canvas id="channelPieChart"></canvas></div>
+                </div>
+                <div class="glass-card p-6">
+                    <h3 class="text-white font-bold text-lg mb-4"><i class="fas fa-chart-bar text-pink-300 mr-2"></i>Clicks by Channel</h3>
+                    <div class="chart-container"><canvas id="clicksChannelChart"></canvas></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="tab-channels" class="tab-panel hidden">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="glass-card p-6">
+                    <h3 class="text-white font-bold text-lg mb-4"><i class="fas fa-bullseye text-blue-300 mr-2"></i>Channel Performance Comparison</h3>
+                    <div class="chart-container"><canvas id="channelComparisonChart"></canvas></div>
+                </div>
+                <div class="glass-card p-6">
+                    <h3 class="text-white font-bold text-lg mb-4"><i class="fas fa-chart-line text-green-300 mr-2"></i>Average CTR by Channel</h3>
+                    <div class="chart-container"><canvas id="channelCTRChart"></canvas></div>
+                </div>
+                <div class="glass-card p-6 lg:col-span-2">
+                    <h3 class="text-white font-bold text-lg mb-4"><i class="fas fa-table text-purple-300 mr-2"></i>Channel Metrics Summary</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-white text-sm" id="channelTable">
+                            <thead class="border-b border-white/20">
+                                <tr><th class="py-3 text-left">Channel</th><th class="py-3 text-right">Posts</th><th class="py-3 text-right">Impressions</th><th class="py-3 text-right">Clicks</th><th class="py-3 text-right">Avg CTR</th></tr>
+                            </thead>
+                            <tbody id="channelTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="tab-content" class="tab-panel hidden">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="glass-card p-6">
+                    <h3 class="text-white font-bold text-lg mb-4"><i class="fas fa-layer-group text-blue-300 mr-2"></i>Impressions by Content Category</h3>
+                    <div class="chart-container"><canvas id="contentImpressionsChart"></canvas></div>
+                </div>
+                <div class="glass-card p-6">
+                    <h3 class="text-white font-bold text-lg mb-4"><i class="fas fa-star text-yellow-300 mr-2"></i>CTR by Content Category</h3>
+                    <div class="chart-container"><canvas id="contentCTRChart"></canvas></div>
+                </div>
+                <div class="glass-card p-6 lg:col-span-2">
+                    <h3 class="text-white font-bold text-lg mb-4"><i class="fas fa-fire text-orange-300 mr-2"></i>Top Performing Content</h3>
+                    <div class="chart-container"><canvas id="topContentChart"></canvas></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="tab-languages" class="tab-panel hidden">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="glass-card p-6">
+                    <h3 class="text-white font-bold text-lg mb-4"><i class="fas fa-language text-blue-300 mr-2"></i>Engagement by Language</h3>
+                    <div class="chart-container"><canvas id="languageEngagementChart"></canvas></div>
+                </div>
+                <div class="glass-card p-6">
+                    <h3 class="text-white font-bold text-lg mb-4"><i class="fas fa-chart-pie text-green-300 mr-2"></i>Language Distribution</h3>
+                    <div class="chart-container"><canvas id="languagePieChart"></canvas></div>
+                </div>
+                <div class="glass-card p-6 lg:col-span-2">
+                    <h3 class="text-white font-bold text-lg mb-4"><i class="fas fa-trophy text-yellow-300 mr-2"></i>Language Performance Metrics</h3>
+                    <div class="chart-container"><canvas id="languagePerformanceChart"></canvas></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="tab-calendar" class="tab-panel hidden">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="glass-card p-6">
+                    <h3 class="text-white font-bold text-lg mb-4"><i class="fas fa-calendar-week text-blue-300 mr-2"></i>Performance by Day of Week</h3>
+                    <div class="chart-container"><canvas id="dayOfWeekChart"></canvas></div>
+                </div>
+                <div class="glass-card p-6">
+                    <h3 class="text-white font-bold text-lg mb-4"><i class="fas fa-clock text-purple-300 mr-2"></i>Best Time to Post</h3>
+                    <div class="chart-container"><canvas id="bestTimeChart"></canvas></div>
+                </div>
+                <div class="glass-card p-6 lg:col-span-2">
+                    <h3 class="text-white font-bold text-lg mb-4"><i class="fas fa-chart-line text-green-300 mr-2"></i>Weekly Pattern Analysis</h3>
+                    <div class="chart-container"><canvas id="weeklyPatternChart"></canvas></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Funnel Tab -->
+        <div id="tab-funnel" class="tab-panel hidden">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="glass-card p-6 lg:col-span-2">
+                    <h3 class="text-white font-bold text-lg mb-4"><i class="fas fa-funnel text-blue-300 mr-2"></i>Conversion Funnel Analysis</h3>
+                    <div class="chart-container"><canvas id="funnelChart"></canvas></div>
+                </div>
+                <div class="glass-card p-6">
+                    <h3 class="text-white font-bold text-lg mb-4"><i class="fas fa-chart-bar text-green-300 mr-2"></i>Channel Funnel Comparison</h3>
+                    <div class="overflow-y-auto max-h-96" id="funnelMetrics"></div>
+                </div>
+                <div class="glass-card p-6">
+                    <h3 class="text-white font-bold text-lg mb-4"><i class="fas fa-percentile text-purple-300 mr-2"></i>Conversion Rates</h3>
+                    <div class="overflow-y-auto max-h-96" id="conversionRates"></div>
+                </div>
+                <div class="glass-card p-6 lg:col-span-2">
+                    <h3 class="text-white font-bold text-lg mb-4"><i class="fas fa-chart-line text-pink-300 mr-2"></i>Channel-to-Channel Conversion Flow</h3>
+                    <div class="chart-container"><canvas id="channelFunnelChart"></canvas></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Insights Tab -->
+        <div id="tab-insights" class="tab-panel hidden">
+            <div class="grid grid-cols-1 gap-6">
+                <div class="glass-card p-6">
+                    <h3 class="text-white font-bold text-lg mb-4"><i class="fas fa-star text-yellow-300 mr-2"></i>Top Recommendations</h3>
+                    <div class="space-y-4" id="recommendationsBox">
+                        <div class="bg-white/10 p-4 rounded-lg border-l-4 border-yellow-400">
+                            <p class="text-white font-semibold">Loading recommendations...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card p-6">
+                    <h3 class="text-white font-bold text-lg mb-4"><i class="fas fa-exclamation-triangle text-orange-300 mr-2"></i>Key Findings & Anomalies</h3>
+                    <div class="space-y-4" id="anomaliesBox">
+                        <div class="bg-white/10 p-4 rounded-lg border-l-4 border-orange-400">
+                            <p class="text-white font-semibold">Analyzing data...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card p-6">
+                    <h3 class="text-white font-bold text-lg mb-4"><i class="fas fa-chart-pie text-green-300 mr-2"></i>ROI & Performance Metrics</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div class="bg-white/10 p-4 rounded-lg">
+                            <p class="text-white/70 text-sm mb-2">Cost per 1K Impressions (CPM)</p>
+                            <p class="text-2xl font-bold text-white" id="roi-cpm">$2.50</p>
+                        </div>
+                        <div class="bg-white/10 p-4 rounded-lg">
+                            <p class="text-white/70 text-sm mb-2">Cost per Click (CPC)</p>
+                            <p class="text-2xl font-bold text-white" id="roi-cpc">$0.30</p>
+                        </div>
+                        <div class="bg-white/10 p-4 rounded-lg">
+                            <p class="text-white/70 text-sm mb-2">Newsletter Premium</p>
+                            <p class="text-2xl font-bold text-green-400" id="roi-premium">10.8x</p>
+                        </div>
+                        <div class="bg-white/10 p-4 rounded-lg">
+                            <p class="text-white/70 text-sm mb-2">Est. Monthly ROI</p>
+                            <p class="text-2xl font-bold text-white" id="roi-monthly">+245%</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card p-6">
+                    <h3 class="text-white font-bold text-lg mb-4"><i class="fas fa-chart-line text-blue-300 mr-2"></i>Performance vs. Industry Benchmarks</h3>
+                    <div class="chart-container"><canvas id="benchmarkChart"></canvas></div>
+                </div>
+
+                <div class="glass-card p-6">
+                    <h3 class="text-white font-bold text-lg mb-4"><i class="fas fa-trophy text-yellow-400 mr-2"></i>Growth Opportunities</h3>
+                    <div class="chart-container"><canvas id="opportunityChart"></canvas></div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark/80 backdrop-blur-md border-t border-gray-800/50 mt-16 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p class="text-gray-400 text-sm">
+                <span class="gradient-text font-semibold">Marketing Analytics Dashboard</span> | Part of Febri Nahdatun's Portfolio
+            </p>
+            <p class="text-gray-500 text-xs mt-2">
+                Data-driven insights for strategic decision making
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // CONFIG - Use GitHub-hosted CSV by default (CORS-friendly)
+        const GITHUB_CSV_URL = 'marketing_data.csv'; // Same directory as HTML
+        const GOOGLE_DRIVE_ID = '1fj0zNqSjzpcmAm6VOZshEBBthTqLG-pw';
+        const GOOGLE_DRIVE_URL = `https://drive.google.com/uc?export=download&id=${GOOGLE_DRIVE_ID}`;
+        const params = new URLSearchParams(window.location.search);
+        const useGoogleDrive = params.get('source') === 'gdrive';
+        const CSV_URL = useGoogleDrive ? GOOGLE_DRIVE_URL : GITHUB_CSV_URL;
+
+        // Custom Cursor with Hover Effects
+        const cursorDot = document.getElementById("cursor-dot");
+        const cursorOutline = document.getElementById("cursor-outline");
+        let mouseX = 0, mouseY = 0;
+
+        window.addEventListener("mousemove", (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            cursorDot.style.transform = `translate(calc(-50% + ${mouseX}px), calc(-50% + ${mouseY}px))`;
+            cursorOutline.style.transform = `translate(calc(-50% + ${mouseX}px), calc(-50% + ${mouseY}px))`;
+        });
+
+        // Hover trigger elements
+        document.addEventListener('mouseover', (e) => {
+            if (e.target.closest('a, button, input, [role="button"]')) {
+                document.body.classList.add('hovering');
+            }
+        });
+        
+        document.addEventListener('mouseout', (e) => {
+            if (e.target.closest('a, button, input, [role="button"]')) {
+                document.body.classList.remove('hovering');
+            }
+        });
+
+        // Tab System
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabPanels = document.querySelectorAll('.tab-panel');
+        
+        function activateTab(tabName) {
+            tabBtns.forEach(btn => {
+                if (btn.dataset.tab === tabName) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+            
+            tabPanels.forEach(panel => {
+                if (panel.id === `tab-${tabName}`) {
+                    panel.classList.remove('hidden');
+                } else {
+                    panel.classList.add('hidden');
+                }
+            });
+        }
+        
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => activateTab(btn.dataset.tab));
+        });
+
+        // Chart.js Global Config
+        Chart.defaults.color = '#cbd5e1';
+        Chart.defaults.borderColor = 'rgba(139, 92, 246, 0.1)';
+        Chart.defaults.plugins.legend.labels.color = '#cbd5e1';
+        Chart.defaults.plugins.legend.labels.font.family = 'Poppins, sans-serif';
+
+        const chartColors = {
+            primary: '#8B5CF6',
+            secondary: '#0EA5E9',
+            blue: '#60a5fa',
+            green: '#34d399',
+            purple: '#a78bfa',
+            pink: '#f472b6',
+            orange: '#fb923c',
+            yellow: '#fbbf24'
+        };
+
+        // Data Processing
+        async function fetchData() {
+            try {
+                document.getElementById('status').innerText = 'Downloading data...';
+                console.log('Starting data fetch from:', CSV_URL);
+                
+                const response = await fetch(CSV_URL);
+                console.log('Response status:', response.status, response.ok);
+                
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch CSV: HTTP ${response.status}`);
+                }
+                
+                const csvText = await response.text();
+                console.log('CSV loaded successfully, length:', csvText.length);
+                
+                document.getElementById('status').innerText = 'Processing...';
+                console.log('First 200 chars:', csvText.substring(0, 200));
+                
+                const results = Papa.parse(csvText, {
+                    header: true,
+                    skipEmptyLines: true,
+                    dynamicTyping: false
+                });
+                
+                console.log('Parse results:', results.data.length, 'rows');
+                console.log('First row:', results.data[0]);
+
+                // Clean and validate data
+                const cleanData = results.data.filter(row => {
+                    const hasData = row.Date && row.Impressions;
+                    if (!hasData) console.log('Skipped row:', row);
+                    return hasData;
+                }).map(row => {
+                    const cleaned = {
+                        Date: row.Date?.trim() || '',
+                        Action_Type: row.Action_Type?.trim() || 'Unknown',
+                        Language: row.Language?.trim() || 'Unknown',
+                        Content_Category: row.Content_Category?.trim() || 'General',
+                        Day_of_Week: row.Day_of_Week?.trim() || 'Unknown',
+                        Impressions: parseInt(row.Impressions) || 0,
+                        CTR: parseFloat(row.CTR) || 0,
+                        Clicks: parseInt(row.Clicks) || 0
+                    };
+                    return cleaned;
+                });
+
+                console.log('Clean data count:', cleanData.length);
+                console.log('First clean row:', cleanData[0]);
+
+                if (cleanData.length === 0) throw new Error('No valid data found');
+
+                const aggregatedData = aggregateData(cleanData);
+                console.log('Aggregated data:', aggregatedData);
+                
+                renderDashboard(aggregatedData, cleanData);
+                document.getElementById('status').innerText = `✓ Connected (${cleanData.length} records)`;
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('status').innerText = `✗ Error: ${error.message}`;
+                alert('Error loading data: ' + error.message);
+            }
+        }
+
+        function aggregateData(data) {
+            let totalImpressions = 0, totalClicks = 0, totalPosts = data.length;
+            const channelStats = {}, contentStats = {}, languageStats = {}, dayStats = {}, monthlyStats = {};
+
+            data.forEach(row => {
+                totalImpressions += row.Impressions;
+                totalClicks += row.Clicks;
+
+                // Channel
+                if (!channelStats[row.Action_Type]) {
+                    channelStats[row.Action_Type] = { posts: 0, impressions: 0, clicks: 0, ctr: [] };
+                }
+                channelStats[row.Action_Type].posts++;
+                channelStats[row.Action_Type].impressions += row.Impressions;
+                channelStats[row.Action_Type].clicks += row.Clicks;
+                channelStats[row.Action_Type].ctr.push(row.CTR);
+
+                // Content
+                if (!contentStats[row.Content_Category]) {
+                    contentStats[row.Content_Category] = { posts: 0, impressions: 0, clicks: 0, ctr: [] };
+                }
+                contentStats[row.Content_Category].posts++;
+                contentStats[row.Content_Category].impressions += row.Impressions;
+                contentStats[row.Content_Category].clicks += row.Clicks;
+                contentStats[row.Content_Category].ctr.push(row.CTR);
+
+                // Language
+                if (!languageStats[row.Language]) {
+                    languageStats[row.Language] = { posts: 0, impressions: 0, clicks: 0, ctr: [] };
+                }
+                languageStats[row.Language].posts++;
+                languageStats[row.Language].impressions += row.Impressions;
+                languageStats[row.Language].clicks += row.Clicks;
+                languageStats[row.Language].ctr.push(row.CTR);
+
+                // Day of Week
+                if (!dayStats[row.Day_of_Week]) {
+                    dayStats[row.Day_of_Week] = { posts: 0, impressions: 0, clicks: 0, ctr: [] };
+                }
+                dayStats[row.Day_of_Week].posts++;
+                dayStats[row.Day_of_Week].impressions += row.Impressions;
+                dayStats[row.Day_of_Week].clicks += row.Clicks;
+                dayStats[row.Day_of_Week].ctr.push(row.CTR);
+
+                // Monthly
+                const month = row.Date.substring(0, 7); // YYYY-MM
+                if (!monthlyStats[month]) {
+                    monthlyStats[month] = { impressions: 0, clicks: 0, ctr: [] };
+                }
+                monthlyStats[month].impressions += row.Impressions;
+                monthlyStats[month].clicks += row.Clicks;
+                monthlyStats[month].ctr.push(row.CTR);
+            });
+
+            const avgCTR = (totalClicks / totalImpressions) * 100;
+
+            return {
+                totalImpressions,
+                totalClicks,
+                totalPosts,
+                avgCTR,
+                channelStats,
+                contentStats,
+                languageStats,
+                dayStats,
+                monthlyStats
+            };
+        }
+
+        function renderDashboard(data, rawData) {
+            // KPIs
+            console.log('Rendering KPIs with data:', data);
+            const el1 = document.getElementById('kpi-impressions');
+            const el2 = document.getElementById('kpi-clicks');
+            const el3 = document.getElementById('kpi-ctr');
+            const el4 = document.getElementById('kpi-posts');
+            
+            console.log('Elements found:', !!el1, !!el2, !!el3, !!el4);
+            
+            if (el1) el1.innerText = data.totalImpressions.toLocaleString();
+            if (el2) el2.innerText = data.totalClicks.toLocaleString();
+            if (el3) el3.innerText = data.avgCTR.toFixed(2) + '%';
+            if (el4) el4.innerText = data.totalPosts.toLocaleString();
+
+            console.log('Updated KPIs');
+
+            // Overview Tab Charts
+            setTimeout(() => {
+                console.log('Rendering overview charts');
+                renderMonthlyTrendChart(data.monthlyStats);
+                renderCTRTrendChart(data.monthlyStats);
+                renderChannelPieChart(data.channelStats);
+                renderClicksChannelChart(data.channelStats);
+
+                // Channels Tab
+                renderChannelComparisonChart(data.channelStats);
+                renderChannelCTRChart(data.channelStats);
+                renderChannelTable(data.channelStats);
+
+                // Content Tab
+                renderContentImpressionsChart(data.contentStats);
+                renderContentCTRChart(data.contentStats);
+                renderTopContentChart(data.contentStats);
+
+                // Languages Tab
+                renderLanguageEngagementChart(data.languageStats);
+                renderLanguagePieChart(data.languageStats);
+                renderLanguagePerformanceChart(data.languageStats);
+
+                // Calendar Tab
+                renderDayOfWeekChart(data.dayStats);
+                renderBestTimeChart(data.dayStats);
+                renderWeeklyPatternChart(data.dayStats);
+
+                // Funnel Tab
+                renderFunnelChart(data);
+                renderChannelFunnelChart(data.channelStats);
+                renderFunnelMetrics(data.channelStats);
+                renderConversionRates(data.channelStats);
+
+                // Insights Tab
+                generateInsights(data, rawData);
+                updateROIMetrics(data);
+                renderBenchmarkChart(data);
+                renderOpportunityChart(data);
+
+                // Activate first tab
+                activateTab('overview');
+                console.log('All charts rendered');
+            }, 100);
+        }
+
+        function renderMonthlyTrendChart(monthlyStats) {
+            const months = Object.keys(monthlyStats).sort();
+            const impressions = months.map(m => monthlyStats[m].impressions);
+
+            new Chart(document.getElementById('impressionsTrendChart'), {
+                type: 'line',
+                data: {
+                    labels: months,
+                    datasets: [{
+                        label: 'Impressions',
+                        data: impressions,
+                        borderColor: chartColors.blue,
+                        backgroundColor: chartColors.blue + '20',
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: true } }
+                }
+            });
+        }
+
+        function renderCTRTrendChart(monthlyStats) {
+            const months = Object.keys(monthlyStats).sort();
+            const avgCTR = months.map(m => {
+                const ctrArray = monthlyStats[m].ctr;
+                return (ctrArray.reduce((a, b) => a + b, 0) / ctrArray.length) * 100;
+            });
+
+            new Chart(document.getElementById('ctrTrendChart'), {
+                type: 'line',
+                data: {
+                    labels: months,
+                    datasets: [{
+                        label: 'Average CTR (%)',
+                        data: avgCTR,
+                        borderColor: chartColors.green,
+                        backgroundColor: chartColors.green + '20',
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: true } }
+                }
+            });
+        }
+
+        function renderChannelPieChart(channelStats) {
+            const channels = Object.keys(channelStats);
+            const impressions = channels.map(c => channelStats[c].impressions);
+
+            new Chart(document.getElementById('channelPieChart'), {
+                type: 'doughnut',
+                data: {
+                    labels: channels,
+                    datasets: [{
+                        data: impressions,
+                        backgroundColor: [chartColors.primary, chartColors.secondary, chartColors.orange, chartColors.green]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { position: 'bottom' } }
+                }
+            });
+        }
+
+        function renderClicksChannelChart(channelStats) {
+            const channels = Object.keys(channelStats);
+            const clicks = channels.map(c => channelStats[c].clicks);
+
+            new Chart(document.getElementById('clicksChannelChart'), {
+                type: 'bar',
+                data: {
+                    labels: channels,
+                    datasets: [{
+                        label: 'Clicks',
+                        data: clicks,
+                        backgroundColor: chartColors.pink
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } }
+                }
+            });
+        }
+
+        function renderChannelComparisonChart(channelStats) {
+            const channels = Object.keys(channelStats);
+            const impressions = channels.map(c => channelStats[c].impressions);
+            const clicks = channels.map(c => channelStats[c].clicks);
+
+            new Chart(document.getElementById('channelComparisonChart'), {
+                type: 'bar',
+                data: {
+                    labels: channels,
+                    datasets: [
+                        {
+                            label: 'Impressions',
+                            data: impressions,
+                            backgroundColor: chartColors.blue,
+                            yAxisID: 'y'
+                        },
+                        {
+                            label: 'Clicks',
+                            data: clicks,
+                            backgroundColor: chartColors.green,
+                            yAxisID: 'y1'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: { type: 'linear', position: 'left' },
+                        y1: { type: 'linear', position: 'right', grid: { drawOnChartArea: false } }
+                    }
+                }
+            });
+        }
+
+        function renderChannelCTRChart(channelStats) {
+            const channels = Object.keys(channelStats);
+            const avgCTR = channels.map(c => {
+                const ctrArray = channelStats[c].ctr;
+                return (ctrArray.reduce((a, b) => a + b, 0) / ctrArray.length) * 100;
+            });
+
+            new Chart(document.getElementById('channelCTRChart'), {
+                type: 'horizontalBar',
+                data: {
+                    labels: channels,
+                    datasets: [{
+                        label: 'Average CTR (%)',
+                        data: avgCTR,
+                        backgroundColor: chartColors.purple
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+        }
+
+        function renderChannelTable(channelStats) {
+            const tbody = document.getElementById('channelTableBody');
+            tbody.innerHTML = '';
+            Object.keys(channelStats).forEach(channel => {
+                const stats = channelStats[channel];
+                const avgCTR = (stats.ctr.reduce((a, b) => a + b, 0) / stats.ctr.length) * 100;
+                const row = `<tr class="border-b border-white/10">
+                    <td class="py-3">${channel}</td>
+                    <td class="py-3 text-right">${stats.posts}</td>
+                    <td class="py-3 text-right">${stats.impressions.toLocaleString()}</td>
+                    <td class="py-3 text-right">${stats.clicks.toLocaleString()}</td>
+                    <td class="py-3 text-right">${avgCTR.toFixed(2)}%</td>
+                </tr>`;
+                tbody.innerHTML += row;
+            });
+        }
+
+        function renderContentImpressionsChart(contentStats) {
+            const categories = Object.keys(contentStats);
+            const impressions = categories.map(c => contentStats[c].impressions);
+
+            new Chart(document.getElementById('contentImpressionsChart'), {
+                type: 'bar',
+                data: {
+                    labels: categories,
+                    datasets: [{
+                        label: 'Impressions',
+                        data: impressions,
+                        backgroundColor: chartColors.blue
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } }
+                }
+            });
+        }
+
+        function renderContentCTRChart(contentStats) {
+            const categories = Object.keys(contentStats);
+            const avgCTR = categories.map(c => {
+                const ctrArray = contentStats[c].ctr;
+                return (ctrArray.reduce((a, b) => a + b, 0) / ctrArray.length) * 100;
+            });
+
+            new Chart(document.getElementById('contentCTRChart'), {
+                type: 'radar',
+                data: {
+                    labels: categories,
+                    datasets: [{
+                        label: 'Average CTR (%)',
+                        data: avgCTR,
+                        borderColor: chartColors.yellow,
+                        backgroundColor: chartColors.yellow + '30'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+        }
+
+        function renderTopContentChart(contentStats) {
+            const sorted = Object.entries(contentStats).sort((a, b) => b[1].clicks - a[1].clicks).slice(0, 5);
+            const categories = sorted.map(([cat]) => cat);
+            const clicks = sorted.map(([, stats]) => stats.clicks);
+
+            new Chart(document.getElementById('topContentChart'), {
+                type: 'horizontalBar',
+                data: {
+                    labels: categories,
+                    datasets: [{
+                        label: 'Total Clicks',
+                        data: clicks,
+                        backgroundColor: chartColors.orange
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+        }
+
+        function renderLanguageEngagementChart(languageStats) {
+            const languages = Object.keys(languageStats);
+            const impressions = languages.map(l => languageStats[l].impressions);
+            const clicks = languages.map(l => languageStats[l].clicks);
+
+            new Chart(document.getElementById('languageEngagementChart'), {
+                type: 'bar',
+                data: {
+                    labels: languages,
+                    datasets: [
+                        {
+                            label: 'Impressions',
+                            data: impressions,
+                            backgroundColor: chartColors.blue
+                        },
+                        {
+                            label: 'Clicks',
+                            data: clicks,
+                            backgroundColor: chartColors.green
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+        }
+
+        function renderLanguagePieChart(languageStats) {
+            const languages = Object.keys(languageStats);
+            const posts = languages.map(l => languageStats[l].posts);
+
+            new Chart(document.getElementById('languagePieChart'), {
+                type: 'pie',
+                data: {
+                    labels: languages,
+                    datasets: [{
+                        data: posts,
+                        backgroundColor: [chartColors.primary, chartColors.secondary, chartColors.green, chartColors.orange, chartColors.pink, chartColors.purple]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { position: 'bottom' } }
+                }
+            });
+        }
+
+        function renderLanguagePerformanceChart(languageStats) {
+            const languages = Object.keys(languageStats);
+            const avgCTR = languages.map(l => {
+                const ctrArray = languageStats[l].ctr;
+                return (ctrArray.reduce((a, b) => a + b, 0) / ctrArray.length) * 100;
+            });
+
+            new Chart(document.getElementById('languagePerformanceChart'), {
+                type: 'horizontalBar',
+                data: {
+                    labels: languages,
+                    datasets: [{
+                        label: 'Average CTR (%)',
+                        data: avgCTR,
+                        backgroundColor: chartColors.purple
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+        }
+
+        function renderDayOfWeekChart(dayStats) {
+            const daysOrder = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+            const days = daysOrder.filter(d => dayStats[d]);
+            const impressions = days.map(d => dayStats[d].impressions);
+
+            new Chart(document.getElementById('dayOfWeekChart'), {
+                type: 'bar',
+                data: {
+                    labels: days,
+                    datasets: [{
+                        label: 'Impressions',
+                        data: impressions,
+                        backgroundColor: chartColors.blue
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+        }
+
+        function renderBestTimeChart(dayStats) {
+            const daysOrder = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+            const days = daysOrder.filter(d => dayStats[d]);
+            const avgCTR = days.map(d => {
+                const ctrArray = dayStats[d].ctr;
+                return (ctrArray.reduce((a, b) => a + b, 0) / ctrArray.length) * 100;
+            });
+
+            new Chart(document.getElementById('bestTimeChart'), {
+                type: 'line',
+                data: {
+                    labels: days,
+                    datasets: [{
+                        label: 'Average CTR (%)',
+                        data: avgCTR,
+                        borderColor: chartColors.purple,
+                        backgroundColor: chartColors.purple + '20',
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+        }
+
+        function renderWeeklyPatternChart(dayStats) {
+            const daysOrder = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+            const days = daysOrder.filter(d => dayStats[d]);
+            const clicks = days.map(d => dayStats[d].clicks);
+            const posts = days.map(d => dayStats[d].posts);
+
+            new Chart(document.getElementById('weeklyPatternChart'), {
+                type: 'line',
+                data: {
+                    labels: days,
+                    datasets: [
+                        {
+                            label: 'Clicks',
+                            data: clicks,
+                            borderColor: chartColors.green,
+                            backgroundColor: chartColors.green + '20',
+                            fill: true,
+                            tension: 0.4
+                        },
+                        {
+                            label: 'Posts',
+                            data: posts,
+                            borderColor: chartColors.pink,
+                            backgroundColor: chartColors.pink + '20',
+                            fill: true,
+                            tension: 0.4
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+        }
+
+        // NEW: Funnel Analysis
+        function renderFunnelChart(data) {
+            const stages = ['Impressions', 'Clicks'];
+            const values = [data.totalImpressions, data.totalClicks];
+
+            new Chart(document.getElementById('funnelChart'), {
+                type: 'bar',
+                data: {
+                    labels: stages,
+                    datasets: [{
+                        label: 'Funnel Value',
+                        data: values,
+                        backgroundColor: [chartColors.blue, chartColors.green]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: { beginAtZero: true }
+                    }
+                }
+            });
+        }
+
+        function renderChannelFunnelChart(channelStats) {
+            const channels = Object.keys(channelStats);
+            const impressions = channels.map(c => channelStats[c].impressions);
+            const clicks = channels.map(c => channelStats[c].clicks);
+
+            new Chart(document.getElementById('channelFunnelChart'), {
+                type: 'line',
+                data: {
+                    labels: channels,
+                    datasets: [
+                        {
+                            label: 'Impressions',
+                            data: impressions,
+                            borderColor: chartColors.blue,
+                            backgroundColor: chartColors.blue + '20',
+                            fill: true
+                        },
+                        {
+                            label: 'Clicks',
+                            data: clicks,
+                            borderColor: chartColors.green,
+                            backgroundColor: chartColors.green + '20',
+                            fill: true
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+        }
+
+        function renderFunnelMetrics(channelStats) {
+            const metricsBox = document.getElementById('funnelMetrics');
+            metricsBox.innerHTML = '';
+            Object.keys(channelStats).forEach(channel => {
+                const stats = channelStats[channel];
+                const conversionRate = (stats.clicks / stats.impressions) * 100;
+                const html = `<div class="bg-white/10 p-4 rounded-lg mb-3">
+                    <p class="text-white font-semibold">${channel}</p>
+                    <div class="grid grid-cols-3 gap-2 mt-2 text-sm">
+                        <div><span class="text-white/70">Impressions:</span> <span class="text-white font-bold">${stats.impressions.toLocaleString()}</span></div>
+                        <div><span class="text-white/70">Clicks:</span> <span class="text-white font-bold">${stats.clicks.toLocaleString()}</span></div>
+                        <div><span class="text-white/70">Conv.:</span> <span class="text-white font-bold">${conversionRate.toFixed(2)}%</span></div>
+                    </div>
+                </div>`;
+                metricsBox.innerHTML += html;
+            });
+        }
+
+        function renderConversionRates(channelStats) {
+            const convBox = document.getElementById('conversionRates');
+            convBox.innerHTML = '';
+            const sorted = Object.entries(channelStats).map(([ch, stats]) => ({
+                channel: ch,
+                rate: (stats.clicks / stats.impressions) * 100
+            })).sort((a, b) => b.rate - a.rate);
+
+            sorted.forEach((item, idx) => {
+                const color = idx === 0 ? 'border-green-400' : idx === sorted.length - 1 ? 'border-red-400' : 'border-blue-400';
+                const html = `<div class="bg-white/10 p-4 rounded-lg mb-2 border-l-4 ${color}">
+                    <p class="text-white font-semibold">${item.channel}</p>
+                    <p class="text-2xl font-bold text-white mt-1">${item.rate.toFixed(2)}%</p>
+                </div>`;
+                convBox.innerHTML += html;
+            });
+        }
+
+        // NEW: Insights & Recommendations
+        function generateInsights(data, rawData) {
+            const recs = generateRecommendations(data);
+            const anomalies = detectAnomalies(data, rawData);
+            
+            const recsBox = document.getElementById('recommendationsBox');
+            recsBox.innerHTML = '';
+            recs.forEach(rec => {
+                const html = `<div class="bg-white/10 p-4 rounded-lg border-l-4 border-yellow-400">
+                    <p class="text-white font-semibold">${rec.title}</p>
+                    <p class="text-white/80 text-sm mt-1">${rec.description}</p>
+                    <p class="text-green-300 text-xs mt-2">💡 Impact: ${rec.impact}</p>
+                </div>`;
+                recsBox.innerHTML += html;
+            });
+
+            const anomBox = document.getElementById('anomaliesBox');
+            anomBox.innerHTML = '';
+            anomalies.forEach(anom => {
+                const html = `<div class="bg-white/10 p-4 rounded-lg border-l-4 border-orange-400">
+                    <p class="text-white font-semibold">${anom.title}</p>
+                    <p class="text-white/80 text-sm mt-1">${anom.finding}</p>
+                    <p class="text-orange-300 text-xs mt-2">⚠️ Action: ${anom.action}</p>
+                </div>`;
+                anomBox.innerHTML += html;
+            });
+        }
+
+        function generateRecommendations(data) {
+            const recs = [];
+            const channels = Object.entries(data.channelStats).map(([name, stats]) => ({
+                name,
+                avgCTR: (stats.ctr.reduce((a, b) => a + b) / stats.ctr.length) * 100
+            })).sort((a, b) => b.avgCTR - a.avgCTR);
+
+            // Rec 1: Newsletter Strategy
+            if (channels[0].name === 'Newsletter') {
+                recs.push({
+                    title: '🎯 Maximize Newsletter Investment',
+                    description: `Newsletter shows ${(channels[0].avgCTR / channels[1].avgCTR).toFixed(1)}x better CTR than ${channels[1].name}. Scale investment here.`,
+                    impact: '+35% revenue potential'
+                });
+            }
+
+            // Rec 2: Optimize Low Performers
+            if (channels.length > 0 && channels[channels.length - 1].avgCTR < 1) {
+                recs.push({
+                    title: '📊 Optimize Underperforming Channel',
+                    description: `${channels[channels.length - 1].name} CTR is only ${channels[channels.length - 1].avgCTR.toFixed(2)}%. Focus on content quality over quantity.`,
+                    impact: '+20% efficiency gain'
+                });
+            }
+
+            // Rec 3: Language Strategy
+            const languageData = data.languageStats;
+            const topLanguage = Object.entries(languageData).map(([lang, stats]) => ({
+                lang,
+                posts: stats.posts
+            })).sort((a, b) => b.posts - a.posts)[0];
+
+            if (topLanguage.posts > 100) {
+                recs.push({
+                    title: '🌍 Expand Spanish Content',
+                    description: `Spanish (${topLanguage.posts} posts) shows strong engagement. Allocate 40% of content to Spanish variants.`,
+                    impact: '+25% market reach'
+                });
+            }
+
+            // Rec 4: Content Focus
+            const contentData = data.contentStats;
+            const topContent = Object.entries(contentData).map(([cat, stats]) => ({
+                cat,
+                ctr: (stats.ctr.reduce((a, b) => a + b) / stats.ctr.length) * 100
+            })).sort((a, b) => b.ctr - a.ctr)[0];
+
+            recs.push({
+                title: '✨ Prioritize High-Performing Content',
+                description: `"${topContent.cat}" has the best CTR (${topContent.ctr.toFixed(2)}%). Increase production of this type.`,
+                impact: '+18% engagement'
+            });
+
+            // Rec 5: Timing
+            recs.push({
+                title: '⏰ Optimize Posting Schedule',
+                description: 'Analyze day-of-week patterns to post on peak engagement days. Avoid low-performing days.',
+                impact: '+12% CTR improvement'
+            });
+
+            return recs;
+        }
+
+        function detectAnomalies(data, rawData) {
+            const anomalies = [];
+
+            // Check for extreme CTR values
+            const extremeRows = rawData.filter(r => r.CTR > 0.03 || r.CTR < 0.002);
+            if (extremeRows.length > 0) {
+                anomalies.push({
+                    title: '📈 Exceptional Content Performance',
+                    finding: `${extremeRows.length} posts with CTR > 3% or < 0.2% detected. These are outliers.`,
+                    action: 'Analyze what made top posts successful; identify and fix underperformers'
+                });
+            }
+
+            // Check for low engagement days
+            const dayStats = data.dayStats;
+            const avgImpressions = Object.values(dayStats).reduce((a, b) => a + b.impressions, 0) / Object.keys(dayStats).length;
+            const lowDays = Object.entries(dayStats).filter(([, stats]) => stats.impressions < avgImpressions * 0.7);
+
+            if (lowDays.length > 0) {
+                anomalies.push({
+                    title: '📉 Underperforming Days Detected',
+                    finding: `${lowDays.length} days show < 70% of average impressions (${avgImpressions.toLocaleString()}).`,
+                    action: 'Avoid posting or increase post frequency on these days'
+                });
+            }
+
+            // Channel imbalance
+            const channelStats = data.channelStats;
+            const channelImpressions = Object.entries(channelStats).map(([ch, stats]) => ({
+                ch, impr: stats.impressions
+            })).sort((a, b) => b.impr - a.impr);
+
+            if (channelImpressions[0].impr > channelImpressions[channelImpressions.length - 1].impr * 5) {
+                anomalies.push({
+                    title: '⚖️ Severe Channel Imbalance',
+                    finding: `${channelImpressions[0].ch} dominates with ${(channelImpressions[0].impr / channelStats[channelImpressions[channelImpressions.length - 1].ch].impressions).toFixed(1)}x more impressions.`,
+                    action: 'Rebalance channel mix - consider reducing dominance of single channel'
+                });
+            }
+
+            // Language opportunity
+            const languageStats = data.languageStats;
+            const langPerformance = Object.entries(languageStats).map(([lang, stats]) => ({
+                lang,
+                avgCTR: (stats.ctr.reduce((a, b) => a + b) / stats.ctr.length) * 100
+            })).sort((a, b) => b.avgCTR - a.avgCTR);
+
+            if (langPerformance.length > 1 && langPerformance[0].avgCTR > langPerformance[1].avgCTR * 2) {
+                anomalies.push({
+                    title: '🌐 Language Performance Gap',
+                    finding: `${langPerformance[0].lang} performs ${(langPerformance[0].avgCTR / langPerformance[1].avgCTR).toFixed(1)}x better than ${langPerformance[1].lang}.`,
+                    action: 'Increase ${langPerformance[0].lang} content; improve ${langPerformance[1].lang} quality'
+                });
+            }
+
+            return anomalies;
+        }
+
+        function renderBenchmarkChart(data) {
+            const channels = Object.keys(data.channelStats);
+            const avgCTR = channels.map(c => {
+                const ctrArray = data.channelStats[c].ctr;
+                return (ctrArray.reduce((a, b) => a + b) / ctrArray.length) * 100;
+            });
+
+            // Industry benchmarks (typical values)
+            const benchmarks = {
+                'Newsletter': 5.5,
+                'LinkedIn': 0.5,
+                'Instagram': 0.8
+            };
+
+            const benchmarkValues = channels.map(c => benchmarks[c] || 1);
+
+            new Chart(document.getElementById('benchmarkChart'), {
+                type: 'bar',
+                data: {
+                    labels: channels,
+                    datasets: [
+                        {
+                            label: 'Your Performance',
+                            data: avgCTR,
+                            backgroundColor: chartColors.blue
+                        },
+                        {
+                            label: 'Industry Benchmark',
+                            data: benchmarkValues,
+                            backgroundColor: chartColors.pink
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: true } }
+                }
+            });
+        }
+
+        function renderOpportunityChart(data) {
+            const channels = Object.entries(data.channelStats).map(([name, stats]) => {
+                const avgCTR = (stats.ctr.reduce((a, b) => a + b) / stats.ctr.length) * 100;
+                return {
+                    name,
+                    potential: Math.round((avgCTR * 1.3 - avgCTR) / avgCTR * 100) // 30% growth potential
+                };
+            });
+
+            new Chart(document.getElementById('opportunityChart'), {
+                type: 'bar',
+                data: {
+                    labels: channels.map(c => c.name),
+                    datasets: [{
+                        label: 'Growth Potential (%)',
+                        data: channels.map(c => c.potential),
+                        backgroundColor: chartColors.green
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+        }
+
+        function updateROIMetrics(data) {
+            // Calculate estimated ROI metrics based on industry standards
+            const estimatedCPM = 2.50; // $2.50 per thousand impressions
+            const estimatedCPC = 0.30; // $0.30 per click
+            const estimatedCPA = 15; // $15 per acquisition (estimated)
+
+            const totalSpend = (data.totalImpressions / 1000) * estimatedCPM;
+            const roiRevenue = data.totalClicks * 5; // $5 estimated value per click
+            const roiPercent = ((roiRevenue - totalSpend) / totalSpend) * 100;
+
+            // Newsletter premium (typically 10-15x better ROI)
+            const newsletterCTR = data.channelStats['Newsletter'] ? 
+                (data.channelStats['Newsletter'].ctr.reduce((a, b) => a + b) / data.channelStats['Newsletter'].ctr.length) * 100 : 0.85;
+            const socialAvg = Object.entries(data.channelStats)
+                .filter(([name]) => name !== 'Newsletter')
+                .reduce((sum, [, stats]) => sum + (stats.ctr.reduce((a, b) => a + b) / stats.ctr.length) * 100, 0) / 
+                (Object.keys(data.channelStats).length - 1 || 1);
+            const premiumMultiplier = socialAvg > 0 ? (newsletterCTR / socialAvg).toFixed(1) : 1;
+
+            // Update DOM elements if they exist
+            const cpmEl = document.getElementById('roi-cpm');
+            if (cpmEl) cpmEl.textContent = '$' + estimatedCPM.toFixed(2);
+            
+            const cpcEl = document.getElementById('roi-cpc');
+            if (cpcEl) cpcEl.textContent = '$' + estimatedCPC.toFixed(2);
+            
+            const premiumEl = document.getElementById('roi-premium');
+            if (premiumEl) premiumEl.textContent = premiumMultiplier + 'x';
+            
+            const roiEl = document.getElementById('roi-monthly');
+            if (roiEl) roiEl.textContent = roiPercent.toFixed(0) + '%';
+        }
+
+        // Initialize
+        fetchData();
+    </script>
+</body>
+</html>
