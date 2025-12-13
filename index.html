@@ -106,6 +106,25 @@
         .project-content { animation: fadeIn 0.3s ease-in; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         .hidden { display: none !important; }
+        
+        /* TAB STYLES */
+        .tab-btn { position: relative; transition: all 0.3s ease; }
+        .tab-btn.active { 
+            background-color: #8B5CF6 !important; 
+            border-color: #8B5CF6 !important; 
+            color: white !important;
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+        }
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(to right, #8B5CF6, #0EA5E9);
+        }
+        .tab-content { animation: fadeIn 0.2s ease-in; }
 
         /* --- PRINT STYLES FOR CV --- */
         @media print {
@@ -276,6 +295,9 @@
                     <button onclick="switchProject('marketing')" class="project-tab px-6 py-3 rounded-lg font-semibold text-sm transition-all bg-dark border border-gray-700 text-gray-300 hover:border-primary hover:text-primary" data-project="marketing">
                         <i class="fas fa-chart-line mr-2"></i>Marketing Analytics
                     </button>
+                    <button onclick="switchProject('rig')" class="project-tab px-6 py-3 rounded-lg font-semibold text-sm transition-all bg-dark border border-gray-700 text-gray-300 hover:border-primary hover:text-primary" data-project="rig">
+                        <i class="fas fa-industry mr-2"></i>Rig Operations
+                    </button>
                 </div>
             </div>
         </div>
@@ -428,11 +450,116 @@
                 </div>
             </div>
         </div> <!-- Close marketing-dashboard -->
-    </section>
 
-    <!-- Certifications -->
-    <section id="certifications" class="py-24 bg-surface/50 border-t border-gray-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- RIG OPERATIONS DASHBOARD (Project #3, Hidden by default) -->
+        <div id="rig-dashboard" class="project-content hidden mt-16">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
+                <div>
+                    <span class="text-secondary font-bold tracking-wider uppercase text-sm">Portfolio Project #3</span>
+                    <h2 class="text-4xl font-bold text-white mt-2">Rig <span class="gradient-text">Operations</span> Dashboard</h2>
+                    <p class="text-gray-400 mt-2 max-w-xl">Dashboard operasional terintegrasi untuk monitoring produktivitas rig, efisiensi bahan bakar, dan laporan DDR real-time. <br><span class="text-xs text-gray-500">Note: Data diambil LIVE dari Google Sheets CSV Publik.</span></p>
+                </div>
+                <div class="flex flex-wrap gap-2 justify-end">
+                    <a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vR-cwrgDCO4QXeguKeuRFLX2N_YLd7u3vG165J7-B7XR1LJBQbIHWWdq8FZjcn8q_geCF6xM8gbGeNT/pub?gid=1953187009&single=true&output=csv" class="hover-trigger px-6 py-3 bg-surface border border-gray-600 rounded-lg text-sm text-white hover:border-primary hover:text-primary transition-colors flex items-center gap-2 font-medium" title="Download DDR Activity Events Data"><i class="fas fa-file-csv"></i> DDR Events</a>
+                    <a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vROs8gBCVAsVUEnOAkMC-heXRhZZZbsrid7Ivl9UBtVT5zEQkbqyNo9QBF6DApX8zLNbtYG1u9tCHaT/pub?gid=2073579499&single=true&output=csv" class="hover-trigger px-6 py-3 bg-surface border border-gray-600 rounded-lg text-sm text-white hover:border-primary hover:text-primary transition-colors flex items-center gap-2 font-medium" title="Download Fuel Consumption Data"><i class="fas fa-gas-pump"></i> Fuel Data</a>
+                    <a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vQQ79RGyb_Mjh4uO_F9qzptHbo2bgdG-Pyicr8kMpPZJWVz7j2KwFzh9Ohgue11KHagbwaRjhAbJgTr/pub?gid=560339056&single=true&output=csv" class="hover-trigger px-6 py-3 bg-surface border border-gray-600 rounded-lg text-sm text-white hover:border-primary hover:text-primary transition-colors flex items-center gap-2 font-medium" title="Download Productivity Drilling Data"><i class="fas fa-chart-bar"></i> Productivity</a>
+                    <a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vTUDR8bFl8G0_L4xTXR1kg_FvCqN5jQyP-3KWmwWIoq5RFwVR61yoEEJfUfTmMruafLIcmG6xuuTQ7B/pub?gid=1953912833&single=true&output=csv" class="hover-trigger px-6 py-3 bg-surface border border-gray-600 rounded-lg text-sm text-white hover:border-primary hover:text-primary transition-colors flex items-center gap-2 font-medium" title="Download Daily Rig KPI Dataset"><i class="fas fa-database"></i> Full Dataset</a>
+                </div>
+            </div>
+            <div class="bg-surface rounded-3xl border border-gray-800 shadow-2xl overflow-hidden">
+                <div class="bg-dark/50 border-b border-gray-800 p-4 flex justify-between items-center">
+                    <div class="flex items-center gap-2"><span class="text-xs font-mono text-gray-500 ml-2">Connected to: <span class="text-gray-300">Rig Operations CSVs (5 Sources)</span></span></div><div class="text-xs text-gray-500 font-mono">Status: <span class="text-yellow-400" id="rig-status-indicator">Initializing...</span></div>
+                </div>
+                <div class="p-8">
+                    <!-- Rig KPI Cards -->
+                    <div class="grid grid-cols-1 sm:grid-cols-4 gap-4 mb-6">
+                        <div class="hover-trigger bg-dark p-6 rounded-2xl border border-gray-800 hover:border-secondary/30 transition-colors">
+                            <p class="text-xs text-gray-500 uppercase font-bold tracking-wider"><i class="fas fa-industry mr-2 text-secondary"></i>Active Rigs</p>
+                            <h4 class="text-2xl font-bold text-white mt-2 tracking-tight" id="rig-kpi-active">0</h4>
+                        </div>
+                        <div class="hover-trigger bg-dark p-6 rounded-2xl border border-gray-800 hover:border-cyan-400/30 transition-colors">
+                            <p class="text-xs text-gray-500 uppercase font-bold tracking-wider"><i class="fas fa-chart-line mr-2 text-cyan-300"></i>Avg Productivity</p>
+                            <h4 class="text-2xl font-bold text-white mt-2 tracking-tight" id="rig-kpi-prod">0</h4>
+                        </div>
+                        <div class="hover-trigger bg-dark p-6 rounded-2xl border border-gray-800 hover:border-purple-400/30 transition-colors">
+                            <p class="text-xs text-gray-500 uppercase font-bold tracking-wider"><i class="fas fa-gas-pump mr-2 text-purple-300"></i>Fuel Efficiency</p>
+                            <h4 class="text-2xl font-bold text-white mt-2 tracking-tight" id="rig-kpi-fuel">0</h4>
+                        </div>
+                        <div class="hover-trigger bg-dark p-6 rounded-2xl border border-gray-800 hover:border-orange-400/30 transition-colors">
+                            <p class="text-xs text-gray-500 uppercase font-bold tracking-wider"><i class="fas fa-list mr-2 text-orange-300"></i>DDR Events</p>
+                            <h4 class="text-2xl font-bold text-white mt-2 tracking-tight" id="rig-kpi-ddr">0</h4>
+                        </div>
+                    </div>
+                    
+                    <!-- Tab Navigation -->
+                    <div class="mt-8 mb-6">
+                        <div id="rig-tabs" class="flex flex-wrap gap-2 border-b border-gray-800 pb-4">
+                            <button class="tab-btn active px-4 py-2 rounded-lg bg-dark border border-gray-800 text-sm text-gray-300 hover:border-secondary hover:text-secondary transition-colors font-medium" data-tab="rig-overview"><i class="fas fa-eye mr-2"></i>Overview</button>
+                            <button class="tab-btn px-4 py-2 rounded-lg bg-dark border border-gray-800 text-sm text-gray-300 hover:border-secondary hover:text-secondary transition-colors font-medium" data-tab="rig-productivity"><i class="fas fa-chart-bar mr-2"></i>Productivity</button>
+                            <button class="tab-btn px-4 py-2 rounded-lg bg-dark border border-gray-800 text-sm text-gray-300 hover:border-secondary hover:text-secondary transition-colors font-medium" data-tab="rig-fuel"><i class="fas fa-gas-pump mr-2"></i>Fuel</button>
+                            <button class="tab-btn px-4 py-2 rounded-lg bg-dark border border-gray-800 text-sm text-gray-300 hover:border-secondary hover:text-secondary transition-colors font-medium" data-tab="rig-ddr"><i class="fas fa-list mr-2"></i>DDR</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Tab Content Panels -->
+                    <div class="space-y-6">
+                        <div id="rig-overview" class="tab-content">
+                            <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+                                <div class="lg:col-span-3 bg-dark p-6 rounded-2xl border border-gray-800">
+                                    <h5 class="text-white font-bold text-sm mb-6 flex items-center gap-2"><i class="fas fa-chart-line text-cyan-300"></i> Productivity Trend</h5>
+                                    <div class="h-80"><canvas id="rig-productivityTrend"></canvas></div>
+                                </div>
+                                <div class="lg:col-span-1 bg-dark p-6 rounded-2xl border border-gray-800">
+                                    <h5 class="text-white font-bold text-sm mb-6 flex items-center gap-2"><i class="fas fa-gas-pump text-purple-300"></i> Fuel/Meter</h5>
+                                    <div class="h-64 flex items-center justify-center"><canvas id="rig-fuelEfficiency"></canvas></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="rig-productivity" class="tab-content hidden">
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                                <div class="bg-dark p-6 rounded-2xl border border-gray-800">
+                                    <h5 class="text-white font-bold text-sm mb-6 flex items-center gap-2"><i class="fas fa-table text-green-300"></i> Daily Productivity (Last 30 Days)</h5>
+                                    <div class="h-80"><canvas id="rig-productivityDaily"></canvas></div>
+                                </div>
+                                <div class="bg-dark p-6 rounded-2xl border border-gray-800">
+                                    <h5 class="text-white font-bold text-sm mb-6 flex items-center gap-2"><i class="fas fa-layer-group text-blue-300"></i> Rig Efficiency Score</h5>
+                                    <div class="h-80"><canvas id="rig-utilization"></canvas></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="rig-fuel" class="tab-content hidden">
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                                <div class="bg-dark p-6 rounded-2xl border border-gray-800">
+                                    <h5 class="text-white font-bold text-sm mb-6 flex items-center gap-2"><i class="fas fa-chart-area text-cyan-300"></i> Daily Fuel Consumption Trend</h5>
+                                    <div class="h-80"><canvas id="rig-fuelConsumption"></canvas></div>
+                                </div>
+                                <div class="bg-dark p-6 rounded-2xl border border-gray-800">
+                                    <h5 class="text-white font-bold text-sm mb-6 flex items-center gap-2"><i class="fas fa-balance-scale text-orange-300"></i> Total Fuel by Rig</h5>
+                                    <div class="h-80"><canvas id="rig-fuelByRig"></canvas></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="rig-ddr" class="tab-content hidden">
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                                <div class="bg-dark p-6 rounded-2xl border border-gray-800">
+                                    <h5 class="text-white font-bold text-sm mb-6 flex items-center gap-2"><i class="fas fa-list text-yellow-300"></i> DDR Activity Types (Top 10)</h5>
+                                    <div class="h-80"><canvas id="rig-ddrTypes"></canvas></div>
+                                </div>
+                                <div class="bg-dark p-6 rounded-2xl border border-gray-800">
+                                    <h5 class="text-white font-bold text-sm mb-6 flex items-center gap-2"><i class="fas fa-hourglass text-red-300"></i> Total Duration by Activity</h5>
+                                    <div class="h-80"><canvas id="rig-ddrDurations"></canvas></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
++        </div>
++    </section>
++
++    <!-- Certifications -->
++    <section id="certifications" class="py-24 bg-surface/50 border-t border-gray-800">
++        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16"><span class="text-primary font-bold tracking-wider uppercase text-sm">Validations</span><h2 class="text-4xl font-bold text-white mt-2">Professional Certifications</h2></div>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <!-- Cert Cards -->
@@ -960,11 +1087,13 @@
         function switchProject(project) {
             const superstore = document.getElementById('superstore-dashboard');
             const marketing = document.getElementById('marketing-dashboard');
+            const rig = document.getElementById('rig-dashboard');
             const tabBtns = document.querySelectorAll('.project-tab');
             
             if (project === 'superstore') {
                 superstore.classList.remove('hidden');
                 marketing.classList.add('hidden');
+                rig?.classList.add('hidden');
                 tabBtns.forEach(btn => {
                     if (btn.dataset.project === 'superstore') {
                         btn.classList.remove('bg-dark', 'border', 'border-gray-700', 'text-gray-300', 'hover:border-primary', 'hover:text-primary');
@@ -977,6 +1106,7 @@
             } else if (project === 'marketing') {
                 superstore.classList.add('hidden');
                 marketing.classList.remove('hidden');
+                rig?.classList.add('hidden');
                 tabBtns.forEach(btn => {
                     if (btn.dataset.project === 'marketing') {
                         btn.classList.remove('bg-dark', 'border', 'border-gray-700', 'text-gray-300', 'hover:border-primary', 'hover:text-primary');
@@ -990,6 +1120,23 @@
                 if (!window.marketingDataLoaded) {
                     marketingFetchData();
                     window.marketingDataLoaded = true;
+                }
+            } else if (project === 'rig') {
+                superstore.classList.add('hidden');
+                marketing.classList.add('hidden');
+                rig?.classList.remove('hidden');
+                tabBtns.forEach(btn => {
+                    if (btn.dataset.project === 'rig') {
+                        btn.classList.remove('bg-dark', 'border', 'border-gray-700', 'text-gray-300', 'hover:border-primary', 'hover:text-primary');
+                        btn.classList.add('bg-primary', 'text-white', 'hover:bg-violet-600');
+                    } else {
+                        btn.classList.remove('bg-primary', 'text-white', 'hover:bg-violet-600');
+                        btn.classList.add('bg-dark', 'border', 'border-gray-700', 'text-gray-300', 'hover:border-primary', 'hover:text-primary');
+                    }
+                });
+                if (!window.rigDataLoaded) {
+                    rigInit();
+                    window.rigDataLoaded = true;
                 }
             }
         }
@@ -1396,6 +1543,256 @@
                 data: { labels: days, datasets: [{ label: 'Impressions', data: dayData, backgroundColor: '#60a5fa' }] },
                 options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { ticks: { color: '#94a3b8' } }, y: { ticks: { color: '#94a3b8' }, grid: { color: '#1E293B' } } } }
             });
+        }
+
+        // ---------- Rig Operations (Project #3) ----------
+        async function rigFetchCSV(url) {
+            const res = await fetch(url);
+            if (!res.ok) throw new Error('Failed to fetch ' + url);
+            const text = await res.text();
+            return new Promise(resolve => {
+                Papa.parse(text, { header: true, skipEmptyLines: true, dynamicTyping: false, complete: (results) => resolve(results.data) });
+            });
+        }
+
+        function rigCleanRows(rows) {
+            return rows.map(r => {
+                const o = { ...r };
+                Object.keys(o).forEach(k => {
+                    const raw = o[k];
+                    if (raw == null) return;
+                    if (typeof raw === 'string') {
+                        const t = raw.trim();
+                        if (t === '') { o[k] = ''; return; }
+                        // Try date parse: supports "YYYY-MM-DD", "M/D/YYYY", "YYYY-MM-DD HH:MM:SS"
+                        const d = new Date(t);
+                        const isDate = !isNaN(d.getTime()) && /\d{2,4}/.test(t) && (t.includes('/') || t.includes('-'));
+                        if (isDate) { o[k] = d; return; }
+                        // Normalize decimal comma to dot
+                        const numLike = t.replace(/,/g, '.');
+                        if (/^-?\d+(\.\d+)?$/.test(numLike)) {
+                            o[k] = parseFloat(numLike);
+                            return;
+                        }
+                        o[k] = t;
+                    }
+                });
+                return o;
+            }).filter(r => Object.values(r).some(v => v !== '' && v != null));
+        }
+
+        async function rigInit() {
+            try {
+                const status = document.getElementById('rig-status-indicator');
+                status.innerText = 'Downloading CSVs...';
+                status.classList.add('text-yellow-400');
+                const urls = {
+                    nomenklatur: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR-cwrgDCO4QXeguKeuRFLX2N_YLd7u3vG165J7-B7XR1LJBQbIHWWdq8FZjcn8q_geCF6xM8gbGeNT/pub?gid=1606881578&single=true&output=csv',
+                    ddr: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR-cwrgDCO4QXeguKeuRFLX2N_YLd7u3vG165J7-B7XR1LJBQbIHWWdq8FZjcn8q_geCF6xM8gbGeNT/pub?gid=1953187009&single=true&output=csv',
+                    fuel: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vROs8gBCVAsVUEnOAkMC-heXRhZZZbsrid7Ivl9UBtVT5zEQkbqyNo9QBF6DApX8zLNbtYG1u9tCHaT/pub?gid=2073579499&single=true&output=csv',
+                    productivity: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQQ79RGyb_Mjh4uO_F9qzptHbo2bgdG-Pyicr8kMpPZJWVz7j2KwFzh9Ohgue11KHagbwaRjhAbJgTr/pub?gid=560339056&single=true&output=csv',
+                    datasetRig: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTUDR8bFl8G0_L4xTXR1kg_FvCqN5jQyP-3KWmwWIoq5RFwVR61yoEEJfUfTmMruafLIcmG6xuuTQ7B/pub?gid=1953912833&single=true&output=csv'
+                };
+                const [nomen, ddr, fuel, prod, rigs] = await Promise.all([
+                    rigFetchCSV(urls.nomenklatur),
+                    rigFetchCSV(urls.ddr),
+                    rigFetchCSV(urls.fuel),
+                    rigFetchCSV(urls.productivity),
+                    rigFetchCSV(urls.datasetRig)
+                ]);
+                status.innerText = 'Cleaning & Aggregating...';
+                const data = {
+                    nomenklatur: rigCleanRows(nomen),
+                    ddr: rigCleanRows(ddr),
+                    fuel: rigCleanRows(fuel),
+                    productivity: rigCleanRows(prod),
+                    rigs: rigCleanRows(rigs)
+                };
+                const agg = rigAggregate(data);
+                status.innerText = 'Connected (Live CSVs)';
+                status.classList.replace('text-yellow-400', 'text-green-400');
+                rigRender(agg);
+                setupRigTabs();
+            } catch (e) {
+                console.error('Rig Init Error', e);
+                const status = document.getElementById('rig-status-indicator');
+                status.innerText = 'Connection Failed';
+                status.classList.replace('text-yellow-400', 'text-red-400');
+            }
+        }
+
+        function rigAggregate(data) {
+            // 1. ACTIVE RIGS: Count unique Code_Unit from datasetRig
+            const activeRigs = new Set(data.rigs.map(r => (r['Code_Unit'] || r.Rig || r.RIG || r.Name || '').trim()).filter(x => x && x !== '#N/A')).size;
+
+            // 2. PRODUCTIVITY: Average daily METER_PRODUCT from datasetRig
+            const prodByDate = {};
+            const meterByRigDate = {}; // Track per-rig-per-day for efficiency calculation
+            data.rigs.forEach(r => {
+                const d = r.Date;
+                if (!(d instanceof Date)) return;
+                const key = d.toISOString().slice(0,10);
+                const rig = (r['Code_Unit'] || r.Rig || r.RIG || 'Unknown').toString().trim();
+                if (rig === '#N/A') return;
+                
+                const meter = Number(r.METER_PRODUCT || r.TOTAL_METER || 0);
+                if (!isFinite(meter)) return;
+                
+                // Sum meters per day (across all rigs)
+                prodByDate[key] = (prodByDate[key] || 0) + meter;
+                
+                // Track per-rig-per-day for fuel efficiency
+                const rigDateKey = `${rig}|${key}`;
+                meterByRigDate[rigDateKey] = meter;
+            });
+
+            // 3. FUEL EFFICIENCY: Average of (daily_fuel / daily_meters) per rig per day
+            // Build fuel by rig-date map
+            const fuelByRigDate = {};
+            data.fuel.forEach(r => {
+                const d = r.Date;
+                if (!(d instanceof Date)) return;
+                const key = d.toISOString().slice(0,10);
+                const rig = (r.Code_Unit || r.Rig || r.RIG || 'Unknown').toString().trim();
+                if (rig === '#N/A') return;
+                
+                const qty = Number(r.Quantity || r.Fuel || r.Liters || 0);
+                if (!isFinite(qty)) return;
+                
+                const rigDateKey = `${rig}|${key}`;
+                fuelByRigDate[rigDateKey] = (fuelByRigDate[rigDateKey] || 0) + qty;
+            });
+
+            // Calculate efficiency per rig across all days
+            const fuelEffArr = [];
+            Object.keys(fuelByRigDate).forEach(rigDateKey => {
+                const [rig, date] = rigDateKey.split('|');
+                const fuel = fuelByRigDate[rigDateKey];
+                const meter = meterByRigDate[rigDateKey] || 0;
+                const eff = meter > 0 ? fuel / meter : 0; // fuel per meter (lower is better)
+                if (eff > 0) fuelEffArr.push(eff);
+            });
+
+            // Also build rig summary for chart display
+            const fuelEffByRig = {};
+            Object.keys(fuelByRigDate).forEach(rigDateKey => {
+                const [rig, date] = rigDateKey.split('|');
+                const fuel = fuelByRigDate[rigDateKey];
+                const meter = meterByRigDate[rigDateKey] || 0;
+                const eff = meter > 0 ? fuel / meter : 0;
+                if (!fuelEffByRig[rig]) fuelEffByRig[rig] = { total_fuel: 0, total_meter: 0, daily_effs: [] };
+                fuelEffByRig[rig].total_fuel += fuel;
+                fuelEffByRig[rig].total_meter += meter;
+                if (eff > 0) fuelEffByRig[rig].daily_effs.push(eff);
+            });
+
+            // Convert to array format for charting
+            const fuelEffArrByRig = Object.entries(fuelEffByRig).map(([rig, data]) => ({
+                rig,
+                fuel: data.total_fuel,
+                meter: data.total_meter,
+                eff: data.total_meter > 0 ? data.total_fuel / data.total_meter : 0
+            }));
+
+            // 4. DDR EVENTS: Count all activity occurrences and track by type
+            const ddrTypes = {};
+            const ddrDurations = {};
+            data.ddr.forEach(r => {
+                const t = (r.Activity || r.Type || r.Event || 'Unknown').toString().trim();
+                const dur = Number(r.Duration || r.Hours || r.Time || 0);
+                ddrTypes[t] = (ddrTypes[t] || 0) + 1;
+                ddrDurations[t] = (ddrDurations[t] || 0) + (isFinite(dur) ? dur : 0);
+            });
+
+            // Calculate averages
+            const avgProd = Object.values(prodByDate).length ? (Object.values(prodByDate).reduce((a,b)=>a+b) / Object.values(prodByDate).length) : 0;
+            const avgFuelEff = fuelEffArr.length ? (fuelEffArr.reduce((a,b)=>a+b) / fuelEffArr.length) : 0;
+            const ddrCount = Object.values(ddrTypes).reduce((a,b)=>a+b,0);
+            
+            return { activeRigs, prodByDate, fuelEffArrByRig, ddrTypes, ddrDurations, avgProd, avgFuelEff, ddrCount, fuelByRigDate };
+        }
+
+        function rigRender(agg) {
+            document.getElementById('rig-kpi-active').innerText = agg.activeRigs;
+            document.getElementById('rig-kpi-prod').innerText = agg.avgProd.toFixed(2);
+            document.getElementById('rig-kpi-fuel').innerText = agg.avgFuelEff.toFixed(2);
+            document.getElementById('rig-kpi-ddr').innerText = agg.ddrCount;
+            
+            const prodCtx = document.getElementById('rig-productivityTrend')?.getContext('2d');
+            if (prodCtx) {
+                const labels = Object.keys(agg.prodByDate).sort();
+                const values = labels.map(k => agg.prodByDate[k]);
+                new Chart(prodCtx, { type: 'line', data: { labels, datasets: [{ label: 'Daily Meters', data: values, borderColor: '#0EA5E9', fill: false, tension: 0.3 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: '#cbd5e1' } } }, scales: { x: { ticks: { color: '#94a3b8' } }, y: { ticks: { color: '#94a3b8' }, grid: { color: '#1E293B' } } } } });
+            }
+            
+            const fuelCtx = document.getElementById('rig-fuelEfficiency')?.getContext('2d');
+            if (fuelCtx) {
+                const labels = agg.fuelEffArrByRig.map(r => r.rig);
+                const values = agg.fuelEffArrByRig.map(r => r.eff.toFixed(2));
+                new Chart(fuelCtx, { type: 'bar', data: { labels, datasets: [{ label: 'Fuel/Meter', data: values, backgroundColor: '#8B5CF6' }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { ticks: { color: '#94a3b8' } }, y: { ticks: { color: '#94a3b8' }, grid: { color: '#1E293B' } } } } });
+            }
+            
+            const ddrTypesCtx = document.getElementById('rig-ddrTypes')?.getContext('2d');
+            if (ddrTypesCtx) {
+                const labels = Object.keys(agg.ddrTypes).slice(0, 10);  // Top 10 for readability
+                const values = labels.map(k => agg.ddrTypes[k]);
+                new Chart(ddrTypesCtx, { type: 'doughnut', data: { labels, datasets: [{ data: values, backgroundColor: ['#60a5fa','#34d399','#a78bfa','#f59e0b','#ef4444','#22D3EE','#F59E0B','#10B981','#06B6D4','#8B5CF6'] }] }, options: { responsive: true, maintainAspectRatio: false, cutout: '60%', plugins: { legend: { position: 'right', labels: { color: '#cbd5e1' } } } } });
+            }
+            
+            const ddrDurCtx = document.getElementById('rig-ddrDurations')?.getContext('2d');
+            if (ddrDurCtx) {
+                const labels = Object.keys(agg.ddrDurations).slice(0, 10);  // Top 10 for readability
+                const values = labels.map(k => agg.ddrDurations[k].toFixed(1));
+                new Chart(ddrDurCtx, { type: 'bar', data: { labels, datasets: [{ label: 'Total Hours', data: values, backgroundColor: '#34d399' }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { ticks: { color: '#94a3b8' } }, y: { ticks: { color: '#94a3b8' }, grid: { color: '#1E293B' } } } } });
+            }
+            
+            const dailyCtx = document.getElementById('rig-productivityDaily')?.getContext('2d');
+            if (dailyCtx) {
+                const labels = Object.keys(agg.prodByDate).sort().slice(-30);  // Last 30 days
+                const values = labels.map(k => agg.prodByDate[k]);
+                new Chart(dailyCtx, { type: 'bar', data: { labels, datasets: [{ label: 'Daily Output (m)', data: values, backgroundColor: '#22D3EE' }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { ticks: { color: '#94a3b8' } }, y: { ticks: { color: '#94a3b8' }, grid: { color: '#1E293B' } } } } });
+            }
+            
+            const fuelConsCtx = document.getElementById('rig-fuelConsumption')?.getContext('2d');
+            if (fuelConsCtx) {
+                const fuelByDate = {};
+                Object.keys(agg.fuelByRigDate).forEach(rigDateKey => {
+                    const [rig, date] = rigDateKey.split('|');
+                    fuelByDate[date] = (fuelByDate[date] || 0) + agg.fuelByRigDate[rigDateKey];
+                });
+                const labels = Object.keys(fuelByDate).sort();
+                const values = labels.map(k => fuelByDate[k]);
+                new Chart(fuelConsCtx, { type: 'line', data: { labels, datasets: [{ label: 'Daily Fuel', data: values, borderColor: '#0EA5E9', fill: false, tension: 0.3 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: '#cbd5e1' } } }, scales: { x: { ticks: { color: '#94a3b8' } }, y: { ticks: { color: '#94a3b8' }, grid: { color: '#1E293B' } } } } });
+            }
+            
+            const fuelByRigCtx = document.getElementById('rig-fuelByRig')?.getContext('2d');
+            if (fuelByRigCtx) {
+                const labels = agg.fuelEffArrByRig.map(r => r.rig);
+                const values = agg.fuelEffArrByRig.map(r => r.fuel);
+                new Chart(fuelByRigCtx, { type: 'bar', data: { labels, datasets: [{ label: 'Total Fuel', data: values, backgroundColor: '#a78bfa' }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { ticks: { color: '#94a3b8' } }, y: { ticks: { color: '#94a3b8' }, grid: { color: '#1E293B' } } } } });
+            }
+            const utilCtx = document.getElementById('rig-utilization')?.getContext('2d');
+            if (utilCtx) {
+                const labels = agg.fuelEffArrByRig.map(r => r.rig);
+                const values = agg.fuelEffArrByRig.map(r => {
+                    const eff = r.eff;
+                    if (!isFinite(eff)) return 0;
+                    const score = 100 - Math.min(100, eff * 10);
+                    return Math.max(0, score);
+                });
+                new Chart(utilCtx, { type: 'radar', data: { labels, datasets: [{ label: 'Efficiency Score', data: values, borderColor: '#6366F1', backgroundColor: 'rgba(99,102,241,0.2)' }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { r: { angleLines: { color: '#1E293B' }, grid: { color: '#1E293B' }, pointLabels: { color: '#94a3b8' }, ticks: { color: '#94a3b8' } } } } });
+            }
+        }
+
+        function setupRigTabs() {
+            const tabs = document.querySelectorAll('#rig-tabs .tab-btn');
+            const contents = document.querySelectorAll('#rig-dashboard .tab-content');
+            tabs.forEach(btn => btn.addEventListener('click', () => {
+                tabs.forEach(b => b.classList.remove('active'));
+                contents.forEach(c => c.classList.add('hidden'));
+                btn.classList.add('active');
+                document.getElementById(btn.dataset.tab)?.classList.remove('hidden');
+            }));
         }
 
         function renderMarketingBestTimeChart(data) {
