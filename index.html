@@ -508,7 +508,11 @@
     <!-- JAVASCRIPT -->
     <script>
         // CONFIG
-        const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSXxXA21f-Q3MUn1A7jyrxNiZ-wD9x4RGfwnqMJrVZuKmhKJKluXsqqkNf2dDvnSJVpdnRBBHQCiLeS/pub?gid=1555337350&single=true&output=csv';
+        const REMOTE_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSXxXA21f-Q3MUn1A7jyrxNiZ-wD9x4RGfwnqMJrVZuKmhKJKluXsqqkNf2dDvnSJVpdnRBBHQCiLeS/pub?gid=1555337350&single=true&output=csv';
+        const LOCAL_CSV_URL = 'SuperStore - SuperStore (3).csv';
+        const params = new URLSearchParams(window.location.search);
+        const useLocal = params.get('source') === 'local';
+        const CSV_URL = useLocal ? LOCAL_CSV_URL : REMOTE_CSV_URL;
 
         // CURSOR
         const cursorDot = document.getElementById("cursor-dot");
@@ -582,7 +586,7 @@
             if (num >= 1000) return '$' + (num / 1000).toFixed(1) + 'k';
             return '$' + num.toLocaleString();
         }
-        function cleanNumber(strVal) {
+        function cleanNumber(strVal, columnName = '') {
             // Handles Indonesian locale numbers in CSV: dots as thousands, commas as decimals
             if (strVal === null || strVal === undefined) return 0;
             if (typeof strVal !== 'string') return Number(strVal) || 0;
@@ -590,14 +594,39 @@
             if (!s) return 0;
             // Remove percent sign and spaces
             s = s.replace(/%/g, '').replace(/\s/g, '');
-            // If both '.' and ',' exist, assume '.' is thousands and ',' is decimal
-            if (s.includes('.') && s.includes(',')) {
+            
+            // SPECIAL CASE: Sales column is in CENTS (pure integer, no decimal comma)
+            // e.g., "9.575.775" = 9,575,775 cents = $95,757.75
+            if (columnName === 'Sales') {
+                // Remove all dots (thousands separators only in Sales)
+                s = s.replace(/\./g, '');
+                // Remove any non-numeric except leading minus
+                s = s.replace(/[^0-9.-]/g, '');
+                const cents = parseFloat(s);
+                // Convert cents to dollars
+                return isNaN(cents) ? 0 : cents / 100;
+            }
+            
+            // For other columns (Profit, Quantity, etc.): Indonesian format with comma decimal
+            // Count separators
+            const dotCount = (s.match(/\./g) || []).length;
+            const commaCount = (s.match(/,/g) || []).length;
+            
+            if (dotCount > 0 && commaCount > 0) {
+                // Both exist: dots are thousands, comma is decimal (e.g., "2.488.915,00")
                 s = s.replace(/\./g, '');
                 s = s.replace(/,/g, '.');
-            } else if (s.includes(',')) {
-                // If only comma exists, treat it as decimal separator
+            } else if (commaCount > 0) {
+                // Only comma: decimal separator (e.g., "419,14")
                 s = s.replace(/,/g, '.');
+            } else if (dotCount > 1) {
+                // Multiple dots: thousands separators (e.g., "9.575.775")
+                s = s.replace(/\./g, '');
+            } else if (dotCount === 1) {
+                // Single dot: keep as decimal point (e.g., "262" or could be "1.5")
+                // No change needed
             }
+            
             // Remove any non-numeric except leading minus and decimal point
             s = s.replace(/[^0-9.-]/g, '');
             const n = parseFloat(s);
@@ -625,9 +654,24 @@
                 let totalSales = 0, totalProfit = 0, uniqueOrders = new Set(), monthlyStats = Array(12).fill(0).map(() => ({ sales: 0, profit: 0 })), segmentStats = {};
                 const categoryStats = {}; const subCategoryStats = {}; const regionStats = {}; const stateStats = {}; const shipModeStats = {}; const shipMonthlySales = Array(12).fill(0); const productStats = {};
 
+                let skippedRows = 0;
                 results.data.forEach(row => {
-                    const sales = cleanNumber(row['Sales']);
-                    const profit = cleanNumber(row['Profit']);
+                    const sales = cleanNumber(row['Sales'], 'Sales');  // Sales in CENTS format
+                    const profit = cleanNumber(row['Profit'], 'Profit');  // Profit in Indonesian format
+                    
+                    // DATA VALIDATION: Skip rows with impossible profit/sales ratios
+                    // Profit should not exceed 10x of sales; for tiny sales, use a $50 floor to avoid false flags
+                    const salesFloor = Math.max(Math.abs(sales), 50);
+                    if (Math.abs(profit) > salesFloor * 10) {
+                        skippedRows++;
+                        return; // Skip this corrupt row
+                    }
+                    // Hard anomaly cap: if profit is absurdly large while sales are small, skip
+                    if (Math.abs(profit) > 1_000_000 && Math.abs(sales) < 500) {
+                        skippedRows++;
+                        return;
+                    }
+                    
                     const orderDate = new Date(row['Order_Date']);
                     const segment = row['Segment'];
                     const orderId = row['Order_ID'];
@@ -658,6 +702,11 @@
                 });
 
                 const margin = totalSales ? ((totalProfit / totalSales) * 100).toFixed(1) + '%' : '0%';
+                
+                if (skippedRows > 0) {
+                    console.warn(`⚠️ Data Quality: ${skippedRows} corrupt rows filtered (profit/sales ratio > 10x)`);
+                }
+                
                 document.getElementById('status-indicator').innerText = 'Connected (Live CSV)';
                 document.getElementById('status-indicator').classList.replace('text-yellow-400', 'text-green-400');
 
