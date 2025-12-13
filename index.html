@@ -1038,16 +1038,16 @@
             const cleanedData = [];
 
             rawData.forEach(row => {
-                if (!row['Channel'] || !row['Impressions']) return;
+                if (!row['Action_Type'] || !row['Impressions']) return;
                 
                 const impressions = parseInt(row['Impressions']) || 0;
                 const clicks = parseInt(row['Clicks']) || 0;
-                const ctr = impressions > 0 ? (clicks / impressions) * 100 : 0;
-                const channel = row['Channel'].trim();
-                const content = row['Content_Type']?.trim() || 'Unknown';
+                const ctr = parseFloat(row['CTR']) * 100 || 0;
+                const channel = row['Action_Type'].trim();
+                const content = row['Content_Category']?.trim() || 'Unknown';
                 const language = normalizeLanguage(row['Language']);
                 const date = new Date(row['Date']);
-                const dayOfWeek = isNaN(date.getTime()) ? 'Unknown' : ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][date.getDay()];
+                const dayOfWeek = row['Day_of_Week']?.trim() || 'Unknown';
                 const month = isNaN(date.getTime()) ? 0 : date.getMonth();
 
                 totalImpressions += impressions;
