@@ -583,8 +583,31 @@
             return '$' + num.toLocaleString();
         }
         function cleanNumber(strVal) {
+            // Handles Indonesian locale numbers in CSV: dots as thousands, commas as decimals
+            if (strVal === null || strVal === undefined) return 0;
             if (typeof strVal !== 'string') return Number(strVal) || 0;
-            return parseFloat(strVal.replace(/[^0-9.-]+/g, '')) || 0;
+            let s = strVal.trim();
+            if (!s) return 0;
+            // Remove percent sign and spaces
+            s = s.replace(/%/g, '').replace(/\s/g, '');
+            // If both '.' and ',' exist, assume '.' is thousands and ',' is decimal
+            if (s.includes('.') && s.includes(',')) {
+                s = s.replace(/\./g, '');
+                s = s.replace(/,/g, '.');
+            } else if (s.includes(',')) {
+                // If only comma exists, treat it as decimal separator
+                s = s.replace(/,/g, '.');
+            }
+            // Remove any non-numeric except leading minus and decimal point
+            s = s.replace(/[^0-9.-]/g, '');
+            const n = parseFloat(s);
+            return isNaN(n) ? 0 : n;
+        }
+
+        function cleanPercent(strVal) {
+            // Returns percent as 0..1
+            const n = cleanNumber(strVal);
+            return n / 100;
         }
 
         async function fetchDashboardData() {
