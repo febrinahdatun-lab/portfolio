@@ -1,0 +1,96 @@
+Date,Action_Type,Language,Content_Category,Day_of_Week,Impressions,CTR,Clicks
+2023-01-02,Instagram Post,English,Partners,Monday,1759,0.016391,29
+2023-01-02,LinkedIn Post,Spanish,Events,Monday,1368,0.008438,12
+2023-01-03,Instagram Post,Spanish,Humor,Tuesday,1573,0.016354,26
+2023-01-03,LinkedIn Post,English,Events,Tuesday,1516,0.007464,11
+2023-01-04,Newsletter,Portuguese,Platform Improvements,Wednesday,5234,0.085234,446
+2023-01-04,Instagram Post,French,Marketing Automation,Wednesday,2145,0.012345,26
+2023-01-05,LinkedIn Post,English,Platform Improvements,Thursday,1876,0.009876,19
+2023-01-05,Newsletter,Spanish,Partners,Thursday,4892,0.082456,403
+2023-01-06,Instagram Post,Italian,Humor,Friday,2341,0.014567,34
+2023-01-06,LinkedIn Post,Portuguese,Marketing Automation,Friday,1654,0.008765,15
+2023-01-09,Newsletter,English,Events,Monday,5678,0.087654,497
+2023-01-09,Instagram Post,French,Platform Improvements,Monday,1923,0.013456,26
+2023-01-10,LinkedIn Post,Spanish,Humor,Tuesday,1745,0.009123,16
+2023-01-10,Newsletter,Italian,Marketing Automation,Tuesday,4567,0.084321,385
+2023-01-11,Instagram Post,English,Partners,Wednesday,2456,0.015678,38
+2023-01-11,LinkedIn Post,French,Events,Wednesday,1834,0.008934,16
+2023-01-12,Newsletter,Portuguese,Platform Improvements,Thursday,5345,0.086789,463
+2023-01-12,Instagram Post,Spanish,Marketing Automation,Thursday,2134,0.012987,28
+2023-01-13,LinkedIn Post,Italian,Humor,Friday,1923,0.009876,19
+2023-01-13,Newsletter,English,Partners,Friday,4923,0.083456,411
+2023-01-16,Instagram Post,French,Events,Monday,2234,0.014123,32
+2023-01-16,LinkedIn Post,Portuguese,Platform Improvements,Monday,1756,0.008765,15
+2023-01-17,Newsletter,Spanish,Marketing Automation,Tuesday,5456,0.085234,465
+2023-01-17,Instagram Post,Italian,Humor,Tuesday,2145,0.013789,30
+2023-01-18,LinkedIn Post,English,Partners,Wednesday,1876,0.009234,17
+2023-01-18,Newsletter,French,Events,Wednesday,4678,0.084123,393
+2023-01-19,Instagram Post,Spanish,Platform Improvements,Thursday,2345,0.015678,37
+2023-01-19,LinkedIn Post,Portuguese,Marketing Automation,Thursday,1654,0.008765,14
+2023-01-20,Newsletter,Italian,Humor,Friday,5234,0.086789,454
+2023-01-20,Instagram Post,English,Partners,Friday,2456,0.014567,36
+2023-01-23,LinkedIn Post,French,Events,Monday,1945,0.009123,18
+2023-01-23,Newsletter,Spanish,Platform Improvements,Monday,4892,0.083456,408
+2023-01-24,Instagram Post,Portuguese,Marketing Automation,Tuesday,2134,0.013456,29
+2023-01-24,LinkedIn Post,Italian,Humor,Tuesday,1756,0.008934,16
+2023-01-25,Newsletter,English,Partners,Wednesday,5678,0.087654,497
+2023-01-25,Instagram Post,French,Events,Wednesday,2345,0.015234,36
+2023-01-26,LinkedIn Post,Spanish,Platform Improvements,Thursday,1876,0.009876,19
+2023-01-26,Newsletter,Portuguese,Marketing Automation,Thursday,4567,0.084321,385
+2023-01-27,Instagram Post,Italian,Humor,Friday,2456,0.014123,35
+2023-01-27,LinkedIn Post,English,Partners,Friday,1654,0.008765,14
+2023-02-01,Newsletter,French,Events,Wednesday,5345,0.086789,463
+2023-02-01,Instagram Post,Spanish,Platform Improvements,Wednesday,2134,0.012987,28
+2023-02-02,LinkedIn Post,Portuguese,Marketing Automation,Thursday,1923,0.009234,18
+2023-02-02,Newsletter,Italian,Humor,Thursday,4923,0.083456,411
+2023-02-03,Instagram Post,English,Partners,Friday,2345,0.015678,37
+2023-02-03,LinkedIn Post,French,Events,Friday,1876,0.008934,17
+2023-02-06,Newsletter,Spanish,Platform Improvements,Monday,5456,0.085234,465
+2023-02-06,Instagram Post,Portuguese,Marketing Automation,Monday,2145,0.013789,30
+2023-02-07,LinkedIn Post,Italian,Humor,Tuesday,1745,0.009123,16
+2023-02-07,Newsletter,English,Partners,Tuesday,4678,0.084123,393
+2023-02-08,Instagram Post,French,Events,Wednesday,2456,0.014567,36
+2023-02-08,LinkedIn Post,Spanish,Platform Improvements,Wednesday,1654,0.008765,14
+2023-02-09,Newsletter,Portuguese,Marketing Automation,Thursday,5234,0.086789,454
+2023-02-09,Instagram Post,Italian,Humor,Thursday,2134,0.013456,29
+2023-02-10,LinkedIn Post,English,Partners,Friday,1923,0.009876,19
+2023-02-10,Newsletter,French,Events,Friday,4892,0.083456,408
+2023-02-13,Instagram Post,Spanish,Platform Improvements,Monday,2345,0.015234,36
+2023-02-13,LinkedIn Post,Portuguese,Marketing Automation,Monday,1876,0.009234,17
+2023-02-14,Newsletter,Italian,Humor,Tuesday,5345,0.085234,456
+2023-02-14,Instagram Post,English,Partners,Tuesday,2456,0.014123,35
+2023-02-15,LinkedIn Post,French,Events,Wednesday,1745,0.008765,15
+2023-02-15,Newsletter,Spanish,Platform Improvements,Wednesday,4567,0.084321,385
+2023-02-16,Instagram Post,Portuguese,Marketing Automation,Thursday,2134,0.013789,29
+2023-02-16,LinkedIn Post,Italian,Humor,Thursday,1654,0.008934,15
+2023-02-17,Newsletter,English,Partners,Friday,5678,0.087654,497
+2023-02-17,Instagram Post,French,Events,Friday,2345,0.015678,37
+2023-02-20,LinkedIn Post,Spanish,Platform Improvements,Monday,1923,0.009123,18
+2023-02-20,Newsletter,Portuguese,Marketing Automation,Monday,4923,0.083456,411
+2023-02-21,Instagram Post,Italian,Humor,Tuesday,2234,0.014567,32
+2023-02-21,LinkedIn Post,English,Partners,Tuesday,1876,0.008765,16
+2023-02-22,Newsletter,French,Events,Wednesday,5456,0.085234,465
+2023-02-22,Instagram Post,Spanish,Platform Improvements,Wednesday,2145,0.013456,29
+2023-02-23,LinkedIn Post,Portuguese,Marketing Automation,Thursday,1745,0.009876,17
+2023-02-23,Newsletter,Italian,Humor,Thursday,4678,0.084123,393
+2023-02-24,Instagram Post,English,Partners,Friday,2456,0.015234,37
+2023-02-24,LinkedIn Post,French,Events,Friday,1654,0.008934,15
+2023-02-27,Newsletter,Spanish,Platform Improvements,Monday,5234,0.086789,454
+2023-02-27,Instagram Post,Portuguese,Marketing Automation,Monday,2134,0.013789,29
+2023-02-28,LinkedIn Post,Italian,Humor,Tuesday,1923,0.009234,18
+2023-03-01,Newsletter,English,Partners,Wednesday,4892,0.083456,408
+2023-03-01,Instagram Post,French,Events,Wednesday,2345,0.014123,33
+2023-03-02,LinkedIn Post,Spanish,Platform Improvements,Thursday,1876,0.008765,16
+2023-03-02,Newsletter,Portuguese,Marketing Automation,Thursday,5345,0.085234,456
+2023-03-03,Instagram Post,Italian,Humor,Friday,2456,0.015678,38
+2023-03-03,LinkedIn Post,English,Partners,Friday,1654,0.008934,15
+2023-03-06,Newsletter,French,Events,Monday,5678,0.087654,497
+2023-03-06,Instagram Post,Spanish,Platform Improvements,Monday,2134,0.013456,29
+2023-03-07,LinkedIn Post,Portuguese,Marketing Automation,Tuesday,1745,0.009123,16
+2023-03-07,Newsletter,Italian,Humor,Tuesday,4567,0.084321,385
+2023-03-08,Instagram Post,English,Partners,Wednesday,2345,0.015234,36
+2023-03-08,LinkedIn Post,French,Events,Wednesday,1876,0.008765,16
+2023-03-09,Newsletter,Spanish,Platform Improvements,Thursday,5456,0.085234,465
+2023-03-09,Instagram Post,Portuguese,Marketing Automation,Thursday,2145,0.013789,30
+2023-03-10,LinkedIn Post,Italian,Humor,Friday,1923,0.009876,19
+2023-03-10,Newsletter,English,Partners,Friday,4923,0.083456,411
