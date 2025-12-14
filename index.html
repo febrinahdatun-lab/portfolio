@@ -834,11 +834,9 @@
             setAIStatus(project, 'Memproses pertanyaan...', 'text-yellow-400');
             output.textContent = '⏳ Memproses...';
             try {
-                const headers = { 'Content-Type': 'application/json' };
-                if (AI_SHARED_SECRET) headers['X-API-KEY'] = AI_SHARED_SECRET;
                 const resp = await fetch(AI_ENDPOINT, {
                     method: 'POST',
-                    headers,
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ project, question, secret: AI_SHARED_SECRET })
                 });
                 if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
