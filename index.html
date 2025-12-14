@@ -809,7 +809,7 @@
         const params = new URLSearchParams(window.location.search);
         const useLocal = params.get('source') === 'local';
         const CSV_URL = useLocal ? LOCAL_CSV_URL : REMOTE_CSV_URL;
-        const AI_ENDPOINT = 'https://script.google.com/macros/s/AKfycbytFmzguZ0XlR7gDuDB1Tt5GvhtNsoOox6MdIAcWi79JFjKR4UUCd305HE-b4BxPWRHiA/exec'; // Web App URL
+        const AI_ENDPOINT = 'https://script.google.com/macros/s/AKfycbxFDeUWGOkICRQN4ZkuwVgpmuYGtQazGF7B5araVst8ouC9zuTJT4K5btcsyhFeKr2zaA/exec'; // Web App URL
         const AI_SHARED_SECRET = '08HIiooknoh080H80h$#$D;ks__='; // Shared secret must match Script Property
 
         function setAIStatus(project, text, color) {
