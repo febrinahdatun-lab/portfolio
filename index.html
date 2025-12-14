@@ -839,7 +839,7 @@
                 const resp = await fetch(AI_ENDPOINT, {
                     method: 'POST',
                     headers,
-                    body: JSON.stringify({ project, question })
+                    body: JSON.stringify({ project, question, secret: AI_SHARED_SECRET })
                 });
                 if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
                 const data = await resp.json();
