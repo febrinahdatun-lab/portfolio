@@ -103,7 +103,7 @@
         .dropdown-panel {
             display: none;
             position: absolute;
-            top: 110%;
+            top: 115%;
             left: 0;
             min-width: 220px;
             background: rgba(15, 23, 42, 0.92);
@@ -112,7 +112,7 @@
             box-shadow: 0 12px 30px rgba(0,0,0,0.35);
             padding: 8px;
             backdrop-filter: blur(10px);
-            z-index: 60;
+            z-index: 999;
         }
         .dropdown-group:hover .dropdown-panel,
         .dropdown-group:focus-within .dropdown-panel { display: block; }
@@ -170,74 +170,53 @@
     <div class="cursor-outline" id="cursor-outline"></div>
 
     <!-- Navbar -->
-    <nav class="fixed w-full z-40 bg-dark/80 backdrop-blur-md border-b border-gray-800/50">
+    <nav class="fixed top-0 left-0 w-full z-50 bg-[#0b1426]/92 backdrop-blur-md border-b border-primary/15 shadow-lg">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-20">
+            <div class="flex items-center gap-6 h-20">
                 <div class="flex-shrink-0 flex items-center gap-3">
                     <div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary shadow-[0_0_15px_rgba(139,92,246,0.4)]">
                         <img src="https://lh3.googleusercontent.com/d/1T2Q8QHpeETmrkz6SS5T1CrZilVGWFAJs=w100" alt="Febri Nahdatun" class="w-full h-full object-cover">
                     </div>
                     <span class="text-lg font-bold text-white tracking-wide hidden sm:block">Febri Nahdatun</span>
                 </div>
-                <div class="hidden md:block">
-                    <div class="ml-10 flex items-baseline space-x-8">
-                        <a href="#about" class="hover-trigger hover:text-primary transition-colors text-sm font-medium">Profile</a>
-                        <a href="#expertise" class="hover-trigger hover:text-primary transition-colors text-sm font-medium">Tech Stacks</a>
-                        <a href="#dashboard" class="hover-trigger hover:text-primary transition-colors text-sm font-medium">Analytics</a>
-                        <a href="#certifications" class="hover-trigger hover:text-primary transition-colors text-sm font-medium">Certifications</a>
+                <div class="flex flex-1 items-center justify-center gap-4 overflow-visible bg-surface/90 border border-gray-800 rounded-full shadow-lg backdrop-blur px-7 py-3 z-50 max-w-5xl mx-auto">
+                    <a href="#about" class="hover-trigger px-3.5 py-2 rounded-full text-gray-200 hover:bg-primary/20 hover:text-white transition-all text-sm font-medium">Profile</a>
+                    <a href="#expertise" class="hover-trigger px-3.5 py-2 rounded-full text-gray-200 hover:bg-primary/20 hover:text-white transition-all text-sm font-medium">Tech Stacks</a>
+                    <a href="#dashboard" class="hover-trigger px-3.5 py-2 rounded-full text-gray-200 hover:bg-primary/20 hover:text-white transition-all text-sm font-medium">Analytics</a>
+                    <a href="#certifications" class="hover-trigger px-3.5 py-2 rounded-full text-gray-200 hover:bg-primary/20 hover:text-white transition-all text-sm font-medium">Certifications</a>
+
+                    <div class="dropdown-group">
+                        <button class="hover-trigger px-3.5 py-2 rounded-full text-gray-200 bg-dark/70 border border-gray-800 hover:border-primary hover:text-white transition-all flex items-center gap-2 text-sm font-medium">
+                            <i class="fas fa-briefcase"></i><span>My Projects</span><i class="fas fa-chevron-down text-xs"></i>
+                        </button>
+                        <div class="dropdown-panel space-y-1">
+                            <button onclick="jumpToDashboard('superstore')" class="w-full text-left hover-trigger px-3 py-2 rounded-lg text-gray-200 hover:bg-primary/10 hover:text-white flex items-center gap-2">
+                                <i class="fas fa-store"></i><span>SuperStore Analytics</span>
+                            </button>
+                            <button onclick="jumpToDashboard('marketing')" class="w-full text-left hover-trigger px-3 py-2 rounded-lg text-gray-200 hover:bg-secondary/10 hover:text-white flex items-center gap-2">
+                                <i class="fas fa-chart-line"></i><span>Marketing Analytics</span>
+                            </button>
+                            <button onclick="jumpToDashboard('rig')" class="w-full text-left hover-trigger px-3 py-2 rounded-lg text-gray-200 hover:bg-amber-500/10 hover:text-white flex items-center gap-2">
+                                <i class="fas fa-industry"></i><span>Rig Operations</span>
+                            </button>
+                        </div>
                     </div>
+
+                    <a href="#contact" class="hover-trigger px-6 py-2.5 bg-primary text-white font-semibold rounded-full text-sm hover:bg-violet-600 transition-all shadow-[0_4px_14px_0_rgba(139,92,246,0.39)] transform hover:-translate-y-0.5 whitespace-nowrap">
+                        Let's Collaborate
+                    </a>
                 </div>
-                <a href="#contact" class="hover-trigger px-6 py-2.5 bg-primary text-white font-semibold rounded-full text-sm hover:bg-violet-600 transition-all shadow-[0_4px_14px_0_rgba(139,92,246,0.39)] transform hover:-translate-y-0.5">
-                    Contact Me
-                </a>
             </div>
         </div>
     </nav>
 
-    <!-- Quick Menu (anchors + project jumpers) -->
-    <div class="fixed top-20 w-full z-30 px-4 sm:px-6 lg:px-8">
-        <div class="max-w-7xl mx-auto">
-            <div class="bg-surface/80 border border-gray-800 rounded-full shadow-lg backdrop-blur flex items-center gap-2 overflow-x-auto hide-scrollbar px-3 py-2 text-sm font-medium">
-                <a href="#about" class="hover-trigger px-4 py-2 rounded-full text-gray-300 hover:bg-primary/20 hover:text-white transition-all">Profile</a>
-                <a href="#expertise" class="hover-trigger px-4 py-2 rounded-full text-gray-300 hover:bg-primary/20 hover:text-white transition-all">Tech Stacks</a>
-                <a href="#dashboard" class="hover-trigger px-4 py-2 rounded-full text-gray-300 hover:bg-primary/20 hover:text-white transition-all">Analytics</a>
-                <a href="#certifications" class="hover-trigger px-4 py-2 rounded-full text-gray-300 hover:bg-primary/20 hover:text-white transition-all">Certifications</a>
-                <a href="#contact" class="hover-trigger px-4 py-2 rounded-full text-gray-300 hover:bg-primary/20 hover:text-white transition-all">Contact</a>
-                <span class="text-gray-600">|</span>
-
-                <!-- My Projects Dropdown -->
-                <div class="dropdown-group">
-                    <button class="hover-trigger px-4 py-2 rounded-full text-gray-200 bg-dark/70 border border-gray-800 hover:border-primary hover:text-white transition-all flex items-center gap-2">
-                        <i class="fas fa-briefcase"></i><span>My Projects</span><i class="fas fa-chevron-down text-xs"></i>
-                    </button>
-                    <div class="dropdown-panel space-y-1">
-                        <button onclick="jumpToDashboard('superstore')" class="w-full text-left hover-trigger px-3 py-2 rounded-lg text-gray-200 hover:bg-primary/10 hover:text-white flex items-center gap-2">
-                            <i class="fas fa-store"></i><span>SuperStore Analytics</span>
-                        </button>
-                        <button onclick="jumpToDashboard('marketing')" class="w-full text-left hover-trigger px-3 py-2 rounded-lg text-gray-200 hover:bg-secondary/10 hover:text-white flex items-center gap-2">
-                            <i class="fas fa-chart-line"></i><span>Marketing Analytics</span>
-                        </button>
-                        <button onclick="jumpToDashboard('rig')" class="w-full text-left hover-trigger px-3 py-2 rounded-lg text-gray-200 hover:bg-amber-500/10 hover:text-white flex items-center gap-2">
-                            <i class="fas fa-industry"></i><span>Rig Operations</span>
-                        </button>
-                    </div>
-                </div>
-
-                <span class="text-gray-600">|</span>
-                <a href="#contact" class="hover-trigger px-4 py-2 rounded-full text-white bg-primary hover:bg-violet-600 transition-all flex items-center gap-2 shadow-[0_8px_20px_-12px_rgba(139,92,246,0.8)]">
-                    <i class="fas fa-paper-plane"></i><span>Let’s Collaborate</span>
-                </a>
-            </div>
-        </div>
-    </div>
-
     <!-- Hero Section -->
-    <section id="about" class="min-h-screen flex items-center justify-center pt-40 pb-12 relative overflow-hidden scroll-mt-36">
+    <section id="about" class="min-h-screen flex items-center justify-center pt-14 pb-12 relative overflow-hidden scroll-mt-24">
         <div class="absolute top-20 right-0 w-[500px] h-[500px] bg-secondary/10 rounded-full blur-[100px] animate-pulse"></div>
         <div class="absolute bottom-0 left-0 w-[400px] h-[400px] bg-primary/10 rounded-full blur-[100px]"></div>
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 items-center">
                 
                 <div class="space-y-6 lg:text-left text-center order-2 lg:order-1">
                     <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-surface border border-gray-700 text-sm font-medium text-gray-300 mx-auto lg:mx-0">
@@ -2050,4 +2029,3 @@
     </script>
 </body>
 </html>
-
