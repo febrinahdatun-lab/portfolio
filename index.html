@@ -2054,7 +2054,7 @@
         // AI Ask Wiring
         // ===============
         // Configure your deployed Apps Script Web App URL here
-        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxYkcma2WpuIEL8I7D4163wwWj2u8pspyk601Z_Tn6L6rwTs2jXq6XZN9BvU0O1mdQm/exec';
+        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby1c90C4Sb2w56_Nt7HSQvLEWsQcd3OmpHODZ0wlnR9sHyn58jHm4PwnN7u6pbiwWQ-/exec';
         const CSV_URLS = {
             superstore: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSXxXA21f-Q3MUn1A7jyrxNiZ-wD9x4RGfwnqMJrVZuKmhKJKluXsqqkNf2dDvnSJVpdnRBBHQCiLeS/pub?gid=1555337350&single=true&output=csv',
             marketing: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR8epamsS0Biy7VhZRTC7KyzDSMo8ShcIj2lfl9v4TlW8FkMcyDOuZFIL5Pu6OQAqv0Frd5fUVT_VjZ/pub?gid=997035940&single=true&output=csv',
@@ -2073,12 +2073,16 @@
             const payload = project === 'rig'
                 ? { project, question, rigUrls: CSV_URLS.rig, ...filters }
                 : { project, question, csvUrl: CSV_URLS[project], ...filters };
-            const resp = await fetch(APPS_SCRIPT_URL, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            });
-            try { return await resp.json(); } catch { return { status: 'error', message: 'Invalid response' }; }
+            try {
+                const resp = await fetch(APPS_SCRIPT_URL, {
+                    method: 'POST',
+                    // Gunakan text/plain (tanpa header custom) untuk menghindari preflight CORS
+                    body: JSON.stringify(payload)
+                });
+                return await resp.json();
+            } catch (err) {
+                return { status: 'error', message: err && err.message ? err.message : 'Failed to fetch' };
+            }
         }
 
         // SuperStore
