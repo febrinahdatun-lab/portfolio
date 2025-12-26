@@ -373,13 +373,13 @@
                     <div id="tab-overview" class="tab-panel grid grid-cols-1 lg:grid-cols-4 gap-6">
                         <div class="lg:col-span-3 bg-dark p-6 rounded-2xl border border-gray-800"><h5 class="text-white font-bold text-sm mb-6 flex items-center gap-2"><i class="fas fa-chart-bar text-primary"></i> Monthly Sales vs Profit Trend</h5><div class="h-80"><canvas id="trendChart"></canvas></div></div>
                         <div class="lg:col-span-1 bg-dark p-6 rounded-2xl border border-gray-800"><h5 class="text-white font-bold text-sm mb-6 flex items-center gap-2"><i class="fas fa-chart-pie text-secondary"></i> Sales by Segment</h5><div class="h-64 flex items-center justify-center"><canvas id="segmentChart"></canvas></div></div>
-                        <div class="lg:col-span-4 bg-dark p-6 rounded-2xl border border-gray-800">
-                            <h5 class="text-white font-bold text-sm mb-3 flex items-center gap-2"><i class="fas fa-robot text-primary"></i> Ask AI about SuperStore Data</h5>
+                        <div class="lg:col-span-4 bg-gradient-to-r from-primary/5 to-secondary/5 p-6 rounded-2xl border-2 border-primary/30 shadow-[0_0_20px_rgba(139,92,246,0.15)] hover:border-primary/50 transition-all">
+                            <h5 class="text-white font-bold text-sm mb-3 flex items-center gap-2 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent"><i class="fas fa-robot text-primary"></i> ✨ Ask AI about SuperStore Data</h5>
                             <div class="grid grid-cols-1 md:grid-cols-5 gap-3">
-                                <textarea id="superstore-ai-input" class="md:col-span-4 w-full bg-surface border border-gray-700 rounded-lg p-3 text-sm text-white" rows="3" placeholder="Tanya dalam Bahasa Indonesia atau English..."></textarea>
-                                <button id="superstore-ai-ask" class="md:col-span-1 px-4 py-3 bg-primary text-white rounded-lg hover:bg-violet-600">Ask AI</button>
+                                <textarea id="superstore-ai-input" class="md:col-span-4 w-full bg-surface border border-gray-700 rounded-lg p-3 text-sm text-white focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all" rows="3" placeholder="e.g. Produk kategori apa yang paling menguntungkan? atau Which region has the highest sales growth?"></textarea>
+                                <button id="superstore-ai-ask" class="md:col-span-1 px-4 py-3 bg-gradient-to-b from-primary to-violet-700 text-white rounded-lg hover:shadow-[0_0_15px_rgba(139,92,246,0.4)] font-semibold transition-all transform hover:scale-105">Ask AI</button>
                             </div>
-                            <div id="superstore-ai-result" class="mt-4 text-sm text-gray-200"></div>
+                            <div id="superstore-ai-result" class="mt-4 text-sm text-gray-200 bg-dark/50 p-4 rounded-lg border border-gray-700/50"></div>
                         </div>
                     </div>
                     <div id="tab-category" class="tab-panel hidden grid grid-cols-1 lg:grid-cols-4 gap-6">
@@ -447,13 +447,13 @@
                             <div class="bg-dark p-6 rounded-2xl border border-gray-800"><h5 class="text-white font-bold text-sm mb-6 flex items-center gap-2"><i class="fas fa-chart-line text-green-300"></i> CTR Performance Over Time</h5><div class="h-72"><canvas id="marketing-ctrTrendChart"></canvas></div></div>
                             <div class="bg-dark p-6 rounded-2xl border border-gray-800"><h5 class="text-white font-bold text-sm mb-6 flex items-center gap-2"><i class="fas fa-chart-pie text-purple-300"></i> Channel Distribution</h5><div class="h-72"><canvas id="marketing-channelPieChart"></canvas></div></div>
                             <div class="bg-dark p-6 rounded-2xl border border-gray-800"><h5 class="text-white font-bold text-sm mb-6 flex items-center gap-2"><i class="fas fa-chart-bar text-pink-300"></i> Clicks by Channel</h5><div class="h-72"><canvas id="marketing-clicksChannelChart"></canvas></div></div>
-                            <div class="bg-dark p-6 rounded-2xl border border-gray-800 lg:col-span-2">
-                                <h5 class="text-white font-bold text-sm mb-3 flex items-center gap-2"><i class="fas fa-robot text-secondary"></i> Ask AI about Marketing Data</h5>
+                            <div class="bg-gradient-to-r from-secondary/5 to-primary/5 p-6 rounded-2xl border-2 border-secondary/30 shadow-[0_0_20px_rgba(14,165,233,0.15)] hover:border-secondary/50 transition-all lg:col-span-2">
+                                <h5 class="text-white font-bold text-sm mb-3 flex items-center gap-2 bg-gradient-to-r from-secondary to-primary bg-clip-text text-transparent"><i class="fas fa-robot text-secondary"></i> ✨ Ask AI about Marketing Data</h5>
                                 <div class="grid grid-cols-1 md:grid-cols-5 gap-3">
-                                    <textarea id="marketing-ai-input" class="md:col-span-4 w-full bg-surface border border-gray-700 rounded-lg p-3 text-sm text-white" rows="3" placeholder="Ask in Indonesian or English..."></textarea>
-                                    <button id="marketing-ai-ask" class="md:col-span-1 px-4 py-3 bg-secondary text-white rounded-lg hover:bg-sky-500">Ask AI</button>
+                                    <textarea id="marketing-ai-input" class="md:col-span-4 w-full bg-surface border border-gray-700 rounded-lg p-3 text-sm text-white focus:border-secondary focus:ring-2 focus:ring-secondary/20 transition-all" rows="3" placeholder="e.g. Channel mana yang memiliki ROI terbaik? atau What's the CTR trend over the past months?"></textarea>
+                                    <button id="marketing-ai-ask" class="md:col-span-1 px-4 py-3 bg-gradient-to-b from-secondary to-cyan-700 text-white rounded-lg hover:shadow-[0_0_15px_rgba(14,165,233,0.4)] font-semibold transition-all transform hover:scale-105">Ask AI</button>
                                 </div>
-                                <div id="marketing-ai-result" class="mt-4 text-sm text-gray-200"></div>
+                                <div id="marketing-ai-result" class="mt-4 text-sm text-gray-200 bg-dark/50 p-4 rounded-lg border border-gray-700/50"></div>
                             </div>
                         </div>
 
@@ -569,13 +569,13 @@
                                     <div class="h-64 flex items-center justify-center"><canvas id="rig-fuelEfficiency"></canvas></div>
                                 </div>
                                 <!-- AI Assistant (Rig) -->
-                                <div class="lg:col-span-4 bg-dark p-6 rounded-2xl border border-gray-800">
-                                    <h5 class="text-white font-bold text-sm mb-3 flex items-center gap-2"><i class="fas fa-robot text-amber-400"></i> Ask AI about Rig Operations</h5>
+                                <div class="lg:col-span-4 bg-gradient-to-r from-amber-500/5 to-primary/5 p-6 rounded-2xl border-2 border-amber-500/30 shadow-[0_0_20px_rgba(217,119,6,0.15)] hover:border-amber-500/50 transition-all">
+                                    <h5 class="text-white font-bold text-sm mb-3 flex items-center gap-2 bg-gradient-to-r from-amber-400 to-primary bg-clip-text text-transparent"><i class="fas fa-robot text-amber-400"></i> ✨ Ask AI about Rig Operations</h5>
                                     <div class="grid grid-cols-1 md:grid-cols-5 gap-3">
-                                        <textarea id="rig-ai-input" class="md:col-span-4 w-full bg-surface border border-gray-700 rounded-lg p-3 text-sm text-white" rows="3" placeholder="Tanya atau Ask..."></textarea>
-                                        <button id="rig-ai-ask" class="md:col-span-1 px-4 py-3 bg-amber-500 text-white rounded-lg hover:bg-amber-600">Ask AI</button>
+                                        <textarea id="rig-ai-input" class="md:col-span-4 w-full bg-surface border border-gray-700 rounded-lg p-3 text-sm text-white focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 transition-all" rows="3" placeholder="e.g. Rig mana yang memiliki produktivitas tertinggi? atau What's the fuel consumption trend across all units?"></textarea>
+                                        <button id="rig-ai-ask" class="md:col-span-1 px-4 py-3 bg-gradient-to-b from-amber-500 to-orange-700 text-white rounded-lg hover:shadow-[0_0_15px_rgba(217,119,6,0.4)] font-semibold transition-all transform hover:scale-105">Ask AI</button>
                                     </div>
-                                    <div id="rig-ai-result" class="mt-4 text-sm text-gray-200"></div>
+                                    <div id="rig-ai-result" class="mt-4 text-sm text-gray-200 bg-dark/50 p-4 rounded-lg border border-gray-700/50"></div>
                                 </div>
                             </div>
                         </div>
