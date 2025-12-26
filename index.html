@@ -2050,6 +2050,47 @@
         const contactForm = document.getElementById('contactForm');
         if(contactForm){ contactForm.addEventListener('submit', function(e) { e.preventDefault(); const name = document.getElementById('name').value; const email = document.getElementById('email').value; const message = document.getElementById('message').value; const subject = `Portfolio Inquiry from ${name}`; const body = `Name: ${name}%0D%0AEmail: ${email}%0D%0A%0D%0AMessage:%0D%0A${message}`; window.location.href = `mailto:febri.nahdatun@gmail.com?subject=${subject}&body=${body}`; }); }
 
+        // Loading progress bar generator
+        function createLoadingProgress() {
+            return `
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between">
+                        <span class="text-gray-300 text-sm font-medium">AI Analyzing...</span>
+                        <span class="text-primary font-bold text-sm" id="progress-percent">0%</span>
+                    </div>
+                    <div class="w-full bg-gray-700/50 rounded-full h-2 overflow-hidden">
+                        <div id="progress-bar" class="h-full bg-gradient-to-r from-primary via-secondary to-primary rounded-full" style="width: 0%; transition: width 0.3s ease"></div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // Animate progress bar
+        function animateProgress(elementId) {
+            let progress = 0;
+            const progressBar = document.getElementById('progress-bar');
+            const progressPercent = document.getElementById('progress-percent');
+            
+            const interval = setInterval(() => {
+                progress += Math.random() * 30;
+                if (progress > 90) progress = 90;
+                
+                if (progressBar) progressBar.style.width = progress + '%';
+                if (progressPercent) progressPercent.textContent = Math.floor(progress) + '%';
+                
+                if (progress >= 90) clearInterval(interval);
+            }, 200);
+            
+            return interval;
+        }
+        
+        function completeProgress() {
+            const progressBar = document.getElementById('progress-bar');
+            const progressPercent = document.getElementById('progress-percent');
+            if (progressBar) progressBar.style.width = '100%';
+            if (progressPercent) progressPercent.textContent = '100%';
+        }
+
         // ===============
         // AI Ask Wiring
         // ===============
@@ -2090,9 +2131,14 @@
             const q = document.getElementById('superstore-ai-input').value.trim();
             if (!q) return;
             const box = document.getElementById('superstore-ai-result');
-            box.innerHTML = '<p class="text-gray-400">Processing...</p>';
+            box.innerHTML = createLoadingProgress();
+            const interval = animateProgress();
             const res = await askAI('superstore', q);
-            box.innerHTML = res.status === 'success' ? res.analysis : `<p class="text-red-400">${res.message || 'Error'}</p>`;
+            clearInterval(interval);
+            completeProgress();
+            setTimeout(() => {
+                box.innerHTML = res.status === 'success' ? `<div class="text-gray-200 leading-relaxed text-justify">${res.analysis}</div>` : `<p class="text-red-400">${res.message || 'Error'}</p>`;
+            }, 300);
         });
 
         // Marketing
@@ -2100,20 +2146,30 @@
             const q = document.getElementById('marketing-ai-input').value.trim();
             if (!q) return;
             const box = document.getElementById('marketing-ai-result');
-            box.innerHTML = '<p class="text-gray-400">Processing...</p>';
+            box.innerHTML = createLoadingProgress();
+            const interval = animateProgress();
             const res = await askAI('marketing', q);
-            box.innerHTML = res.status === 'success' ? res.analysis : `<p class="text-red-400">${res.message || 'Error'}</p>`;
+            clearInterval(interval);
+            completeProgress();
+            setTimeout(() => {
+                box.innerHTML = res.status === 'success' ? `<div class="text-gray-200 leading-relaxed text-justify">${res.analysis}</div>` : `<p class="text-red-400">${res.message || 'Error'}</p>`;
+            }, 300);
         });
 
-        // Rig (UI can be added similarly; will use configured CSV URL if provided)
+        // Rig
         document.getElementById('rig-ai-ask')?.addEventListener('click', async () => {
             const q = document.getElementById('rig-ai-input')?.value.trim();
             if (!q) return;
             const box = document.getElementById('rig-ai-result');
             if (!box) return;
-            box.innerHTML = '<p class="text-gray-400">Processing...</p>';
+            box.innerHTML = createLoadingProgress();
+            const interval = animateProgress();
             const res = await askAI('rig', q);
-            box.innerHTML = res.status === 'success' ? res.analysis : `<p class="text-red-400">${res.message || 'Error'}</p>`;
+            clearInterval(interval);
+            completeProgress();
+            setTimeout(() => {
+                box.innerHTML = res.status === 'success' ? `<div class="text-gray-200 leading-relaxed text-justify">${res.analysis}</div>` : `<p class="text-red-400">${res.message || 'Error'}</p>`;
+            }, 300);
         });
 
         document.addEventListener('DOMContentLoaded', async () => { const data = await fetchDashboardData(); renderDashboard(data); });
