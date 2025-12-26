@@ -240,7 +240,7 @@
                             <i class="fas fa-file-alt"></i> View CV
                         </button>
                         
-                        <a href="https://www.linkedin.com/in/febri-nahdatun-49b437126/" target="_blank" class="hover-trigger px-8 py-4 bg-surface border border-gray-700 text-white font-bold rounded-xl hover:border-primary hover:text-primary transition-all flex items-center gap-2">
+                        <a href="https://www.linkedin.com/in/febri-nahdatun-49b437126/" target="_blank" rel="noopener noreferrer" class="hover-trigger px-8 py-4 bg-surface border border-gray-700 text-white font-bold rounded-xl hover:border-primary hover:text-primary transition-all flex items-center gap-2">
                             <i class="fab fa-linkedin"></i> LinkedIn
                         </a>
                     </div>
@@ -373,6 +373,14 @@
                     <div id="tab-overview" class="tab-panel grid grid-cols-1 lg:grid-cols-4 gap-6">
                         <div class="lg:col-span-3 bg-dark p-6 rounded-2xl border border-gray-800"><h5 class="text-white font-bold text-sm mb-6 flex items-center gap-2"><i class="fas fa-chart-bar text-primary"></i> Monthly Sales vs Profit Trend</h5><div class="h-80"><canvas id="trendChart"></canvas></div></div>
                         <div class="lg:col-span-1 bg-dark p-6 rounded-2xl border border-gray-800"><h5 class="text-white font-bold text-sm mb-6 flex items-center gap-2"><i class="fas fa-chart-pie text-secondary"></i> Sales by Segment</h5><div class="h-64 flex items-center justify-center"><canvas id="segmentChart"></canvas></div></div>
+                        <div class="lg:col-span-4 bg-dark p-6 rounded-2xl border border-gray-800">
+                            <h5 class="text-white font-bold text-sm mb-3 flex items-center gap-2"><i class="fas fa-robot text-primary"></i> Ask AI about SuperStore Data</h5>
+                            <div class="grid grid-cols-1 md:grid-cols-5 gap-3">
+                                <textarea id="superstore-ai-input" class="md:col-span-4 w-full bg-surface border border-gray-700 rounded-lg p-3 text-sm text-white" rows="3" placeholder="Tanya dalam Bahasa Indonesia atau English..."></textarea>
+                                <button id="superstore-ai-ask" class="md:col-span-1 px-4 py-3 bg-primary text-white rounded-lg hover:bg-violet-600">Ask AI</button>
+                            </div>
+                            <div id="superstore-ai-result" class="mt-4 text-sm text-gray-200"></div>
+                        </div>
                     </div>
                     <div id="tab-category" class="tab-panel hidden grid grid-cols-1 lg:grid-cols-4 gap-6">
                         <div class="lg:col-span-2 bg-dark p-6 rounded-2xl border border-gray-800"><h5 class="text-white font-bold text-sm mb-6 flex items-center gap-2"><i class="fas fa-layer-group text-primary"></i> Sales by Category</h5><div class="h-72"><canvas id="categoryChart"></canvas></div></div>
@@ -439,6 +447,14 @@
                             <div class="bg-dark p-6 rounded-2xl border border-gray-800"><h5 class="text-white font-bold text-sm mb-6 flex items-center gap-2"><i class="fas fa-chart-line text-green-300"></i> CTR Performance Over Time</h5><div class="h-72"><canvas id="marketing-ctrTrendChart"></canvas></div></div>
                             <div class="bg-dark p-6 rounded-2xl border border-gray-800"><h5 class="text-white font-bold text-sm mb-6 flex items-center gap-2"><i class="fas fa-chart-pie text-purple-300"></i> Channel Distribution</h5><div class="h-72"><canvas id="marketing-channelPieChart"></canvas></div></div>
                             <div class="bg-dark p-6 rounded-2xl border border-gray-800"><h5 class="text-white font-bold text-sm mb-6 flex items-center gap-2"><i class="fas fa-chart-bar text-pink-300"></i> Clicks by Channel</h5><div class="h-72"><canvas id="marketing-clicksChannelChart"></canvas></div></div>
+                            <div class="bg-dark p-6 rounded-2xl border border-gray-800 lg:col-span-2">
+                                <h5 class="text-white font-bold text-sm mb-3 flex items-center gap-2"><i class="fas fa-robot text-secondary"></i> Ask AI about Marketing Data</h5>
+                                <div class="grid grid-cols-1 md:grid-cols-5 gap-3">
+                                    <textarea id="marketing-ai-input" class="md:col-span-4 w-full bg-surface border border-gray-700 rounded-lg p-3 text-sm text-white" rows="3" placeholder="Ask in Indonesian or English..."></textarea>
+                                    <button id="marketing-ai-ask" class="md:col-span-1 px-4 py-3 bg-secondary text-white rounded-lg hover:bg-sky-500">Ask AI</button>
+                                </div>
+                                <div id="marketing-ai-result" class="mt-4 text-sm text-gray-200"></div>
+                            </div>
                         </div>
 
                         <!-- Channels Tab -->
@@ -552,6 +568,15 @@
                                     <h5 class="text-white font-bold text-sm mb-6 flex items-center gap-2"><i class="fas fa-gas-pump text-purple-300"></i> Fuel/Meter</h5>
                                     <div class="h-64 flex items-center justify-center"><canvas id="rig-fuelEfficiency"></canvas></div>
                                 </div>
+                                <!-- AI Assistant (Rig) -->
+                                <div class="lg:col-span-4 bg-dark p-6 rounded-2xl border border-gray-800">
+                                    <h5 class="text-white font-bold text-sm mb-3 flex items-center gap-2"><i class="fas fa-robot text-amber-400"></i> Ask AI about Rig Operations</h5>
+                                    <div class="grid grid-cols-1 md:grid-cols-5 gap-3">
+                                        <textarea id="rig-ai-input" class="md:col-span-4 w-full bg-surface border border-gray-700 rounded-lg p-3 text-sm text-white" rows="3" placeholder="Tanya atau Ask..."></textarea>
+                                        <button id="rig-ai-ask" class="md:col-span-1 px-4 py-3 bg-amber-500 text-white rounded-lg hover:bg-amber-600">Ask AI</button>
+                                    </div>
+                                    <div id="rig-ai-result" class="mt-4 text-sm text-gray-200"></div>
+                                </div>
                             </div>
                         </div>
                         <div id="rig-productivity" class="tab-content hidden">
@@ -626,10 +651,10 @@
                 </form>
                 <div class="relative my-8"><div class="absolute inset-0 flex items-center"><div class="w-full border-t border-gray-700"></div></div><div class="relative flex justify-center text-sm"><span class="px-2 bg-surface text-gray-500">Or connect via</span></div></div>
                 <div class="flex justify-center gap-6">
-                    <a href="https://wa.me/6287888893111" target="_blank" class="hover-trigger text-2xl text-gray-400 hover:text-green-500 transition-colors"><i class="fab fa-whatsapp"></i></a>
-                    <a href="https://t.me/+6287888893111" target="_blank" class="hover-trigger text-2xl text-gray-400 hover:text-blue-400 transition-colors"><i class="fab fa-telegram-plane"></i></a>
-                    <a href="https://www.linkedin.com/in/febri-nahdatun-49b437126/" target="_blank" class="hover-trigger text-2xl text-gray-400 hover:text-[#0077b5] transition-colors"><i class="fab fa-linkedin"></i></a>
-                    <a href="https://github.com/febrinahdatun-lab" target="_blank" class="hover-trigger text-2xl text-gray-400 hover:text-white transition-colors"><i class="fab fa-github"></i></a>
+                    <a href="https://wa.me/6287888893111" target="_blank" rel="noopener noreferrer" title="Chat on WhatsApp" class="hover-trigger text-2xl text-gray-400 hover:text-green-500 transition-colors"><i class="fab fa-whatsapp"></i></a>
+                    <a href="https://t.me/+6287888893111" target="_blank" rel="noopener noreferrer" title="Message on Telegram" class="hover-trigger text-2xl text-gray-400 hover:text-blue-400 transition-colors"><i class="fab fa-telegram-plane"></i></a>
+                    <a href="https://www.linkedin.com/in/febri-nahdatun-49b437126/" target="_blank" rel="noopener noreferrer" title="Visit LinkedIn" class="hover-trigger text-2xl text-gray-400 hover:text-[#0077b5] transition-colors"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://github.com/febrinahdatun-lab" target="_blank" rel="noopener noreferrer" title="Visit GitHub" class="hover-trigger text-2xl text-gray-400 hover:text-white transition-colors"><i class="fab fa-github"></i></a>
                 </div>
             </div>
             <p class="text-sm text-gray-600 text-center mt-12">&copy; 2025 Febri Nahdatun. Built with <span class="text-red-500">♥</span> & Experiment.</p>
@@ -2024,6 +2049,68 @@
         // FORM MAILTO
         const contactForm = document.getElementById('contactForm');
         if(contactForm){ contactForm.addEventListener('submit', function(e) { e.preventDefault(); const name = document.getElementById('name').value; const email = document.getElementById('email').value; const message = document.getElementById('message').value; const subject = `Portfolio Inquiry from ${name}`; const body = `Name: ${name}%0D%0AEmail: ${email}%0D%0A%0D%0AMessage:%0D%0A${message}`; window.location.href = `mailto:febri.nahdatun@gmail.com?subject=${subject}&body=${body}`; }); }
+
+        // ===============
+        // AI Ask Wiring
+        // ===============
+        // Configure your deployed Apps Script Web App URL here
+        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxYkcma2WpuIEL8I7D4163wwWj2u8pspyk601Z_Tn6L6rwTs2jXq6XZN9BvU0O1mdQm/exec';
+        const CSV_URLS = {
+            superstore: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSXxXA21f-Q3MUn1A7jyrxNiZ-wD9x4RGfwnqMJrVZuKmhKJKluXsqqkNf2dDvnSJVpdnRBBHQCiLeS/pub?gid=1555337350&single=true&output=csv',
+            marketing: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR8epamsS0Biy7VhZRTC7KyzDSMo8ShcIj2lfl9v4TlW8FkMcyDOuZFIL5Pu6OQAqv0Frd5fUVT_VjZ/pub?gid=997035940&single=true&output=csv',
+            rig: {
+                ddr: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR-cwrgDCO4QXeguKeuRFLX2N_YLd7u3vG165J7-B7XR1LJJBQbIHWWdq8FZjcn8q_geCF6xM8gbGeNT/pub?gid=1953187009&single=true&output=csv',
+                fuel: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vROs8gBCVAsVUEnOAkMC-heXRhZZZbsrid7Ivl9UBtVT5zEQkbqyNo9QBF6DApX8zLNbtYG1u9tCHaT/pub?gid=2073579499&single=true&output=csv',
+                productivity: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQQ79RGyb_Mjh4uO_F9qzptHbo2bgdG-Pyicr8kMpPZJWVz7j2KwFzh9Ohgue11KHagbwaRjhAbJgTr/pub?gid=560339056&single=true&output=csv',
+                dataset: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTUDR8bFl8G0_L4xTXR1kg_FvCqN5jQyP-3KWmwWIoq5RFwVR61yoEEJfUfTmMruafLIcmG6xuuTQ7B/pub?gid=1953912833&single=true&output=csv'
+            }
+        };
+
+        async function askAI(project, question, filters = {}) {
+            if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL.includes('YOUR_APPS_SCRIPT_WEB_APP_URL')) {
+                return { status: 'error', message: 'Apps Script URL belum dikonfigurasi.' };
+            }
+            const payload = project === 'rig'
+                ? { project, question, rigUrls: CSV_URLS.rig, ...filters }
+                : { project, question, csvUrl: CSV_URLS[project], ...filters };
+            const resp = await fetch(APPS_SCRIPT_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            try { return await resp.json(); } catch { return { status: 'error', message: 'Invalid response' }; }
+        }
+
+        // SuperStore
+        document.getElementById('superstore-ai-ask')?.addEventListener('click', async () => {
+            const q = document.getElementById('superstore-ai-input').value.trim();
+            if (!q) return;
+            const box = document.getElementById('superstore-ai-result');
+            box.innerHTML = '<p class="text-gray-400">Processing...</p>';
+            const res = await askAI('superstore', q);
+            box.innerHTML = res.status === 'success' ? res.analysis : `<p class="text-red-400">${res.message || 'Error'}</p>`;
+        });
+
+        // Marketing
+        document.getElementById('marketing-ai-ask')?.addEventListener('click', async () => {
+            const q = document.getElementById('marketing-ai-input').value.trim();
+            if (!q) return;
+            const box = document.getElementById('marketing-ai-result');
+            box.innerHTML = '<p class="text-gray-400">Processing...</p>';
+            const res = await askAI('marketing', q);
+            box.innerHTML = res.status === 'success' ? res.analysis : `<p class="text-red-400">${res.message || 'Error'}</p>`;
+        });
+
+        // Rig (UI can be added similarly; will use configured CSV URL if provided)
+        document.getElementById('rig-ai-ask')?.addEventListener('click', async () => {
+            const q = document.getElementById('rig-ai-input')?.value.trim();
+            if (!q) return;
+            const box = document.getElementById('rig-ai-result');
+            if (!box) return;
+            box.innerHTML = '<p class="text-gray-400">Processing...</p>';
+            const res = await askAI('rig', q);
+            box.innerHTML = res.status === 'success' ? res.analysis : `<p class="text-red-400">${res.message || 'Error'}</p>`;
+        });
 
         document.addEventListener('DOMContentLoaded', async () => { const data = await fetchDashboardData(); renderDashboard(data); });
     </script>
