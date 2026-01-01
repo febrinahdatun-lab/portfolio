@@ -263,9 +263,14 @@
             </div>
         </div>
 
-        <div id="mobileMenu" class="mobile-menu lg:hidden fixed inset-0 hidden bg-[#0b1426]/95 backdrop-blur-md z-40">
-            <div class="pt-24 pb-12 px-6 flex flex-col gap-4 max-w-xl mx-auto w-full">
-                <div class="bg-surface/80 border border-gray-800 rounded-2xl shadow-xl divide-y divide-gray-800">
+        <div id="mobileMenu" class="mobile-menu lg:hidden fixed inset-x-0 top-20 bottom-0 hidden bg-[#0b1426]/95 backdrop-blur-md z-40">
+            <div class="pt-6 pb-12 px-4 sm:px-6 flex flex-col gap-4 w-full h-full overflow-y-auto">
+                <div class="flex justify-end">
+                    <button onclick="toggleMobileMenu(false)" class="hover-trigger inline-flex items-center justify-center w-11 h-11 rounded-full border border-gray-800 text-white bg-surface/80 hover:border-primary hover:text-primary transition-all shadow-lg">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="bg-surface/80 border border-gray-800 rounded-2xl shadow-xl divide-y divide-gray-800 w-full">
                     <div class="flex flex-col gap-2 p-5">
                         <a href="#about" class="mobile-nav-link hover-trigger px-4 py-3 rounded-xl text-white bg-surfaceHover/40 border border-gray-800 hover:border-primary hover:text-primary transition-all text-sm font-semibold">Profile</a>
                         <a href="#expertise" class="mobile-nav-link hover-trigger px-4 py-3 rounded-xl text-white bg-surfaceHover/40 border border-gray-800 hover:border-primary hover:text-primary transition-all text-sm font-semibold">Tech Stacks</a>
@@ -409,16 +414,16 @@
         
         <!-- PROJECT SWITCHER TABS -->
         <div class="mb-16 sticky top-24 z-30 bg-dark/80 backdrop-blur-md p-4 rounded-2xl border border-gray-800 shadow-lg">
-            <div class="flex items-center gap-4">
+            <div class="flex flex-col gap-3">
                 <span class="text-gray-400 text-sm font-medium">Select Project:</span>
-                <div class="flex gap-3">
-                    <button onclick="switchProject('superstore')" class="project-tab px-6 py-3 rounded-lg font-semibold text-sm transition-all bg-primary text-white hover:bg-violet-600 shadow-md" data-project="superstore">
+                <div class="flex flex-wrap gap-3 w-full">
+                    <button onclick="switchProject('superstore')" class="project-tab px-6 py-3 rounded-lg font-semibold text-sm transition-all bg-primary text-white hover:bg-violet-600 shadow-md w-full sm:w-auto sm:min-w-[200px] text-center" data-project="superstore">
                         <i class="fas fa-store mr-2"></i>SuperStore Analytics
                     </button>
-                    <button onclick="switchProject('marketing')" class="project-tab px-6 py-3 rounded-lg font-semibold text-sm transition-all bg-dark border border-gray-700 text-gray-300 hover:border-primary hover:text-primary" data-project="marketing">
+                    <button onclick="switchProject('marketing')" class="project-tab px-6 py-3 rounded-lg font-semibold text-sm transition-all bg-dark border border-gray-700 text-gray-300 hover:border-primary hover:text-primary w-full sm:w-auto sm:min-w-[200px] text-center" data-project="marketing">
                         <i class="fas fa-chart-line mr-2"></i>Marketing Analytics
                     </button>
-                    <button onclick="switchProject('rig')" class="project-tab px-6 py-3 rounded-lg font-semibold text-sm transition-all bg-dark border border-gray-700 text-gray-300 hover:border-primary hover:text-primary" data-project="rig">
+                    <button onclick="switchProject('rig')" class="project-tab px-6 py-3 rounded-lg font-semibold text-sm transition-all bg-dark border border-gray-700 text-gray-300 hover:border-primary hover:text-primary w-full sm:w-auto sm:min-w-[200px] text-center" data-project="rig">
                         <i class="fas fa-industry mr-2"></i>Rig Operations
                     </button>
                 </div>
