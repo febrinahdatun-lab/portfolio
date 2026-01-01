@@ -116,6 +116,10 @@
         }
         .dropdown-group:hover .dropdown-panel,
         .dropdown-group:focus-within .dropdown-panel { display: block; }
+
+        /* MOBILE NAV */
+        .mobile-menu { opacity: 0; transform: translateY(-8px); pointer-events: none; transition: opacity 0.25s ease, transform 0.25s ease; }
+        .mobile-menu.open { opacity: 1; transform: translateY(0); pointer-events: auto; }
         
         #scrollToTopBtn { transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out; }
         #scrollToTopBtn.show { opacity: 1; visibility: visible; }
@@ -216,14 +220,20 @@
     <!-- Navbar -->
     <nav class="fixed top-0 left-0 w-full z-50 bg-[#0b1426]/92 backdrop-blur-md border-b border-primary/15 shadow-lg">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center gap-6 h-20">
+            <div class="flex items-center justify-between gap-4 h-20">
                 <div class="flex-shrink-0 flex items-center gap-3">
                     <div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary shadow-[0_0_15px_rgba(139,92,246,0.4)]">
                         <img src="https://lh3.googleusercontent.com/d/1T2Q8QHpeETmrkz6SS5T1CrZilVGWFAJs=w100" alt="Febri Nahdatun" class="w-full h-full object-cover">
                     </div>
                     <span class="text-lg font-bold text-white tracking-wide hidden sm:block">Febri Nahdatun</span>
                 </div>
-                <div class="flex flex-1 items-center justify-center gap-4 overflow-visible bg-surface/90 border border-gray-800 rounded-full shadow-lg backdrop-blur px-7 py-3 z-50 max-w-5xl mx-auto">
+
+                <button id="mobileMenuBtn" aria-label="Toggle navigation" aria-expanded="false" class="lg:hidden inline-flex items-center justify-center w-11 h-11 rounded-full border border-gray-800 text-white bg-surface/80 hover:border-primary hover:text-primary transition-all shadow-lg">
+                    <i class="fas fa-bars" id="mobileMenuIconOpen"></i>
+                    <i class="fas fa-times hidden" id="mobileMenuIconClose"></i>
+                </button>
+
+                <div class="hidden lg:flex flex-1 items-center justify-center gap-4 overflow-visible bg-surface/90 border border-gray-800 rounded-full shadow-lg backdrop-blur px-7 py-3 z-50 max-w-5xl mx-auto">
                     <a href="#about" class="hover-trigger px-3.5 py-2 rounded-full text-gray-200 hover:bg-primary/20 hover:text-white transition-all text-sm font-medium">Profile</a>
                     <a href="#expertise" class="hover-trigger px-3.5 py-2 rounded-full text-gray-200 hover:bg-primary/20 hover:text-white transition-all text-sm font-medium">Tech Stacks</a>
                     <a href="#dashboard" class="hover-trigger px-3.5 py-2 rounded-full text-gray-200 hover:bg-primary/20 hover:text-white transition-all text-sm font-medium">Analytics</a>
@@ -249,6 +259,36 @@
                     <a href="#contact" class="hover-trigger px-6 py-2.5 bg-primary text-white font-semibold rounded-full text-sm hover:bg-violet-600 transition-all shadow-[0_4px_14px_0_rgba(139,92,246,0.39)] transform hover:-translate-y-0.5 whitespace-nowrap">
                         Let's Collaborate
                     </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="mobileMenu" class="mobile-menu lg:hidden fixed inset-0 hidden bg-[#0b1426]/95 backdrop-blur-md z-40">
+            <div class="pt-24 pb-12 px-6 flex flex-col gap-4 max-w-xl mx-auto w-full">
+                <div class="bg-surface/80 border border-gray-800 rounded-2xl shadow-xl divide-y divide-gray-800">
+                    <div class="flex flex-col gap-2 p-5">
+                        <a href="#about" class="mobile-nav-link hover-trigger px-4 py-3 rounded-xl text-white bg-surfaceHover/40 border border-gray-800 hover:border-primary hover:text-primary transition-all text-sm font-semibold">Profile</a>
+                        <a href="#expertise" class="mobile-nav-link hover-trigger px-4 py-3 rounded-xl text-white bg-surfaceHover/40 border border-gray-800 hover:border-primary hover:text-primary transition-all text-sm font-semibold">Tech Stacks</a>
+                        <a href="#dashboard" class="mobile-nav-link hover-trigger px-4 py-3 rounded-xl text-white bg-surfaceHover/40 border border-gray-800 hover:border-primary hover:text-primary transition-all text-sm font-semibold">Analytics</a>
+                        <a href="#certifications" class="mobile-nav-link hover-trigger px-4 py-3 rounded-xl text-white bg-surfaceHover/40 border border-gray-800 hover:border-primary hover:text-primary transition-all text-sm font-semibold">Certifications</a>
+                    </div>
+                    <div class="p-5 space-y-3">
+                        <div class="flex items-center gap-2 text-xs uppercase tracking-wider text-gray-400 font-semibold"><i class="fas fa-briefcase text-primary"></i><span>My Projects</span></div>
+                        <div class="grid gap-2">
+                            <button onclick="jumpToDashboard('superstore')" class="mobile-nav-link hover-trigger px-4 py-3 rounded-xl text-left text-white bg-dark/80 border border-gray-800 hover:border-primary hover:text-primary transition-all flex items-center gap-2">
+                                <i class="fas fa-store text-primary"></i><span>SuperStore Analytics</span>
+                            </button>
+                            <button onclick="jumpToDashboard('marketing')" class="mobile-nav-link hover-trigger px-4 py-3 rounded-xl text-left text-white bg-dark/80 border border-gray-800 hover:border-secondary hover:text-secondary transition-all flex items-center gap-2">
+                                <i class="fas fa-chart-line text-secondary"></i><span>Marketing Analytics</span>
+                            </button>
+                            <button onclick="jumpToDashboard('rig')" class="mobile-nav-link hover-trigger px-4 py-3 rounded-xl text-left text-white bg-dark/80 border border-gray-800 hover:border-amber-500 hover:text-amber-300 transition-all flex items-center gap-2">
+                                <i class="fas fa-industry text-amber-400"></i><span>Rig Operations</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <a href="#contact" class="mobile-nav-link hover-trigger w-full inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-primary text-white font-semibold text-sm shadow-[0_4px_14px_0_rgba(139,92,246,0.39)] hover:bg-violet-600 transition-all">Let's Collaborate <i class="fas fa-arrow-right"></i></a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -884,6 +924,38 @@
             el.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
             el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
         });
+
+        // MOBILE NAV TOGGLER
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenuIconOpen = document.getElementById('mobileMenuIconOpen');
+        const mobileMenuIconClose = document.getElementById('mobileMenuIconClose');
+
+        function toggleMobileMenu(forceState) {
+            if (!mobileMenu || !mobileMenuBtn) return;
+            const isOpen = mobileMenu.classList.contains('open') && !mobileMenu.classList.contains('hidden');
+            const targetState = typeof forceState === 'boolean' ? forceState : !isOpen;
+
+            if (targetState) {
+                mobileMenu.classList.remove('hidden');
+                requestAnimationFrame(() => mobileMenu.classList.add('open'));
+                document.body.classList.add('overflow-hidden');
+                mobileMenuBtn.setAttribute('aria-expanded', 'true');
+                mobileMenuIconOpen?.classList.add('hidden');
+                mobileMenuIconClose?.classList.remove('hidden');
+            } else {
+                mobileMenu.classList.remove('open');
+                document.body.classList.remove('overflow-hidden');
+                mobileMenuBtn.setAttribute('aria-expanded', 'false');
+                mobileMenuIconOpen?.classList.remove('hidden');
+                mobileMenuIconClose?.classList.add('hidden');
+                setTimeout(() => mobileMenu.classList.add('hidden'), 200);
+            }
+        }
+
+        mobileMenuBtn?.addEventListener('click', () => toggleMobileMenu());
+        mobileMenu?.addEventListener('click', (e) => { if (e.target === mobileMenu) toggleMobileMenu(false); });
+        document.querySelectorAll('.mobile-nav-link').forEach(link => link.addEventListener('click', () => toggleMobileMenu(false)));
 
         // MODAL LOGIC (UNIFIED)
         const modal = document.getElementById('certModal');
