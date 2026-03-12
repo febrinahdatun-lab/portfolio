@@ -193,6 +193,63 @@
             color: #fbbf24;
         }
 
+        /* ═══ SIAGAAI INTEGRATION STYLES ═══ */
+        .siagaai-gradient { background: linear-gradient(135deg, #023E8A, #0077B6, #00B4D8); }
+        .siagaai-text { background: linear-gradient(to right, #00B4D8, #0077B6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        
+        /* BMKG Earthquake Cards */
+        .eq-main-card { background: linear-gradient(135deg, rgba(2,62,138,0.3), rgba(0,119,182,0.15)); border: 1px solid rgba(0,180,216,0.3); border-radius: 16px; padding: 24px; position: relative; overflow: hidden; }
+        .eq-main-card::before { content: ''; position: absolute; top: -50%; right: -50%; width: 100%; height: 100%; background: radial-gradient(circle, rgba(0,180,216,0.08) 0%, transparent 70%); }
+        .eq-mag-badge { display: inline-flex; align-items: center; justify-content: center; width: 64px; height: 64px; border-radius: 16px; font-size: 1.5rem; font-weight: 800; color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+        .eq-recent-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; }
+        .eq-recent-card { background: rgba(30,41,59,0.8); border: 1px solid rgba(71,85,105,0.5); border-radius: 12px; padding: 14px; display: flex; align-items: center; gap: 12px; transition: all 0.2s; }
+        .eq-recent-card:hover { border-color: rgba(0,180,216,0.4); transform: translateY(-2px); }
+        .eq-mini-mag { min-width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.85rem; color: white; }
+        
+        /* SiagaAI Chat Widget */
+        .siagaai-chat-container { background: #0F172A; border: 1px solid rgba(0,180,216,0.2); border-radius: 16px; overflow: hidden; height: 420px; display: flex; flex-direction: column; }
+        .siagaai-chat-header { background: linear-gradient(135deg, #023E8A, #0077B6); padding: 16px; display: flex; align-items: center; gap: 12px; }
+        .siagaai-chat-messages { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+        .siagaai-chat-messages::-webkit-scrollbar { width: 4px; }
+        .siagaai-chat-messages::-webkit-scrollbar-thumb { background: #334155; border-radius: 2px; }
+        .siagaai-msg { max-width: 85%; padding: 10px 14px; border-radius: 12px; font-size: 0.85rem; line-height: 1.6; word-break: break-word; }
+        .siagaai-msg.user { align-self: flex-end; background: linear-gradient(135deg, #0077B6, #023E8A); color: white; border-bottom-right-radius: 4px; }
+        .siagaai-msg.ai { align-self: flex-start; background: #1E293B; color: #e2e8f0; border: 1px solid #334155; border-bottom-left-radius: 4px; }
+        .siagaai-msg.ai strong { color: #fbbf24; }
+        .siagaai-msg.ai ul, .siagaai-msg.ai ol { margin: 0.5rem 0 0.5rem 1.2rem; }
+        .siagaai-msg.ai li { margin-bottom: 0.3rem; }
+        .siagaai-chat-input-area { padding: 12px; border-top: 1px solid #1E293B; display: flex; gap: 8px; background: #0b1120; }
+        .siagaai-chat-input-area textarea { flex: 1; background: #1E293B; border: 1px solid #334155; border-radius: 10px; padding: 10px 14px; color: white; font-size: 0.85rem; resize: none; outline: none; font-family: inherit; }
+        .siagaai-chat-input-area textarea:focus { border-color: #0077B6; }
+        .siagaai-chat-input-area button { background: linear-gradient(135deg, #0077B6, #023E8A); color: white; border: none; border-radius: 10px; width: 44px; height: 44px; cursor: pointer; font-size: 1.1rem; transition: transform 0.2s, opacity 0.2s; }
+        .siagaai-chat-input-area button:hover { transform: scale(1.05); }
+        .siagaai-chat-input-area button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        /* SiagaAI Guide Tabs */
+        .siagaai-guide-tab { padding: 10px 18px; border-radius: 10px; font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: all 0.25s; background: #1E293B; border: 1px solid #334155; color: #94a3b8; }
+        .siagaai-guide-tab:hover { border-color: #0077B6; color: #e2e8f0; }
+        .siagaai-guide-tab.active { background: linear-gradient(135deg, #023E8A, #0077B6); border-color: #0077B6; color: white; box-shadow: 0 4px 15px rgba(0,119,182,0.3); }
+        .siagaai-guide-panel { display: none; animation: fadeIn 0.3s ease-in; }
+        .siagaai-guide-panel.active { display: grid; }
+        .siagaai-guide-card { background: #0F172A; border: 1px solid #1E293B; border-radius: 14px; padding: 20px; transition: all 0.25s; }
+        .siagaai-guide-card:hover { border-color: rgba(0,180,216,0.3); transform: translateY(-3px); }
+        
+        /* Architecture Flow */
+        .arch-node { background: #1E293B; border: 1px solid #334155; border-radius: 12px; padding: 16px; text-align: center; transition: all 0.3s; }
+        .arch-node:hover { border-color: #0077B6; transform: translateY(-4px); box-shadow: 0 8px 25px rgba(0,119,182,0.15); }
+        .arch-arrow { color: #0077B6; font-size: 1.5rem; display: flex; align-items: center; justify-content: center; }
+        
+        /* Typing indicator */
+        .typing-dots { display: inline-flex; gap: 4px; align-items: center; padding: 4px 0; }
+        .typing-dots span { width: 6px; height: 6px; border-radius: 50%; background: #64748b; animation: typingBounce 1.4s infinite ease-in-out; }
+        .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes typingBounce { 0%, 80%, 100% { transform: scale(0.7); opacity: 0.4; } 40% { transform: scale(1); opacity: 1; } }
+        
+        /* Quick Ask Buttons */
+        .quick-ask-btn { background: rgba(0,119,182,0.1); border: 1px solid rgba(0,119,182,0.3); border-radius: 8px; padding: 6px 12px; font-size: 0.75rem; color: #7dd3fc; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+        .quick-ask-btn:hover { background: rgba(0,119,182,0.2); border-color: #0077B6; color: white; }
+
         /* --- PRINT STYLES FOR CV --- */
         @media print {
             body * { visibility: hidden; }
@@ -242,6 +299,10 @@
                             </button>
                             <button onclick="jumpToDashboard('rig')" class="w-full text-left hover-trigger px-3 py-2 rounded-lg text-gray-200 hover:bg-amber-500/10 hover:text-white flex items-center gap-2">
                                 <i class="fas fa-industry"></i><span>Rig Operations</span>
+                            </button>
+                            <div class="border-t border-gray-700/50 my-1"></div>
+                            <button onclick="jumpToDashboard('siagaai')" class="w-full text-left hover-trigger px-3 py-2 rounded-lg text-gray-200 hover:bg-cyan-500/10 hover:text-white flex items-center gap-2">
+                                <i class="fas fa-shield-alt"></i><span>SiagaAI</span><span class="text-[10px] bg-cyan-500/20 text-cyan-300 px-1.5 py-0.5 rounded-full ml-auto">LIVE</span>
                             </button>
                         </div>
                     </div>
@@ -380,6 +441,9 @@
                     </button>
                     <button onclick="switchProject('rig')" class="project-tab px-6 py-3 rounded-lg font-semibold text-sm transition-all bg-dark border border-gray-700 text-gray-300 hover:border-primary hover:text-primary" data-project="rig">
                         <i class="fas fa-industry mr-2"></i>Rig Operations
+                    </button>
+                    <button onclick="switchProject('siagaai')" class="project-tab px-6 py-3 rounded-lg font-semibold text-sm transition-all bg-dark border border-gray-700 text-gray-300 hover:border-primary hover:text-primary" data-project="siagaai">
+                        <i class="fas fa-shield-alt mr-2"></i>SiagaAI<span class="ml-2 text-[10px] bg-cyan-500/20 text-cyan-300 px-1.5 py-0.5 rounded-full align-middle">LIVE</span>
                     </button>
                 </div>
             </div>
@@ -663,6 +727,259 @@
                 </div>
             </div>
         </div>
+
+        <!-- ═══════════════════════════════════════════════════════════════════
+             SIAGAAI — AI-POWERED DISASTER PREPAREDNESS (Project #4)
+        ═══════════════════════════════════════════════════════════════════ -->
+        <div id="siagaai-dashboard" class="project-content hidden">
+            <!-- Header -->
+            <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
+                <div>
+                    <span class="text-cyan-400 font-bold tracking-wider uppercase text-sm">Portfolio Project #4 — Web App</span>
+                    <h2 class="text-4xl font-bold text-white mt-2">
+                        <span class="siagaai-text">SiagaAI</span> — Disaster Preparedness
+                    </h2>
+                    <p class="text-gray-400 mt-2 max-w-xl">
+                        Aplikasi kesiapsiagaan bencana berbasis AI untuk Indonesia. Menggabungkan data gempa real-time BMKG, chatbot AI (Groq LLaMA 3.3), panduan evakuasi, dan checklist darurat dalam satu platform.
+                        <br><span class="text-xs text-gray-500">IDCamp 2025 Developer Challenge — Menampilkan fitur LIVE langsung dari backend.</span>
+                    </p>
+                </div>
+                <div class="flex gap-3 flex-wrap">
+                    <a href="https://febrinahdatun-lab.github.io/SiagaAI/" target="_blank" rel="noopener noreferrer" class="hover-trigger px-6 py-3 bg-gradient-to-r from-[#023E8A] to-[#0077B6] rounded-lg text-sm text-white font-semibold transition-all flex items-center gap-2 shadow-[0_4px_15px_rgba(0,119,182,0.3)] hover:shadow-[0_6px_20px_rgba(0,119,182,0.5)] transform hover:-translate-y-0.5">
+                        <i class="fas fa-external-link-alt"></i> Buka Full App
+                    </a>
+                    <a href="https://github.com/febrinahdatun-lab/SiagaAI" target="_blank" rel="noopener noreferrer" class="hover-trigger px-6 py-3 bg-surface border border-gray-600 rounded-lg text-sm text-white hover:border-cyan-400 hover:text-cyan-400 transition-colors flex items-center gap-2 font-medium">
+                        <i class="fab fa-github"></i> Source Code
+                    </a>
+                </div>
+            </div>
+
+            <!-- Main Content Container -->
+            <div class="bg-surface rounded-3xl border border-gray-800 shadow-2xl overflow-hidden">
+                <!-- Status Bar -->
+                <div class="bg-dark/50 border-b border-gray-800 p-4 flex flex-wrap justify-between items-center gap-2">
+                    <div class="flex items-center gap-3">
+                        <div class="flex items-center gap-2">
+                            <div class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></div>
+                            <span class="text-xs font-mono text-gray-500">Backend: <span class="text-cyan-400">Google Apps Script</span></span>
+                        </div>
+                        <span class="text-gray-700">|</span>
+                        <span class="text-xs font-mono text-gray-500">AI: <span class="text-green-400">Groq LLaMA 3.3-70B</span></span>
+                    </div>
+                    <div class="text-xs text-gray-500 font-mono">BMKG: <span class="text-green-400" id="siagaai-status">Connecting...</span></div>
+                </div>
+
+                <div class="p-8">
+
+                    <!-- ── SECTION 1: Architecture & Tech Stack ── -->
+                    <div class="mb-10">
+                        <h3 class="text-lg font-bold text-white mb-6 flex items-center gap-2">
+                            <i class="fas fa-project-diagram text-cyan-400"></i> System Architecture
+                        </h3>
+                        <div class="grid grid-cols-2 md:grid-cols-5 gap-3 items-center">
+                            <div class="arch-node">
+                                <div class="text-2xl mb-2">🌐</div>
+                                <div class="text-xs font-bold text-white">Frontend</div>
+                                <div class="text-[10px] text-gray-500 mt-1">HTML / CSS / JS</div>
+                                <div class="text-[10px] text-cyan-400">GitHub Pages</div>
+                            </div>
+                            <div class="arch-arrow hidden md:flex"><i class="fas fa-arrow-right"></i></div>
+                            <div class="arch-node">
+                                <div class="text-2xl mb-2">⚙️</div>
+                                <div class="text-xs font-bold text-white">Backend Proxy</div>
+                                <div class="text-[10px] text-gray-500 mt-1">Google Apps Script</div>
+                                <div class="text-[10px] text-green-400">Serverless</div>
+                            </div>
+                            <div class="arch-arrow hidden md:flex"><i class="fas fa-arrow-right"></i></div>
+                            <div class="arch-node">
+                                <div class="text-2xl mb-2">🤖</div>
+                                <div class="text-xs font-bold text-white">AI + Data APIs</div>
+                                <div class="text-[10px] text-gray-500 mt-1">Groq AI · BMKG</div>
+                                <div class="text-[10px] text-yellow-400">LLaMA 3.3-70B</div>
+                            </div>
+                        </div>
+                        <!-- Tech Badges -->
+                        <div class="flex flex-wrap gap-2 mt-5">
+                            <span class="px-3 py-1 text-[11px] font-semibold rounded-full bg-orange-500/10 text-orange-400 border border-orange-500/20">HTML5</span>
+                            <span class="px-3 py-1 text-[11px] font-semibold rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20">CSS3</span>
+                            <span class="px-3 py-1 text-[11px] font-semibold rounded-full bg-yellow-500/10 text-yellow-400 border border-yellow-500/20">JavaScript</span>
+                            <span class="px-3 py-1 text-[11px] font-semibold rounded-full bg-green-500/10 text-green-400 border border-green-500/20">Google Apps Script</span>
+                            <span class="px-3 py-1 text-[11px] font-semibold rounded-full bg-purple-500/10 text-purple-400 border border-purple-500/20">Groq API</span>
+                            <span class="px-3 py-1 text-[11px] font-semibold rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">BMKG API</span>
+                            <span class="px-3 py-1 text-[11px] font-semibold rounded-full bg-red-500/10 text-red-400 border border-red-500/20">REST API</span>
+                            <span class="px-3 py-1 text-[11px] font-semibold rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">LocalStorage</span>
+                        </div>
+                    </div>
+
+                    <!-- ── SECTION 2: Live BMKG + AI Chat (Side by Side) ── -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-10">
+                        
+                        <!-- LEFT: Live BMKG Earthquake Monitor -->
+                        <div>
+                            <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                                <i class="fas fa-satellite-dish text-cyan-400"></i> Live Earthquake Monitor
+                                <span class="text-[10px] bg-red-500/20 text-red-400 px-2 py-0.5 rounded-full ml-2 animate-pulse">LIVE</span>
+                            </h3>
+                            <div class="bg-dark rounded-2xl border border-gray-800 p-5 min-h-[420px]" id="siagaai-bmkg-container">
+                                <div class="flex flex-col items-center justify-center h-80 gap-3">
+                                    <div class="animate-spin rounded-full h-10 w-10 border-t-2 border-cyan-400"></div>
+                                    <p class="text-gray-500 text-sm">Menghubungkan ke BMKG...</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between mt-3 text-xs text-gray-600" id="siagaai-bmkg-footer" style="display:none;">
+                                <span>Sumber: data.bmkg.go.id</span>
+                                <span id="siagaai-bmkg-updated">—</span>
+                            </div>
+                        </div>
+
+                        <!-- RIGHT: AI Chat Demo -->
+                        <div>
+                            <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                                <i class="fas fa-robot text-cyan-400"></i> AI Chat Demo
+                                <span class="text-[10px] bg-green-500/20 text-green-400 px-2 py-0.5 rounded-full ml-2">Groq LLaMA 3.3</span>
+                            </h3>
+                            <div class="siagaai-chat-container">
+                                <div class="siagaai-chat-header">
+                                    <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center text-lg">🛡️</div>
+                                    <div>
+                                        <div class="text-white font-bold text-sm">SiagaAI Assistant</div>
+                                        <div class="text-cyan-200 text-xs">Asisten Kesiapsiagaan Bencana</div>
+                                    </div>
+                                </div>
+                                <div class="siagaai-chat-messages" id="siagaai-chat-messages">
+                                    <div class="siagaai-msg ai">
+                                        👋 Halo! Saya <strong>SiagaAI</strong>, asisten kesiapsiagaan bencana. Tanyakan apa saja tentang mitigasi bencana, evakuasi, atau pertolongan pertama!
+                                    </div>
+                                </div>
+                                <!-- Quick Ask Buttons -->
+                                <div class="px-3 py-2 flex gap-2 overflow-x-auto hide-scrollbar border-t border-gray-800/50">
+                                    <button onclick="siagaaiQuickAsk('Apa yang harus dilakukan saat gempa?')" class="quick-ask-btn">🏚️ Saat Gempa</button>
+                                    <button onclick="siagaaiQuickAsk('Cara menyiapkan tas darurat')" class="quick-ask-btn">🎒 Tas Darurat</button>
+                                    <button onclick="siagaaiQuickAsk('Tanda-tanda tsunami')" class="quick-ask-btn">🌊 Tanda Tsunami</button>
+                                </div>
+                                <div class="siagaai-chat-input-area">
+                                    <textarea id="siagaai-chat-input" placeholder="Tanya tentang bencana..." rows="1" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();siagaaiSend()}" oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,80)+'px'"></textarea>
+                                    <button id="siagaai-send-btn" onclick="siagaaiSend()"><i class="fas fa-paper-plane"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ── SECTION 3: Disaster Guide Tabs ── -->
+                    <div class="mb-10">
+                        <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                            <i class="fas fa-book-open text-cyan-400"></i> Panduan Kesiapsiagaan Bencana
+                        </h3>
+                        <div class="flex flex-wrap gap-2 mb-5">
+                            <button onclick="siagaaiSwitchGuide(this,'gempa')" class="siagaai-guide-tab active">🏚️ Gempa Bumi</button>
+                            <button onclick="siagaaiSwitchGuide(this,'tsunami')" class="siagaai-guide-tab">🌊 Tsunami</button>
+                            <button onclick="siagaaiSwitchGuide(this,'banjir')" class="siagaai-guide-tab">🌧️ Banjir</button>
+                            <button onclick="siagaaiSwitchGuide(this,'longsor')" class="siagaai-guide-tab">⛰️ Longsor</button>
+                            <button onclick="siagaaiSwitchGuide(this,'kebakaran')" class="siagaai-guide-tab">🔥 Kebakaran</button>
+                        </div>
+                        <!-- Gempa -->
+                        <div id="siagaai-guide-gempa" class="siagaai-guide-panel active grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="siagaai-guide-card"><div class="text-2xl mb-3">⚡</div><h4 class="text-white font-bold text-sm mb-2">Saat Terjadi</h4><p class="text-gray-400 text-xs leading-relaxed">Jatuhkan badan, berlindung di bawah meja kokoh, pegang erat. Jauhi jendela, cermin, dan benda berat yang bisa jatuh. Jika di luar, menjauhlah dari gedung.</p></div>
+                            <div class="siagaai-guide-card"><div class="text-2xl mb-3">🏃</div><h4 class="text-white font-bold text-sm mb-2">Evakuasi</h4><p class="text-gray-400 text-xs leading-relaxed">Keluar gedung saat guncangan berhenti. Gunakan tangga, jangan lift. Berkumpul di area terbuka jauh dari gedung dan tiang listrik.</p></div>
+                            <div class="siagaai-guide-card"><div class="text-2xl mb-3">🎒</div><h4 class="text-white font-bold text-sm mb-2">Persiapan</h4><p class="text-gray-400 text-xs leading-relaxed">Siapkan tas darurat berisi air, makanan, obat, senter, peluit, dan dokumen penting. Kenali jalur evakuasi dan titik kumpul.</p></div>
+                            <div class="siagaai-guide-card"><div class="text-2xl mb-3">📞</div><h4 class="text-white font-bold text-sm mb-2">Kontak Darurat</h4><p class="text-gray-400 text-xs leading-relaxed">BMKG: 196 · BNPB: 021-500-164 · Basarnas: 115 · Darurat Nasional: 112 · Ambulans: 119</p></div>
+                        </div>
+                        <!-- Tsunami -->
+                        <div id="siagaai-guide-tsunami" class="siagaai-guide-panel grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="siagaai-guide-card"><div class="text-2xl mb-3">🚨</div><h4 class="text-white font-bold text-sm mb-2">Tanda Bahaya</h4><p class="text-gray-400 text-xs leading-relaxed">Air laut surut drastis, gempa besar di pesisir, suara gemuruh dari laut. Segera evakuasi ke dataran tinggi tanpa menunggu peringatan resmi.</p></div>
+                            <div class="siagaai-guide-card"><div class="text-2xl mb-3">🏔️</div><h4 class="text-white font-bold text-sm mb-2">Evakuasi</h4><p class="text-gray-400 text-xs leading-relaxed">Lari ke dataran tinggi atau minimal 30 meter di atas permukaan laut. Jangan kembali hingga ada pernyataan aman resmi dari BMKG.</p></div>
+                            <div class="siagaai-guide-card"><div class="text-2xl mb-3">🗺️</div><h4 class="text-white font-bold text-sm mb-2">Persiapan</h4><p class="text-gray-400 text-xs leading-relaxed">Kenali jalur evakuasi tsunami terdekat. Simpan tas darurat di tempat mudah dijangkau. Latih keluarga rute evakuasi secara berkala.</p></div>
+                            <div class="siagaai-guide-card"><div class="text-2xl mb-3">📻</div><h4 class="text-white font-bold text-sm mb-2">Informasi</h4><p class="text-gray-400 text-xs leading-relaxed">Pantau BMKG untuk peringatan dini tsunami. Siapkan radio darurat. Indonesia Tsunami Early Warning System aktif 24/7.</p></div>
+                        </div>
+                        <!-- Banjir -->
+                        <div id="siagaai-guide-banjir" class="siagaai-guide-panel grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="siagaai-guide-card"><div class="text-2xl mb-3">🌧️</div><h4 class="text-white font-bold text-sm mb-2">Peringatan</h4><p class="text-gray-400 text-xs leading-relaxed">Pantau curah hujan tinggi, aliran sungai naik, dan peringatan BMKG. Siapkan barang berharga di tempat tinggi.</p></div>
+                            <div class="siagaai-guide-card"><div class="text-2xl mb-3">🚶</div><h4 class="text-white font-bold text-sm mb-2">Saat Banjir</h4><p class="text-gray-400 text-xs leading-relaxed">Matikan listrik. Evakuasi ke lantai atas atau dataran tinggi. Jangan berjalan/berkendara di air banjir setinggi lutut.</p></div>
+                            <div class="siagaai-guide-card"><div class="text-2xl mb-3">🧹</div><h4 class="text-white font-bold text-sm mb-2">Pasca Banjir</h4><p class="text-gray-400 text-xs leading-relaxed">Periksa kerusakan struktur sebelum masuk rumah. Bersihkan lumpur dan desinfeksi. Waspada penyakit kulit dan diare.</p></div>
+                            <div class="siagaai-guide-card"><div class="text-2xl mb-3">💧</div><h4 class="text-white font-bold text-sm mb-2">Pencegahan</h4><p class="text-gray-400 text-xs leading-relaxed">Jangan buang sampah ke saluran air. Tanam vegetasi di sekitar rumah. Kenali daerah rawan banjir di lingkungan Anda.</p></div>
+                        </div>
+                        <!-- Longsor -->
+                        <div id="siagaai-guide-longsor" class="siagaai-guide-panel grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="siagaai-guide-card"><div class="text-2xl mb-3">⚠️</div><h4 class="text-white font-bold text-sm mb-2">Tanda Bahaya</h4><p class="text-gray-400 text-xs leading-relaxed">Retakan di tanah/dinding, pohon miring, air tanah keruh, suara gemuruh dari lereng. Hujan deras berkepanjangan meningkatkan risiko.</p></div>
+                            <div class="siagaai-guide-card"><div class="text-2xl mb-3">🏃</div><h4 class="text-white font-bold text-sm mb-2">Saat Longsor</h4><p class="text-gray-400 text-xs leading-relaxed">Segera menjauh dari jalur longsor. Lari ke samping, bukan ke bawah lintasan. Hindari lembah dan sungai di kaki bukit.</p></div>
+                            <div class="siagaai-guide-card"><div class="text-2xl mb-3">🏡</div><h4 class="text-white font-bold text-sm mb-2">Persiapan</h4><p class="text-gray-400 text-xs leading-relaxed">Jangan membangun di lereng curam. Buat drainase yang baik. Tanam pohon berakar kuat untuk menstabilkan tanah.</p></div>
+                            <div class="siagaai-guide-card"><div class="text-2xl mb-3">📞</div><h4 class="text-white font-bold text-sm mb-2">Kontak</h4><p class="text-gray-400 text-xs leading-relaxed">BNPB: 021-500-164 · Basarnas: 115 · PMI: 021-7992325 · Darurat: 112</p></div>
+                        </div>
+                        <!-- Kebakaran -->
+                        <div id="siagaai-guide-kebakaran" class="siagaai-guide-panel grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="siagaai-guide-card"><div class="text-2xl mb-3">🔥</div><h4 class="text-white font-bold text-sm mb-2">Saat Kebakaran</h4><p class="text-gray-400 text-xs leading-relaxed">Merunduk di bawah asap, tutup hidung dengan kain basah. Raba pintu sebelum membuka — jika panas, cari jalan lain.</p></div>
+                            <div class="siagaai-guide-card"><div class="text-2xl mb-3">🚪</div><h4 class="text-white font-bold text-sm mb-2">Evakuasi</h4><p class="text-gray-400 text-xs leading-relaxed">Gunakan tangga darurat, jangan lift. Jangan kembali ke dalam. Kumpul di titik aman dan hitung semua anggota keluarga.</p></div>
+                            <div class="siagaai-guide-card"><div class="text-2xl mb-3">🧯</div><h4 class="text-white font-bold text-sm mb-2">Pencegahan</h4><p class="text-gray-400 text-xs leading-relaxed">Pasang smoke detector. Siapkan APAR di tempat strategis. Jangan tinggalkan kompor menyala. Periksa instalasi listrik berkala.</p></div>
+                            <div class="siagaai-guide-card"><div class="text-2xl mb-3">📞</div><h4 class="text-white font-bold text-sm mb-2">Kontak</h4><p class="text-gray-400 text-xs leading-relaxed">Pemadam: 113 · PLN: 123 · Darurat: 112 · Ambulans: 119</p></div>
+                        </div>
+                    </div>
+
+                    <!-- ── SECTION 4: Emergency Contacts ── -->
+                    <div class="mb-10">
+                        <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                            <i class="fas fa-phone-alt text-cyan-400"></i> Kontak Darurat Indonesia
+                        </h3>
+                        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+                            <div class="bg-dark p-4 rounded-xl border border-gray-800 hover:border-red-500/30 transition-all text-center group">
+                                <div class="text-2xl mb-2">🚨</div>
+                                <div class="text-white font-bold text-sm">112</div>
+                                <div class="text-gray-500 text-[10px] mt-1">Darurat Nasional</div>
+                            </div>
+                            <div class="bg-dark p-4 rounded-xl border border-gray-800 hover:border-red-500/30 transition-all text-center group">
+                                <div class="text-2xl mb-2">🚑</div>
+                                <div class="text-white font-bold text-sm">119</div>
+                                <div class="text-gray-500 text-[10px] mt-1">Ambulans</div>
+                            </div>
+                            <div class="bg-dark p-4 rounded-xl border border-gray-800 hover:border-orange-500/30 transition-all text-center group">
+                                <div class="text-2xl mb-2">🚒</div>
+                                <div class="text-white font-bold text-sm">113</div>
+                                <div class="text-gray-500 text-[10px] mt-1">Pemadam</div>
+                            </div>
+                            <div class="bg-dark p-4 rounded-xl border border-gray-800 hover:border-blue-500/30 transition-all text-center group">
+                                <div class="text-2xl mb-2">🚁</div>
+                                <div class="text-white font-bold text-sm">115</div>
+                                <div class="text-gray-500 text-[10px] mt-1">Basarnas / SAR</div>
+                            </div>
+                            <div class="bg-dark p-4 rounded-xl border border-gray-800 hover:border-cyan-500/30 transition-all text-center group">
+                                <div class="text-2xl mb-2">📡</div>
+                                <div class="text-white font-bold text-sm">196</div>
+                                <div class="text-gray-500 text-[10px] mt-1">BMKG</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ── SECTION 5: Feature Highlights ── -->
+                    <div>
+                        <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                            <i class="fas fa-star text-cyan-400"></i> Key Features
+                        </h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                            <div class="bg-dark p-5 rounded-xl border border-gray-800 hover:border-cyan-500/30 transition-all group">
+                                <div class="w-10 h-10 rounded-lg bg-cyan-500/10 flex items-center justify-center text-cyan-400 text-lg mb-3 group-hover:scale-110 transition-transform">📡</div>
+                                <h4 class="text-white font-bold text-sm mb-1">BMKG Real-time</h4>
+                                <p class="text-gray-500 text-xs">Data gempa terbaru langsung dari BMKG API, auto-refresh setiap 5 menit.</p>
+                            </div>
+                            <div class="bg-dark p-5 rounded-xl border border-gray-800 hover:border-purple-500/30 transition-all group">
+                                <div class="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center text-purple-400 text-lg mb-3 group-hover:scale-110 transition-transform">🤖</div>
+                                <h4 class="text-white font-bold text-sm mb-1">AI Chatbot</h4>
+                                <p class="text-gray-500 text-xs">Powered by Groq LLaMA 3.3-70B. Ahli kebencanaan, P3K, dan evakuasi.</p>
+                            </div>
+                            <div class="bg-dark p-5 rounded-xl border border-gray-800 hover:border-green-500/30 transition-all group">
+                                <div class="w-10 h-10 rounded-lg bg-green-500/10 flex items-center justify-center text-green-400 text-lg mb-3 group-hover:scale-110 transition-transform">✅</div>
+                                <h4 class="text-white font-bold text-sm mb-1">Emergency Checklist</h4>
+                                <p class="text-gray-500 text-xs">25 item dalam 5 kategori. Progress tersimpan di localStorage browser.</p>
+                            </div>
+                            <div class="bg-dark p-5 rounded-xl border border-gray-800 hover:border-yellow-500/30 transition-all group">
+                                <div class="w-10 h-10 rounded-lg bg-yellow-500/10 flex items-center justify-center text-yellow-400 text-lg mb-3 group-hover:scale-110 transition-transform">📚</div>
+                                <h4 class="text-white font-bold text-sm mb-1">Panduan 5 Bencana</h4>
+                                <p class="text-gray-500 text-xs">Gempa, Tsunami, Banjir, Longsor, Kebakaran — lengkap dengan langkah evakuasi.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </section>
 
     <!-- Certifications -->
@@ -1212,55 +1529,48 @@
             const superstore = document.getElementById('superstore-dashboard');
             const marketing = document.getElementById('marketing-dashboard');
             const rig = document.getElementById('rig-dashboard');
+            const siagaai = document.getElementById('siagaai-dashboard');
             const tabBtns = document.querySelectorAll('.project-tab');
             
+            // Hide all dashboards first
+            superstore.classList.add('hidden');
+            marketing.classList.add('hidden');
+            rig?.classList.add('hidden');
+            siagaai?.classList.add('hidden');
+            
+            // Style all tabs as inactive
+            tabBtns.forEach(btn => {
+                btn.classList.remove('bg-primary', 'text-white', 'hover:bg-violet-600');
+                btn.classList.add('bg-dark', 'border', 'border-gray-700', 'text-gray-300', 'hover:border-primary', 'hover:text-primary');
+            });
+            
+            // Activate selected tab
+            tabBtns.forEach(btn => {
+                if (btn.dataset.project === project) {
+                    btn.classList.remove('bg-dark', 'border', 'border-gray-700', 'text-gray-300', 'hover:border-primary', 'hover:text-primary');
+                    btn.classList.add('bg-primary', 'text-white', 'hover:bg-violet-600');
+                }
+            });
+
             if (project === 'superstore') {
                 superstore.classList.remove('hidden');
-                marketing.classList.add('hidden');
-                rig?.classList.add('hidden');
-                tabBtns.forEach(btn => {
-                    if (btn.dataset.project === 'superstore') {
-                        btn.classList.remove('bg-dark', 'border', 'border-gray-700', 'text-gray-300', 'hover:border-primary', 'hover:text-primary');
-                        btn.classList.add('bg-primary', 'text-white', 'hover:bg-violet-600');
-                    } else {
-                        btn.classList.remove('bg-primary', 'text-white', 'hover:bg-violet-600');
-                        btn.classList.add('bg-dark', 'border', 'border-gray-700', 'text-gray-300', 'hover:border-primary', 'hover:text-primary');
-                    }
-                });
             } else if (project === 'marketing') {
-                superstore.classList.add('hidden');
                 marketing.classList.remove('hidden');
-                rig?.classList.add('hidden');
-                tabBtns.forEach(btn => {
-                    if (btn.dataset.project === 'marketing') {
-                        btn.classList.remove('bg-dark', 'border', 'border-gray-700', 'text-gray-300', 'hover:border-primary', 'hover:text-primary');
-                        btn.classList.add('bg-primary', 'text-white', 'hover:bg-violet-600');
-                    } else {
-                        btn.classList.remove('bg-primary', 'text-white', 'hover:bg-violet-600');
-                        btn.classList.add('bg-dark', 'border', 'border-gray-700', 'text-gray-300', 'hover:border-primary', 'hover:text-primary');
-                    }
-                });
-                // Load marketing data if not yet loaded
                 if (!window.marketingDataLoaded) {
                     marketingFetchData();
                     window.marketingDataLoaded = true;
                 }
             } else if (project === 'rig') {
-                superstore.classList.add('hidden');
-                marketing.classList.add('hidden');
                 rig?.classList.remove('hidden');
-                tabBtns.forEach(btn => {
-                    if (btn.dataset.project === 'rig') {
-                        btn.classList.remove('bg-dark', 'border', 'border-gray-700', 'text-gray-300', 'hover:border-primary', 'hover:text-primary');
-                        btn.classList.add('bg-primary', 'text-white', 'hover:bg-violet-600');
-                    } else {
-                        btn.classList.remove('bg-primary', 'text-white', 'hover:bg-violet-600');
-                        btn.classList.add('bg-dark', 'border', 'border-gray-700', 'text-gray-300', 'hover:border-primary', 'hover:text-primary');
-                    }
-                });
                 if (!window.rigDataLoaded) {
                     rigInit();
                     window.rigDataLoaded = true;
+                }
+            } else if (project === 'siagaai') {
+                siagaai?.classList.remove('hidden');
+                if (!window.siagaaiDataLoaded) {
+                    siagaaiInit();
+                    window.siagaaiDataLoaded = true;
                 }
             }
         }
@@ -2217,6 +2527,193 @@
         });
 
         document.addEventListener('DOMContentLoaded', async () => { const data = await fetchDashboardData(); renderDashboard(data); });
+
+        // ========== SIAGAAI — LIVE INTEGRATION ==========
+        const SIAGAAI_BACKEND = (function() {
+            var k = [
+                'aHR0cHM6Ly9zY3JpcHQuZ29vZ2xlLmNvbS9tYWNy',
+                'b3Mvcy9BS2Z5Y2J5WEs1UEpPM2V2VE44ZTFRWUhZ',
+                'Z3JVVi1TOHhveUtPczJmUFBaVU1nTGx5UzQwb1BD',
+                'dlgxSjEyRWJxWGpwZHhFajBVZy9leGVj'
+            ];
+            return atob(k.join(''));
+        })();
+        var siagaaiChatHistory = [];
+
+        function siagaaiInit() {
+            siagaaiLoadBMKG();
+            // Auto-refresh BMKG every 5 minutes
+            setInterval(siagaaiLoadBMKG, 300000);
+            document.getElementById('siagaai-status').textContent = 'Connected';
+            document.getElementById('siagaai-status').classList.remove('text-yellow-400');
+            document.getElementById('siagaai-status').classList.add('text-green-400');
+        }
+
+        // ── BMKG LIVE DATA ──
+        function siagaaiLoadBMKG() {
+            var container = document.getElementById('siagaai-bmkg-container');
+            container.innerHTML = '<div class="flex flex-col items-center justify-center h-80 gap-3"><div class="animate-spin rounded-full h-10 w-10 border-t-2 border-cyan-400"></div><p class="text-gray-500 text-sm">Memuat data gempa dari BMKG...</p></div>';
+
+            Promise.all([
+                fetch(SIAGAAI_BACKEND + '?action=bmkg', { redirect: 'follow' }).then(r => r.json()),
+                fetch(SIAGAAI_BACKEND + '?action=bmkg_recent', { redirect: 'follow' }).then(r => r.json())
+            ])
+            .then(function(results) {
+                siagaaiRenderBMKG(results[0], results[1]);
+                var footer = document.getElementById('siagaai-bmkg-footer');
+                if (footer) footer.style.display = 'flex';
+                var updated = document.getElementById('siagaai-bmkg-updated');
+                if (updated) updated.textContent = 'Diperbarui: ' + new Date().toLocaleTimeString('id-ID', { hour:'2-digit', minute:'2-digit' });
+                document.getElementById('siagaai-status').textContent = 'Live ✓';
+            })
+            .catch(function(err) {
+                container.innerHTML = '<div class="flex flex-col items-center justify-center h-80 gap-3 text-center"><p class="text-gray-500">⚠️ Gagal memuat data BMKG</p><p class="text-gray-600 text-xs">' + siagaaiEsc(err.message) + '</p><button onclick="siagaaiLoadBMKG()" class="mt-2 px-4 py-2 bg-cyan-500/10 text-cyan-400 rounded-lg text-xs border border-cyan-500/30 hover:bg-cyan-500/20 transition-all">🔄 Coba Lagi</button></div>';
+            });
+        }
+
+        function siagaaiEsc(t) {
+            var d = document.createElement('div');
+            d.textContent = t;
+            return d.innerHTML;
+        }
+
+        function siagaaiRenderBMKG(latestData, recentData) {
+            var container = document.getElementById('siagaai-bmkg-container');
+            var html = '';
+
+            if (latestData && latestData.Infogempa && latestData.Infogempa.gempa) {
+                var g = latestData.Infogempa.gempa;
+                var mag = parseFloat(g.Magnitude) || 0;
+                var magColor = mag < 3 ? '#10B981' : mag < 5 ? '#F59E0B' : mag < 6 ? '#F97316' : mag < 7 ? '#EF4444' : '#991B1B';
+
+                html += '<div class="eq-main-card mb-5">';
+                html += '<div class="flex flex-col sm:flex-row items-start gap-4 relative z-10">';
+                html += '<div class="eq-mag-badge" style="background:' + magColor + '">M' + g.Magnitude + '</div>';
+                html += '<div class="flex-1">';
+                html += '<h4 class="text-white font-bold text-sm">' + siagaaiEsc(g.Wilayah || '-') + '</h4>';
+                html += '<div class="flex flex-wrap gap-x-4 gap-y-1 mt-2 text-xs text-gray-400">';
+                html += '<span>📅 ' + siagaaiEsc(g.Tanggal || '') + ' ' + siagaaiEsc(g.Jam || '') + '</span>';
+                html += '<span>📍 ' + siagaaiEsc(g.Coordinates || g.Lintang + ',' + g.Bujur) + '</span>';
+                html += '<span>⬇️ ' + siagaaiEsc(g.Kedalaman || '') + '</span>';
+                html += '</div>';
+                if (g.Potensi) html += '<p class="mt-2 text-xs font-medium ' + (g.Potensi.toLowerCase().includes('tsunami') ? 'text-red-400' : 'text-green-400') + '">' + siagaaiEsc(g.Potensi) + '</p>';
+                html += '</div></div></div>';
+            }
+
+            if (recentData && recentData.Infogempa && recentData.Infogempa.gempa) {
+                var list = recentData.Infogempa.gempa;
+                html += '<h5 class="text-white font-bold text-xs mb-3 flex items-center gap-2"><i class="fas fa-list text-cyan-400"></i> Gempa Terkini (' + Math.min(list.length, 6) + ' terakhir)</h5>';
+                html += '<div class="eq-recent-grid">';
+                var max = Math.min(list.length, 6);
+                for (var i = 0; i < max; i++) {
+                    var eq = list[i];
+                    var m = parseFloat(eq.Magnitude) || 0;
+                    var bg = m < 3 ? '#10B981' : m < 5 ? '#F59E0B' : m < 6 ? '#F97316' : m < 7 ? '#EF4444' : '#991B1B';
+                    html += '<div class="eq-recent-card">';
+                    html += '<div class="eq-mini-mag" style="background:' + bg + '">M' + eq.Magnitude + '</div>';
+                    html += '<div class="flex-1 min-w-0"><h4 class="text-white text-xs font-semibold truncate">' + siagaaiEsc(eq.Wilayah || '-') + '</h4>';
+                    html += '<p class="text-gray-500 text-[10px] mt-0.5">' + siagaaiEsc(eq.Tanggal || '') + ' · ' + siagaaiEsc(eq.Kedalaman || '') + '</p></div>';
+                    html += '</div>';
+                }
+                html += '</div>';
+            }
+
+            container.innerHTML = html || '<div class="flex items-center justify-center h-40 text-gray-500 text-sm">Data gempa tidak tersedia.</div>';
+        }
+
+        // ── AI CHAT ──
+        function siagaaiSend() {
+            var input = document.getElementById('siagaai-chat-input');
+            var q = input.value.trim();
+            if (!q) return;
+
+            var messages = document.getElementById('siagaai-chat-messages');
+            input.value = '';
+            input.style.height = 'auto';
+
+            // Add user message
+            var userDiv = document.createElement('div');
+            userDiv.className = 'siagaai-msg user';
+            userDiv.textContent = q;
+            messages.appendChild(userDiv);
+
+            // Add typing indicator
+            var typingDiv = document.createElement('div');
+            typingDiv.className = 'siagaai-msg ai';
+            typingDiv.id = 'siagaai-typing';
+            typingDiv.innerHTML = '<div class="typing-dots"><span></span><span></span><span></span></div>';
+            messages.appendChild(typingDiv);
+            messages.scrollTop = messages.scrollHeight;
+
+            // Track history
+            siagaaiChatHistory.push({ role: 'user', content: q });
+            var sendBtn = document.getElementById('siagaai-send-btn');
+            sendBtn.disabled = true;
+
+            fetch(SIAGAAI_BACKEND, {
+                method: 'POST',
+                headers: { 'Content-Type': 'text/plain' },
+                body: JSON.stringify({ action: 'chat', messages: siagaaiChatHistory.slice(-10) }),
+                redirect: 'follow'
+            })
+            .then(r => r.json())
+            .then(function(data) {
+                var typing = document.getElementById('siagaai-typing');
+                if (typing) typing.remove();
+
+                if (data.reply) {
+                    siagaaiChatHistory.push({ role: 'assistant', content: data.reply });
+                    if (siagaaiChatHistory.length > 20) siagaaiChatHistory = siagaaiChatHistory.slice(-20);
+                    var aiDiv = document.createElement('div');
+                    aiDiv.className = 'siagaai-msg ai';
+                    aiDiv.innerHTML = siagaaiFormat(data.reply);
+                    messages.appendChild(aiDiv);
+                } else {
+                    siagaaiChatHistory.pop();
+                    var errDiv = document.createElement('div');
+                    errDiv.className = 'siagaai-msg ai';
+                    errDiv.textContent = '❌ ' + (data.error || 'Respons tidak dikenali.');
+                    messages.appendChild(errDiv);
+                }
+                messages.scrollTop = messages.scrollHeight;
+            })
+            .catch(function(err) {
+                var typing = document.getElementById('siagaai-typing');
+                if (typing) typing.remove();
+                siagaaiChatHistory.pop();
+                var errDiv = document.createElement('div');
+                errDiv.className = 'siagaai-msg ai';
+                errDiv.textContent = '❌ Gagal menghubungi backend. ' + (navigator.onLine ? siagaaiEsc(err.message) : 'Tidak ada koneksi internet.');
+                messages.appendChild(errDiv);
+                messages.scrollTop = messages.scrollHeight;
+            })
+            .finally(function() { sendBtn.disabled = false; });
+        }
+
+        function siagaaiQuickAsk(q) {
+            document.getElementById('siagaai-chat-input').value = q;
+            siagaaiSend();
+        }
+
+        function siagaaiFormat(t) {
+            return t
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                .replace(/^### (.*$)/gm, '<h4 style="color:#7dd3fc;font-weight:700;margin:8px 0 4px">$1</h4>')
+                .replace(/^## (.*$)/gm, '<h3 style="color:#7dd3fc;font-weight:700;margin:10px 0 6px">$1</h3>')
+                .replace(/^[•●] (.*$)/gm, '<li style="margin-left:16px;list-style:disc">$1</li>')
+                .replace(/^- (.*$)/gm, '<li style="margin-left:16px;list-style:disc">$1</li>')
+                .replace(/^\d+\.\s(.*$)/gm, '<li style="margin-left:16px;list-style:decimal">$1</li>')
+                .replace(/\n/g, '<br>');
+        }
+
+        // ── GUIDE TABS ──
+        function siagaaiSwitchGuide(btn, id) {
+            document.querySelectorAll('.siagaai-guide-tab').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.siagaai-guide-panel').forEach(p => p.classList.remove('active'));
+            btn.classList.add('active');
+            document.getElementById('siagaai-guide-' + id).classList.add('active');
+        }
     </script>
 </body>
 </html>
