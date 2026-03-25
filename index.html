@@ -453,7 +453,7 @@
         <div id="superstore-dashboard" class="project-content">
         <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
             <div><span class="text-primary font-bold tracking-wider uppercase text-sm">Portfolio Project #2</span><h2 class="text-4xl font-bold text-white mt-2">SuperStore Analytics</h2><p class="text-gray-400 mt-2 max-w-xl">Dashboard interaktif ini menyajikan wawasan bisnis strategis yang diolah dari dataset penjualan 'SuperStore'. <br><span class="text-xs text-gray-500">Note: Data diambil LIVE dari Google Sheets CSV Publik.</span></p></div>
-            <div class="flex gap-3"><a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vSXxXA21f-Q3MUn1A7jyrxNiZ-wD9x4RGfwnqMJrVZuKmhKJKluXsqqkNf2dDvnSJVpdnRBBHQCiLeS/pub?gid=1555337350&single=true&output=csv" class="hover-trigger px-6 py-3 bg-surface border border-gray-600 rounded-lg text-sm text-white hover:border-primary hover:text-primary transition-colors flex items-center gap-2 font-medium"><i class="fas fa-file-csv"></i> Download Source Data</a></div>
+            <div class="flex gap-3"><a id="dl-superstore" href="#" class="hover-trigger px-6 py-3 bg-surface border border-gray-600 rounded-lg text-sm text-white hover:border-primary hover:text-primary transition-colors flex items-center gap-2 font-medium"><i class="fas fa-file-csv"></i> Download Source Data</a></div>
         </div>
         <div class="bg-surface rounded-3xl border border-gray-800 shadow-2xl overflow-hidden">
             <div class="bg-dark/50 border-b border-gray-800 p-4 flex justify-between items-center">
@@ -519,7 +519,7 @@
                     <h2 class="text-4xl font-bold text-white mt-2">Marketing <span class="gradient-text">Analytics</span> Dashboard</h2>
                     <p class="text-gray-400 mt-2 max-w-xl">Dashboard komprehensif untuk tracking performa social media marketing dengan insight strategis, funnel analysis, dan rekomendasi berbasis AI.</p>
                 </div>
-                <div class="flex gap-3"><a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vR8epamsS0Biy7VhZRTC7KyzDSMo8ShcIj2lfl9v4TlW8FkMcyDOuZFIL5Pu6OQAqv0Frd5fUVT_VjZ/pub?gid=997035940&single=true&output=csv" class="hover-trigger px-6 py-3 bg-surface border border-gray-600 rounded-lg text-sm text-white hover:border-primary hover:text-primary transition-colors flex items-center gap-2 font-medium"><i class="fas fa-file-csv"></i> Download Source Data</a></div>
+                <div class="flex gap-3"><a id="dl-marketing" href="#" class="hover-trigger px-6 py-3 bg-surface border border-gray-600 rounded-lg text-sm text-white hover:border-primary hover:text-primary transition-colors flex items-center gap-2 font-medium"><i class="fas fa-file-csv"></i> Download Source Data</a></div>
             </div>
             <div class="bg-surface rounded-3xl border border-gray-800 shadow-2xl overflow-hidden">
                 <div class="bg-dark/50 border-b border-gray-800 p-4 flex justify-between items-center">
@@ -623,10 +623,10 @@
                     <p class="text-gray-400 mt-2 max-w-xl">Dashboard operasional terintegrasi untuk monitoring produktivitas rig, efisiensi bahan bakar, dan laporan DDR real-time. <br><span class="text-xs text-gray-500">Note: Data diambil LIVE dari Google Sheets CSV Publik.</span></p>
                 </div>
                 <div class="flex flex-wrap gap-2 justify-end">
-                    <a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vR-cwrgDCO4QXeguKeuRFLX2N_YLd7u3vG165J7-B7XR1LJBQbIHWWdq8FZjcn8q_geCF6xM8gbGeNT/pub?gid=1953187009&single=true&output=csv" class="hover-trigger px-6 py-3 bg-surface border border-gray-600 rounded-lg text-sm text-white hover:border-primary hover:text-primary transition-colors flex items-center gap-2 font-medium" title="Download DDR Activity Events Data"><i class="fas fa-file-csv"></i> DDR Events</a>
-                    <a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vROs8gBCVAsVUEnOAkMC-heXRhZZZbsrid7Ivl9UBtVT5zEQkbqyNo9QBF6DApX8zLNbtYG1u9tCHaT/pub?gid=2073579499&single=true&output=csv" class="hover-trigger px-6 py-3 bg-surface border border-gray-600 rounded-lg text-sm text-white hover:border-primary hover:text-primary transition-colors flex items-center gap-2 font-medium" title="Download Fuel Consumption Data"><i class="fas fa-gas-pump"></i> Fuel Data</a>
-                    <a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vQQ79RGyb_Mjh4uO_F9qzptHbo2bgdG-Pyicr8kMpPZJWVz7j2KwFzh9Ohgue11KHagbwaRjhAbJgTr/pub?gid=560339056&single=true&output=csv" class="hover-trigger px-6 py-3 bg-surface border border-gray-600 rounded-lg text-sm text-white hover:border-primary hover:text-primary transition-colors flex items-center gap-2 font-medium" title="Download Productivity Drilling Data"><i class="fas fa-chart-bar"></i> Productivity</a>
-                    <a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vTUDR8bFl8G0_L4xTXR1kg_FvCqN5jQyP-3KWmwWIoq5RFwVR61yoEEJfUfTmMruafLIcmG6xuuTQ7B/pub?gid=1953912833&single=true&output=csv" class="hover-trigger px-6 py-3 bg-surface border border-gray-600 rounded-lg text-sm text-white hover:border-primary hover:text-primary transition-colors flex items-center gap-2 font-medium" title="Download Daily Rig KPI Dataset"><i class="fas fa-database"></i> Full Dataset</a>
+                    <a id="dl-rig-ddr" href="#" class="hover-trigger px-6 py-3 bg-surface border border-gray-600 rounded-lg text-sm text-white hover:border-primary hover:text-primary transition-colors flex items-center gap-2 font-medium" title="Download DDR Activity Events Data"><i class="fas fa-file-csv"></i> DDR Events</a>
+                    <a id="dl-rig-fuel" href="#" class="hover-trigger px-6 py-3 bg-surface border border-gray-600 rounded-lg text-sm text-white hover:border-primary hover:text-primary transition-colors flex items-center gap-2 font-medium" title="Download Fuel Consumption Data"><i class="fas fa-gas-pump"></i> Fuel Data</a>
+                    <a id="dl-rig-productivity" href="#" class="hover-trigger px-6 py-3 bg-surface border border-gray-600 rounded-lg text-sm text-white hover:border-primary hover:text-primary transition-colors flex items-center gap-2 font-medium" title="Download Productivity Drilling Data"><i class="fas fa-chart-bar"></i> Productivity</a>
+                    <a id="dl-rig-dataset" href="#" class="hover-trigger px-6 py-3 bg-surface border border-gray-600 rounded-lg text-sm text-white hover:border-primary hover:text-primary transition-colors flex items-center gap-2 font-medium" title="Download Daily Rig KPI Dataset"><i class="fas fa-database"></i> Full Dataset</a>
                 </div>
             </div>
             <div class="bg-surface rounded-3xl border border-gray-800 shadow-2xl overflow-hidden">
@@ -987,11 +987,11 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16"><span class="text-primary font-bold tracking-wider uppercase text-sm">Validations</span><h2 class="text-4xl font-bold text-white mt-2">Professional Certifications</h2></div>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- Cert Cards -->
-                <div onclick="openCertModal('BNSP Certified', 'Badan Nasional Sertifikasi Profesi', '1cG7mouvxEbI7HjEd2Mih3IE00M7ZVK1x')" class="hover-trigger bg-dark p-8 rounded-2xl border border-gray-800 cursor-pointer hover:border-primary transition-all hover:-translate-y-2 group text-center"><div class="w-20 h-20 bg-white rounded-full flex items-center justify-center mx-auto mb-6 p-2 border-2 border-gray-700 group-hover:border-primary transition-colors"><img src="https://www.hpi.or.id/wp-content/uploads/2021/08/Logo-BNSP.png" alt="BNSP" class="w-full h-full object-contain rounded-full"></div><h4 class="text-white font-bold text-lg group-hover:text-primary transition-colors">BNSP Certified</h4><p class="text-gray-500 text-sm mt-2">Amil Zakat Qualification</p><div class="mt-6"><span class="text-xs bg-surface px-4 py-2 rounded-full text-gray-400 group-hover:bg-primary group-hover:text-white transition-colors">View Document</span></div></div>
-                <div onclick="openCertModal('Dicoding AI', 'Dicoding Indonesia', '1GEeSOrNDvOCIGP2QUX8lAVlDTJIgwOrF')" class="hover-trigger bg-dark p-8 rounded-2xl border border-gray-800 cursor-pointer hover:border-primary transition-all hover:-translate-y-2 group text-center"><div class="w-20 h-20 bg-surface rounded-full flex items-center justify-center mx-auto mb-6 text-3xl text-white group-hover:text-primary transition-colors"><i class="fas fa-robot"></i></div><h4 class="text-white font-bold text-lg group-hover:text-primary transition-colors">Dicoding AI</h4><p class="text-gray-500 text-sm mt-2">Artificial Intelligence Basic</p><div class="mt-6"><span class="text-xs bg-surface px-4 py-2 rounded-full text-gray-400 group-hover:bg-primary group-hover:text-white transition-colors">View Document</span></div></div>
-                <div onclick="openCertModal('DQLab Analyst', 'DQLab', '1TLdVFDWCmFs4yR_sVtpEFPSQWIHkIict')" class="hover-trigger bg-dark p-8 rounded-2xl border border-gray-800 cursor-pointer hover:border-primary transition-all hover:-translate-y-2 group text-center"><div class="w-20 h-20 bg-surface rounded-full flex items-center justify-center mx-auto mb-6 text-3xl text-white group-hover:text-primary transition-colors"><i class="fas fa-chart-bar"></i></div><h4 class="text-white font-bold text-lg group-hover:text-primary transition-colors">DQLab Analyst</h4><p class="text-gray-500 text-sm mt-2">Data Analyst Career Track</p><div class="mt-6"><span class="text-xs bg-surface px-4 py-2 rounded-full text-gray-400 group-hover:bg-primary group-hover:text-white transition-colors">View Document</span></div></div>
-                <div onclick="openCertModal('Taalenta AI', 'Taalenta Digital', '1cn6_8zBFR9ieeSMKpixVpprTxbJ6CLBg')" class="hover-trigger bg-dark p-8 rounded-2xl border border-gray-800 cursor-pointer hover:border-primary transition-all hover:-translate-y-2 group text-center"><div class="w-20 h-20 bg-surface rounded-full flex items-center justify-center mx-auto mb-6 text-3xl text-white group-hover:text-primary transition-colors"><i class="fas fa-brain"></i></div><h4 class="text-white font-bold text-lg group-hover:text-primary transition-colors">Taalenta AI</h4><p class="text-gray-500 text-sm mt-2">Generative AI Expert</p><div class="mt-6"><span class="text-xs bg-surface px-4 py-2 rounded-full text-gray-400 group-hover:bg-primary group-hover:text-white transition-colors">View Document</span></div></div>
+                <!-- Cert Cards — Drive IDs loaded dynamically from backend -->
+                <div data-cert="bnsp" onclick="openCertDynamic(this, 'BNSP Certified', 'Badan Nasional Sertifikasi Profesi')" class="hover-trigger bg-dark p-8 rounded-2xl border border-gray-800 cursor-pointer hover:border-primary transition-all hover:-translate-y-2 group text-center"><div class="w-20 h-20 bg-white rounded-full flex items-center justify-center mx-auto mb-6 p-2 border-2 border-gray-700 group-hover:border-primary transition-colors"><img src="https://www.hpi.or.id/wp-content/uploads/2021/08/Logo-BNSP.png" alt="BNSP" class="w-full h-full object-contain rounded-full"></div><h4 class="text-white font-bold text-lg group-hover:text-primary transition-colors">BNSP Certified</h4><p class="text-gray-500 text-sm mt-2">Amil Zakat Qualification</p><div class="mt-6"><span class="text-xs bg-surface px-4 py-2 rounded-full text-gray-400 group-hover:bg-primary group-hover:text-white transition-colors">View Document</span></div></div>
+                <div data-cert="dicoding" onclick="openCertDynamic(this, 'Dicoding AI', 'Dicoding Indonesia')" class="hover-trigger bg-dark p-8 rounded-2xl border border-gray-800 cursor-pointer hover:border-primary transition-all hover:-translate-y-2 group text-center"><div class="w-20 h-20 bg-surface rounded-full flex items-center justify-center mx-auto mb-6 text-3xl text-white group-hover:text-primary transition-colors"><i class="fas fa-robot"></i></div><h4 class="text-white font-bold text-lg group-hover:text-primary transition-colors">Dicoding AI</h4><p class="text-gray-500 text-sm mt-2">Artificial Intelligence Basic</p><div class="mt-6"><span class="text-xs bg-surface px-4 py-2 rounded-full text-gray-400 group-hover:bg-primary group-hover:text-white transition-colors">View Document</span></div></div>
+                <div data-cert="dqlab" onclick="openCertDynamic(this, 'DQLab Analyst', 'DQLab')" class="hover-trigger bg-dark p-8 rounded-2xl border border-gray-800 cursor-pointer hover:border-primary transition-all hover:-translate-y-2 group text-center"><div class="w-20 h-20 bg-surface rounded-full flex items-center justify-center mx-auto mb-6 text-3xl text-white group-hover:text-primary transition-colors"><i class="fas fa-chart-bar"></i></div><h4 class="text-white font-bold text-lg group-hover:text-primary transition-colors">DQLab Analyst</h4><p class="text-gray-500 text-sm mt-2">Data Analyst Career Track</p><div class="mt-6"><span class="text-xs bg-surface px-4 py-2 rounded-full text-gray-400 group-hover:bg-primary group-hover:text-white transition-colors">View Document</span></div></div>
+                <div data-cert="taalenta" onclick="openCertDynamic(this, 'Taalenta AI', 'Taalenta Digital')" class="hover-trigger bg-dark p-8 rounded-2xl border border-gray-800 cursor-pointer hover:border-primary transition-all hover:-translate-y-2 group text-center"><div class="w-20 h-20 bg-surface rounded-full flex items-center justify-center mx-auto mb-6 text-3xl text-white group-hover:text-primary transition-colors"><i class="fas fa-brain"></i></div><h4 class="text-white font-bold text-lg group-hover:text-primary transition-colors">Taalenta AI</h4><p class="text-gray-500 text-sm mt-2">Generative AI Expert</p><div class="mt-6"><span class="text-xs bg-surface px-4 py-2 rounded-full text-gray-400 group-hover:bg-primary group-hover:text-white transition-colors">View Document</span></div></div>
             </div>
         </div>
     </section>
@@ -1183,12 +1183,13 @@
 
     <!-- JAVASCRIPT -->
     <script>
-        // CONFIG
-        const REMOTE_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSXxXA21f-Q3MUn1A7jyrxNiZ-wD9x4RGfwnqMJrVZuKmhKJKluXsqqkNf2dDvnSJVpdnRBBHQCiLeS/pub?gid=1555337350&single=true&output=csv';
+        // CONFIG — CSV URL loaded from backend config
+        let REMOTE_CSV_URL = '';
         const LOCAL_CSV_URL = 'SuperStore - SuperStore (3).csv';
         const params = new URLSearchParams(window.location.search);
         const useLocal = params.get('source') === 'local';
-        const CSV_URL = useLocal ? LOCAL_CSV_URL : REMOTE_CSV_URL;
+        // CSV_URL will be resolved after config loads
+        let CSV_URL = useLocal ? LOCAL_CSV_URL : '';
 
         // CURSOR
         const cursorDot = document.getElementById("cursor-dot");
@@ -1235,6 +1236,13 @@
                 pdfFrame.src = `https://drive.google.com/file/d/${fileId}/preview`;
                 pdfFrame.onload = () => spinner.classList.add('hidden');
             }
+        }
+
+        function openCertDynamic(el, title, org) {
+            const key = el.getAttribute('data-cert');
+            const fileId = CERT_IDS[key] || el.getAttribute('data-cert-id') || '';
+            if (!fileId) { alert('Certificate data belum tersedia. Silakan coba lagi.'); return; }
+            openCertModal(title, org, fileId);
         }
 
         // PRINT CV FUNCTION
@@ -1576,7 +1584,7 @@
         }
 
         // ========== MARKETING ANALYTICS FUNCTIONS ==========
-        const MARKETING_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR8epamsS0Biy7VhZRTC7KyzDSMo8ShcIj2lfl9v4TlW8FkMcyDOuZFIL5Pu6OQAqv0Frd5fUVT_VjZ/pub?gid=997035940&single=true&output=csv';
+        // Marketing CSV URL loaded from backend config
         const MARKETING_LOCAL_CSV_URL = 'marketing_data_simulated - marketing_data_simulated.csv';
 
         async function marketingFetchData() {
@@ -1584,7 +1592,8 @@
                 document.getElementById('marketing-status-indicator').innerText = 'Downloading CSV...';
                 document.getElementById('marketing-status-indicator').classList.add('text-yellow-400');
                 
-                const response = await fetch(MARKETING_CSV_URL);
+                const marketingUrl = CSV_URLS.marketing || MARKETING_LOCAL_CSV_URL;
+                const response = await fetch(marketingUrl);
                 if (!response.ok) throw new Error("Failed to fetch CSV");
                 const csvText = await response.text();
                 
@@ -2020,12 +2029,13 @@
                 const status = document.getElementById('rig-status-indicator');
                 status.innerText = 'Downloading CSVs...';
                 status.classList.add('text-yellow-400');
+                // URLs loaded from backend config
                 const urls = {
-                    nomenklatur: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR-cwrgDCO4QXeguKeuRFLX2N_YLd7u3vG165J7-B7XR1LJBQbIHWWdq8FZjcn8q_geCF6xM8gbGeNT/pub?gid=1606881578&single=true&output=csv',
-                    ddr: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR-cwrgDCO4QXeguKeuRFLX2N_YLd7u3vG165J7-B7XR1LJBQbIHWWdq8FZjcn8q_geCF6xM8gbGeNT/pub?gid=1953187009&single=true&output=csv',
-                    fuel: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vROs8gBCVAsVUEnOAkMC-heXRhZZZbsrid7Ivl9UBtVT5zEQkbqyNo9QBF6DApX8zLNbtYG1u9tCHaT/pub?gid=2073579499&single=true&output=csv',
-                    productivity: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQQ79RGyb_Mjh4uO_F9qzptHbo2bgdG-Pyicr8kMpPZJWVz7j2KwFzh9Ohgue11KHagbwaRjhAbJgTr/pub?gid=560339056&single=true&output=csv',
-                    datasetRig: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTUDR8bFl8G0_L4xTXR1kg_FvCqN5jQyP-3KWmwWIoq5RFwVR61yoEEJfUfTmMruafLIcmG6xuuTQ7B/pub?gid=1953912833&single=true&output=csv'
+                    nomenklatur: (CSV_URLS.rig && CSV_URLS.rig.nomenklatur) || '',
+                    ddr: (CSV_URLS.rig && CSV_URLS.rig.ddr) || '',
+                    fuel: (CSV_URLS.rig && CSV_URLS.rig.fuel) || '',
+                    productivity: (CSV_URLS.rig && CSV_URLS.rig.productivity) || '',
+                    datasetRig: (CSV_URLS.rig && CSV_URLS.rig.dataset) || ''
                 };
                 const [nomen, ddr, fuel, prod, rigs] = await Promise.all([
                     rigFetchCSV(urls.nomenklatur),
@@ -2446,32 +2456,80 @@
         }
 
         // ===============
-        // AI Ask Wiring
+        // AI Ask Wiring (Secure: URL obfuscated, CSV URLs fetched from backend)
         // ===============
-        // Configure your deployed Apps Script Web App URL here
-        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby1c90C4Sb2w56_Nt7HSQvLEWsQcd3OmpHODZ0wlnR9sHyn58jHm4PwnN7u6pbiwWQ-/exec';
-        const CSV_URLS = {
-            superstore: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSXxXA21f-Q3MUn1A7jyrxNiZ-wD9x4RGfwnqMJrVZuKmhKJKluXsqqkNf2dDvnSJVpdnRBBHQCiLeS/pub?gid=1555337350&single=true&output=csv',
-            marketing: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR8epamsS0Biy7VhZRTC7KyzDSMo8ShcIj2lfl9v4TlW8FkMcyDOuZFIL5Pu6OQAqv0Frd5fUVT_VjZ/pub?gid=997035940&single=true&output=csv',
-            rig: {
-                ddr: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR-cwrgDCO4QXeguKeuRFLX2N_YLd7u3vG165J7-B7XR1LJJBQbIHWWdq8FZjcn8q_geCF6xM8gbGeNT/pub?gid=1953187009&single=true&output=csv',
-                fuel: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vROs8gBCVAsVUEnOAkMC-heXRhZZZbsrid7Ivl9UBtVT5zEQkbqyNo9QBF6DApX8zLNbtYG1u9tCHaT/pub?gid=2073579499&single=true&output=csv',
-                productivity: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQQ79RGyb_Mjh4uO_F9qzptHbo2bgdG-Pyicr8kMpPZJWVz7j2KwFzh9Ohgue11KHagbwaRjhAbJgTr/pub?gid=560339056&single=true&output=csv',
-                dataset: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTUDR8bFl8G0_L4xTXR1kg_FvCqN5jQyP-3KWmwWIoq5RFwVR61yoEEJfUfTmMruafLIcmG6xuuTQ7B/pub?gid=1953912833&single=true&output=csv'
+        const APPS_SCRIPT_URL = (function() {
+            var _p = [
+                'aHR0cHM6Ly9zY3JpcHQuZ29vZ2xlLmNvbS9tYWNyb3Mvcy9BS2',
+                'Z5Y2J6YnVuMUk5Y2NqZEFQRnZMb19CTjFNZTZCeWJlRFpmSEI3',
+                'VC0wXzVzTHBIUGI1R2VrSXFIdmNVYXRSODdHUUVxd0QvZXhlYw=='
+            ];
+            return atob(_p.join(''));
+        })();
+
+        // Dynamic config: CSV URLs and cert IDs fetched from backend Script Properties
+        let PORTFOLIO_CONFIG = null;
+        let CSV_URLS = { superstore: '', marketing: '', rig: { ddr: '', fuel: '', productivity: '', dataset: '', nomenklatur: '' } };
+        let CERT_IDS = { bnsp: '', dicoding: '', dqlab: '', taalenta: '' };
+
+        async function loadPortfolioConfig() {
+            try {
+                const resp = await fetch(APPS_SCRIPT_URL + '?action=config');
+                const data = await resp.json();
+                if (data.status === 'ok') {
+                    PORTFOLIO_CONFIG = data;
+                    CSV_URLS = {
+                        superstore: data.csv.superstore || '',
+                        marketing: data.csv.marketing || '',
+                        rig: data.csv.rig || {}
+                    };
+                    CERT_IDS = data.certs || {};
+                    // Update download button hrefs dynamically
+                    updateDownloadLinks();
+                    // Update certification card IDs
+                    updateCertCards();
+                }
+            } catch (e) {
+                console.warn('Config fetch failed, features may be limited:', e);
             }
-        };
+        }
+
+        function updateDownloadLinks() {
+            // SuperStore download
+            const ssLink = document.getElementById('dl-superstore');
+            if (ssLink && CSV_URLS.superstore) ssLink.href = CSV_URLS.superstore;
+            // Marketing download
+            const mkLink = document.getElementById('dl-marketing');
+            if (mkLink && CSV_URLS.marketing) mkLink.href = CSV_URLS.marketing;
+            // Rig downloads
+            const rigDdr = document.getElementById('dl-rig-ddr');
+            if (rigDdr && CSV_URLS.rig.ddr) rigDdr.href = CSV_URLS.rig.ddr;
+            const rigFuel = document.getElementById('dl-rig-fuel');
+            if (rigFuel && CSV_URLS.rig.fuel) rigFuel.href = CSV_URLS.rig.fuel;
+            const rigProd = document.getElementById('dl-rig-productivity');
+            if (rigProd && CSV_URLS.rig.productivity) rigProd.href = CSV_URLS.rig.productivity;
+            const rigDs = document.getElementById('dl-rig-dataset');
+            if (rigDs && CSV_URLS.rig.dataset) rigDs.href = CSV_URLS.rig.dataset;
+        }
+
+        function updateCertCards() {
+            document.querySelectorAll('[data-cert]').forEach(el => {
+                const key = el.getAttribute('data-cert');
+                if (CERT_IDS[key]) {
+                    el.setAttribute('data-cert-id', CERT_IDS[key]);
+                }
+            });
+        }
 
         async function askAI(project, question, filters = {}) {
-            if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL.includes('YOUR_APPS_SCRIPT_WEB_APP_URL')) {
+            if (!APPS_SCRIPT_URL) {
                 return { status: 'error', message: 'Apps Script URL belum dikonfigurasi.' };
             }
-            const payload = project === 'rig'
-                ? { project, question, rigUrls: CSV_URLS.rig, ...filters }
-                : { project, question, csvUrl: CSV_URLS[project], ...filters };
+            // Backend handles CSV URLs from Script Properties — no need to send them
+            const payload = { project, question, ...filters };
             try {
                 const resp = await fetch(APPS_SCRIPT_URL, {
                     method: 'POST',
-                    // Gunakan text/plain (tanpa header custom) untuk menghindari preflight CORS
                     body: JSON.stringify(payload)
                 });
                 return await resp.json();
@@ -2526,7 +2584,16 @@
             }, 300);
         });
 
-        document.addEventListener('DOMContentLoaded', async () => { const data = await fetchDashboardData(); renderDashboard(data); });
+        document.addEventListener('DOMContentLoaded', async () => {
+            await loadPortfolioConfig();
+            // Resolve SuperStore CSV URL from backend config
+            if (!CSV_URL && CSV_URLS.superstore) {
+                REMOTE_CSV_URL = CSV_URLS.superstore;
+                CSV_URL = REMOTE_CSV_URL;
+            }
+            const data = await fetchDashboardData();
+            renderDashboard(data);
+        });
 
         // ========== SIAGAAI — LIVE INTEGRATION ==========
         const SIAGAAI_BACKEND = (function() {
