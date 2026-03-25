@@ -2960,8 +2960,8 @@
         const APPS_SCRIPT_URL = (function() {
             var _p = [
                 'aHR0cHM6Ly9zY3JpcHQuZ29vZ2xlLmNvbS9tYWNyb3Mvcy9BS2',
-                'Z5Y2J6YnVuMUk5Y2NqZEFQRnZMb19CTjFNZTZCeWJlRFpmSEI3',
-                'VC0wXzVzTHBIUGI1R2VrSXFIdmNVYXRSODdHUUVxd0QvZXhlYw=='
+                'Z5Y2J6ODZxdWtvTzdwR1JhamFpM2VXTkVTSzJlcWJrRDkyQUVz',
+                'S2dJazhwWTg0ZXRhVi02b191WjNDZEJ2YnJiSWdHNkIvZXhlYw=='
             ];
             return atob(_p.join(''));
         })();
@@ -3352,10 +3352,26 @@
         async function bmlpFetchData() {
             try {
                 var csvUrl = BMLP_CONFIG.csvData;
+
+                // If csvData not yet available, try re-fetching config once
                 if (!csvUrl) {
-                    bmlpSetStatus('No CSV configured', 'text-red-400');
+                    bmlpSetStatus('Loading config...', 'text-yellow-400');
+                    try {
+                        var resp = await fetch(APPS_SCRIPT_URL + '?action=config');
+                        var data = await resp.json();
+                        if (data.status === 'ok' && data.bmlp) {
+                            BMLP_CONFIG = data.bmlp;
+                            csvUrl = BMLP_CONFIG.csvData;
+                        }
+                    } catch (ce) { /* config retry failed, continue */ }
+                }
+
+                if (!csvUrl) {
+                    bmlpSetStatus('CSV belum dikonfigurasi — tambahkan Script Property: CSV_BMLP_DATA', 'text-red-400');
                     return;
                 }
+
+                bmlpSetStatus('Fetching dataset...', 'text-yellow-400');
                 var response = await fetch(csvUrl);
                 if (!response.ok) throw new Error('HTTP ' + response.status);
                 var text = await response.text();
@@ -3364,10 +3380,17 @@
                     dynamicTyping: true,
                     skipEmptyLines: true,
                     complete: function(results) {
-                        bmlpData = results.data.filter(function(r) { return r.TransactionAmount != null; });
+                        bmlpData = results.data.filter(function(r) {
+                            // Accept rows that have at least one known column
+                            return r.TransactionAmount != null || r.CustomerAge != null || r.Target != null;
+                        });
                         bmlpRenderStats();
                         bmlpRenderTable();
-                        bmlpSetStatus('Connected (' + bmlpData.length + ' rows)', 'text-emerald-400');
+                        if (bmlpData.length > 0) {
+                            bmlpSetStatus('Connected (' + bmlpData.length + ' rows)', 'text-emerald-400');
+                        } else {
+                            bmlpSetStatus('CSV loaded but 0 matching rows — check column names', 'text-yellow-400');
+                        }
                     },
                     error: function(err) {
                         bmlpSetStatus('Parse error: ' + err.message, 'text-red-400');
