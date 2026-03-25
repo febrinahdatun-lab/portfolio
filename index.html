@@ -250,6 +250,27 @@
         .quick-ask-btn { background: rgba(0,119,182,0.1); border: 1px solid rgba(0,119,182,0.3); border-radius: 8px; padding: 6px 12px; font-size: 0.75rem; color: #7dd3fc; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
         .quick-ask-btn:hover { background: rgba(0,119,182,0.2); border-color: #0077B6; color: white; }
 
+        /* --- BMLP FRAUD DETECTION STYLES --- */
+        .bmlp-gradient { background: linear-gradient(135deg, #064E3B, #059669, #34D399); }
+        .bmlp-text { background: linear-gradient(to right, #34D399, #059669); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .bmlp-panel { display: none; }
+        .bmlp-panel.active { display: block; }
+        .bmlp-tab-btn { transition: all 0.3s; border-bottom: 2px solid transparent; }
+        .bmlp-tab-btn.active { border-color: #34D399; color: #34D399; background: rgba(52,211,153,0.1); }
+        .bmlp-tab-btn:hover { color: #6EE7B7; }
+        .bmlp-step-header { cursor: pointer; transition: background 0.2s; }
+        .bmlp-step-header:hover { background: rgba(52,211,153,0.05); }
+        .bmlp-step-content { max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.3s ease; }
+        .bmlp-step-content.open { max-height: 600px; padding-top: 12px; }
+        .bmlp-result-card { transition: all 0.5s ease; }
+        .bmlp-result-card.fraud { border-color: #EF4444; background: rgba(239,68,68,0.08); }
+        .bmlp-result-card.normal { border-color: #34D399; background: rgba(52,211,153,0.08); }
+        .bmlp-concept-card { transition: transform 0.3s, box-shadow 0.3s; }
+        .bmlp-concept-card:hover { transform: translateY(-4px); box-shadow: 0 8px 25px rgba(52,211,153,0.15); }
+        .bmlp-progress-bar { transition: width 1s ease; }
+        .bmlp-cert-modal { -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+        .bmlp-table-row:hover { background: rgba(52,211,153,0.05); }
+
         /* --- PRINT STYLES FOR CV --- */
         @media print {
             body * { visibility: hidden; }
@@ -444,6 +465,9 @@
                     </button>
                     <button onclick="switchProject('siagaai')" class="project-tab px-6 py-3 rounded-lg font-semibold text-sm transition-all bg-dark border border-gray-700 text-gray-300 hover:border-primary hover:text-primary" data-project="siagaai">
                         <i class="fas fa-shield-alt mr-2"></i>SiagaAI<span class="ml-2 text-[10px] bg-cyan-500/20 text-cyan-300 px-1.5 py-0.5 rounded-full align-middle">LIVE</span>
+                    </button>
+                    <button onclick="switchProject('bmlp')" class="project-tab px-6 py-3 rounded-lg font-semibold text-sm transition-all bg-dark border border-gray-700 text-gray-300 hover:border-primary hover:text-primary" data-project="bmlp">
+                        <i class="fas fa-brain mr-2"></i>ML Fraud Detection<span class="ml-2 text-[10px] bg-emerald-500/20 text-emerald-300 px-1.5 py-0.5 rounded-full align-middle">AI</span>
                     </button>
                 </div>
             </div>
@@ -979,6 +1003,391 @@
                 </div>
             </div>
         </div>
+
+        <!-- ============================================================ -->
+        <!-- ML FRAUD DETECTION DASHBOARD (BMLP Dicoding - Project #5)    -->
+        <!-- ============================================================ -->
+        <div id="bmlp-dashboard" class="project-content hidden">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
+                <div>
+                    <span class="text-emerald-400 font-bold tracking-wider uppercase text-sm">Portfolio Project #5 — Dicoding BMLP</span>
+                    <h2 class="text-4xl font-bold text-white mt-2">Machine Learning: <span class="bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">Fraud Detection</span></h2>
+                    <p class="text-gray-400 mt-2 max-w-xl">Proyek Machine Learning end-to-end: dari Unsupervised Clustering (K-Means) hingga Supervised Classification (Random Forest) untuk mendeteksi transaksi anomali/fraud.</p>
+                </div>
+                <div class="flex gap-3 flex-wrap">
+                    <button onclick="bmlpOpenDriveCert()" class="hover-trigger px-5 py-3 bg-gradient-to-r from-emerald-600 to-emerald-500 rounded-lg text-sm text-white font-semibold transition-all flex items-center gap-2 shadow-lg hover:shadow-emerald-500/30 transform hover:-translate-y-0.5"><i class="fas fa-certificate"></i> Sertifikat Dicoding</button>
+                    <a id="bmlp-drive-link" href="#" target="_blank" rel="noopener noreferrer" class="hover-trigger px-5 py-3 bg-surface border border-gray-600 rounded-lg text-sm text-white hover:border-emerald-400 hover:text-emerald-400 transition-colors flex items-center gap-2 font-medium"><i class="fab fa-google-drive"></i> Google Drive</a>
+                </div>
+            </div>
+
+            <div class="bg-surface rounded-3xl border border-gray-800 shadow-2xl overflow-hidden">
+                <!-- Status Bar -->
+                <div class="bg-dark/50 border-b border-gray-800 p-4 flex justify-between items-center">
+                    <div class="flex items-center gap-2"><span class="text-xs font-mono text-gray-500 ml-2">Connected to: <span class="text-gray-300">BMLP Transaction Dataset (Google Drive)</span></span></div>
+                    <div class="text-xs text-gray-500 font-mono">Status: <span class="text-yellow-400" id="bmlp-status">Initializing...</span></div>
+                </div>
+
+                <div class="p-6 md:p-8">
+                    <!-- Tab Navigation -->
+                    <div class="flex flex-wrap gap-2 mb-8 bg-dark/50 p-3 rounded-xl border border-gray-800">
+                        <button class="bmlp-tab-btn active px-4 py-2 rounded-lg text-sm font-medium" data-tab="learn">🎓 Pelajari ML</button>
+                        <button class="bmlp-tab-btn px-4 py-2 rounded-lg bg-dark border border-gray-800 text-sm text-gray-300 hover:border-emerald-400 hover:text-emerald-400 transition-all" data-tab="pipeline">⚙️ Pipeline</button>
+                        <button class="bmlp-tab-btn px-4 py-2 rounded-lg bg-dark border border-gray-800 text-sm text-gray-300 hover:border-emerald-400 hover:text-emerald-400 transition-all" data-tab="simulator">🔍 Fraud Simulator</button>
+                        <button class="bmlp-tab-btn px-4 py-2 rounded-lg bg-dark border border-gray-800 text-sm text-gray-300 hover:border-emerald-400 hover:text-emerald-400 transition-all" data-tab="models">📊 Model Comparison</button>
+                        <button class="bmlp-tab-btn px-4 py-2 rounded-lg bg-dark border border-gray-800 text-sm text-gray-300 hover:border-emerald-400 hover:text-emerald-400 transition-all" data-tab="data">📋 Dataset Preview</button>
+                    </div>
+
+                    <!-- ===== TAB 1: LEARN ML ===== -->
+                    <div id="bmlp-learn" class="bmlp-panel active">
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                            <div class="bg-dark rounded-2xl p-6 border border-gray-800">
+                                <h3 class="text-white font-bold text-lg mb-4 flex items-center gap-2"><span class="text-2xl">🤖</span> Apa itu Machine Learning?</h3>
+                                <p class="text-gray-400 text-sm leading-relaxed mb-4">Machine Learning adalah cabang dari AI dimana komputer <strong class="text-emerald-400">belajar dari data</strong> tanpa diprogram secara eksplisit. Bayangkan mengajari komputer mengenali pola, seperti mengajari anak kecil membedakan kucing dan anjing dari contoh gambar.</p>
+                                <div class="bg-surface p-4 rounded-xl border border-gray-700">
+                                    <p class="text-xs text-gray-500 uppercase font-bold tracking-wider mb-2">Analogi Sederhana</p>
+                                    <p class="text-gray-300 text-sm">📧 Bayangkan email spam filter: <em class="text-emerald-300">bukan programmer yang menulis aturan satu per satu</em>, tapi komputer mempelajari ribuan contoh email spam vs normal, lalu otomatis bisa mendeteksi spam baru.</p>
+                                </div>
+                            </div>
+                            <div class="bg-dark rounded-2xl p-6 border border-gray-800">
+                                <h3 class="text-white font-bold text-lg mb-4 flex items-center gap-2"><span class="text-2xl">🔍</span> Tentang Proyek Ini</h3>
+                                <p class="text-gray-400 text-sm leading-relaxed mb-4">Proyek ini mendeteksi <strong class="text-red-400">transaksi fraud/anomali</strong> menggunakan 2 tahap ML:</p>
+                                <div class="space-y-3">
+                                    <div class="flex items-start gap-3 bg-surface p-3 rounded-lg border border-gray-700">
+                                        <span class="bg-blue-500/20 text-blue-400 px-2 py-1 rounded text-xs font-bold mt-0.5">1</span>
+                                        <div><p class="text-white text-sm font-medium">Clustering (Unsupervised)</p><p class="text-gray-500 text-xs">K-Means mengelompokkan transaksi menjadi 2 cluster: Normal vs Anomali</p></div>
+                                    </div>
+                                    <div class="flex items-start gap-3 bg-surface p-3 rounded-lg border border-gray-700">
+                                        <span class="bg-emerald-500/20 text-emerald-400 px-2 py-1 rounded text-xs font-bold mt-0.5">2</span>
+                                        <div><p class="text-white text-sm font-medium">Classification (Supervised)</p><p class="text-gray-500 text-xs">Random Forest memprediksi label dari clustering untuk data baru</p></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Key Concepts Cards -->
+                        <h3 class="text-white font-bold text-lg mb-4">📚 Konsep Kunci yang Digunakan</h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                            <div class="bg-dark p-5 rounded-xl border border-gray-800 hover:border-blue-500/30 transition-all group">
+                                <div class="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center text-blue-400 text-lg mb-3">🎯</div>
+                                <h4 class="text-white font-bold text-sm mb-1">K-Means Clustering</h4>
+                                <p class="text-gray-500 text-xs leading-relaxed">Algoritma yang mengelompokkan data ke dalam K cluster berdasarkan kedekatan (jarak). Seperti mengelompokkan buah berdasarkan warna dan ukurannya.</p>
+                            </div>
+                            <div class="bg-dark p-5 rounded-xl border border-gray-800 hover:border-green-500/30 transition-all group">
+                                <div class="w-10 h-10 rounded-lg bg-green-500/10 flex items-center justify-center text-green-400 text-lg mb-3">🌲</div>
+                                <h4 class="text-white font-bold text-sm mb-1">Random Forest</h4>
+                                <p class="text-gray-500 text-xs leading-relaxed">Kumpulan banyak Decision Tree yang "voting" bersama. Seperti bertanya ke 100 ahli dan mengambil jawaban mayoritas.</p>
+                            </div>
+                            <div class="bg-dark p-5 rounded-xl border border-gray-800 hover:border-purple-500/30 transition-all group">
+                                <div class="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center text-purple-400 text-lg mb-3">📉</div>
+                                <h4 class="text-white font-bold text-sm mb-1">PCA (Dimensionality Reduction)</h4>
+                                <p class="text-gray-500 text-xs leading-relaxed">Menyederhanakan data berdimensi tinggi menjadi 2D/3D untuk visualisasi. Seperti membuat peta 2D dari dunia 3D.</p>
+                            </div>
+                            <div class="bg-dark p-5 rounded-xl border border-gray-800 hover:border-yellow-500/30 transition-all group">
+                                <div class="w-10 h-10 rounded-lg bg-yellow-500/10 flex items-center justify-center text-yellow-400 text-lg mb-3">⚖️</div>
+                                <h4 class="text-white font-bold text-sm mb-1">GridSearchCV</h4>
+                                <p class="text-gray-500 text-xs leading-relaxed">Mencoba semua kombinasi hyperparameter untuk menemukan setting terbaik. Seperti mencoba semua resep sampai menemukan yang paling enak.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ===== TAB 2: PIPELINE ===== -->
+                    <div id="bmlp-pipeline" class="bmlp-panel">
+                        <h3 class="text-white font-bold text-lg mb-6">⚙️ ML Pipeline — Langkah demi Langkah</h3>
+                        <div class="relative">
+                            <!-- Pipeline Steps -->
+                            <div class="space-y-4" id="bmlp-pipeline-steps">
+                                <div class="bmlp-step bg-dark rounded-xl p-5 border border-gray-800 cursor-pointer hover:border-emerald-500/40 transition-all" onclick="bmlpToggleStep(this)">
+                                    <div class="flex items-center gap-4">
+                                        <div class="w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-400 font-bold text-sm shrink-0">1</div>
+                                        <div class="flex-1"><h4 class="text-white font-bold text-sm">📥 Data Collection</h4><p class="text-gray-500 text-xs">Mengumpulkan 2.512 sampel transaksi</p></div>
+                                        <i class="fas fa-chevron-down text-gray-600 text-xs bmlp-step-icon transition-transform"></i>
+                                    </div>
+                                    <div class="bmlp-step-detail hidden mt-4 pt-4 border-t border-gray-700">
+                                        <p class="text-gray-400 text-sm leading-relaxed">Dataset terdiri dari <strong class="text-white">2.512 transaksi</strong> dengan 16 fitur: jumlah transaksi, tipe (Credit/Debit), lokasi, channel (Online/ATM/Branch), usia, pekerjaan, durasi transaksi, login attempts, dan saldo akun.</p>
+                                        <div class="mt-3 flex flex-wrap gap-2">
+                                            <span class="text-xs bg-surface px-2 py-1 rounded text-gray-400 border border-gray-700">2,512 Samples</span>
+                                            <span class="text-xs bg-surface px-2 py-1 rounded text-gray-400 border border-gray-700">16 Features</span>
+                                            <span class="text-xs bg-surface px-2 py-1 rounded text-gray-400 border border-gray-700">Google Sheets CSV</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bmlp-step bg-dark rounded-xl p-5 border border-gray-800 cursor-pointer hover:border-emerald-500/40 transition-all" onclick="bmlpToggleStep(this)">
+                                    <div class="flex items-center gap-4">
+                                        <div class="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400 font-bold text-sm shrink-0">2</div>
+                                        <div class="flex-1"><h4 class="text-white font-bold text-sm">🧹 Data Preprocessing</h4><p class="text-gray-500 text-xs">Membersihkan & menyiapkan data</p></div>
+                                        <i class="fas fa-chevron-down text-gray-600 text-xs bmlp-step-icon transition-transform"></i>
+                                    </div>
+                                    <div class="bmlp-step-detail hidden mt-4 pt-4 border-t border-gray-700">
+                                        <p class="text-gray-400 text-sm leading-relaxed">Data dibersihkan: null values dihapus, <strong class="text-white">Label Encoding</strong> untuk variabel kategorikal, <strong class="text-white">Standard Scaler</strong> untuk normalisasi nilai numerik agar berada di skala yang sama.</p>
+                                        <div class="mt-3 bg-surface p-3 rounded-lg border border-gray-700 font-mono text-xs text-gray-400">
+                                            <span class="text-emerald-400">from</span> sklearn.preprocessing <span class="text-emerald-400">import</span> LabelEncoder, StandardScaler
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bmlp-step bg-dark rounded-xl p-5 border border-gray-800 cursor-pointer hover:border-emerald-500/40 transition-all" onclick="bmlpToggleStep(this)">
+                                    <div class="flex items-center gap-4">
+                                        <div class="w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-400 font-bold text-sm shrink-0">3</div>
+                                        <div class="flex-1"><h4 class="text-white font-bold text-sm">🎯 K-Means Clustering</h4><p class="text-gray-500 text-xs">Mengelompokkan transaksi: Normal vs Anomali</p></div>
+                                        <i class="fas fa-chevron-down text-gray-600 text-xs bmlp-step-icon transition-transform"></i>
+                                    </div>
+                                    <div class="bmlp-step-detail hidden mt-4 pt-4 border-t border-gray-700">
+                                        <p class="text-gray-400 text-sm leading-relaxed"><strong class="text-white">Elbow Method</strong> digunakan untuk menentukan jumlah cluster optimal → hasilnya <strong class="text-emerald-400">K=2</strong> (Normal & Anomali). Silhouette Score digunakan untuk mengukur kualitas clustering.</p>
+                                        <div class="mt-3 bg-surface p-3 rounded-lg border border-gray-700 font-mono text-xs text-gray-400">
+                                            KMeans(n_clusters=<span class="text-emerald-400">2</span>, random_state=<span class="text-emerald-400">42</span>)
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bmlp-step bg-dark rounded-xl p-5 border border-gray-800 cursor-pointer hover:border-emerald-500/40 transition-all" onclick="bmlpToggleStep(this)">
+                                    <div class="flex items-center gap-4">
+                                        <div class="w-10 h-10 rounded-full bg-cyan-500/20 flex items-center justify-center text-cyan-400 font-bold text-sm shrink-0">4</div>
+                                        <div class="flex-1"><h4 class="text-white font-bold text-sm">📐 PCA Visualization</h4><p class="text-gray-500 text-xs">Mereduksi dimensi untuk visualisasi 2D</p></div>
+                                        <i class="fas fa-chevron-down text-gray-600 text-xs bmlp-step-icon transition-transform"></i>
+                                    </div>
+                                    <div class="bmlp-step-detail hidden mt-4 pt-4 border-t border-gray-700">
+                                        <p class="text-gray-400 text-sm leading-relaxed">Data berdimensi tinggi (10+ fitur) direduksi menjadi <strong class="text-white">2 komponen utama</strong> menggunakan PCA, sehingga bisa divisualisasikan dalam scatter plot 2D untuk melihat pemisahan cluster.</p>
+                                    </div>
+                                </div>
+                                <div class="bmlp-step bg-dark rounded-xl p-5 border border-gray-800 cursor-pointer hover:border-emerald-500/40 transition-all" onclick="bmlpToggleStep(this)">
+                                    <div class="flex items-center gap-4">
+                                        <div class="w-10 h-10 rounded-full bg-orange-500/20 flex items-center justify-center text-orange-400 font-bold text-sm shrink-0">5</div>
+                                        <div class="flex-1"><h4 class="text-white font-bold text-sm">🌲 Classification Models</h4><p class="text-gray-500 text-xs">Decision Tree → Random Forest → Tuned RF</p></div>
+                                        <i class="fas fa-chevron-down text-gray-600 text-xs bmlp-step-icon transition-transform"></i>
+                                    </div>
+                                    <div class="bmlp-step-detail hidden mt-4 pt-4 border-t border-gray-700">
+                                        <p class="text-gray-400 text-sm leading-relaxed">Label dari clustering digunakan sebagai target supervised learning. Tiga model dilatih dan dibandingkan: <strong class="text-white">Decision Tree</strong> (baseline), <strong class="text-white">Random Forest</strong> (ensemble), dan <strong class="text-emerald-400">Tuned Random Forest</strong> (GridSearchCV optimization). Data di-split 80:20 dengan stratifikasi.</p>
+                                        <div class="mt-3 bg-surface p-3 rounded-lg border border-gray-700 font-mono text-xs text-gray-400">
+                                            train_test_split(X, y, test_size=<span class="text-emerald-400">0.2</span>, stratify=y)
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bmlp-step bg-dark rounded-xl p-5 border border-gray-800 cursor-pointer hover:border-emerald-500/40 transition-all" onclick="bmlpToggleStep(this)">
+                                    <div class="flex items-center gap-4">
+                                        <div class="w-10 h-10 rounded-full bg-red-500/20 flex items-center justify-center text-red-400 font-bold text-sm shrink-0">6</div>
+                                        <div class="flex-1"><h4 class="text-white font-bold text-sm">📊 Evaluation & Deployment</h4><p class="text-gray-500 text-xs">Precision, Recall, F1-Score comparison</p></div>
+                                        <i class="fas fa-chevron-down text-gray-600 text-xs bmlp-step-icon transition-transform"></i>
+                                    </div>
+                                    <div class="bmlp-step-detail hidden mt-4 pt-4 border-t border-gray-700">
+                                        <p class="text-gray-400 text-sm leading-relaxed">Setiap model dievaluasi menggunakan <strong class="text-white">Classification Report</strong> (Precision, Recall, F1-Score). Model terbaik disimpan dalam format .h5 (joblib) untuk deployment di production.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ===== TAB 3: FRAUD SIMULATOR ===== -->
+                    <div id="bmlp-simulator" class="bmlp-panel">
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            <!-- Input Form -->
+                            <div class="bg-dark rounded-2xl p-6 border border-gray-800">
+                                <h3 class="text-white font-bold text-lg mb-2 flex items-center gap-2"><span class="text-xl">🔍</span> Coba Deteksi Fraud!</h3>
+                                <p class="text-gray-500 text-xs mb-5">Masukkan data transaksi di bawah, lalu klik "Analisis" untuk melihat apakah transaksi tersebut terdeteksi sebagai anomali/fraud oleh model ML.</p>
+                                <div class="space-y-4">
+                                    <div>
+                                        <label class="text-xs text-gray-400 font-medium block mb-1">💰 Transaction Amount ($)</label>
+                                        <input type="number" id="bmlp-amount" value="250" min="0" max="10000" step="0.01" class="w-full bg-surface border border-gray-700 rounded-lg px-4 py-2.5 text-white text-sm focus:border-emerald-500 focus:outline-none transition-colors">
+                                    </div>
+                                    <div class="grid grid-cols-2 gap-3">
+                                        <div>
+                                            <label class="text-xs text-gray-400 font-medium block mb-1">💳 Transaction Type</label>
+                                            <select id="bmlp-type" class="w-full bg-surface border border-gray-700 rounded-lg px-4 py-2.5 text-white text-sm focus:border-emerald-500 focus:outline-none transition-colors">
+                                                <option value="Credit">Credit</option>
+                                                <option value="Debit" selected>Debit</option>
+                                                <option value="Transfer">Transfer</option>
+                                                <option value="Withdrawal">Withdrawal</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label class="text-xs text-gray-400 font-medium block mb-1">📍 Channel</label>
+                                            <select id="bmlp-channel" class="w-full bg-surface border border-gray-700 rounded-lg px-4 py-2.5 text-white text-sm focus:border-emerald-500 focus:outline-none transition-colors">
+                                                <option value="Online">Online</option>
+                                                <option value="ATM" selected>ATM</option>
+                                                <option value="Branch">Branch</option>
+                                                <option value="Mobile">Mobile</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="grid grid-cols-2 gap-3">
+                                        <div>
+                                            <label class="text-xs text-gray-400 font-medium block mb-1">👤 Customer Age</label>
+                                            <input type="number" id="bmlp-age" value="35" min="18" max="100" class="w-full bg-surface border border-gray-700 rounded-lg px-4 py-2.5 text-white text-sm focus:border-emerald-500 focus:outline-none transition-colors">
+                                        </div>
+                                        <div>
+                                            <label class="text-xs text-gray-400 font-medium block mb-1">💼 Occupation</label>
+                                            <select id="bmlp-occupation" class="w-full bg-surface border border-gray-700 rounded-lg px-4 py-2.5 text-white text-sm focus:border-emerald-500 focus:outline-none transition-colors">
+                                                <option value="Doctor">Doctor</option>
+                                                <option value="Engineer" selected>Engineer</option>
+                                                <option value="Lawyer">Lawyer</option>
+                                                <option value="IT">IT</option>
+                                                <option value="Business Owner">Business Owner</option>
+                                                <option value="Student">Student</option>
+                                                <option value="Unemployed">Unemployed</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="grid grid-cols-2 gap-3">
+                                        <div>
+                                            <label class="text-xs text-gray-400 font-medium block mb-1">⏱️ Duration (seconds)</label>
+                                            <input type="number" id="bmlp-duration" value="60" min="1" max="600" class="w-full bg-surface border border-gray-700 rounded-lg px-4 py-2.5 text-white text-sm focus:border-emerald-500 focus:outline-none transition-colors">
+                                        </div>
+                                        <div>
+                                            <label class="text-xs text-gray-400 font-medium block mb-1">🔑 Login Attempts</label>
+                                            <input type="number" id="bmlp-login" value="1" min="0" max="10" class="w-full bg-surface border border-gray-700 rounded-lg px-4 py-2.5 text-white text-sm focus:border-emerald-500 focus:outline-none transition-colors">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label class="text-xs text-gray-400 font-medium block mb-1">🏦 Account Balance ($)</label>
+                                        <input type="number" id="bmlp-balance" value="5000" min="0" max="100000" step="0.01" class="w-full bg-surface border border-gray-700 rounded-lg px-4 py-2.5 text-white text-sm focus:border-emerald-500 focus:outline-none transition-colors">
+                                    </div>
+                                    <button onclick="bmlpAnalyze()" class="w-full bg-gradient-to-r from-emerald-600 to-cyan-600 hover:from-emerald-500 hover:to-cyan-500 text-white font-bold py-3 rounded-xl transition-all transform hover:-translate-y-0.5 shadow-lg hover:shadow-emerald-500/20 flex items-center justify-center gap-2">
+                                        <i class="fas fa-search"></i> Analisis Transaksi
+                                    </button>
+                                </div>
+                            </div>
+                            <!-- Result Panel -->
+                            <div class="bg-dark rounded-2xl p-6 border border-gray-800 flex flex-col">
+                                <h3 class="text-white font-bold text-lg mb-4 flex items-center gap-2"><span class="text-xl">📋</span> Hasil Analisis</h3>
+                                <div id="bmlp-result" class="flex-1 flex items-center justify-center">
+                                    <div class="text-center text-gray-600">
+                                        <i class="fas fa-flask text-4xl mb-3 opacity-30"></i>
+                                        <p class="text-sm">Masukkan data transaksi dan klik "Analisis" untuk melihat hasil deteksi fraud.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- How it works explanation -->
+                        <div class="mt-6 bg-dark rounded-xl p-5 border border-gray-800">
+                            <h4 class="text-white font-bold text-sm mb-3">💡 Bagaimana Simulator Ini Bekerja?</h4>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <div class="bg-surface p-4 rounded-lg border border-gray-700">
+                                    <p class="text-emerald-400 font-bold text-xs mb-1">Step 1 — Feature Analysis</p>
+                                    <p class="text-gray-500 text-xs">Input Anda dikonversi menjadi feature vector yang sama dengan format training data (normalisasi, encoding).</p>
+                                </div>
+                                <div class="bg-surface p-4 rounded-lg border border-gray-700">
+                                    <p class="text-blue-400 font-bold text-xs mb-1">Step 2 — Pattern Matching</p>
+                                    <p class="text-gray-500 text-xs">Model membandingkan pola transaksi Anda dengan 2.512 sampel yang sudah dipelajari selama training.</p>
+                                </div>
+                                <div class="bg-surface p-4 rounded-lg border border-gray-700">
+                                    <p class="text-purple-400 font-bold text-xs mb-1">Step 3 — Risk Scoring</p>
+                                    <p class="text-gray-500 text-xs">Confidence score dihitung berdasarkan seberapa mirip transaksi dengan cluster Normal vs Anomali.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ===== TAB 4: MODEL COMPARISON ===== -->
+                    <div id="bmlp-models" class="bmlp-panel">
+                        <h3 class="text-white font-bold text-lg mb-6">📊 Perbandingan 3 Model Machine Learning</h3>
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+                            <!-- Decision Tree -->
+                            <div class="bg-dark rounded-2xl p-6 border border-gray-800 hover:border-blue-500/30 transition-all">
+                                <div class="flex items-center gap-3 mb-4">
+                                    <div class="w-12 h-12 rounded-xl bg-blue-500/10 flex items-center justify-center text-blue-400 text-xl">🌳</div>
+                                    <div><h4 class="text-white font-bold">Decision Tree</h4><p class="text-gray-500 text-xs">Baseline Model</p></div>
+                                </div>
+                                <div class="space-y-3 mb-4">
+                                    <div><div class="flex justify-between text-xs mb-1"><span class="text-gray-400">Accuracy</span><span class="text-blue-400 font-bold" id="bmlp-dt-acc">--</span></div><div class="w-full bg-surface rounded-full h-2"><div class="bg-blue-500 h-2 rounded-full transition-all" id="bmlp-dt-acc-bar" style="width:0%"></div></div></div>
+                                    <div><div class="flex justify-between text-xs mb-1"><span class="text-gray-400">Precision</span><span class="text-blue-400 font-bold" id="bmlp-dt-prec">--</span></div><div class="w-full bg-surface rounded-full h-2"><div class="bg-blue-400 h-2 rounded-full transition-all" id="bmlp-dt-prec-bar" style="width:0%"></div></div></div>
+                                    <div><div class="flex justify-between text-xs mb-1"><span class="text-gray-400">Recall</span><span class="text-blue-400 font-bold" id="bmlp-dt-rec">--</span></div><div class="w-full bg-surface rounded-full h-2"><div class="bg-blue-300 h-2 rounded-full transition-all" id="bmlp-dt-rec-bar" style="width:0%"></div></div></div>
+                                    <div><div class="flex justify-between text-xs mb-1"><span class="text-gray-400">F1-Score</span><span class="text-blue-400 font-bold" id="bmlp-dt-f1">--</span></div><div class="w-full bg-surface rounded-full h-2"><div class="bg-blue-200 h-2 rounded-full transition-all" id="bmlp-dt-f1-bar" style="width:0%"></div></div></div>
+                                </div>
+                                <p class="text-gray-600 text-xs italic">Sederhana, cepat, tapi rentan overfitting</p>
+                            </div>
+                            <!-- Random Forest -->
+                            <div class="bg-dark rounded-2xl p-6 border border-gray-800 hover:border-emerald-500/30 transition-all">
+                                <div class="flex items-center gap-3 mb-4">
+                                    <div class="w-12 h-12 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-400 text-xl">🌲</div>
+                                    <div><h4 class="text-white font-bold">Random Forest</h4><p class="text-gray-500 text-xs">Ensemble Model</p></div>
+                                </div>
+                                <div class="space-y-3 mb-4">
+                                    <div><div class="flex justify-between text-xs mb-1"><span class="text-gray-400">Accuracy</span><span class="text-emerald-400 font-bold" id="bmlp-rf-acc">--</span></div><div class="w-full bg-surface rounded-full h-2"><div class="bg-emerald-500 h-2 rounded-full transition-all" id="bmlp-rf-acc-bar" style="width:0%"></div></div></div>
+                                    <div><div class="flex justify-between text-xs mb-1"><span class="text-gray-400">Precision</span><span class="text-emerald-400 font-bold" id="bmlp-rf-prec">--</span></div><div class="w-full bg-surface rounded-full h-2"><div class="bg-emerald-400 h-2 rounded-full transition-all" id="bmlp-rf-prec-bar" style="width:0%"></div></div></div>
+                                    <div><div class="flex justify-between text-xs mb-1"><span class="text-gray-400">Recall</span><span class="text-emerald-400 font-bold" id="bmlp-rf-rec">--</span></div><div class="w-full bg-surface rounded-full h-2"><div class="bg-emerald-300 h-2 rounded-full transition-all" id="bmlp-rf-rec-bar" style="width:0%"></div></div></div>
+                                    <div><div class="flex justify-between text-xs mb-1"><span class="text-gray-400">F1-Score</span><span class="text-emerald-400 font-bold" id="bmlp-rf-f1">--</span></div><div class="w-full bg-surface rounded-full h-2"><div class="bg-emerald-200 h-2 rounded-full transition-all" id="bmlp-rf-f1-bar" style="width:0%"></div></div></div>
+                                </div>
+                                <p class="text-gray-600 text-xs italic">Lebih stabil berkat voting dari banyak tree</p>
+                            </div>
+                            <!-- Tuned RF -->
+                            <div class="bg-dark rounded-2xl p-6 border border-emerald-500/30 ring-1 ring-emerald-500/20 relative transition-all">
+                                <div class="absolute -top-3 right-4 bg-emerald-500 text-white text-xs font-bold px-3 py-1 rounded-full">⭐ BEST</div>
+                                <div class="flex items-center gap-3 mb-4">
+                                    <div class="w-12 h-12 rounded-xl bg-emerald-500/20 flex items-center justify-center text-emerald-300 text-xl">🏆</div>
+                                    <div><h4 class="text-white font-bold">Tuned Random Forest</h4><p class="text-emerald-400 text-xs font-medium">GridSearchCV Optimized</p></div>
+                                </div>
+                                <div class="space-y-3 mb-4">
+                                    <div><div class="flex justify-between text-xs mb-1"><span class="text-gray-400">Accuracy</span><span class="text-emerald-300 font-bold" id="bmlp-trf-acc">--</span></div><div class="w-full bg-surface rounded-full h-2"><div class="bg-gradient-to-r from-emerald-500 to-cyan-400 h-2 rounded-full transition-all" id="bmlp-trf-acc-bar" style="width:0%"></div></div></div>
+                                    <div><div class="flex justify-between text-xs mb-1"><span class="text-gray-400">Precision</span><span class="text-emerald-300 font-bold" id="bmlp-trf-prec">--</span></div><div class="w-full bg-surface rounded-full h-2"><div class="bg-gradient-to-r from-emerald-400 to-cyan-300 h-2 rounded-full transition-all" id="bmlp-trf-prec-bar" style="width:0%"></div></div></div>
+                                    <div><div class="flex justify-between text-xs mb-1"><span class="text-gray-400">Recall</span><span class="text-emerald-300 font-bold" id="bmlp-trf-rec">--</span></div><div class="w-full bg-surface rounded-full h-2"><div class="bg-gradient-to-r from-emerald-300 to-cyan-200 h-2 rounded-full transition-all" id="bmlp-trf-rec-bar" style="width:0%"></div></div></div>
+                                    <div><div class="flex justify-between text-xs mb-1"><span class="text-gray-400">F1-Score</span><span class="text-emerald-300 font-bold" id="bmlp-trf-f1">--</span></div><div class="w-full bg-surface rounded-full h-2"><div class="bg-gradient-to-r from-emerald-200 to-cyan-100 h-2 rounded-full transition-all" id="bmlp-trf-f1-bar" style="width:0%"></div></div></div>
+                                </div>
+                                <div class="bg-surface p-3 rounded-lg border border-emerald-500/20 text-xs text-gray-400">
+                                    <p class="text-emerald-400 font-bold mb-1">Best Hyperparameters:</p>
+                                    <span class="font-mono">n_estimators=200, max_depth=None, min_samples_split=2</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Chart -->
+                        <div class="bg-dark rounded-2xl p-6 border border-gray-800">
+                            <h4 class="text-white font-bold text-sm mb-4">📈 Visual Comparison</h4>
+                            <div class="h-64"><canvas id="bmlp-model-chart"></canvas></div>
+                        </div>
+                    </div>
+
+                    <!-- ===== TAB 5: DATASET PREVIEW ===== -->
+                    <div id="bmlp-data" class="bmlp-panel">
+                        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+                            <div>
+                                <h3 class="text-white font-bold text-lg">📋 Dataset Preview</h3>
+                                <p class="text-gray-500 text-xs mt-1">Data transaksi LIVE dari Google Drive — <span id="bmlp-row-count">0</span> total rows</p>
+                            </div>
+                            <div class="flex gap-2">
+                                <input type="text" id="bmlp-search" placeholder="Cari data..." class="bg-surface border border-gray-700 rounded-lg px-4 py-2 text-white text-sm focus:border-emerald-500 focus:outline-none transition-colors w-48">
+                                <select id="bmlp-filter-target" class="bg-surface border border-gray-700 rounded-lg px-3 py-2 text-white text-sm focus:border-emerald-500 focus:outline-none transition-colors">
+                                    <option value="all">All</option>
+                                    <option value="0">Normal (0)</option>
+                                    <option value="1">Anomali (1)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="bg-dark rounded-xl border border-gray-800 overflow-hidden">
+                            <div class="overflow-x-auto max-h-96" id="bmlp-table-container">
+                                <table class="w-full text-sm text-left">
+                                    <thead class="bg-surface text-xs text-gray-400 uppercase sticky top-0">
+                                        <tr id="bmlp-thead"></tr>
+                                    </thead>
+                                    <tbody id="bmlp-tbody" class="divide-y divide-gray-800"></tbody>
+                                </table>
+                            </div>
+                            <div class="p-3 border-t border-gray-800 flex justify-between items-center">
+                                <span class="text-xs text-gray-500">Showing <span id="bmlp-showing">0</span> of <span id="bmlp-total">0</span></span>
+                                <div class="flex gap-2">
+                                    <button onclick="bmlpPrevPage()" class="px-3 py-1 bg-surface border border-gray-700 rounded text-xs text-gray-400 hover:text-white transition-colors">← Prev</button>
+                                    <button onclick="bmlpNextPage()" class="px-3 py-1 bg-surface border border-gray-700 rounded text-xs text-gray-400 hover:text-white transition-colors">Next →</button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Dataset Stats -->
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
+                            <div class="bg-dark p-4 rounded-xl border border-gray-800 text-center">
+                                <p class="text-xs text-gray-500 uppercase font-bold">Total Samples</p>
+                                <p class="text-2xl font-bold text-white mt-1" id="bmlp-stat-total">0</p>
+                            </div>
+                            <div class="bg-dark p-4 rounded-xl border border-gray-800 text-center">
+                                <p class="text-xs text-gray-500 uppercase font-bold">Features</p>
+                                <p class="text-2xl font-bold text-white mt-1" id="bmlp-stat-features">0</p>
+                            </div>
+                            <div class="bg-dark p-4 rounded-xl border border-gray-800 text-center">
+                                <p class="text-xs text-gray-500 uppercase font-bold">Normal (0)</p>
+                                <p class="text-2xl font-bold text-emerald-400 mt-1" id="bmlp-stat-normal">0</p>
+                            </div>
+                            <div class="bg-dark p-4 rounded-xl border border-gray-800 text-center">
+                                <p class="text-xs text-gray-500 uppercase font-bold">Anomali (1)</p>
+                                <p class="text-2xl font-bold text-red-400 mt-1" id="bmlp-stat-anomali">0</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End bmlp-dashboard -->
 
     </section>
 
@@ -1538,6 +1947,7 @@
             const marketing = document.getElementById('marketing-dashboard');
             const rig = document.getElementById('rig-dashboard');
             const siagaai = document.getElementById('siagaai-dashboard');
+            const bmlp = document.getElementById('bmlp-dashboard');
             const tabBtns = document.querySelectorAll('.project-tab');
             
             // Hide all dashboards first
@@ -1545,6 +1955,7 @@
             marketing.classList.add('hidden');
             rig?.classList.add('hidden');
             siagaai?.classList.add('hidden');
+            bmlp?.classList.add('hidden');
             
             // Style all tabs as inactive
             tabBtns.forEach(btn => {
@@ -1579,6 +1990,12 @@
                 if (!window.siagaaiDataLoaded) {
                     siagaaiInit();
                     window.siagaaiDataLoaded = true;
+                }
+            } else if (project === 'bmlp') {
+                bmlp?.classList.remove('hidden');
+                if (!window.bmlpDataLoaded) {
+                    bmlpInit();
+                    window.bmlpDataLoaded = true;
                 }
             }
         }
@@ -2471,6 +2888,7 @@
         let PORTFOLIO_CONFIG = null;
         let CSV_URLS = { superstore: '', marketing: '', rig: { ddr: '', fuel: '', productivity: '', dataset: '', nomenklatur: '' } };
         let CERT_IDS = { bnsp: '', dicoding: '', dqlab: '', taalenta: '' };
+        let BMLP_CONFIG = { certUrl: '', driveFolder: '', csvData: '' };
 
         async function loadPortfolioConfig() {
             try {
@@ -2484,10 +2902,14 @@
                         rig: data.csv.rig || {}
                     };
                     CERT_IDS = data.certs || {};
+                    BMLP_CONFIG = data.bmlp || {};
                     // Update download button hrefs dynamically
                     updateDownloadLinks();
                     // Update certification card IDs
                     updateCertCards();
+                    // Update BMLP drive link
+                    const driveLink = document.getElementById('bmlp-drive-link');
+                    if (driveLink && BMLP_CONFIG.driveFolder) driveLink.href = BMLP_CONFIG.driveFolder;
                 }
             } catch (e) {
                 console.warn('Config fetch failed, features may be limited:', e);
@@ -2780,6 +3202,408 @@
             document.querySelectorAll('.siagaai-guide-panel').forEach(p => p.classList.remove('active'));
             btn.classList.add('active');
             document.getElementById('siagaai-guide-' + id).classList.add('active');
+        }
+
+        // ========== BMLP — FRAUD DETECTION ML PROJECT ==========
+        let bmlpData = [];
+        let bmlpPage = 1;
+        const BMLP_PER_PAGE = 15;
+        let bmlpModelChart = null;
+        let bmlpFilterTarget = 'all';
+        let bmlpSearchQuery = '';
+
+        // Model metrics from actual Dicoding submission
+        const BMLP_MODELS = {
+            dt:  { name: 'Decision Tree',       acc: 0.9363, prec: 0.9377, rec: 0.9363, f1: 0.9363, color: '#F59E0B' },
+            rf:  { name: 'Random Forest',        acc: 0.9562, prec: 0.9567, rec: 0.9562, f1: 0.9561, color: '#3B82F6' },
+            trf: { name: 'Tuned Random Forest',  acc: 0.9602, prec: 0.9606, rec: 0.9602, f1: 0.9601, color: '#34D399' }
+        };
+
+        // Dataset statistics for simulator thresholds (from EDA)
+        const BMLP_THRESHOLDS = {
+            amountHigh: 8000, amountLow: 200,
+            durationHigh: 55, durationLow: 3,
+            loginHigh: 7,
+            balanceLow: 1500,
+            riskyTypes: ['Transfer', 'Withdrawal'],
+            riskyChannels: ['ATM', 'Mobile'],
+            riskyAges: [18, 25],
+            riskyOccupations: ['Student', 'Unemployed']
+        };
+
+        function bmlpInit() {
+            var status = document.getElementById('bmlp-status');
+            if (status) { status.textContent = 'Loading...'; status.className = 'text-yellow-400 text-xs font-medium'; }
+
+            // Setup tab switching
+            document.querySelectorAll('.bmlp-tab-btn').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    bmlpSwitchTab(this.dataset.tab);
+                });
+            });
+
+            // Setup search
+            var searchInput = document.getElementById('bmlp-search');
+            if (searchInput) {
+                searchInput.addEventListener('input', function() {
+                    bmlpSearchQuery = this.value.toLowerCase();
+                    bmlpPage = 1;
+                    bmlpRenderTable();
+                });
+            }
+
+            // Setup filter
+            var filterSelect = document.getElementById('bmlp-filter-target');
+            if (filterSelect) {
+                filterSelect.addEventListener('change', function() {
+                    bmlpFilterTarget = this.value;
+                    bmlpPage = 1;
+                    bmlpRenderTable();
+                });
+            }
+
+            // Render model metrics immediately (static data)
+            bmlpRenderMetrics();
+            bmlpRenderModelChart();
+
+            // Fetch CSV data
+            bmlpFetchData();
+        }
+
+        async function bmlpFetchData() {
+            try {
+                var csvUrl = BMLP_CONFIG.csvData;
+                if (!csvUrl) {
+                    bmlpSetStatus('No CSV configured', 'text-red-400');
+                    return;
+                }
+                var response = await fetch(csvUrl);
+                if (!response.ok) throw new Error('HTTP ' + response.status);
+                var text = await response.text();
+                Papa.parse(text, {
+                    header: true,
+                    dynamicTyping: true,
+                    skipEmptyLines: true,
+                    complete: function(results) {
+                        bmlpData = results.data.filter(function(r) { return r.TransactionAmount != null; });
+                        bmlpRenderStats();
+                        bmlpRenderTable();
+                        bmlpSetStatus('Connected (' + bmlpData.length + ' rows)', 'text-emerald-400');
+                    },
+                    error: function(err) {
+                        bmlpSetStatus('Parse error: ' + err.message, 'text-red-400');
+                    }
+                });
+            } catch (e) {
+                bmlpSetStatus('Fetch error: ' + e.message, 'text-red-400');
+            }
+        }
+
+        function bmlpSetStatus(msg, cls) {
+            var s = document.getElementById('bmlp-status');
+            if (s) { s.textContent = msg; s.className = cls + ' text-xs font-medium'; }
+        }
+
+        function bmlpSwitchTab(tabId) {
+            document.querySelectorAll('.bmlp-tab-btn').forEach(function(b) {
+                b.classList.remove('active');
+                b.classList.add('bg-dark', 'border-gray-800', 'text-gray-300');
+            });
+            document.querySelectorAll('.bmlp-panel').forEach(function(p) { p.classList.remove('active'); });
+            var activeBtn = document.querySelector('.bmlp-tab-btn[data-tab="' + tabId + '"]');
+            if (activeBtn) {
+                activeBtn.classList.add('active');
+                activeBtn.classList.remove('bg-dark', 'border-gray-800', 'text-gray-300');
+            }
+            var activePanel = document.getElementById('bmlp-' + tabId);
+            if (activePanel) activePanel.classList.add('active');
+        }
+
+        function bmlpToggleStep(el) {
+            var content = el.querySelector('.bmlp-step-detail');
+            var icon = el.querySelector('.bmlp-step-icon');
+            if (!content) return;
+            if (content.classList.contains('hidden')) {
+                content.classList.remove('hidden');
+                content.classList.add('open');
+                if (icon) icon.style.transform = 'rotate(180deg)';
+            } else {
+                content.classList.add('hidden');
+                content.classList.remove('open');
+                if (icon) icon.style.transform = 'rotate(0deg)';
+            }
+        }
+
+        // ── FRAUD SIMULATOR ──
+        function bmlpAnalyze() {
+            var amount = parseFloat(document.getElementById('bmlp-amount').value) || 0;
+            var type = document.getElementById('bmlp-type').value;
+            var channel = document.getElementById('bmlp-channel').value;
+            var age = parseInt(document.getElementById('bmlp-age').value) || 30;
+            var occupation = document.getElementById('bmlp-occupation').value;
+            var duration = parseFloat(document.getElementById('bmlp-duration').value) || 10;
+            var loginAttempts = parseInt(document.getElementById('bmlp-login').value) || 1;
+            var balance = parseFloat(document.getElementById('bmlp-balance').value) || 5000;
+
+            var result = document.getElementById('bmlp-result');
+            result.innerHTML = '<div class="flex items-center justify-center py-8"><div class="animate-spin rounded-full h-8 w-8 border-t-2 border-emerald-400"></div><span class="ml-3 text-gray-400">Analyzing...</span></div>';
+
+            // Simulate ML analysis with weighted scoring
+            setTimeout(function() {
+                var score = 0;
+                var factors = [];
+
+                // Amount analysis
+                if (amount > BMLP_THRESHOLDS.amountHigh) { score += 25; factors.push({ feature: 'Transaction Amount', detail: '$' + amount.toLocaleString() + ' (HIGH — above $' + BMLP_THRESHOLDS.amountHigh.toLocaleString() + ')', risk: 'high' }); }
+                else if (amount < BMLP_THRESHOLDS.amountLow) { score += 15; factors.push({ feature: 'Transaction Amount', detail: '$' + amount.toLocaleString() + ' (unusually low)', risk: 'medium' }); }
+                else { factors.push({ feature: 'Transaction Amount', detail: '$' + amount.toLocaleString() + ' (normal range)', risk: 'low' }); }
+
+                // Type analysis
+                if (BMLP_THRESHOLDS.riskyTypes.includes(type)) { score += 20; factors.push({ feature: 'Transaction Type', detail: type + ' (higher fraud correlation)', risk: 'high' }); }
+                else { factors.push({ feature: 'Transaction Type', detail: type + ' (lower risk)', risk: 'low' }); }
+
+                // Channel
+                if (BMLP_THRESHOLDS.riskyChannels.includes(channel)) { score += 15; factors.push({ feature: 'Channel', detail: channel + ' (elevated risk channel)', risk: 'medium' }); }
+                else { factors.push({ feature: 'Channel', detail: channel + ' (standard channel)', risk: 'low' }); }
+
+                // Age
+                if (age >= BMLP_THRESHOLDS.riskyAges[0] && age <= BMLP_THRESHOLDS.riskyAges[1]) { score += 12; factors.push({ feature: 'Customer Age', detail: age + ' years (young age bracket — higher risk)', risk: 'medium' }); }
+                else { factors.push({ feature: 'Customer Age', detail: age + ' years', risk: 'low' }); }
+
+                // Occupation
+                if (BMLP_THRESHOLDS.riskyOccupations.includes(occupation)) { score += 10; factors.push({ feature: 'Occupation', detail: occupation + ' (limited financial history)', risk: 'medium' }); }
+                else { factors.push({ feature: 'Occupation', detail: occupation, risk: 'low' }); }
+
+                // Duration
+                if (duration > BMLP_THRESHOLDS.durationHigh) { score += 18; factors.push({ feature: 'Duration', detail: duration + ' min (abnormally long)', risk: 'high' }); }
+                else if (duration < BMLP_THRESHOLDS.durationLow) { score += 15; factors.push({ feature: 'Duration', detail: duration + ' min (suspiciously quick)', risk: 'medium' }); }
+                else { factors.push({ feature: 'Duration', detail: duration + ' min (normal)', risk: 'low' }); }
+
+                // Login attempts
+                if (loginAttempts > BMLP_THRESHOLDS.loginHigh) { score += 22; factors.push({ feature: 'Login Attempts', detail: loginAttempts + ' attempts (brute force signal)', risk: 'high' }); }
+                else if (loginAttempts > 3) { score += 10; factors.push({ feature: 'Login Attempts', detail: loginAttempts + ' attempts (above average)', risk: 'medium' }); }
+                else { factors.push({ feature: 'Login Attempts', detail: loginAttempts + ' attempt(s)', risk: 'low' }); }
+
+                // Balance
+                if (balance < BMLP_THRESHOLDS.balanceLow) { score += 15; factors.push({ feature: 'Account Balance', detail: '$' + balance.toLocaleString() + ' (low balance — overdraft risk)', risk: 'medium' }); }
+                else { factors.push({ feature: 'Account Balance', detail: '$' + balance.toLocaleString(), risk: 'low' }); }
+
+                // Normalize score to 0-100
+                var maxPossible = 25 + 20 + 15 + 12 + 10 + 18 + 22 + 15;
+                var probability = Math.min(Math.round((score / maxPossible) * 100), 99);
+                var isFraud = probability >= 45;
+
+                var riskColors = { high: 'text-red-400', medium: 'text-yellow-400', low: 'text-emerald-400' };
+                var riskIcons = { high: '🔴', medium: '🟡', low: '🟢' };
+
+                var html = '<div class="bmlp-result-card rounded-xl border-2 p-5 ' + (isFraud ? 'fraud' : 'normal') + '">';
+                html += '<div class="flex items-center gap-3 mb-4">';
+                html += '<div class="w-14 h-14 rounded-full flex items-center justify-center text-2xl ' + (isFraud ? 'bg-red-500/20' : 'bg-emerald-500/20') + '">' + (isFraud ? '⚠️' : '✅') + '</div>';
+                html += '<div><h4 class="text-lg font-bold ' + (isFraud ? 'text-red-400' : 'text-emerald-400') + '">' + (isFraud ? 'Fraud Detected (Anomali)' : 'Normal Transaction') + '</h4>';
+                html += '<p class="text-gray-400 text-sm">Risk Score: <span class="font-bold ' + (isFraud ? 'text-red-400' : 'text-emerald-400') + '">' + probability + '%</span></p></div></div>';
+
+                // Progress bar
+                html += '<div class="w-full bg-gray-700 rounded-full h-3 mb-4"><div class="h-3 rounded-full transition-all duration-1000 ' + (isFraud ? 'bg-gradient-to-r from-yellow-500 to-red-500' : 'bg-gradient-to-r from-emerald-500 to-green-400') + '" style="width:' + probability + '%"></div></div>';
+
+                // Factor breakdown
+                html += '<h5 class="text-white text-sm font-semibold mb-3"><i class="fas fa-microscope mr-2 text-emerald-400"></i>Feature Analysis Breakdown</h5>';
+                html += '<div class="space-y-2">';
+                factors.forEach(function(f) {
+                    html += '<div class="flex items-start gap-2 text-xs"><span>' + riskIcons[f.risk] + '</span>';
+                    html += '<span class="text-gray-300 font-medium w-32 shrink-0">' + f.feature + '</span>';
+                    html += '<span class="' + riskColors[f.risk] + '">' + f.detail + '</span></div>';
+                });
+                html += '</div>';
+
+                // Explanation
+                html += '<div class="mt-4 p-3 rounded-lg bg-gray-800/50 border border-gray-700 text-xs text-gray-400">';
+                html += '<p><i class="fas fa-info-circle text-emerald-400 mr-1"></i> <strong class="text-gray-300">How this works:</strong> This simulator uses a rule-based scoring system inspired by the Random Forest model\'s feature importance analysis. ';
+                html += 'In the actual ML project, a <strong class="text-emerald-400">Tuned Random Forest</strong> (GridSearchCV optimized) achieved <strong class="text-emerald-400">96.02% accuracy</strong>. ';
+                html += 'Features were ranked by their contribution to fraud detection using the trained model\'s feature_importances_ attribute.</p></div>';
+                html += '</div>';
+
+                result.innerHTML = html;
+            }, 800);
+        }
+
+        // ── CERTIFICATE POPUP ──
+        function bmlpOpenDriveCert() {
+            var certUrl = BMLP_CONFIG.certUrl;
+            if (!certUrl) { alert('Certificate URL not configured.'); return; }
+
+            // Create modal overlay
+            var overlay = document.createElement('div');
+            overlay.id = 'bmlp-cert-overlay';
+            overlay.className = 'bmlp-cert-modal fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4';
+            overlay.onclick = function(e) { if (e.target === overlay) overlay.remove(); };
+
+            var modal = document.createElement('div');
+            modal.className = 'relative bg-gray-900 rounded-2xl border border-emerald-500/30 w-full max-w-3xl overflow-hidden shadow-2xl';
+
+            // Header
+            var header = document.createElement('div');
+            header.className = 'flex items-center justify-between px-5 py-3 bg-gradient-to-r from-emerald-900/50 to-gray-900 border-b border-gray-700';
+            header.innerHTML = '<div class="flex items-center gap-2"><i class="fas fa-certificate text-emerald-400"></i><span class="text-white font-semibold text-sm">Sertifikat Dicoding — BMLP</span></div>' +
+                '<button onclick="document.getElementById(\'bmlp-cert-overlay\').remove()" class="text-gray-400 hover:text-white transition text-xl leading-none">&times;</button>';
+
+            // Iframe
+            var iframe = document.createElement('iframe');
+            iframe.src = certUrl;
+            iframe.className = 'w-full border-0';
+            iframe.style.height = '520px';
+            iframe.setAttribute('loading', 'lazy');
+            iframe.setAttribute('title', 'Dicoding Certificate');
+
+            modal.appendChild(header);
+            modal.appendChild(iframe);
+            overlay.appendChild(modal);
+            document.body.appendChild(overlay);
+        }
+
+        // ── MODEL METRICS ──
+        function bmlpRenderMetrics() {
+            Object.keys(BMLP_MODELS).forEach(function(key) {
+                var m = BMLP_MODELS[key];
+                var setEl = function(id, val) {
+                    var el = document.getElementById(id);
+                    if (el) el.textContent = (val * 100).toFixed(1) + '%';
+                };
+                var setBar = function(id, val) {
+                    var el = document.getElementById(id);
+                    if (el) el.style.width = (val * 100).toFixed(1) + '%';
+                };
+                setEl('bmlp-' + key + '-acc', m.acc);
+                setEl('bmlp-' + key + '-prec', m.prec);
+                setEl('bmlp-' + key + '-rec', m.rec);
+                setEl('bmlp-' + key + '-f1', m.f1);
+                setBar('bmlp-' + key + '-acc-bar', m.acc);
+                setBar('bmlp-' + key + '-prec-bar', m.prec);
+                setBar('bmlp-' + key + '-rec-bar', m.rec);
+                setBar('bmlp-' + key + '-f1-bar', m.f1);
+            });
+        }
+
+        function bmlpRenderModelChart() {
+            var ctx = document.getElementById('bmlp-model-chart');
+            if (!ctx) return;
+            if (bmlpModelChart) bmlpModelChart.destroy();
+
+            var labels = ['Accuracy', 'Precision', 'Recall', 'F1-Score'];
+            var datasets = Object.keys(BMLP_MODELS).map(function(key) {
+                var m = BMLP_MODELS[key];
+                return {
+                    label: m.name,
+                    data: [m.acc * 100, m.prec * 100, m.rec * 100, m.f1 * 100],
+                    backgroundColor: m.color + '33',
+                    borderColor: m.color,
+                    borderWidth: 2,
+                    borderRadius: 4,
+                    barPercentage: 0.7,
+                    categoryPercentage: 0.8
+                };
+            });
+
+            bmlpModelChart = new Chart(ctx, {
+                type: 'bar',
+                data: { labels: labels, datasets: datasets },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'top', labels: { color: '#e2e8f0', font: { size: 11 }, usePointStyle: true, pointStyle: 'rectRounded' } },
+                        tooltip: { callbacks: { label: function(c) { return c.dataset.label + ': ' + c.raw.toFixed(2) + '%'; } } }
+                    },
+                    scales: {
+                        y: { min: 90, max: 100, grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#9CA3AF', callback: function(v) { return v + '%'; } } },
+                        x: { grid: { display: false }, ticks: { color: '#9CA3AF' } }
+                    }
+                }
+            });
+        }
+
+        // ── DATASET TABLE ──
+        function bmlpGetFilteredData() {
+            return bmlpData.filter(function(row) {
+                if (bmlpFilterTarget !== 'all') {
+                    var t = parseInt(bmlpFilterTarget);
+                    if (row.Target !== t) return false;
+                }
+                if (bmlpSearchQuery) {
+                    var searchStr = Object.values(row).join(' ').toLowerCase();
+                    return searchStr.includes(bmlpSearchQuery);
+                }
+                return true;
+            });
+        }
+
+        function bmlpRenderStats() {
+            var total = bmlpData.length;
+            var normal = bmlpData.filter(function(r) { return r.Target === 0; }).length;
+            var anomali = total - normal;
+            var cols = bmlpData.length > 0 ? Object.keys(bmlpData[0]).length : 0;
+
+            var set = function(id, val) { var el = document.getElementById(id); if (el) el.textContent = val.toLocaleString(); };
+            set('bmlp-stat-total', total);
+            set('bmlp-stat-features', cols);
+            set('bmlp-stat-normal', normal);
+            set('bmlp-stat-anomali', anomali);
+        }
+
+        function bmlpRenderTable() {
+            var filtered = bmlpGetFilteredData();
+            var totalPages = Math.max(1, Math.ceil(filtered.length / BMLP_PER_PAGE));
+            if (bmlpPage > totalPages) bmlpPage = totalPages;
+            var start = (bmlpPage - 1) * BMLP_PER_PAGE;
+            var pageData = filtered.slice(start, start + BMLP_PER_PAGE);
+
+            // Headers
+            var thead = document.getElementById('bmlp-thead');
+            if (thead && bmlpData.length > 0) {
+                var cols = Object.keys(bmlpData[0]);
+                thead.innerHTML = cols.map(function(c) {
+                    return '<th class="px-3 py-2 text-left text-xs font-semibold text-emerald-400 whitespace-nowrap">' + c + '</th>';
+                }).join('');
+            }
+
+            // Body
+            var tbody = document.getElementById('bmlp-tbody');
+            if (tbody) {
+                if (pageData.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="99" class="text-center py-8 text-gray-500">No data found</td></tr>';
+                } else {
+                    tbody.innerHTML = pageData.map(function(row) {
+                        var cols = Object.keys(row);
+                        return '<tr class="bmlp-table-row border-b border-gray-800">' + cols.map(function(c) {
+                            var val = row[c];
+                            var cls = 'px-3 py-2 text-xs text-gray-300 whitespace-nowrap';
+                            if (c === 'Target') {
+                                cls += val === 1 ? ' text-red-400 font-bold' : ' text-emerald-400 font-bold';
+                                val = val === 1 ? '1 (Anomali)' : '0 (Normal)';
+                            } else if (typeof val === 'number') {
+                                val = Number.isInteger(val) ? val : val.toFixed(2);
+                            }
+                            return '<td class="' + cls + '">' + (val != null ? val : '-') + '</td>';
+                        }).join('') + '</tr>';
+                    }).join('');
+                }
+            }
+
+            // Pagination info
+            var showing = document.getElementById('bmlp-showing');
+            if (showing) showing.textContent = (filtered.length > 0 ? start + 1 : 0) + '-' + Math.min(start + BMLP_PER_PAGE, filtered.length);
+            var total = document.getElementById('bmlp-total');
+            if (total) total.textContent = filtered.length;
+            var rowCount = document.getElementById('bmlp-row-count');
+            if (rowCount) rowCount.textContent = filtered.length + ' rows';
+        }
+
+        function bmlpPrevPage() {
+            if (bmlpPage > 1) { bmlpPage--; bmlpRenderTable(); }
+        }
+        function bmlpNextPage() {
+            var filtered = bmlpGetFilteredData();
+            var maxPage = Math.ceil(filtered.length / BMLP_PER_PAGE);
+            if (bmlpPage < maxPage) { bmlpPage++; bmlpRenderTable(); }
         }
     </script>
 </body>
