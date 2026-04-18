@@ -31,6 +31,49 @@
 
     <!-- FAVICON -->
     <link rel="icon" href="https://lh3.googleusercontent.com/d/1T2Q8QHpeETmrkz6SS5T1CrZilVGWFAJs=w100" type="image/png">
+
+    <!-- THEME / PWA -->
+    <meta name="theme-color" content="#0F172A">
+    <meta name="color-scheme" content="dark">
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="apple-touch-icon" href="https://lh3.googleusercontent.com/d/1T2Q8QHpeETmrkz6SS5T1CrZilVGWFAJs=w192">
+    <link rel="canonical" href="https://febrinahdatun-lab.github.io/">
+
+    <!-- JSON-LD Structured Data (Person Schema for Google Rich Results) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Febri Nahdatun",
+      "url": "https://febrinahdatun-lab.github.io/",
+      "image": "https://lh3.googleusercontent.com/d/1T2Q8QHpeETmrkz6SS5T1CrZilVGWFAJs=w800",
+      "jobTitle": "Data Analyst & Enterprise Systems Specialist",
+      "description": "Spesialis Knowledge Management System (KMS), Microsoft 365, Google Workspace, dan Data Analytics. Mengubah data menjadi aset strategis.",
+      "knowsAbout": [
+        "Data Analytics",
+        "Business Intelligence",
+        "Microsoft 365",
+        "Google Workspace",
+        "Knowledge Management System",
+        "Google Apps Script",
+        "Machine Learning",
+        "Disaster Preparedness AI"
+      ],
+      "sameAs": [
+        "https://www.linkedin.com/in/febri-nahdatun-49b437126/",
+        "https://github.com/febrinahdatun-lab"
+      ]
+    }
+    </script>
+
+    <!-- PERFORMANCE: preconnect to 3rd-party origins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://lh3.googleusercontent.com" crossorigin>
+    <link rel="preconnect" href="https://script.google.com" crossorigin>
+    <link rel="dns-prefetch" href="https://script.googleusercontent.com">
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -289,6 +332,15 @@
         .bmlp-auto-badge { animation: bmlpPulse 2s infinite; }
         @keyframes bmlpPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
 
+        /* ═══ KPI SKELETON SHIMMER ═══ */
+        .kpi-loading {
+            display: inline-block; min-width: 80px; height: 1.6em; border-radius: 6px;
+            background: linear-gradient(90deg, #1e293b 0%, #334155 50%, #1e293b 100%);
+            background-size: 200% 100%; animation: kpiShimmer 1.4s ease-in-out infinite;
+            color: transparent !important; -webkit-user-select: none; user-select: none;
+        }
+        @keyframes kpiShimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
         /* ═══ SCROLL PROGRESS BAR ═══ */
         #scroll-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -301,6 +353,34 @@
         .nav-anchor-active {
             background: rgba(139, 92, 246, 0.18) !important;
             color: #fff !important;
+        }
+
+        /* ═══ MOBILE MENU ═══ */
+        #mobile-menu-toggle { display: none; }
+        #mobile-menu { display: none; }
+        @media (max-width: 1023px) {
+            #desktop-nav-pill { display: none !important; }
+            #mobile-menu-toggle { display: inline-flex; }
+            #mobile-menu.open { display: block; }
+        }
+        #mobile-menu {
+            position: fixed; top: 80px; left: 0; right: 0;
+            background: rgba(11,20,38,0.98); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(139,92,246,0.2); z-index: 49;
+            max-height: calc(100vh - 80px); overflow-y: auto;
+            animation: slideDown .25s ease;
+        }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Reduced motion: respect user preference */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+            #scroll-progress, .cursor-dot, .cursor-outline { display: none !important; }
         }
 
         /* --- PRINT STYLES FOR CV --- */
@@ -336,7 +416,7 @@
                     </div>
                     <span class="text-lg font-bold text-white tracking-wide hidden sm:block">Febri Nahdatun</span>
                 </div>
-                <div class="flex flex-1 items-center justify-center gap-4 overflow-visible bg-surface/90 border border-gray-800 rounded-full shadow-lg backdrop-blur px-7 py-3 z-50 max-w-5xl mx-auto">
+                <div id="desktop-nav-pill" class="flex flex-1 items-center justify-center gap-4 overflow-visible bg-surface/90 border border-gray-800 rounded-full shadow-lg backdrop-blur px-7 py-3 z-50 max-w-5xl mx-auto">
                     <a href="#about" class="hover-trigger px-3.5 py-2 rounded-full text-gray-200 hover:bg-primary/20 hover:text-white transition-all text-sm font-medium">Profile</a>
                     <a href="#expertise" class="hover-trigger px-3.5 py-2 rounded-full text-gray-200 hover:bg-primary/20 hover:text-white transition-all text-sm font-medium">Tech Stacks</a>
                     <a href="#dashboard" class="hover-trigger px-3.5 py-2 rounded-full text-gray-200 hover:bg-primary/20 hover:text-white transition-all text-sm font-medium">Analytics</a>
@@ -373,6 +453,32 @@
                         Let's Collaborate
                     </a>
                 </div>
+
+                <!-- Mobile hamburger -->
+                <button id="mobile-menu-toggle" type="button" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-menu"
+                    class="ml-auto items-center justify-center w-11 h-11 rounded-full bg-surface border border-gray-700 text-white hover:border-primary transition-all"
+                    onclick="toggleMobileMenu()">
+                    <i id="mobile-menu-icon" class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile menu panel -->
+        <div id="mobile-menu" role="menu" aria-label="Mobile navigation">
+            <div class="px-4 py-4 space-y-1">
+                <a href="#about" onclick="closeMobileMenu()" class="block px-4 py-3 rounded-lg text-gray-200 hover:bg-primary/10 hover:text-white transition-all text-sm font-medium"><i class="fas fa-user mr-2 text-primary"></i>Profile</a>
+                <a href="#expertise" onclick="closeMobileMenu()" class="block px-4 py-3 rounded-lg text-gray-200 hover:bg-primary/10 hover:text-white transition-all text-sm font-medium"><i class="fas fa-layer-group mr-2 text-primary"></i>Tech Stacks</a>
+                <a href="#dashboard" onclick="closeMobileMenu()" class="block px-4 py-3 rounded-lg text-gray-200 hover:bg-primary/10 hover:text-white transition-all text-sm font-medium"><i class="fas fa-chart-bar mr-2 text-primary"></i>Analytics</a>
+                <a href="#certifications" onclick="closeMobileMenu()" class="block px-4 py-3 rounded-lg text-gray-200 hover:bg-primary/10 hover:text-white transition-all text-sm font-medium"><i class="fas fa-certificate mr-2 text-primary"></i>Certifications</a>
+                <a href="https://febrinahdatun-lab.github.io/IDCamp-2025-Developer-Challenge--Small-Apps-for-Big-Preparedness/" target="_blank" rel="noopener noreferrer" onclick="closeMobileMenu()" class="block px-4 py-3 rounded-lg text-cyan-300 bg-cyan-500/10 border border-cyan-500/20 hover:bg-cyan-500/20 transition-all text-sm font-medium"><i class="fas fa-shield-alt mr-2"></i>SiagaAI <i class="fas fa-external-link-alt text-[10px] ml-1 opacity-70"></i></a>
+                <div class="border-t border-gray-800 my-2"></div>
+                <p class="px-4 text-[11px] uppercase tracking-wider text-gray-500 font-semibold">My Projects</p>
+                <button onclick="closeMobileMenu();jumpToDashboard('superstore')" class="w-full text-left block px-4 py-3 rounded-lg text-gray-200 hover:bg-primary/10 hover:text-white transition-all text-sm"><i class="fas fa-store mr-2 text-primary"></i>SuperStore Analytics</button>
+                <button onclick="closeMobileMenu();jumpToDashboard('marketing')" class="w-full text-left block px-4 py-3 rounded-lg text-gray-200 hover:bg-secondary/10 hover:text-white transition-all text-sm"><i class="fas fa-chart-line mr-2 text-secondary"></i>Marketing Analytics</button>
+                <button onclick="closeMobileMenu();jumpToDashboard('rig')" class="w-full text-left block px-4 py-3 rounded-lg text-gray-200 hover:bg-amber-500/10 hover:text-white transition-all text-sm"><i class="fas fa-industry mr-2 text-amber-400"></i>Rig Operations</button>
+                <button onclick="closeMobileMenu();jumpToDashboard('siagaai')" class="w-full text-left block px-4 py-3 rounded-lg text-gray-200 hover:bg-cyan-500/10 hover:text-white transition-all text-sm"><i class="fas fa-shield-alt mr-2 text-cyan-400"></i>SiagaAI Showcase</button>
+                <button onclick="closeMobileMenu();jumpToDashboard('bmlp')" class="w-full text-left block px-4 py-3 rounded-lg text-gray-200 hover:bg-emerald-500/10 hover:text-white transition-all text-sm"><i class="fas fa-brain mr-2 text-emerald-400"></i>ML Fraud Detection</button>
+                <a href="#contact" onclick="closeMobileMenu()" class="block mt-3 px-4 py-3 rounded-lg bg-primary text-white text-center font-semibold text-sm hover:bg-violet-600 transition-all">Let's Collaborate</a>
             </div>
         </div>
     </nav>
@@ -424,7 +530,7 @@
                         <div class="absolute inset-0 border border-secondary/20 rounded-full scale-125 border-dashed animate-spin-slow"></div>
                         
                         <div class="relative w-full h-full rounded-full electric-container shadow-2xl">
-                            <img src="https://lh3.googleusercontent.com/d/1T2Q8QHpeETmrkz6SS5T1CrZilVGWFAJs=w800" alt="Febri Nahdatun" class="w-full h-full object-cover rounded-full">
+                            <img src="https://lh3.googleusercontent.com/d/1T2Q8QHpeETmrkz6SS5T1CrZilVGWFAJs=w480" srcset="https://lh3.googleusercontent.com/d/1T2Q8QHpeETmrkz6SS5T1CrZilVGWFAJs=w480 1x, https://lh3.googleusercontent.com/d/1T2Q8QHpeETmrkz6SS5T1CrZilVGWFAJs=w800 2x" loading="eager" fetchpriority="high" width="380" height="380" alt="Febri Nahdatun" class="w-full h-full object-cover rounded-full">
                         </div>
                         
                         <!-- Floating Badges (ADJUSTED POSITIONS AGAIN) -->
@@ -526,10 +632,10 @@
             </div>
             <div class="p-8 grid grid-cols-1 lg:grid-cols-4 gap-6">
                 <div class="lg:col-span-4 grid grid-cols-1 sm:grid-cols-4 gap-4">
-                    <div class="hover-trigger bg-dark p-6 rounded-2xl border border-gray-800 hover:border-primary/30 transition-colors"><p class="text-xs text-gray-500 uppercase font-bold tracking-wider">Total Sales</p><h4 class="text-2xl font-bold text-white mt-2 tracking-tight" id="kpi-sales">$0</h4></div>
-                    <div class="hover-trigger bg-dark p-6 rounded-2xl border border-gray-800 hover:border-primary/30 transition-colors"><p class="text-xs text-gray-500 uppercase font-bold tracking-wider">Total Profit</p><h4 class="text-2xl font-bold text-white mt-2 tracking-tight" id="kpi-profit">$0</h4></div>
-                    <div class="hover-trigger bg-dark p-6 rounded-2xl border border-gray-800 hover:border-primary/30 transition-colors"><p class="text-xs text-gray-500 uppercase font-bold tracking-wider">Orders</p><h4 class="text-2xl font-bold text-white mt-2 tracking-tight" id="kpi-orders">0</h4></div>
-                    <div class="hover-trigger bg-dark p-6 rounded-2xl border border-gray-800 hover:border-primary/30 transition-colors"><p class="text-xs text-gray-500 uppercase font-bold tracking-wider">Margin</p><h4 class="text-2xl font-bold text-white mt-2 tracking-tight" id="avg-discount">0%</h4></div>
+                    <div class="hover-trigger bg-dark p-6 rounded-2xl border border-gray-800 hover:border-primary/30 transition-colors"><p class="text-xs text-gray-500 uppercase font-bold tracking-wider">Total Sales</p><h4 class="text-2xl font-bold text-white mt-2 tracking-tight" id="kpi-sales"><span class="kpi-loading">$0</span></h4></div>
+                    <div class="hover-trigger bg-dark p-6 rounded-2xl border border-gray-800 hover:border-primary/30 transition-colors"><p class="text-xs text-gray-500 uppercase font-bold tracking-wider">Total Profit</p><h4 class="text-2xl font-bold text-white mt-2 tracking-tight" id="kpi-profit"><span class="kpi-loading">$0</span></h4></div>
+                    <div class="hover-trigger bg-dark p-6 rounded-2xl border border-gray-800 hover:border-primary/30 transition-colors"><p class="text-xs text-gray-500 uppercase font-bold tracking-wider">Orders</p><h4 class="text-2xl font-bold text-white mt-2 tracking-tight" id="kpi-orders"><span class="kpi-loading">0000</span></h4></div>
+                    <div class="hover-trigger bg-dark p-6 rounded-2xl border border-gray-800 hover:border-primary/30 transition-colors"><p class="text-xs text-gray-500 uppercase font-bold tracking-wider">Margin</p><h4 class="text-2xl font-bold text-white mt-2 tracking-tight" id="avg-discount"><span class="kpi-loading">0%</span></h4></div>
                 </div>
                 <!-- Tab Navigation -->
                 <div class="lg:col-span-4 mt-4">
@@ -891,7 +997,7 @@
                                     <p class="text-gray-500 text-sm">Menghubungkan ke BMKG...</p>
                                 </div>
                             </div>
-                            <div class="flex items-center justify-between mt-3 text-xs text-gray-600" id="siagaai-bmkg-footer" style="display:none;">
+                            <div class="flex items-center justify-between mt-3 text-xs text-gray-600 hidden" id="siagaai-bmkg-footer">
                                 <span>Sumber: data.bmkg.go.id</span>
                                 <span id="siagaai-bmkg-updated">—</span>
                             </div>
@@ -1688,7 +1794,7 @@
     </div>
     
     <!-- SCROLL TO TOP BUTTON -->
-    <button id="scrollToTopBtn" class="hover-trigger fixed bottom-8 right-8 w-12 h-12 bg-primary hover:bg-violet-600 text-white rounded-full flex items-center justify-center shadow-lg shadow-primary/20 transition-all transform hover:scale-110 opacity-0 invisible z-50">
+    <button id="scrollToTopBtn" aria-label="Back to top" title="Kembali ke atas" class="hover-trigger fixed bottom-8 right-8 w-12 h-12 bg-primary hover:bg-violet-600 text-white rounded-full flex items-center justify-center shadow-lg shadow-primary/20 transition-all transform hover:scale-110 opacity-0 invisible z-50">
         <i class="fas fa-arrow-up"></i>
     </button>
 
@@ -1926,6 +2032,10 @@
         }
 
         function renderDashboard(data) {
+            ['kpi-sales', 'kpi-profit', 'kpi-orders', 'avg-discount'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.classList.remove('kpi-loading');
+            });
             document.getElementById('kpi-sales').innerText = formatLargeNumber(data.kpi.sales);
             document.getElementById('kpi-profit').innerText = formatLargeNumber(data.kpi.profit);
             document.getElementById('kpi-orders').innerText = data.kpi.orders.toLocaleString();
@@ -2036,6 +2146,26 @@
 
         // SCROLL TO TOP
         const scrollToTopBtn = document.getElementById("scrollToTopBtn");
+
+        // ── MOBILE MENU TOGGLE ──
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const btn = document.getElementById('mobile-menu-toggle');
+            const icon = document.getElementById('mobile-menu-icon');
+            if (!menu) return;
+            const isOpen = menu.classList.toggle('open');
+            if (btn) btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+            if (icon) icon.className = isOpen ? 'fas fa-times' : 'fas fa-bars';
+        }
+        function closeMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const btn = document.getElementById('mobile-menu-toggle');
+            const icon = document.getElementById('mobile-menu-icon');
+            if (!menu) return;
+            menu.classList.remove('open');
+            if (btn) btn.setAttribute('aria-expanded', 'false');
+            if (icon) icon.className = 'fas fa-bars';
+        }
 
         // QUICK JUMP TO DASHBOARD PROJECTS
         function jumpToDashboard(project) {
@@ -3106,6 +3236,13 @@
         });
 
         document.addEventListener('DOMContentLoaded', async () => {
+            // ── Service Worker registration (PWA + offline cache)
+            if ('serviceWorker' in navigator && location.protocol === 'https:') {
+                window.addEventListener('load', () => {
+                    navigator.serviceWorker.register('./sw.js').catch((e) => console.warn('SW failed:', e));
+                });
+            }
+
             // ── Scroll progress bar
             const progressBar = document.getElementById('scroll-progress');
             if (progressBar) {
@@ -3190,7 +3327,7 @@
             .then(function(results) {
                 siagaaiRenderBMKG(results[0], results[1]);
                 var footer = document.getElementById('siagaai-bmkg-footer');
-                if (footer) footer.style.display = 'flex';
+                if (footer) footer.classList.remove('hidden');
                 var updated = document.getElementById('siagaai-bmkg-updated');
                 if (updated) updated.textContent = 'Diperbarui: ' + new Date().toLocaleTimeString('id-ID', { hour:'2-digit', minute:'2-digit' });
                 document.getElementById('siagaai-status').textContent = 'Live ✓';

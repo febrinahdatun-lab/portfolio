@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex">
+    <title>404 — Halaman Tidak Ditemukan | Febri Nahdatun</title>
+    <meta name="theme-color" content="#0F172A">
+    <link rel="icon" href="https://lh3.googleusercontent.com/d/1T2Q8QHpeETmrkz6SS5T1CrZilVGWFAJs=w100" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Poppins', system-ui, sans-serif;
+            background: #0F172A; color: #e2e8f0; min-height: 100vh;
+            display: flex; align-items: center; justify-content: center;
+            padding: 2rem; text-align: center; overflow: hidden;
+        }
+        .glow-1, .glow-2 { position: fixed; border-radius: 50%; filter: blur(120px); pointer-events: none; }
+        .glow-1 { width: 500px; height: 500px; background: rgba(139,92,246,0.15); top: -100px; left: -100px; }
+        .glow-2 { width: 400px; height: 400px; background: rgba(14,165,233,0.15); bottom: -80px; right: -80px; }
+        .card { position: relative; max-width: 520px; z-index: 1; }
+        h1 {
+            font-size: clamp(5rem, 18vw, 9rem); font-weight: 800; line-height: 1;
+            background: linear-gradient(135deg, #8B5CF6 0%, #0EA5E9 100%);
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+            margin-bottom: 0.5rem;
+        }
+        h2 { font-size: 1.5rem; font-weight: 600; color: #fff; margin-bottom: 1rem; }
+        p { color: #94a3b8; line-height: 1.6; margin-bottom: 2rem; }
+        .btn {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            padding: 0.85rem 1.75rem; border-radius: 9999px; font-weight: 600;
+            text-decoration: none; transition: all 0.25s;
+        }
+        .btn-primary {
+            background: #8B5CF6; color: #fff;
+            box-shadow: 0 8px 24px rgba(139,92,246,0.4);
+        }
+        .btn-primary:hover { background: #7c3aed; transform: translateY(-2px); }
+        .meta { margin-top: 2rem; font-size: 0.8rem; color: #64748b; }
+    </style>
+</head>
+<body>
+    <div class="glow-1" aria-hidden="true"></div>
+    <div class="glow-2" aria-hidden="true"></div>
+    <main class="card">
+        <h1>404</h1>
+        <h2>Halaman Tidak Ditemukan</h2>
+        <p>Sepertinya Anda tersesat di luar peta dashboard. Mari kembali ke beranda untuk melanjutkan eksplorasi portfolio.</p>
+        <a href="/" class="btn btn-primary">← Kembali ke Beranda</a>
+        <p class="meta">Febri Nahdatun · Portfolio</p>
+    </main>
+</body>
+</html>
