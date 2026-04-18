@@ -289,6 +289,20 @@
         .bmlp-auto-badge { animation: bmlpPulse 2s infinite; }
         @keyframes bmlpPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
 
+        /* ═══ SCROLL PROGRESS BAR ═══ */
+        #scroll-progress {
+            position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+            background: linear-gradient(90deg, #8B5CF6 0%, #0EA5E9 50%, #00B4D8 100%);
+            z-index: 100; transition: width 0.1s linear;
+            box-shadow: 0 0 10px rgba(139,92,246,0.6);
+        }
+
+        /* Active state for in-view nav anchor (set via JS) */
+        .nav-anchor-active {
+            background: rgba(139, 92, 246, 0.18) !important;
+            color: #fff !important;
+        }
+
         /* --- PRINT STYLES FOR CV --- */
         @media print {
             body * { visibility: hidden; }
@@ -304,6 +318,9 @@
     </style>
 </head>
 <body class="bg-dark text-gray-300 font-sans antialiased overflow-x-hidden">
+
+    <!-- SCROLL PROGRESS BAR -->
+    <div id="scroll-progress" aria-hidden="true"></div>
 
     <!-- CUSTOM CURSOR -->
     <div class="cursor-dot" id="cursor-dot"></div>
@@ -324,6 +341,9 @@
                     <a href="#expertise" class="hover-trigger px-3.5 py-2 rounded-full text-gray-200 hover:bg-primary/20 hover:text-white transition-all text-sm font-medium">Tech Stacks</a>
                     <a href="#dashboard" class="hover-trigger px-3.5 py-2 rounded-full text-gray-200 hover:bg-primary/20 hover:text-white transition-all text-sm font-medium">Analytics</a>
                     <a href="#certifications" class="hover-trigger px-3.5 py-2 rounded-full text-gray-200 hover:bg-primary/20 hover:text-white transition-all text-sm font-medium">Certifications</a>
+                    <a id="siagaai-external-link" href="https://febrinahdatun-lab.github.io/IDCamp-2025-Developer-Challenge--Small-Apps-for-Big-Preparedness/" target="_blank" rel="noopener noreferrer" class="hover-trigger px-3.5 py-2 rounded-full text-cyan-300 bg-cyan-500/10 border border-cyan-500/30 hover:bg-cyan-500/20 hover:text-white transition-all text-sm font-medium flex items-center gap-1.5" title="Buka aplikasi SiagaAI di tab baru">
+                        <i class="fas fa-shield-alt"></i><span>SiagaAI</span><i class="fas fa-external-link-alt text-[10px] opacity-70"></i>
+                    </a>
 
                     <div class="dropdown-group">
                         <button class="hover-trigger px-3.5 py-2 rounded-full text-gray-200 bg-dark/70 border border-gray-800 hover:border-primary hover:text-white transition-all flex items-center gap-2 text-sm font-medium">
@@ -3086,7 +3106,48 @@
         });
 
         document.addEventListener('DOMContentLoaded', async () => {
+            // ── Scroll progress bar
+            const progressBar = document.getElementById('scroll-progress');
+            if (progressBar) {
+                const updateProgress = () => {
+                    const h = document.documentElement;
+                    const scrolled = h.scrollTop;
+                    const max = h.scrollHeight - h.clientHeight;
+                    progressBar.style.width = max > 0 ? ((scrolled / max) * 100) + '%' : '0%';
+                };
+                window.addEventListener('scroll', updateProgress, { passive: true });
+                updateProgress();
+            }
+
+            // ── Scroll-spy: highlight nav anchor whose target section is in view
+            const navAnchors = document.querySelectorAll('nav a[href^="#"]');
+            const sectionMap = new Map();
+            navAnchors.forEach(a => {
+                const id = a.getAttribute('href').slice(1);
+                const sec = id && document.getElementById(id);
+                if (sec) sectionMap.set(sec, a);
+            });
+            if (sectionMap.size && 'IntersectionObserver' in window) {
+                const observer = new IntersectionObserver(entries => {
+                    entries.forEach(e => {
+                        const a = sectionMap.get(e.target);
+                        if (!a) return;
+                        if (e.isIntersecting && e.intersectionRatio > 0.3) {
+                            navAnchors.forEach(x => x.classList.remove('nav-anchor-active'));
+                            a.classList.add('nav-anchor-active');
+                        }
+                    });
+                }, { threshold: [0.3, 0.6] });
+                sectionMap.forEach((_, sec) => observer.observe(sec));
+            }
+
             await loadPortfolioConfig();
+            // Sync external SiagaAI link with backend config (overridable via Script Properties)
+            try {
+                const url = PORTFOLIO_CONFIG && PORTFOLIO_CONFIG.meta && PORTFOLIO_CONFIG.meta.siagaai_app_url;
+                const el = document.getElementById('siagaai-external-link');
+                if (el && url) el.href = url;
+            } catch (_) {}
             // Resolve SuperStore CSV URL from backend config
             if (!CSV_URL && CSV_URLS.superstore) {
                 REMOTE_CSV_URL = CSV_URLS.superstore;
