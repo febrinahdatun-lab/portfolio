@@ -87,6 +87,12 @@
     <!-- PapaParse -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 
+    <!-- SortableJS for drag-and-drop reorder -->
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js" defer></script>
+
+    <!-- SortableJS for drag-and-drop reorder -->
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js" defer></script>
+
     <!-- Google Fonts: POPPINS (Web) & NOTO SANS (CV) -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Noto+Sans:wght@400;700&display=swap" rel="stylesheet">
 
@@ -341,6 +347,77 @@
         }
         @keyframes kpiShimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
 
+        /* ═══ INTERACTIVE DASHBOARD ═══ */
+        /* Drag handle visible on chart card hover */
+        .chart-card { position: relative; transition: transform .25s cubic-bezier(.2,.9,.3,1.2), box-shadow .25s; }
+        .chart-card.is-tilt { transform-style: preserve-3d; will-change: transform; }
+        .chart-card .card-toolbar {
+            position: absolute; top: 10px; right: 10px; display: flex; gap: 6px;
+            opacity: 0; transition: opacity .2s; z-index: 5;
+        }
+        .chart-card:hover .card-toolbar { opacity: 1; }
+        .card-tool-btn {
+            width: 28px; height: 28px; border-radius: 8px;
+            background: rgba(15,23,42,.85); border: 1px solid rgba(139,92,246,.35);
+            color: #cbd5e1; font-size: 11px; cursor: pointer;
+            display: inline-flex; align-items: center; justify-content: center;
+            transition: all .2s; -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+        }
+        .card-tool-btn:hover { background: rgba(139,92,246,.25); color: #fff; border-color: #8B5CF6; transform: translateY(-1px); }
+        .card-drag-handle { cursor: grab; }
+        .card-drag-handle:active { cursor: grabbing; }
+        .sortable-ghost { opacity: .35; transform: scale(.97); }
+        .sortable-drag { box-shadow: 0 20px 50px rgba(139,92,246,.45) !important; transform: rotate(1.5deg); }
+        .sortable-chosen { box-shadow: 0 0 0 2px #8B5CF6; }
+
+        /* Chart fullscreen modal */
+        #chart-fs-overlay {
+            position: fixed; inset: 0; background: rgba(2,6,23,.92);
+            -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+            z-index: 200; display: none; align-items: center; justify-content: center; padding: 24px;
+        }
+        #chart-fs-overlay.open { display: flex; animation: fadeIn .25s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        #chart-fs-card {
+            background: #0F172A; border: 1px solid #334155; border-radius: 18px;
+            width: min(1200px, 96vw); height: min(80vh, 720px);
+            display: flex; flex-direction: column; overflow: hidden;
+            box-shadow: 0 30px 80px rgba(139,92,246,.3);
+        }
+        #chart-fs-card header {
+            padding: 14px 20px; border-bottom: 1px solid #1e293b;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        #chart-fs-card .body { flex: 1; padding: 20px; position: relative; min-height: 0; }
+        #chart-fs-canvas { width: 100% !important; height: 100% !important; }
+
+        /* Count-up KPI emphasis */
+        .kpi-counted { animation: kpiPop .5s cubic-bezier(.25,.46,.45,1.4); }
+        @keyframes kpiPop {
+            0% { transform: scale(.85); opacity: .4; }
+            60% { transform: scale(1.08); opacity: 1; }
+            100% { transform: scale(1); }
+        }
+
+        /* Scroll-reveal */
+        .reveal {
+            opacity: 0; transform: translateY(24px);
+            transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.3,1);
+        }
+        .reveal.in { opacity: 1; transform: none; }
+
+        /* Toast */
+        #ix-toast {
+            position: fixed; bottom: 80px; right: 22px; max-width: 320px;
+            background: linear-gradient(135deg, #1e1b4b, #0c4a6e);
+            border: 1px solid rgba(139,92,246,.5); border-radius: 12px;
+            padding: 12px 16px; color: #fff; font-size: 13px; line-height: 1.5;
+            box-shadow: 0 10px 30px rgba(0,0,0,.45);
+            transform: translateX(360px); opacity: 0;
+            transition: transform .3s ease, opacity .3s ease; z-index: 95; pointer-events: none;
+        }
+        #ix-toast.show { transform: none; opacity: 1; }
+
         /* ═══ SCROLL PROGRESS BAR ═══ */
         #scroll-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
@@ -482,6 +559,23 @@
             </div>
         </div>
     </nav>
+
+    <!-- INTERACTIVE: Toast + Chart Fullscreen Overlay -->
+    <div id="ix-toast" role="status" aria-live="polite"></div>
+    <div id="chart-fs-overlay" role="dialog" aria-modal="true" aria-label="Chart fullscreen view">
+        <div id="chart-fs-card">
+            <header>
+                <h3 id="chart-fs-title" class="text-white font-bold text-sm flex items-center gap-2">
+                    <i class="fas fa-expand text-primary"></i> <span>Chart</span>
+                </h3>
+                <div class="flex items-center gap-2">
+                    <button id="chart-fs-download" class="card-tool-btn" title="Download as PNG"><i class="fas fa-download"></i></button>
+                    <button id="chart-fs-close" class="card-tool-btn" title="Close (Esc)"><i class="fas fa-times"></i></button>
+                </div>
+            </header>
+            <div class="body"><canvas id="chart-fs-canvas"></canvas></div>
+        </div>
+    </div>
 
     <!-- Hero Section -->
     <section id="about" class="min-h-screen flex items-center justify-center pt-14 pb-12 relative overflow-hidden scroll-mt-24">
@@ -649,7 +743,7 @@
                 </div>
                 <!-- Tab Panels -->
                 <div class="lg:col-span-4">
-                    <div id="tab-overview" class="tab-panel grid grid-cols-1 lg:grid-cols-4 gap-6">
+                    <div id="tab-overview" class="tab-panel grid grid-cols-1 lg:grid-cols-4 gap-6" data-ix-sortable>
                         <div class="lg:col-span-3 bg-dark p-6 rounded-2xl border border-gray-800"><h5 class="text-white font-bold text-sm mb-6 flex items-center gap-2"><i class="fas fa-chart-bar text-primary"></i> Monthly Sales vs Profit Trend</h5><div class="h-80"><canvas id="trendChart"></canvas></div></div>
                         <div class="lg:col-span-1 bg-dark p-6 rounded-2xl border border-gray-800"><h5 class="text-white font-bold text-sm mb-6 flex items-center gap-2"><i class="fas fa-chart-pie text-secondary"></i> Sales by Segment</h5><div class="h-64 flex items-center justify-center"><canvas id="segmentChart"></canvas></div></div>
                         <div class="lg:col-span-4 bg-gradient-to-r from-primary/5 to-secondary/5 p-6 rounded-2xl border-2 border-primary/30 shadow-[0_0_20px_rgba(139,92,246,0.15)] hover:border-primary/50 transition-all">
@@ -661,19 +755,19 @@
                             <div id="superstore-ai-result" class="mt-4 text-sm text-gray-200 bg-dark/50 p-4 rounded-lg border border-gray-700/50"></div>
                         </div>
                     </div>
-                    <div id="tab-category" class="tab-panel hidden grid grid-cols-1 lg:grid-cols-4 gap-6">
+                    <div id="tab-category" class="tab-panel hidden grid grid-cols-1 lg:grid-cols-4 gap-6" data-ix-sortable>
                         <div class="lg:col-span-2 bg-dark p-6 rounded-2xl border border-gray-800"><h5 class="text-white font-bold text-sm mb-6 flex items-center gap-2"><i class="fas fa-layer-group text-primary"></i> Sales by Category</h5><div class="h-72"><canvas id="categoryChart"></canvas></div></div>
                         <div class="lg:col-span-2 bg-dark p-6 rounded-2xl border border-gray-800"><h5 class="text-white font-bold text-sm mb-6 flex items-center gap-2"><i class="fas fa-sitemap text-secondary"></i> Profit by Sub-Category</h5><div class="h-72"><canvas id="subCategoryChart"></canvas></div></div>
                     </div>
-                    <div id="tab-region" class="tab-panel hidden grid grid-cols-1 lg:grid-cols-4 gap-6">
+                    <div id="tab-region" class="tab-panel hidden grid grid-cols-1 lg:grid-cols-4 gap-6" data-ix-sortable>
                         <div class="lg:col-span-2 bg-dark p-6 rounded-2xl border border-gray-800"><h5 class="text-white font-bold text-sm mb-6 flex items-center gap-2"><i class="fas fa-globe-asia text-primary"></i> Sales by Region</h5><div class="h-72"><canvas id="regionChart"></canvas></div></div>
                         <div class="lg:col-span-2 bg-dark p-6 rounded-2xl border border-gray-800"><h5 class="text-white font-bold text-sm mb-6 flex items-center gap-2"><i class="fas fa-city text-secondary"></i> Profit by State</h5><div class="h-72"><canvas id="stateChart"></canvas></div></div>
                     </div>
-                    <div id="tab-ship" class="tab-panel hidden grid grid-cols-1 lg:grid-cols-4 gap-6">
+                    <div id="tab-ship" class="tab-panel hidden grid grid-cols-1 lg:grid-cols-4 gap-6" data-ix-sortable>
                         <div class="lg:col-span-2 bg-dark p-6 rounded-2xl border border-gray-800"><h5 class="text-white font-bold text-sm mb-6 flex items-center gap-2"><i class="fas fa-truck-fast text-primary"></i> Orders by Ship Mode</h5><div class="h-72"><canvas id="shipModeChart" class="w-full h-full"></canvas></div></div>
                         <div class="lg:col-span-2 bg-dark p-6 rounded-2xl border border-gray-800"><h5 class="text-white font-bold text-sm mb-6 flex items-center gap-2"><i class="fas fa-clock text-secondary"></i> Sales by Ship Date (Monthly)</h5><div class="h-72"><canvas id="shipMonthlyChart"></canvas></div></div>
                     </div>
-                    <div id="tab-products" class="tab-panel hidden grid grid-cols-1 lg:grid-cols-4 gap-6">
+                    <div id="tab-products" class="tab-panel hidden grid grid-cols-1 lg:grid-cols-4 gap-6" data-ix-sortable>
                         <div class="lg:col-span-3 bg-dark p-6 rounded-2xl border border-gray-800"><h5 class="text-white font-bold text-sm mb-6 flex items-center gap-2"><i class="fas fa-star text-primary"></i> Top 10 Products by Sales</h5><div class="overflow-auto"><table class="min-w-full text-sm"><thead><tr class="text-gray-400"><th class="text-left py-2 pr-4">Product Name</th><th class="text-right py-2 pr-4">Sales</th><th class="text-right py-2">Profit</th></tr></thead><tbody id="topProductsTable"></tbody></table></div></div>
                         <div class="lg:col-span-1 bg-dark p-6 rounded-2xl border border-gray-800"><h5 class="text-white font-bold text-sm mb-6 flex items-center gap-2"><i class="fas fa-tags text-secondary"></i> Sales by Segment (Detail)</h5><div class="h-64"><canvas id="segmentBarChart"></canvas></div></div>
                     </div>
@@ -2036,10 +2130,18 @@
                 const el = document.getElementById(id);
                 if (el) el.classList.remove('kpi-loading');
             });
-            document.getElementById('kpi-sales').innerText = formatLargeNumber(data.kpi.sales);
-            document.getElementById('kpi-profit').innerText = formatLargeNumber(data.kpi.profit);
-            document.getElementById('kpi-orders').innerText = data.kpi.orders.toLocaleString();
-            document.getElementById('avg-discount').innerText = data.kpi.discount; 
+            // Animated count-up for KPIs
+            if (window.IX) {
+                IX.animateCount(document.getElementById('kpi-sales'),  data.kpi.sales,  { prefix: '$', currency: true });
+                IX.animateCount(document.getElementById('kpi-profit'), data.kpi.profit, { prefix: '$', currency: true });
+                IX.animateCount(document.getElementById('kpi-orders'), data.kpi.orders);
+                IX.animateCount(document.getElementById('avg-discount'), parseFloat(data.kpi.discount) || 0, { float: true, decimals: 1, suffix: '%' });
+            } else {
+                document.getElementById('kpi-sales').innerText = formatLargeNumber(data.kpi.sales);
+                document.getElementById('kpi-profit').innerText = formatLargeNumber(data.kpi.profit);
+                document.getElementById('kpi-orders').innerText = data.kpi.orders.toLocaleString();
+                document.getElementById('avg-discount').innerText = data.kpi.discount;
+            } 
 
             const ctxTrend = document.getElementById('trendChart').getContext('2d');
             new Chart(ctxTrend, {
@@ -2139,9 +2241,15 @@
             // Basic tabs logic
             const tabs = document.querySelectorAll('.tab-btn');
             const panels = { overview: document.getElementById('tab-overview'), category: document.getElementById('tab-category'), region: document.getElementById('tab-region'), ship: document.getElementById('tab-ship'), products: document.getElementById('tab-products') };
-            function activate(tab) { Object.keys(panels).forEach(k => { const p = panels[k]; if (p) p.classList.add('hidden'); }); const target = panels[tab]; if (target) target.classList.remove('hidden'); tabs.forEach(btn => { if (btn.dataset.tab === tab) { btn.classList.add('border-primary','text-primary'); } else { btn.classList.remove('border-primary','text-primary'); } }); }
+            function activate(tab) { Object.keys(panels).forEach(k => { const p = panels[k]; if (p) p.classList.add('hidden'); }); const target = panels[tab]; if (target) target.classList.remove('hidden'); tabs.forEach(btn => { if (btn.dataset.tab === tab) { btn.classList.add('border-primary','text-primary'); } else { btn.classList.remove('border-primary','text-primary'); } }); window.IX && IX.rescan(); }
             activate('overview');
             tabs.forEach(btn => btn.addEventListener('click', () => activate(btn.dataset.tab)));
+
+            // Trigger interactive layer rescan after charts are ready
+            if (window.IX) {
+                setTimeout(() => IX.rescan(), 300);
+                setTimeout(() => IX.toast('💡 <strong>Tip:</strong> Hover chart untuk drag-reorder, perbesar, atau download PNG'), 1800);
+            }
         }
 
         // SCROLL TO TOP
@@ -2344,11 +2452,17 @@
         }
 
         function marketingRenderDashboard(data, rawData) {
-            // Update KPIs
-            document.getElementById('marketing-kpi-impressions').innerText = (data.totalImpressions / 1000).toFixed(0) + 'K';
-            document.getElementById('marketing-kpi-clicks').innerText = (data.totalClicks / 1000).toFixed(1) + 'K';
-            document.getElementById('marketing-kpi-ctr').innerText = data.avgCTR + '%';
-            document.getElementById('marketing-kpi-posts').innerText = data.totalPosts.toLocaleString();
+            // Update KPIs (with count-up if interactive layer ready)
+            const setKpi = (id, target, opts) => {
+                const el = document.getElementById(id);
+                if (!el) return;
+                if (window.IX) IX.animateCount(el, target, opts);
+                else el.innerText = target;
+            };
+            setKpi('marketing-kpi-impressions', data.totalImpressions, { currency: true });
+            setKpi('marketing-kpi-clicks',      data.totalClicks,      { currency: true });
+            setKpi('marketing-kpi-ctr',         parseFloat(data.avgCTR) || 0, { float: true, decimals: 2, suffix: '%' });
+            setKpi('marketing-kpi-posts',       data.totalPosts);
 
             // Render charts - Overview Tab
             renderMarketingImpressionsChart(data);
@@ -2391,6 +2505,8 @@
 
             // Tab system for marketing
             setupMarketingTabs();
+            // Rescan interactive layer for new charts
+            if (window.IX) setTimeout(() => IX.rescan(), 300);
         }
 
         function setupMarketingTabs() {
@@ -3255,6 +3371,286 @@
                 window.addEventListener('scroll', updateProgress, { passive: true });
                 updateProgress();
             }
+
+            // ────────────────────────────────────────────────────────────────
+            //  INTERACTIVE LAYER — drag-reorder, tilt, fullscreen, toast,
+            //  count-up, scroll-reveal, chart click cross-info
+            // ────────────────────────────────────────────────────────────────
+            window.IX = (function () {
+                const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+                /* ── Toast ─────────────────────────────────────────────── */
+                const toastEl = document.getElementById('ix-toast');
+                let toastTimer = null;
+                function toast(html, ms = 2600) {
+                    if (!toastEl) return;
+                    toastEl.innerHTML = html;
+                    toastEl.classList.add('show');
+                    clearTimeout(toastTimer);
+                    toastTimer = setTimeout(() => toastEl.classList.remove('show'), ms);
+                }
+
+                /* ── Count-up animation ────────────────────────────────── */
+                function animateCount(el, target, opts = {}) {
+                    if (!el) return;
+                    const duration = reduceMotion ? 0 : (opts.duration || 1100);
+                    const prefix = opts.prefix || '';
+                    const suffix = opts.suffix || '';
+                    const isFloat = opts.float || false;
+                    const isCurrency = opts.currency || false;
+                    const startVal = 0;
+                    const startTime = performance.now();
+                    function format(n) {
+                        if (isCurrency) {
+                            if (n >= 1e9) return prefix + (n / 1e9).toFixed(2) + 'B' + suffix;
+                            if (n >= 1e6) return prefix + (n / 1e6).toFixed(2) + 'M' + suffix;
+                            if (n >= 1e3) return prefix + (n / 1e3).toFixed(1) + 'K' + suffix;
+                            return prefix + Math.round(n).toLocaleString() + suffix;
+                        }
+                        if (isFloat) return prefix + n.toFixed(opts.decimals || 1) + suffix;
+                        return prefix + Math.round(n).toLocaleString('id-ID') + suffix;
+                    }
+                    if (duration === 0) {
+                        el.textContent = format(target);
+                        el.classList.add('kpi-counted');
+                        return;
+                    }
+                    function step(now) {
+                        const t = Math.min(1, (now - startTime) / duration);
+                        const eased = 1 - Math.pow(1 - t, 3);
+                        const current = startVal + (target - startVal) * eased;
+                        el.textContent = format(current);
+                        if (t < 1) requestAnimationFrame(step);
+                        else el.classList.add('kpi-counted');
+                    }
+                    requestAnimationFrame(step);
+                }
+                // Auto-detect & count-up any element with data-count attribute
+                function bindCountUp(root = document) {
+                    root.querySelectorAll('[data-count]:not([data-count-done])').forEach(el => {
+                        const obs = new IntersectionObserver((entries) => {
+                            entries.forEach(e => {
+                                if (!e.isIntersecting) return;
+                                const target = parseFloat(el.dataset.count) || 0;
+                                animateCount(el, target, {
+                                    prefix: el.dataset.prefix || '',
+                                    suffix: el.dataset.suffix || '',
+                                    float: el.dataset.float === 'true',
+                                    decimals: parseInt(el.dataset.decimals || '1', 10),
+                                    currency: el.dataset.currency === 'true'
+                                });
+                                el.dataset.countDone = '1';
+                                obs.disconnect();
+                            });
+                        }, { threshold: 0.4 });
+                        obs.observe(el);
+                    });
+                }
+
+                /* ── Scroll-reveal ─────────────────────────────────────── */
+                function bindReveal() {
+                    const items = document.querySelectorAll('.reveal:not(.in)');
+                    if (!items.length || reduceMotion) {
+                        items.forEach(el => el.classList.add('in'));
+                        return;
+                    }
+                    const obs = new IntersectionObserver(entries => {
+                        entries.forEach(e => {
+                            if (e.isIntersecting) {
+                                e.target.classList.add('in');
+                                obs.unobserve(e.target);
+                            }
+                        });
+                    }, { threshold: 0.12 });
+                    items.forEach(el => obs.observe(el));
+                }
+
+                /* ── Tilt 3D effect on cards ───────────────────────────── */
+                function bindTilt(selector = '.tilt') {
+                    if (reduceMotion) return;
+                    document.querySelectorAll(selector).forEach(card => {
+                        if (card.dataset.tiltBound) return;
+                        card.dataset.tiltBound = '1';
+                        card.classList.add('is-tilt');
+                        card.addEventListener('pointermove', (e) => {
+                            const r = card.getBoundingClientRect();
+                            const x = (e.clientX - r.left) / r.width - 0.5;
+                            const y = (e.clientY - r.top) / r.height - 0.5;
+                            const rx = (-y * 6).toFixed(2);
+                            const ry = (x * 8).toFixed(2);
+                            card.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) translateZ(2px)`;
+                        });
+                        card.addEventListener('pointerleave', () => {
+                            card.style.transform = '';
+                        });
+                    });
+                }
+
+                /* ── Drag-reorder grids ────────────────────────────────── */
+                function bindSortable() {
+                    if (typeof Sortable === 'undefined') return;
+                    document.querySelectorAll('[data-ix-sortable]:not([data-ix-sortable-bound])').forEach(grid => {
+                        grid.dataset.ixSortableBound = '1';
+                        Sortable.create(grid, {
+                            animation: 200,
+                            handle: '.card-drag-handle',
+                            ghostClass: 'sortable-ghost',
+                            chosenClass: 'sortable-chosen',
+                            dragClass: 'sortable-drag',
+                            onEnd: () => toast('🎯 Layout chart diatur ulang. Geser lagi kapan saja!')
+                        });
+                    });
+                }
+
+                /* ── Chart card toolbar (drag handle, expand, download) ── */
+                function decorateChartCards() {
+                    document.querySelectorAll('canvas').forEach(canvas => {
+                        const card = canvas.closest('.chart-card') || canvas.closest('[class*="rounded-2xl"]');
+                        if (!card || card.dataset.ixDecorated) return;
+                        // Skip toolbar for very small / non-chart canvases (e.g. CV preview)
+                        if (canvas.offsetParent === null && !canvas.getAttribute('id')) return;
+                        card.dataset.ixDecorated = '1';
+                        card.classList.add('chart-card');
+
+                        const toolbar = document.createElement('div');
+                        toolbar.className = 'card-toolbar';
+                        toolbar.innerHTML = `
+                            <button class="card-tool-btn card-drag-handle" title="Geser untuk mengatur ulang"><i class="fas fa-grip-vertical"></i></button>
+                            <button class="card-tool-btn ix-expand" title="Perbesar chart"><i class="fas fa-expand"></i></button>
+                            <button class="card-tool-btn ix-download" title="Download PNG"><i class="fas fa-download"></i></button>
+                        `;
+                        card.appendChild(toolbar);
+
+                        toolbar.querySelector('.ix-expand').addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            openChartFullscreen(canvas, card);
+                        });
+                        toolbar.querySelector('.ix-download').addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            downloadCanvas(canvas, card);
+                        });
+                    });
+                }
+
+                /* ── Download canvas as PNG ────────────────────────────── */
+                function downloadCanvas(canvas, card) {
+                    try {
+                        const title = (card?.querySelector('h5, h4')?.innerText || canvas.id || 'chart').trim();
+                        const safe = title.replace(/[^\w\d-]+/g, '_').slice(0, 40);
+                        const url = canvas.toDataURL('image/png');
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = `${safe}.png`;
+                        document.body.appendChild(a);
+                        a.click();
+                        a.remove();
+                        toast('📸 Chart didownload sebagai PNG');
+                    } catch (err) {
+                        toast('⚠️ Gagal download chart: ' + err.message);
+                    }
+                }
+
+                /* ── Chart fullscreen modal ────────────────────────────── */
+                let fsChart = null;
+                function openChartFullscreen(sourceCanvas, card) {
+                    const overlay = document.getElementById('chart-fs-overlay');
+                    const fsCanvas = document.getElementById('chart-fs-canvas');
+                    const titleEl = document.getElementById('chart-fs-title')?.querySelector('span');
+                    const title = (card?.querySelector('h5, h4')?.innerText || 'Chart').trim();
+                    if (titleEl) titleEl.textContent = title;
+                    const sourceChart = (window.Chart && Chart.getChart) ? Chart.getChart(sourceCanvas) : null;
+                    if (!sourceChart) {
+                        toast('⚠️ Chart belum siap di-perbesar');
+                        return;
+                    }
+                    if (fsChart) { fsChart.destroy(); fsChart = null; }
+                    const cfg = JSON.parse(JSON.stringify({ type: sourceChart.config.type, data: sourceChart.config.data, options: sourceChart.config.options }));
+                    cfg.options = cfg.options || {};
+                    cfg.options.responsive = true;
+                    cfg.options.maintainAspectRatio = false;
+                    fsChart = new Chart(fsCanvas, cfg);
+                    overlay.classList.add('open');
+                }
+                function closeChartFullscreen() {
+                    const overlay = document.getElementById('chart-fs-overlay');
+                    if (overlay) overlay.classList.remove('open');
+                    if (fsChart) { fsChart.destroy(); fsChart = null; }
+                }
+                document.getElementById('chart-fs-close')?.addEventListener('click', closeChartFullscreen);
+                document.getElementById('chart-fs-overlay')?.addEventListener('click', (e) => {
+                    if (e.target.id === 'chart-fs-overlay') closeChartFullscreen();
+                });
+                document.getElementById('chart-fs-download')?.addEventListener('click', () => {
+                    const fsCanvas = document.getElementById('chart-fs-canvas');
+                    if (fsCanvas) downloadCanvas(fsCanvas, document.getElementById('chart-fs-card'));
+                });
+                document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeChartFullscreen(); });
+
+                /* ── Chart click cross-info (hook into Chart.js) ───────── */
+                function attachChartClick(canvas) {
+                    const chart = (window.Chart && Chart.getChart) ? Chart.getChart(canvas) : null;
+                    if (!chart || chart.__ixClickBound) return;
+                    chart.__ixClickBound = true;
+                    canvas.addEventListener('click', (evt) => {
+                        const points = chart.getElementsAtEventForMode(evt, 'nearest', { intersect: true }, true);
+                        if (!points.length) return;
+                        const p = points[0];
+                        const ds = chart.data.datasets[p.datasetIndex];
+                        const label = chart.data.labels[p.index];
+                        const value = ds.data[p.index];
+                        const formatted = (typeof value === 'number') ? value.toLocaleString('id-ID') : value;
+                        toast(`<strong>${ds.label || 'Data'}</strong> · ${label}<br><span style="color:#a5f3fc">${formatted}</span>`);
+                    });
+                }
+
+                /* ── Periodic re-scan (charts created lazily per tab) ──── */
+                let rescanTimer = null;
+                function rescan() {
+                    clearTimeout(rescanTimer);
+                    rescanTimer = setTimeout(() => {
+                        decorateChartCards();
+                        bindSortable();
+                        bindCountUp();
+                        bindReveal();
+                        bindTilt('.tilt');
+                        document.querySelectorAll('canvas').forEach(attachChartClick);
+                    }, 250);
+                }
+                // Wrap Chart constructor (after Chart.js loads) so new charts auto-bind
+                function patchChartJS() {
+                    if (!window.Chart || window.Chart.__ixPatched) return;
+                    window.Chart.__ixPatched = true;
+                    if (Chart.defaults) {
+                        Chart.defaults.animation = Chart.defaults.animation || {};
+                        Chart.defaults.animation.duration = reduceMotion ? 0 : 900;
+                        Chart.defaults.animation.easing = 'easeOutCubic';
+                        Chart.defaults.interaction = Chart.defaults.interaction || {};
+                        Chart.defaults.interaction.intersect = false;
+                        Chart.defaults.interaction.mode = 'index';
+                    }
+                    // Wrap Chart class so any newly created chart triggers rescan
+                    const OrigChart = window.Chart;
+                    function PatchedChart(ctx, cfg) {
+                        const inst = new OrigChart(ctx, cfg);
+                        try { rescan(); } catch (e) { /* noop */ }
+                        return inst;
+                    }
+                    PatchedChart.prototype = OrigChart.prototype;
+                    Object.setPrototypeOf(PatchedChart, OrigChart);
+                    Object.keys(OrigChart).forEach(k => { try { PatchedChart[k] = OrigChart[k]; } catch (e) {} });
+                    window.Chart = PatchedChart;
+                }
+
+                // Run initial pass + periodic rescan when tabs switch / data loads
+                patchChartJS();
+                rescan();
+                window.addEventListener('resize', rescan);
+                document.addEventListener('click', (e) => {
+                    if (e.target.closest('.project-tab, .tab-btn')) setTimeout(rescan, 400);
+                });
+
+                return { toast, animateCount, rescan, bindCountUp, bindReveal, bindTilt };
+            })();
 
             // ── Scroll-spy: highlight nav anchor whose target section is in view
             const navAnchors = document.querySelectorAll('nav a[href^="#"]');
