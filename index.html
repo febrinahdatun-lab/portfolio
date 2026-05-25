@@ -2289,7 +2289,9 @@
                             <div class="glass-panel p-5 rounded-2xl hover:border-green-500/50 group">
                                 <div class="w-10 h-10 rounded-lg bg-green-500/10 flex items-center justify-center text-green-400 text-lg mb-3 group-hover:scale-110 transition-transform">✅</div>
                                 <h4 class="text-white font-bold text-sm mb-1">Emergency Checklist</h4>
-<div class="glass-panel p-5 rounded-2xl hover:border-yellow-500/50 group">
+                                <p class="text-gray-500 text-xs">Daftar kebutuhan evakuasi terintegrasi: tas darurat, P3K, dokumen, dan logistik.</p>
+                            </div>
+                            <div class="glass-panel p-5 rounded-2xl hover:border-yellow-500/50 group">
                                 <div class="w-10 h-10 rounded-lg bg-yellow-500/10 flex items-center justify-center text-yellow-400 text-lg mb-3 group-hover:scale-110 transition-transform">📚</div>
                                 <h4 class="text-white font-bold text-sm mb-1">Panduan 5 Bencana</h4>
                                 <p class="text-gray-500 text-xs">Gempa, Tsunami, Banjir, Longsor, Kebakaran — lengkap dengan langkah evakuasi.</p>
@@ -2734,7 +2736,6 @@
                     </div>
                 </div>
             </div>
-        </div>
         <!-- End bmlp-dashboard -->
     </section>
 
@@ -3241,15 +3242,59 @@
         function printCV() {
             const activeId = activeCvLanguage === 'en' ? 'atsCvEn' : 'atsCvId';
             const cvContents = document.getElementById(activeId).innerHTML;
-            const printWindow = window.open('', '', 'height=600,width=800');
+            const printWindow = window.open('', '', 'height=800,width=900');
             printWindow.document.write('<html><head><title>Febri_Nahdatun_CV_ATS</title>');
-            printWindow.document.write('<link href="https://cdn.tailwindcss.com" rel="stylesheet">');
-            printWindow.document.write('<style>body { font-family: \"Noto Sans\", sans-serif; }</style>');
-            printWindow.document.write('</head><body class="p-8">');
+            printWindow.document.write('<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap" rel="stylesheet">');
+            printWindow.document.write('<style>');
+            printWindow.document.write('body { font-family: \"Noto Sans\", \"Arial\", \"Helvetica\", sans-serif; line-height: 1.4; color: #1a1a1a; font-size: 12px; padding: 0; margin: 0; background: #fff; }');
+            printWindow.document.write('.text-center { text-align: center; }');
+            printWindow.document.write('.text-justify { text-align: justify; text-justify: inter-word; }');
+            printWindow.document.write('.border-b-2 { border-bottom: 2px solid #000; }');
+            printWindow.document.write('.border-b { border-bottom: 1px solid #1a1a1a; }');
+            printWindow.document.write('.border-black { border-color: #000; }');
+            printWindow.document.write('.pb-4 { padding-bottom: 0.75rem; }');
+            printWindow.document.write('.mb-4 { margin-bottom: 1rem; }');
+            printWindow.document.write('.mb-3 { margin-bottom: 0.75rem; }');
+            printWindow.document.write('.mb-2 { margin-bottom: 0.5rem; }');
+            printWindow.document.write('.mb-1 { margin-bottom: 0.25rem; }');
+            printWindow.document.write('.mt-1 { margin-top: 0.25rem; }');
+            printWindow.document.write('.font-bold { font-weight: 700; }');
+            printWindow.document.write('.uppercase { text-transform: uppercase; }');
+            printWindow.document.write('.tracking-wide { letter-spacing: 0.025em; }');
+            printWindow.document.write('.tracking-wider { letter-spacing: 0.05em; }');
+            printWindow.document.write('.italic { font-style: italic; }');
+            printWindow.document.write('.text-gray-700 { color: #4b5563; }');
+            printWindow.document.write('.text-gray-800 { color: #1f2937; }');
+            printWindow.document.write('.text-blue-700 { color: #1d4ed8; }');
+            printWindow.document.write('.underline { text-decoration: underline; }');
+            printWindow.document.write('.text-xs { font-size: 11px; }');
+            printWindow.document.write('.text-sm { font-size: 12px; }');
+            printWindow.document.write('.text-base { font-size: 13.5px; }');
+            printWindow.document.write('.text-3xl { font-size: 22px; }');
+            printWindow.document.write('.flex { display: flex; }');
+            printWindow.document.write('.justify-between { justify-content: space-between; }');
+            printWindow.document.write('ul { padding-left: 1.25rem; margin-top: 0.25rem; margin-bottom: 0.25rem; }');
+            printWindow.document.write('.list-disc { list-style-type: disc; }');
+            printWindow.document.write('.list-none { list-style-type: none; padding-left: 0; }');
+            printWindow.document.write('.space-y-1 > * + * { margin-top: 0.25rem; }');
+            printWindow.document.write('@page { size: A4; margin: 1.8cm 1.5cm; }');
+            printWindow.document.write('</style>');
+            printWindow.document.write('</head><body class="p-4">');
             printWindow.document.write(cvContents);
             printWindow.document.write('</body></html>');
             printWindow.document.close();
-            setTimeout(() => { printWindow.print(); }, 1000);
+            
+            if (printWindow.document.fonts) {
+                printWindow.document.fonts.ready.then(function() {
+                    setTimeout(function() {
+                        printWindow.print();
+                    }, 350);
+                });
+            } else {
+                setTimeout(function() {
+                    printWindow.print();
+                }, 800);
+            }
         }
 
         function closeModal() {
