@@ -1214,6 +1214,7 @@
         @media print {
             body * { visibility: hidden; }
             #atsCvContent, #atsCvContent * { visibility: visible; position: absolute; left: 0; top: 0; width: 100%; margin: 0; padding: 0; background: white; color: black; }
+            .hidden { display: none !important; }
             .no-print { display: none !important; }
             .text-gray-700 { color: #374151 !important; }
             .text-gray-800 { color: #1f2937 !important; }
@@ -2735,6 +2736,7 @@
             </div>
         </div>
         <!-- End bmlp-dashboard -->
+    </section>
 
 
     <!-- Certifications -->
@@ -2843,7 +2845,11 @@
                 <div><h3 id="modalTitle" class="text-lg font-bold text-white font-poppins font-semibold">Document Viewer</h3><p id="modalOrg" class="text-gray-400 text-xs font-mono">Preview Mode</p></div>
                 
                 <!-- Action Buttons -->
-                <div class="flex gap-3">
+                <div class="flex gap-3 items-center">
+                    <div id="cvLangToggle" class="hidden flex gap-1 bg-white/5 border border-white/10 p-1 rounded-xl">
+                        <button id="btnLangEn" onclick="switchCvLanguage('en')" class="px-3 py-1.5 text-xs rounded-lg font-poppins font-medium transition-all duration-300 bg-primary text-white">English</button>
+                        <button id="btnLangId" onclick="switchCvLanguage('id')" class="px-3 py-1.5 text-xs rounded-lg font-poppins font-medium transition-all duration-300 text-gray-400 hover:text-white">Indonesia</button>
+                    </div>
                     <button id="downloadCvBtn" onclick="printCV()" class="hidden text-xs bg-primary hover:bg-violet-600 text-white px-4 py-2 rounded-xl transition-all duration-300 flex items-center gap-1.5 shadow-lg shadow-primary/20 font-poppins font-medium">
                         <i class="fas fa-download"></i> Save as PDF
                     </button>
@@ -2868,116 +2874,254 @@
 
                 <!-- 3. NATIVE ATS CV HTML (Hidden by default, shown via JS) -->
                 <div id="atsCvContent" class="hidden w-full max-w-[21cm] mx-auto bg-white text-black p-8 sm:p-12 text-left font-cv text-sm leading-snug">
-                    <!-- HEADER -->
-                    <div class="text-center border-b-2 border-black pb-4 mb-4">
-                        <h1 class="text-3xl font-bold uppercase tracking-wide">Febri Nahdatun</h1>
-                        <p class="mt-1 text-gray-700">Depok, Indonesia | (+62) 878-8889-3111 | febri.nahdatun@gmail.com</p>
-                        <p class="text-blue-700 underline text-xs mt-1">linkedin.com/in/febri-nahdatun | febrinahdatun-lab.github.io</p>
-                    </div>
+                    <!-- ENGLISH CV -->
+                    <div id="atsCvEn">
+                        <!-- HEADER -->
+                        <div class="text-center border-b-2 border-black pb-4 mb-4">
+                            <h1 class="text-3xl font-bold uppercase tracking-wide">Febri Nahdatun</h1>
+                            <p class="mt-1 text-gray-700">Depok, Indonesia | (+62) 878-8889-3111 | febri.nahdatun@gmail.com</p>
+                            <p class="text-blue-700 underline text-xs mt-1">linkedin.com/in/febri-nahdatun | febrinahdatun-lab.github.io</p>
+                        </div>
 
-                    <!-- SUMMARY -->
-                    <div class="mb-4">
-                        <h2 class="text-base font-bold uppercase border-b border-black mb-2 tracking-wider">Professional Summary</h2>
-                        <p class="text-justify text-gray-800">
-                            Tech & Data Specialist with over 10 years of experience in the non-profit and Islamic philanthropy sector, specializing in Knowledge Management Systems (KMS), Data Analytics, and Enterprise Automation. Proven track record in transforming scattered organizational data into strategic intelligence using Google & Microsoft ecosystems. Expert in bridging the gap between high-level management strategy and technical execution, implementing AI-driven solutions for document analysis, and ensuring data integrity for critical decision-making.
-                        </p>
-                    </div>
+                        <!-- SUMMARY -->
+                        <div class="mb-4">
+                            <h2 class="text-base font-bold uppercase border-b border-black mb-2 tracking-wider">Professional Summary</h2>
+                            <p class="text-justify text-gray-800">
+                                Tech & Data Specialist with over 10 years of experience in IT governance, organizational automation, and Business Intelligence (BI). Possesses deep expertise in transforming semi-manual workflows into data-driven automated systems leveraging Google and Microsoft ecosystems. Adept at serving as a technical bridge between strategic management and advanced data execution. Experienced in building rapid data pipelines using VS Code and Python, accelerated by AI assistants, to deliver custom data into internal division dashboards and Knowledge Management System (KMS) platforms.
+                            </p>
+                        </div>
 
-                    <!-- EXPERIENCE -->
-                    <div class="mb-4">
-                        <h2 class="text-base font-bold uppercase border-b border-black mb-2 tracking-wider">Experience</h2>
-                        
-                        <div class="mb-3">
-                            <div class="flex justify-between font-bold">
-                                <span>Knowledge Management Systems (KMS) Specialist</span>
-                                <span>Nov 2023 -- Present</span>
+                        <!-- EXPERIENCE -->
+                        <div class="mb-4">
+                            <h2 class="text-base font-bold uppercase border-b border-black mb-2 tracking-wider">Experience</h2>
+                            
+                            <div class="mb-3">
+                                <div class="flex justify-between font-bold">
+                                    <span>Knowledge Management Systems (KMS) Specialist</span>
+                                    <span>Nov 2023 -- Present</span>
+                                </div>
+                                <div class="flex justify-between italic text-gray-700 mb-1">
+                                    <span>YBM BRILiaN</span>
+                                    <span>Jakarta Pusat, Indonesia</span>
+                                </div>
+                                <ul class="list-disc list-outside ml-4 text-gray-800 space-y-1">
+                                    <li>Served as the primary technical bridge in translating organizational strategy into functional digital implementations and KMS solutions that align with business goals.</li>
+                                    <li>Independently developed rapid automated data architectures when operational data was not yet available in the central system, feeding directly into internal division dashboards.</li>
+                                    <li>Utilized Visual Studio Code (VS Code) as the primary development environment to integrate custom data, process it via Python, and leverage AI Assistants to accelerate data cleaning and manipulation before loading into Power BI.</li>
+                                    <li>Served as the automation technical bridge in a semi-manual work environment, primarily optimizing data collaboration and synchronicity between Microsoft SharePoint and Google Workspace.</li>
+                                    <li>Designed and launched a centralized Knowledge Management portal, eliminating information silos and ensuring seamless document access for 100+ employees.</li>
+                                    <li>Integrated Generative AI technologies into organizational document workflows to enable instant summarization and data-driven search (chat-with-data).</li>
+                                    <li>Developed interactive Business Intelligence dashboards to visualize operational metrics in real-time, delivering data-driven insights for executive leadership.</li>
+                                    <li>Created custom automation scripts using Google Apps Script, cutting annual administrative report preparation time by 40%.</li>
+                                    <li>Managed global cloud infrastructure governance, user access rights via Entra ID/Azure and Google Admin, and secured large-scale data migrations from SharePoint to Google Drive.</li>
+                                </ul>
                             </div>
-                            <div class="flex justify-between italic text-gray-700 mb-1">
-                                <span>YBM BRILiaN</span>
-                                <span>Jakarta Pusat, Indonesia</span>
+
+                            <div class="mb-3">
+                                <div class="flex justify-between font-bold">
+                                    <span>Database Management Staff</span>
+                                    <span>Dec 2016 -- Jun 2023</span>
+                                </div>
+                                <div class="flex justify-between italic text-gray-700 mb-1">
+                                    <span>YBM BRILiaN</span>
+                                    <span>Jakarta Pusat, Indonesia</span>
+                                </div>
+                                <ul class="list-disc list-outside ml-4 text-gray-800 space-y-1">
+                                    <li>Managed the central database for the Program Division, ensuring high integrity and accuracy for regional reporting.</li>
+                                    <li>Conducted Business Feasibility Analysis and due diligence on application documents for organizational partnership programs.</li>
+                                    <li>Evaluated division budget spending reports to monitor financial accountability and compliance with organizational regulations.</li>
+                                    <li>Transformed conventional physical archiving systems into a structured digital document ecosystem, accelerating data retrieval efficiency.</li>
+                                </ul>
                             </div>
-                            <ul class="list-disc list-outside ml-4 text-gray-800 space-y-1">
-                                <li>Serving as the technical bridge between organizational strategy and digital implementation, translating leadership directives into functional KMS solutions that align with business goals.</li>
-                                <li>Designed and deployed a centralized Knowledge Management portal, eliminating information silos and ensuring seamless access to organizational assets for 100+ employees.</li>
-                                <li>Operationalized <strong>Generative AI integration</strong> within document workflows, enabling instant summarization and chat-with-data capabilities to accelerate research and reporting processes.</li>
-                                <li>Developed interactive Business Intelligence dashboards to visualize real-time operational metrics (fundraising & distribution), empowering leadership with data-backed insights.</li>
-                                <li>Engineered custom automation scripts using Google Apps Script to streamline administrative processes, reducing manual reporting time by approximately 40%.</li>
+                            
+                            <div class="mb-3">
+                                <div class="flex justify-between font-bold">
+                                    <span>Frontliner Staff</span>
+                                    <span>Dec 2014 -- Nov 2016</span>
+                                </div>
+                                <div class="flex justify-between italic text-gray-700 mb-1">
+                                    <span>YBM BRILiaN</span>
+                                    <span>Jakarta Pusat, Indonesia</span>
+                                </div>
+                                <ul class="list-disc list-outside ml-4 text-gray-800 space-y-1">
+                                    <li>Responsible as the first line of defense for information collection and data quality assurance, minimizing errors from the initial input stage.</li>
+                                    <li>Conducted structured interviews and preliminary assessments of prospective aid program beneficiaries.</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- SKILLS -->
+                        <div class="mb-4">
+                            <h2 class="text-base font-bold uppercase border-b border-black mb-2 tracking-wider">Technical Skills</h2>
+                            <ul class="list-none text-gray-800 space-y-1">
+                                <li><strong>Data Analytics & Visualization:</strong> Power BI (Advanced DAX & Data Modeling), Google Looker Studio, SQL, Python (Pandas/NumPy), Advanced Excel, R.</li>
+                                <li><strong>Workspace & Technical Integration:</strong> Visual Studio Code (VS Code), Microsoft Fabric, ETL/ELT Pipeline Automation.</li>
+                                <li><strong>Cloud & IT Infrastructure:</strong> Google Workspace Super Admin (Apps Script, AppSheet), Microsoft 365 (Admin Center, Entra ID/Azure, SharePoint, Power Platform), Email Routing, Storage Optimization, Cloud Data Migration.</li>
+                                <li><strong>AI & Automation:</strong> Generative AI Integration (Azure OpenAI, Gemini, ChatGPT), Prompt Engineering, RAG Chatbot Integration, Process Automation.</li>
+                                <li><strong>Core Competencies:</strong> Knowledge Management, Digital Transformation, Business Intelligence, Data Governance, Strategic Reporting.</li>
                             </ul>
                         </div>
 
-                        <div class="mb-3">
-                            <div class="flex justify-between font-bold">
-                                <span>Database Management Staff</span>
-                                <span>Dec 2016 -- Jun 2023</span>
-                            </div>
-                            <div class="flex justify-between italic text-gray-700 mb-1">
-                                <span>YBM BRILiaN</span>
-                                <span>Jabodetabek, Indonesia</span>
-                            </div>
-                            <ul class="list-disc list-outside ml-4 text-gray-800 space-y-1">
-                                <li>Managed the central Program Division database, ensuring high integrity and accuracy for regional reporting and stakeholder updates.</li>
-                                <li>Conducted <strong>Business Feasibility Analysis</strong> and due diligence for program submissions, verifying beneficiary eligibility to ensure targeted fund distribution.</li>
-                                <li>Evaluated Fund Usage Reports and Program Support Reports to monitor compliance, effectiveness, and financial accountability of division budgets.</li>
-                                <li>Facilitated strategic planning by documenting key decisions in Annual Budget Plan meetings and drafting official correspondence and cooperation agreements.</li>
-                                <li>Transformed manual archiving processes into a structured digital filing system, significantly improving information retrieval efficiency.</li>
+                        <!-- CERTIFICATIONS -->
+                        <div class="mb-4">
+                            <h2 class="text-base font-bold uppercase border-b border-black mb-2 tracking-wider">Training & Certifications</h2>
+                            <ul class="list-none text-gray-800 space-y-1">
+                                <li class="flex justify-between"><span><strong>Machine Learning for Beginners</strong> | Dicoding / Google Developers Partner</span> <span class="italic">Mar 2026</span></li>
+                                <li class="flex justify-between"><span><strong>Building Gen AI Applications with Microsoft Azure</strong> | Dicoding / Microsoft Partner</span> <span class="italic">Mar 2026</span></li>
+                                <li class="flex justify-between"><span><strong>Applying Data Science with Microsoft Fabric</strong> | Dicoding / Microsoft Partner</span> <span class="italic">Mar 2026</span></li>
+                                <li class="flex justify-between"><span><strong>Certified Zakat Expert (Level 3)</strong> | BNSP (National Professional Certification Board)</span> <span class="italic">Jul 2025</span></li>
+                                <li class="flex justify-between"><span><strong>Data Science Track: Probability & Statistics</strong> | Dicoding</span> <span class="italic">Oct 2025</span></li>
+                                <li class="flex justify-between"><span><strong>Introduction to AI</strong> | Dicoding</span> <span class="italic">Oct 2025</span></li>
+                                <li class="flex justify-between"><span><strong>Data Analyst Career Track</strong> | DQLab</span> <span class="italic">Oct 2025</span></li>
+                                <li class="flex justify-between"><span><strong>Machine Learning & AI for Beginners Bootcamp</strong> | DQLab</span> <span class="italic">Oct 2025</span></li>
+                                <li class="flex justify-between"><span><strong>Data Analyst with SQL & Python Bootcamp</strong> | DQLab</span> <span class="italic">Oct 2025</span></li>
+                                <li class="flex justify-between"><span><strong>Data Analyst with Excel Bootcamp</strong> | DQLab</span> <span class="italic">Oct 2025</span></li>
+                                <li class="flex justify-between"><span><strong>Mini Bootcamp: Introduction to Data Analytics</strong> | DQLab</span> <span class="italic">2025</span></li>
+                                <li class="flex justify-between"><span><strong>DevCoach 159: Database 101</strong> | Dicoding</span> <span class="italic">Jul 2024</span></li>
+                                <li class="flex justify-between"><span><strong>Introduction to Programming with Python</strong> | Dicoding</span> <span class="italic">Sep 2023</span></li>
+                                <li class="flex justify-between"><span><strong>Introduction to Structured Query Language (SQL)</strong> | Dicoding</span> <span class="italic">Sep 2023</span></li>
+                                <li class="flex justify-between"><span><strong>AI & ChatGPT for Academics and Office Work</strong> | Taalenta</span> <span class="italic">Dec 2023</span></li>
                             </ul>
                         </div>
-                        
-                        <div class="mb-3">
+
+                        <!-- EDUCATION -->
+                        <div class="mb-4">
+                            <h2 class="text-base font-bold uppercase border-b border-black mb-2 tracking-wider">Education</h2>
                             <div class="flex justify-between font-bold">
-                                <span>Frontliner Staff</span>
-                                <span>Dec 2014 -- Nov 2016</span>
+                                <span>Universitas Indraprasta PGRI (UNINDRA)</span>
+                                <span>Jakarta Timur, Indonesia</span>
                             </div>
-                            <div class="flex justify-between italic text-gray-700 mb-1">
-                                <span>YBM BRILiaN</span>
-                                <span>Jabodetabek, Indonesia</span>
+                            <div class="flex justify-between italic text-gray-700">
+                                <span>Bachelor of Computer Science (S.Kom.) -- Informatics</span>
+                                <span>Graduated: Feb 2020</span>
                             </div>
-                            <ul class="list-disc list-outside ml-4 text-gray-800 space-y-1">
-                                <li>Acted as the primary point of data collection and quality assurance, verifying incoming information to minimize errors at the input stage.</li>
-                                <li>Conducted structured interviews and preliminary assessments of prospective beneficiaries to determine eligibility for program assistance.</li>
-                                <li>Served as the liaison between external parties and internal divisions, ensuring swift and accurate information flow across electronic and direct channels.</li>
+                            <div class="text-sm text-gray-600">GPA: 3.20 | Faculty of Engineering and Computer Science | Focus: Software Engineering, Data Structures.</div>
+                        </div>
+                    </div>
+
+                    <!-- INDONESIAN CV -->
+                    <div id="atsCvId" class="hidden">
+                        <!-- HEADER -->
+                        <div class="text-center border-b-2 border-black pb-4 mb-4">
+                            <h1 class="text-3xl font-bold uppercase tracking-wide">Febri Nahdatun</h1>
+                            <p class="mt-1 text-gray-700">Depok, Indonesia | (+62) 878-8889-3111 | febri.nahdatun@gmail.com</p>
+                            <p class="text-blue-700 underline text-xs mt-1">linkedin.com/in/febri-nahdatun | febrinahdatun-lab.github.io</p>
+                        </div>
+
+                        <!-- SUMMARY -->
+                        <div class="mb-4">
+                            <h2 class="text-base font-bold uppercase border-b border-black mb-2 tracking-wider">Ringkasan Profesional</h2>
+                            <p class="text-justify text-gray-800">
+                                Tech & Data Specialist dengan pengalaman lebih dari 10 tahun di sektor tata kelola teknologi, otomatisasi organisasi, dan Business Intelligence (BI). Memiliki keahlian mendalam dalam mentransformasi ekosistem kerja semi-manual menjadi sistem otomatis berbasis data menggunakan ekosistem Google dan Microsoft. Mahir bertindak sebagai jembatan teknis (technical bridge) antara manajemen strategis dan eksekusi pengolahan data tingkat lanjut. Berpengalaman membangun alur kerja data (data pipeline) cepat menggunakan VS Code dan Python dengan akselerasi AI Assistant untuk mengolah data kustom ke dalam dashboard divisi internal maupun platform Knowledge Management System (KMS).
+                            </p>
+                        </div>
+
+                        <!-- EXPERIENCE -->
+                        <div class="mb-4">
+                            <h2 class="text-base font-bold uppercase border-b border-black mb-2 tracking-wider">Pengalaman Kerja</h2>
+                            
+                            <div class="mb-3">
+                                <div class="flex justify-between font-bold">
+                                    <span>Knowledge Management Systems (KMS) Specialist</span>
+                                    <span>Nov 2023 -- Sekarang</span>
+                                </div>
+                                <div class="flex justify-between italic text-gray-700 mb-1">
+                                    <span>YBM BRILiaN</span>
+                                    <span>Jakarta Pusat, Indonesia</span>
+                                </div>
+                                <ul class="list-disc list-outside ml-4 text-gray-800 space-y-1">
+                                    <li>Bertindak sebagai jembatan teknis utama dalam menerjemahkan strategi organisasi menjadi implementasi digital dan solusi KMS yang fungsional.</li>
+                                    <li>Mengembangkan arsitektur data otomatis secara mandiri dan cepat saat data operasional belum tersedia di sistem pusat, guna disajikan langsung ke dalam dashboard divisi internal.</li>
+                                    <li>Menggunakan Visual Studio Code (VS Code) sebagai lingkungan kerja utama untuk mengintegrasikan data kustom, mengolahnya via Python, serta memanfaatkan bantuan AI Assistant demi mempercepat proses data cleaning dan manipulasi data sebelum ditarik ke Power BI.</li>
+                                    <li>Menjadi jembatan teknis otomatisasi pada lingkungan kerja organisasi yang masih bersifat semi-manual, utamanya mengoptimalkan kolaborasi data antara Microsoft SharePoint dan Google Workspace.</li>
+                                    <li>Merancang dan meluncurkan portal Knowledge Management terpusat yang menghilangkan sekat informasi dan menjamin kelancaran akses dokumen bagi 100+ karyawan.</li>
+                                    <li>Mengintegrasikan teknologi Generative AI ke dalam alur kerja dokumen organisasi untuk menghadirkan kemampuan ringkasan instan dan pencarian berbasis data (chat-with-data).</li>
+                                    <li>Membangun dashboard Business Intelligence interaktif untuk memvisualisasikan metrik operasional secara real-time guna menghasilkan insight berbasis data bagi pimpinan.</li>
+                                    <li>Membuat skrip otomatisasi kustom berbasis Google Apps Script untuk memangkas waktu penyusunan laporan administrasi tahunan hingga 40%.</li>
+                                    <li>Mengelola tata kelola infrastruktur cloud global, hak akses pengguna melalui Entra ID/Azure dan Google Admin, serta mengamankan migrasi data berskala besar dari SharePoint ke Google Drive.</li>
+                                </ul>
+                            </div>
+
+                            <div class="mb-3">
+                                <div class="flex justify-between font-bold">
+                                    <span>Database Management Staff</span>
+                                    <span>Des 2016 -- Juni 2023</span>
+                                </div>
+                                <div class="flex justify-between italic text-gray-700 mb-1">
+                                    <span>YBM BRILiaN</span>
+                                    <span>Jakarta Pusat, Indonesia</span>
+                                </div>
+                                <ul class="list-disc list-outside ml-4 text-gray-800 space-y-1">
+                                    <li>Mengelola basis data pusat Divisi Program untuk menjamin tingkat integritas dan keakuratan yang tinggi dalam pelaporan regional.</li>
+                                    <li>Melakukan Analisis Kelayakan Bisnis (Business Feasibility Analysis) dan uji tuntas (due diligence) dokumen pengajuan program kemitraan organisasi.</li>
+                                    <li>Mengevaluasi Laporan Penggunaan Dana Anggaran divisi untuk memonitor akuntabilitas finansial dan kepatuhan terhadap regulasi organisasi.</li>
+                                    <li>Mentransformasi sistem pengarsipan fisik konvensional menjadi ekosistem dokumen digital yang terstruktur untuk mempercepat efisiensi pencarian data.</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <div class="flex justify-between font-bold">
+                                    <span>Frontliner Staff</span>
+                                    <span>Des 2014 -- Nov 2016</span>
+                                </div>
+                                <div class="flex justify-between italic text-gray-700 mb-1">
+                                    <span>YBM BRILiaN</span>
+                                    <span>Jakarta Pusat, Indonesia</span>
+                                </div>
+                                <ul class="list-disc list-outside ml-4 text-gray-800 space-y-1">
+                                    <li>Bertanggung jawab sebagai garda pertama pengumpulan informasi dan penjaminan kualitas data (quality assurance) untuk meminimalkan eror sejak tahap input awal.</li>
+                                    <li>Melakukan wawancara terstruktur dan penilaian awal (preliminary assessment) terhadap calon penerima manfaat program bantuan.</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- SKILLS -->
+                        <div class="mb-4">
+                            <h2 class="text-base font-bold uppercase border-b border-black mb-2 tracking-wider">Keahlian Teknis</h2>
+                            <ul class="list-none text-gray-800 space-y-1">
+                                <li><strong>Data Analytics & Visualization:</strong> Power BI (Advanced DAX & Data Modeling), Google Looker Studio, SQL, Python (Pandas/NumPy), Advanced Excel, R.</li>
+                                <li><strong>Dapur Kerja & Integrasi Teknis:</strong> Visual Studio Code (VS Code), Microsoft Fabric, ETL/ELT Pipeline Automation.</li>
+                                <li><strong>Cloud & IT Infrastructure:</strong> Google Workspace Super Admin (Apps Script, AppSheet), Microsoft 365 (Admin Center, Entra ID/Azure, SharePoint, Power Platform), Email Routing, Storage Optimization, Cloud Data Migration.</li>
+                                <li><strong>AI & Automation:</strong> Generative AI Integration (Azure OpenAI, Gemini, ChatGPT), Prompt Engineering, RAG Chatbot Integration, Process Automation.</li>
+                                <li><strong>Core Competencies:</strong> Knowledge Management, Digital Transformation, Business Intelligence, Data Governance, Strategic Reporting.</li>
                             </ul>
                         </div>
-                    </div>
 
-                    <!-- SKILLS -->
-                    <div class="mb-4">
-                        <h2 class="text-base font-bold uppercase border-b border-black mb-2 tracking-wider">Technical Skills</h2>
-                        <ul class="list-none text-gray-800 space-y-1">
-                            <li><strong>Data Analytics & Visualization:</strong> SQL, Python (Pandas/NumPy), R, Google Looker Studio, Microsoft Power BI, Advanced Excel.</li>
-                            <li><strong>Cloud Ecosystems:</strong> Google Workspace (Super Admin, Apps Script, AppSheet), Microsoft 365 (Admin Center, Entra ID/Azure, SharePoint, Power Platform).</li>
-                            <li><strong>AI & Automation:</strong> Generative AI Integration (Gemini/ChatGPT), Prompt Engineering, Process Automation, Chatbot Integration.</li>
-                            <li><strong>Core Competencies:</strong> Knowledge Management, Digital Transformation, Business Intelligence, Data Governance, Strategic Reporting.</li>
-                        </ul>
-                    </div>
-
-                    <!-- CERTIFICATIONS -->
-                    <div class="mb-4">
-                        <h2 class="text-base font-bold uppercase border-b border-black mb-2 tracking-wider">Training & Certifications</h2>
-                        <ul class="list-none text-gray-800 space-y-1">
-                            <li class="flex justify-between"><span><strong>Amil Zakat Organisations (Lvl 3)</strong> | BNSP</span> <span class="italic">Jul 2025</span></li>
-                            <li class="flex justify-between"><span><strong>Data Science: Probability & Statistics</strong> | Dicoding</span> <span class="italic">Oct 2025</span></li>
-                            <li class="flex justify-between"><span><strong>Basic Artificial Intelligence (AI)</strong> | Dicoding</span> <span class="italic">Oct 2025</span></li>
-                            <li class="flex justify-between"><span><strong>Data Analyst Career Track</strong> | DQLab</span> <span class="italic">Oct 2025</span></li>
-                            <li class="flex justify-between"><span><strong>Machine Learning & AI for Beginner</strong> | DQLab</span> <span class="italic">Oct 2025</span></li>
-                            <li class="flex justify-between"><span><strong>Introduction to Data Science with R</strong> | DQLab</span> <span class="italic">Apr 2025</span></li>
-                            <li class="flex justify-between"><span><strong>DevCoach 159: Database 101</strong> | Dicoding</span> <span class="italic">Jul 2024</span></li>
-                            <li class="flex justify-between"><span><strong>AI & ChatGPT for Academic & Office</strong> | Taalenta</span> <span class="italic">Dec 2023</span></li>
-                        </ul>
-                    </div>
-
-                    <!-- EDUCATION -->
-                    <div class="mb-4">
-                        <h2 class="text-base font-bold uppercase border-b border-black mb-2 tracking-wider">Education</h2>
-                        <div class="flex justify-between font-bold">
-                            <span>Universitas Indraprasta PGRI (UNINDRA)</span>
-                            <span>Jakarta Timur, Indonesia</span>
+                        <!-- CERTIFICATIONS -->
+                        <div class="mb-4">
+                            <h2 class="text-base font-bold uppercase border-b border-black mb-2 tracking-wider">Pelatihan & Sertifikasi</h2>
+                            <ul class="list-none text-gray-800 space-y-1">
+                                <li class="flex justify-between"><span><strong>Belajar Machine Learning untuk Pemula</strong> | Dicoding / Google Developers Partner</span> <span class="italic">Maret 2026</span></li>
+                                <li class="flex justify-between"><span><strong>Membangun Aplikasi Gen AI dengan Microsoft Azure</strong> | Dicoding / Microsoft Partner</span> <span class="italic">Maret 2026</span></li>
+                                <li class="flex justify-between"><span><strong>Belajar Penerapan Data Science dengan Microsoft Fabric</strong> | Dicoding / Microsoft Partner</span> <span class="italic">Maret 2026</span></li>
+                                <li class="flex justify-between"><span><strong>Sertifikasi Kompetensi Ahli Amil Zakat (Lvl 3)</strong> | BNSP</span> <span class="italic">Juli 2025</span></li>
+                                <li class="flex justify-between"><span><strong>Data Science Track: Probability & Statistics</strong> | Dicoding</span> <span class="italic">Oktober 2025</span></li>
+                                <li class="flex justify-between"><span><strong>Belajar Dasar AI</strong> | Dicoding</span> <span class="italic">Oktober 2025</span></li>
+                                <li class="flex justify-between"><span><strong>Data Analyst Career Track</strong> | DQLab</span> <span class="italic">Oktober 2025</span></li>
+                                <li class="flex justify-between"><span><strong>Machine Learning & AI for Beginner Bootcamp</strong> | DQLab</span> <span class="italic">Oktober 2025</span></li>
+                                <li class="flex justify-between"><span><strong>Data Analyst with SQL & Python Bootcamp</strong> | DQLab</span> <span class="italic">Oktober 2025</span></li>
+                                <li class="flex justify-between"><span><strong>Data Analyst with Excel Bootcamp</strong> | DQLab</span> <span class="italic">Oktober 2025</span></li>
+                                <li class="flex justify-between"><span><strong>Mini Bootcamp: Introduction to Data Analytics</strong> | DQLab</span> <span class="italic">2025</span></li>
+                                <li class="flex justify-between"><span><strong>DevCoach 159: Database 101</strong> | Dicoding</span> <span class="italic">Juli 2024</span></li>
+                                <li class="flex justify-between"><span><strong>Memulai Pemrograman dengan Python</strong> | Dicoding</span> <span class="italic">September 2023</span></li>
+                                <li class="flex justify-between"><span><strong>Belajar Dasar Structured Query Language (SQL)</strong> | Dicoding</span> <span class="italic">September 2023</span></li>
+                                <li class="flex justify-between"><span><strong>AI & ChatGPT untuk Akademik dan Perkantoran</strong> | Taalenta</span> <span class="italic">Desember 2023</span></li>
+                            </ul>
                         </div>
-                        <div class="flex justify-between italic text-gray-700">
-                            <span>Bachelor of Informatics Engineering (S.Kom)</span>
-                            <span></span>
+
+                        <!-- EDUCATION -->
+                        <div class="mb-4">
+                            <h2 class="text-base font-bold uppercase border-b border-black mb-2 tracking-wider">Pendidikan</h2>
+                            <div class="flex justify-between font-bold">
+                                <span>Universitas Indraprasta PGRI (UNINDRA)</span>
+                                <span>Jakarta Timur, Indonesia</span>
+                            </div>
+                            <div class="flex justify-between italic text-gray-700">
+                                <span>Sarjana Komputer (S.Kom.) -- Informatika</span>
+                                <span>Lulus: Feb 2020</span>
+                            </div>
+                            <div class="text-sm text-gray-600">IPK: 3.20 | Fakultas Teknik dan Ilmu Komputer | Fokus Studi: Informatika (Rekayasa Perangkat Lunak, Struktur Data).</div>
                         </div>
-                        <div class="text-sm text-gray-600">Focus: Software Engineering, Data Structures.</div>
                     </div>
                 </div>
 
@@ -3026,6 +3170,32 @@
         const spinner = document.getElementById('loadingSpinner');
         const pdfShield = document.getElementById('pdfShield');
 
+        let activeCvLanguage = 'en';
+
+        function switchCvLanguage(lang) {
+            activeCvLanguage = lang;
+            const enDiv = document.getElementById('atsCvEn');
+            const idDiv = document.getElementById('atsCvId');
+            const btnEn = document.getElementById('btnLangEn');
+            const btnId = document.getElementById('btnLangId');
+
+            if (lang === 'en') {
+                enDiv.classList.remove('hidden');
+                idDiv.classList.add('hidden');
+                btnEn.classList.add('bg-primary', 'text-white');
+                btnEn.classList.remove('text-gray-400', 'hover:text-white');
+                btnId.classList.remove('bg-primary', 'text-white');
+                btnId.classList.add('text-gray-400', 'hover:text-white');
+            } else {
+                idDiv.classList.remove('hidden');
+                enDiv.classList.add('hidden');
+                btnId.classList.add('bg-primary', 'text-white');
+                btnId.classList.remove('text-gray-400', 'hover:text-white');
+                btnEn.classList.remove('bg-primary', 'text-white');
+                btnEn.classList.add('text-gray-400', 'hover:text-white');
+            }
+        }
+
         function openCertModal(title, org, fileId) {
             modalTitle.innerText = title;
             modalOrg.innerText = org;
@@ -3037,12 +3207,15 @@
                 pdfFrame.src = '';
                 atsCvContent.classList.remove('hidden');
                 downloadCvBtn.classList.remove('hidden'); 
+                document.getElementById('cvLangToggle').classList.remove('hidden');
                 spinner.classList.add('hidden');
                 pdfShield.classList.add('hidden'); // Disable shield for CV so download button works
+                switchCvLanguage('en'); // Default language is English
             } else {
                 // Show Google Drive PDF (Protected Certs)
                 atsCvContent.classList.add('hidden');
                 downloadCvBtn.classList.add('hidden');
+                document.getElementById('cvLangToggle').classList.add('hidden');
                 pdfFrame.classList.remove('hidden');
                 spinner.classList.remove('hidden');
                 pdfShield.classList.remove('hidden'); // Enable shield for Certs
@@ -3060,10 +3233,12 @@
 
         // PRINT CV FUNCTION
         function printCV() {
-            const cvContents = document.getElementById('atsCvContent').innerHTML;
+            const activeId = activeCvLanguage === 'en' ? 'atsCvEn' : 'atsCvId';
+            const cvContents = document.getElementById(activeId).innerHTML;
             const printWindow = window.open('', '', 'height=600,width=800');
             printWindow.document.write('<html><head><title>Febri_Nahdatun_CV_ATS</title>');
             printWindow.document.write('<link href="https://cdn.tailwindcss.com" rel="stylesheet">');
+            printWindow.document.write('<style>body { font-family: \"Noto Sans\", sans-serif; }</style>');
             printWindow.document.write('</head><body class="p-8">');
             printWindow.document.write(cvContents);
             printWindow.document.write('</body></html>');
