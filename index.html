@@ -758,6 +758,46 @@
             box-shadow: 0 2px 8px rgba(0,119,182,0.1);
         }
 
+        /* PROJECT SELECTOR CARD STYLES */
+        .project-card {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(12px);
+            border-color: rgba(255, 255, 255, 0.05);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .project-card:hover {
+            background: rgba(255, 255, 255, 0.04);
+            transform: translateY(-4px);
+        }
+        
+        /* Specific project themes when active */
+        .project-card.active[data-project="superstore"] {
+            border-color: rgba(139, 92, 246, 0.6);
+            box-shadow: 0 0 25px rgba(139, 92, 246, 0.25);
+            background: rgba(139, 92, 246, 0.05);
+        }
+        .project-card.active[data-project="marketing"] {
+            border-color: rgba(14, 165, 233, 0.6);
+            box-shadow: 0 0 25px rgba(14, 165, 233, 0.25);
+            background: rgba(14, 165, 233, 0.05);
+        }
+        .project-card.active[data-project="rig"] {
+            border-color: rgba(245, 158, 11, 0.6);
+            box-shadow: 0 0 25px rgba(245, 158, 11, 0.25);
+            background: rgba(245, 158, 11, 0.05);
+        }
+        .project-card.active[data-project="siagaai"] {
+            border-color: rgba(34, 211, 238, 0.6);
+            box-shadow: 0 0 25px rgba(34, 211, 238, 0.25);
+            background: rgba(34, 211, 238, 0.05);
+        }
+        .project-card.active[data-project="bmlp"] {
+            border-color: rgba(16, 185, 129, 0.6);
+            box-shadow: 0 0 25px rgba(16, 185, 129, 0.25);
+            background: rgba(16, 185, 129, 0.05);
+        }
+
         /* BMLP STYLES */
         .bmlp-gradient {
             background: linear-gradient(135deg, #064E3B, #059669, #34D399);
@@ -1462,25 +1502,119 @@
     <section id="dashboard" class="py-24 max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-36">
         
         <!-- PROJECT SWITCHER TABS -->
-        <div class="mb-16 sticky top-24 z-30 bg-dark/80 backdrop-blur-md p-4 rounded-2xl border border-gray-800 shadow-lg">
-            <div class="flex items-center gap-4">
-                <span class="text-gray-400 text-sm font-medium">Select Project:</span>
-                <div class="flex gap-3">
-                    <button onclick="switchProject('superstore')" class="project-tab px-6 py-3 rounded-lg font-semibold text-sm transition-all bg-primary text-white hover:bg-violet-600 shadow-md" data-project="superstore">
-                        <i class="fas fa-store mr-2"></i>SuperStore Analytics
-                    </button>
-                    <button onclick="switchProject('marketing')" class="project-tab px-6 py-3 rounded-lg font-semibold text-sm transition-all bg-dark border border-gray-700 text-gray-300 hover:border-primary hover:text-primary" data-project="marketing">
-                        <i class="fas fa-chart-line mr-2"></i>Marketing Analytics
-                    </button>
-                    <button onclick="switchProject('rig')" class="project-tab px-6 py-3 rounded-lg font-semibold text-sm transition-all bg-dark border border-gray-700 text-gray-300 hover:border-primary hover:text-primary" data-project="rig">
-                        <i class="fas fa-industry mr-2"></i>Rig Operations
-                    </button>
-                    <button onclick="switchProject('siagaai')" class="project-tab px-6 py-3 rounded-lg font-semibold text-sm transition-all bg-dark border border-gray-700 text-gray-300 hover:border-primary hover:text-primary" data-project="siagaai">
-                        <i class="fas fa-shield-alt mr-2"></i>SiagaAI<span class="ml-2 text-[10px] bg-cyan-500/20 text-cyan-300 px-1.5 py-0.5 rounded-full align-middle">LIVE</span>
-                    </button>
-                    <button onclick="switchProject('bmlp')" class="project-tab px-6 py-3 rounded-lg font-semibold text-sm transition-all bg-dark border border-gray-700 text-gray-300 hover:border-primary hover:text-primary" data-project="bmlp">
-                        <i class="fas fa-brain mr-2"></i>ML Fraud Detection<span class="ml-2 text-[10px] bg-emerald-500/20 text-emerald-300 px-1.5 py-0.5 rounded-full align-middle">AI</span>
-                    </button>
+        <div class="mb-12 sticky top-24 z-30 bg-dark/85 backdrop-blur-md p-4 rounded-3xl border border-gray-800 shadow-2xl">
+            <div class="flex flex-col gap-3">
+                <div class="flex items-center justify-between px-2">
+                    <span class="text-gray-400 text-xs font-mono uppercase tracking-widest font-bold flex items-center gap-2">
+                        <span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span> Select Workspace / Project
+                    </span>
+                    <span class="text-[10px] text-gray-500 font-mono hidden md:inline">Interactive Live Dashboards</span>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
+                    <!-- Card 1: SuperStore -->
+                    <div onclick="switchProject('superstore')" class="project-card active group relative p-4 rounded-2xl border border-white/5 cursor-pointer transition-all duration-300 hover:border-primary/30" data-project="superstore">
+                        <div class="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl"></div>
+                        <div class="relative flex flex-col h-full justify-between gap-3">
+                            <div class="flex justify-between items-start">
+                                <div class="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary text-sm group-hover:scale-110 transition-transform">
+                                    <i class="fas fa-store"></i>
+                                </div>
+                                <span class="text-[8px] bg-primary/20 text-violet-300 px-1.5 py-0.5 rounded font-mono font-bold uppercase tracking-wider">BI Hub</span>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-bold text-xs group-hover:text-primary transition-colors">SuperStore Analytics</h4>
+                                <p class="text-[9px] text-gray-500 mt-0.5 leading-normal font-poppins">Sales dynamics & profit margins.</p>
+                            </div>
+                            <div class="flex justify-between items-center border-t border-white/5 pt-2 mt-0.5 text-[9px] font-mono text-gray-400">
+                                <span>Revenue:</span>
+                                <span class="text-white font-bold">$1.94M</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Card 2: Marketing -->
+                    <div onclick="switchProject('marketing')" class="project-card group relative p-4 rounded-2xl border border-white/5 cursor-pointer transition-all duration-300 hover:border-secondary/30" data-project="marketing">
+                        <div class="absolute inset-0 bg-gradient-to-br from-secondary/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl"></div>
+                        <div class="relative flex flex-col h-full justify-between gap-3">
+                            <div class="flex justify-between items-start">
+                                <div class="w-8 h-8 rounded-lg bg-secondary/10 flex items-center justify-center text-secondary text-sm group-hover:scale-110 transition-transform">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                                <span class="text-[8px] bg-secondary/20 text-secondary-300 px-1.5 py-0.5 rounded font-mono font-bold uppercase tracking-wider">Marketing</span>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-bold text-xs group-hover:text-secondary transition-colors">Marketing Campaigns</h4>
+                                <p class="text-[9px] text-gray-500 mt-0.5 leading-normal font-poppins">Funnel and conversion statistics.</p>
+                            </div>
+                            <div class="flex justify-between items-center border-t border-white/5 pt-2 mt-0.5 text-[9px] font-mono text-gray-400">
+                                <span>Clicks:</span>
+                                <span class="text-white font-bold">14.8k</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Card 3: Rig Operations -->
+                    <div onclick="switchProject('rig')" class="project-card group relative p-4 rounded-2xl border border-white/5 cursor-pointer transition-all duration-300 hover:border-amber-500/30" data-project="rig">
+                        <div class="absolute inset-0 bg-gradient-to-br from-amber-500/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl"></div>
+                        <div class="relative flex flex-col h-full justify-between gap-3">
+                            <div class="flex justify-between items-start">
+                                <div class="w-8 h-8 rounded-lg bg-amber-500/10 flex items-center justify-center text-amber-500 text-sm group-hover:scale-110 transition-transform">
+                                    <i class="fas fa-industry"></i>
+                                </div>
+                                <span class="text-[8px] bg-amber-500/20 text-amber-300 px-1.5 py-0.5 rounded font-mono font-bold uppercase tracking-wider">Telemetry</span>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-bold text-xs group-hover:text-amber-500 transition-colors">Rig Operations</h4>
+                                <p class="text-[9px] text-gray-500 mt-0.5 leading-normal font-poppins">DDR parsing & oil rig metrics.</p>
+                            </div>
+                            <div class="flex justify-between items-center border-t border-white/5 pt-2 mt-0.5 text-[9px] font-mono text-gray-400">
+                                <span>Rig State:</span>
+                                <span class="text-amber-400 font-bold">Connected</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Card 4: SiagaAI -->
+                    <div onclick="switchProject('siagaai')" class="project-card group relative p-4 rounded-2xl border border-white/5 cursor-pointer transition-all duration-300 hover:border-cyan-400/30" data-project="siagaai">
+                        <div class="absolute inset-0 bg-gradient-to-br from-cyan-400/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl"></div>
+                        <div class="relative flex flex-col h-full justify-between gap-3">
+                            <div class="flex justify-between items-start">
+                                <div class="w-8 h-8 rounded-lg bg-cyan-400/10 flex items-center justify-center text-cyan-400 text-sm group-hover:scale-110 transition-transform">
+                                    <i class="fas fa-shield-alt"></i>
+                                </div>
+                                <span class="text-[8px] bg-cyan-400/20 text-cyan-300 px-1.5 py-0.5 rounded font-mono font-bold uppercase tracking-wider">Groq AI</span>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-bold text-xs group-hover:text-cyan-400 transition-colors">SiagaAI Platform</h4>
+                                <p class="text-[9px] text-gray-500 mt-0.5 leading-normal font-poppins">BMKG Monitor & LLaMA 3.3.</p>
+                            </div>
+                            <div class="flex justify-between items-center border-t border-white/5 pt-2 mt-0.5 text-[9px] font-mono text-gray-400">
+                                <span>Status:</span>
+                                <span class="text-cyan-400 font-bold flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"></span>Live</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Card 5: ML Fraud -->
+                    <div onclick="switchProject('bmlp')" class="project-card group relative p-4 rounded-2xl border border-white/5 cursor-pointer transition-all duration-300 hover:border-emerald-400/30 col-span-2 md:col-span-1 lg:col-span-1" data-project="bmlp">
+                        <div class="absolute inset-0 bg-gradient-to-br from-emerald-400/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl"></div>
+                        <div class="relative flex flex-col h-full justify-between gap-3">
+                            <div class="flex justify-between items-start">
+                                <div class="w-8 h-8 rounded-lg bg-emerald-400/10 flex items-center justify-center text-emerald-400 text-sm group-hover:scale-110 transition-transform">
+                                    <i class="fas fa-brain"></i>
+                                </div>
+                                <span class="text-[8px] bg-emerald-400/20 text-emerald-300 px-1.5 py-0.5 rounded font-mono font-bold uppercase tracking-wider">Machine Learning</span>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-bold text-xs group-hover:text-emerald-400 transition-colors">ML Fraud Detection</h4>
+                                <p class="text-[9px] text-gray-500 mt-0.5 leading-normal font-poppins">K-Means & Random Forest.</p>
+                            </div>
+                            <div class="flex justify-between items-center border-t border-white/5 pt-2 mt-0.5 text-[9px] font-mono text-gray-400">
+                                <span>Accuracy:</span>
+                                <span class="text-emerald-400 font-bold">96.02%</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1495,6 +1629,34 @@
                 <a id="dl-superstore" href="#" class="glass-panel px-4 py-2 rounded-lg text-xs font-mono text-white hover:border-primary hover:text-primary transition-all flex items-center gap-2">
                     <i class="fas fa-download"></i> CSV Source
                 </a>
+            </div>
+
+            <!-- Narrative Context Panel (Business Brief & Tech Stack) -->
+            <div class="glass-panel p-6 rounded-3xl mb-8 border-l-4 border-l-primary relative overflow-hidden group hover:border-l-primary/80 transition-all duration-300">
+                <div class="absolute right-0 top-0 -mt-6 -mr-6 w-24 h-24 bg-primary/5 rounded-full blur-xl group-hover:bg-primary/10 transition-colors"></div>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 relative z-10">
+                    <div class="lg:col-span-2">
+                        <span class="text-[10px] text-primary font-mono uppercase tracking-widest font-bold">Business Brief</span>
+                        <h4 class="text-white font-bold text-base mt-1 mb-2 font-poppins">Optimizing Retail Supply Chain & Profit Margins</h4>
+                        <p class="text-gray-400 text-xs leading-relaxed font-poppins">Dashboard interaktif ini menyajikan analisis performa penjualan global untuk mengidentifikasi produk yang kurang menghasilkan profit, mengevaluasi metode logistik pengiriman, dan mengoptimalkan margin keuntungan di setiap wilayah pasar secara dinamis. Dilengkapi dengan AI Insights Engine untuk menjawab query data secara natural.</p>
+                    </div>
+                    <div class="flex flex-col justify-between">
+                        <div>
+                            <span class="text-[10px] text-primary font-mono uppercase tracking-widest font-bold">Technologies Used</span>
+                            <div class="flex flex-wrap gap-1.5 mt-2">
+                                <span class="px-2.5 py-0.5 rounded text-[10px] font-mono font-bold bg-base text-gray-400 border border-white/5">Google Sheets CSV</span>
+                                <span class="px-2.5 py-0.5 rounded text-[10px] font-mono font-bold bg-base text-gray-400 border border-white/5">Chart.js</span>
+                                <span class="px-2.5 py-0.5 rounded text-[10px] font-mono font-bold bg-base text-gray-400 border border-white/5">PapaParse</span>
+                                <span class="px-2.5 py-0.5 rounded text-[10px] font-mono font-bold bg-base text-gray-400 border border-white/5">Google Apps Script</span>
+                                <span class="px-2.5 py-0.5 rounded text-[10px] font-mono font-bold bg-base text-gray-400 border border-white/5">Tailwind CSS</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 border-t border-white/5 pt-3 flex gap-4 text-[10px] font-mono text-gray-400">
+                            <div>Dataset: <span class="text-white font-bold font-mono">Live CSV</span></div>
+                            <div>Records: <span class="text-white font-bold font-mono">9,900+ Rows</span></div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="glass-panel rounded-3xl p-1 overflow-hidden relative">
@@ -1639,6 +1801,34 @@
                 <a id="dl-marketing" href="#" class="glass-panel px-4 py-2 rounded-lg text-xs font-mono text-white hover:border-secondary hover:text-secondary transition-all flex items-center gap-2">
                     <i class="fas fa-download"></i> Data Source
                 </a>
+            </div>
+
+            <!-- Narrative Context Panel (Business Brief & Tech Stack) -->
+            <div class="glass-panel p-6 rounded-3xl mb-8 border-l-4 border-l-secondary relative overflow-hidden group hover:border-l-secondary/80 transition-all duration-300">
+                <div class="absolute right-0 top-0 -mt-6 -mr-6 w-24 h-24 bg-secondary/5 rounded-full blur-xl group-hover:bg-secondary/10 transition-colors"></div>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 relative z-10">
+                    <div class="lg:col-span-2">
+                        <span class="text-[10px] text-secondary font-mono uppercase tracking-widest font-bold">Business Brief</span>
+                        <h4 class="text-white font-bold text-base mt-1 mb-2 font-poppins">Omnichannel Campaign Performance & Audience Engagement</h4>
+                        <p class="text-gray-400 text-xs leading-relaxed font-poppins">Dashboard analitik ini melacak performa kampanye pemasaran digital lintas saluran (Instagram, YouTube, Website) untuk mengukur rasio konversi, rasio klik-tayang (CTR), efisiensi alokasi anggaran, serta demografi bahasa audiens secara interaktif. Membantu tim pemasaran memfokuskan pengeluaran iklan pada saluran dengan konversi tertinggi.</p>
+                    </div>
+                    <div class="flex flex-col justify-between">
+                        <div>
+                            <span class="text-[10px] text-secondary font-mono uppercase tracking-widest font-bold">Technologies Used</span>
+                            <div class="flex flex-wrap gap-1.5 mt-2">
+                                <span class="px-2.5 py-0.5 rounded text-[10px] font-mono font-bold bg-base text-gray-400 border border-white/5">Live CSV Data</span>
+                                <span class="px-2.5 py-0.5 rounded text-[10px] font-mono font-bold bg-base text-gray-400 border border-white/5">Funnel Charts</span>
+                                <span class="px-2.5 py-0.5 rounded text-[10px] font-mono font-bold bg-base text-gray-400 border border-white/5">Tailwind Grid</span>
+                                <span class="px-2.5 py-0.5 rounded text-[10px] font-mono font-bold bg-base text-gray-400 border border-white/5">Chart.js</span>
+                                <span class="px-2.5 py-0.5 rounded text-[10px] font-mono font-bold bg-base text-gray-400 border border-white/5">Google Apps Script</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 border-t border-white/5 pt-3 flex gap-4 text-[10px] font-mono text-gray-400">
+                            <div>Trackers: <span class="text-white font-bold font-mono">Conversion Funnel</span></div>
+                            <div>Channels: <span class="text-white font-bold font-mono">Omnichannel</span></div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="glass-panel rounded-3xl p-1 overflow-hidden relative">
@@ -1939,6 +2129,33 @@
                 </div>
             </div>
 
+            <!-- Narrative Context Panel (Business Brief & Tech Stack) -->
+            <div class="glass-panel p-6 rounded-3xl mb-8 border-l-4 border-l-amber-500 relative overflow-hidden group hover:border-l-amber-500/80 transition-all duration-300">
+                <div class="absolute right-0 top-0 -mt-6 -mr-6 w-24 h-24 bg-amber-500/5 rounded-full blur-xl group-hover:bg-amber-500/10 transition-colors"></div>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 relative z-10">
+                    <div class="lg:col-span-2">
+                        <span class="text-[10px] text-amber-500 font-mono uppercase tracking-widest font-bold">Business Brief</span>
+                        <h4 class="text-white font-bold text-base mt-1 mb-2 font-poppins">Drilling Efficiency & Heavy Telemetry Logging</h4>
+                        <p class="text-gray-400 text-xs leading-relaxed font-poppins">Dashboard pemantauan operasi rig pengeboran minyak bumi ini mengintegrasikan log data aktivitas harian (DDR). Menganalisis efisiensi bahan bakar, laju pengeboran (Daily Meters), pembagian waktu kerja (operation vs. downtime), serta efisiensi beban kerja rig untuk meminimalkan waktu non-produktif (NPT).</p>
+                    </div>
+                    <div class="flex flex-col justify-between">
+                        <div>
+                            <span class="text-[10px] text-amber-500 font-mono uppercase tracking-widest font-bold">Technologies Used</span>
+                            <div class="flex flex-wrap gap-1.5 mt-2">
+                                <span class="px-2.5 py-0.5 rounded text-[10px] font-mono font-bold bg-base text-gray-400 border border-white/5">CSV Data Streams</span>
+                                <span class="px-2.5 py-0.5 rounded text-[10px] font-mono font-bold bg-base text-gray-400 border border-white/5">Radar Charts</span>
+                                <span class="px-2.5 py-0.5 rounded text-[10px] font-mono font-bold bg-base text-gray-400 border border-white/5">Telemetry Pipeline</span>
+                                <span class="px-2.5 py-0.5 rounded text-[10px] font-mono font-bold bg-base text-gray-400 border border-white/5">Chart.js</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 border-t border-white/5 pt-3 flex gap-4 text-[10px] font-mono text-gray-400">
+                            <div>Data Sources: <span class="text-white font-bold font-mono">4 CSV Files</span></div>
+                            <div>Rig Status: <span class="text-white font-bold font-mono">Live Monitoring</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="glass-panel rounded-3xl p-1 overflow-hidden relative">
                 <!-- Glow effect inside container -->
                 <div class="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-amber-500 to-transparent opacity-50"></div>
@@ -2088,6 +2305,33 @@
                     <a href="https://github.com/febrinahdatun-lab/IDCamp-2025-Developer-Challenge--Small-Apps-for-Big-Preparedness" target="_blank" rel="noopener noreferrer" class="glass-panel px-4 py-2 rounded-lg text-xs font-bold text-white hover:border-cyan-400 hover:text-cyan-400 transition-all flex items-center gap-2">
                         <i class="fab fa-github"></i> Repository
                     </a>
+                </div>
+            </div>
+
+            <!-- Narrative Context Panel (Business Brief & Tech Stack) -->
+            <div class="glass-panel p-6 rounded-3xl mb-8 border-l-4 border-l-cyan-400 relative overflow-hidden group hover:border-l-cyan-400/80 transition-all duration-300">
+                <div class="absolute right-0 top-0 -mt-6 -mr-6 w-24 h-24 bg-cyan-400/5 rounded-full blur-xl group-hover:bg-cyan-400/10 transition-colors"></div>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 relative z-10">
+                    <div class="lg:col-span-2">
+                        <span class="text-[10px] text-cyan-400 font-mono uppercase tracking-widest font-bold">Business Brief</span>
+                        <h4 class="text-white font-bold text-base mt-1 mb-2 font-poppins">Earthquake Tracking & LLM Preparedness Assistant</h4>
+                        <p class="text-gray-400 text-xs leading-relaxed font-poppins">Platform tanggap darurat bencana gempa bumi terintegrasi real-time BMKG API untuk mendeteksi koordinat episentrum, tingkat getaran (MMI), dan wilayah berpotensi tsunami. Dilengkapi dengan asisten AI (Groq LLaMA 3.3-70B) untuk memandu evakuasi, pertolongan pertama, serta peta kesiapan bencana.</p>
+                    </div>
+                    <div class="flex flex-col justify-between">
+                        <div>
+                            <span class="text-[10px] text-cyan-400 font-mono uppercase tracking-widest font-bold">Technologies Used</span>
+                            <div class="flex flex-wrap gap-1.5 mt-2">
+                                <span class="px-2.5 py-0.5 rounded text-[10px] font-mono font-bold bg-base text-gray-400 border border-white/5">BMKG API</span>
+                                <span class="px-2.5 py-0.5 rounded text-[10px] font-mono font-bold bg-base text-gray-400 border border-white/5">Groq LLaMA 3.3-70B</span>
+                                <span class="px-2.5 py-0.5 rounded text-[10px] font-mono font-bold bg-base text-gray-400 border border-white/5">Serverless Proxy</span>
+                                <span class="px-2.5 py-0.5 rounded text-[10px] font-mono font-bold bg-base text-gray-400 border border-white/5">LocalStorage</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 border-t border-white/5 pt-3 flex gap-4 text-[10px] font-mono text-gray-400">
+                            <div>Data Feed: <span class="text-white font-bold font-mono">BMKG Real-time</span></div>
+                            <div>Mitigation: <span class="text-white font-bold font-mono">5 Major Disasters</span></div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -2315,6 +2559,34 @@
                 <button onclick="bmlpShowCert()" class="hover-trigger glass-panel px-4 py-2 rounded-lg text-xs font-mono text-white hover:border-emerald-500 hover:text-emerald-400 transition-all flex items-center gap-2">
                     <i class="fas fa-certificate text-emerald-400"></i> Sertifikat Dicoding
                 </button>
+            </div>
+
+            <!-- Narrative Context Panel (Business Brief & Tech Stack) -->
+            <div class="glass-panel p-6 rounded-3xl mb-8 border-l-4 border-l-emerald-500 relative overflow-hidden group hover:border-l-emerald-500/80 transition-all duration-300">
+                <div class="absolute right-0 top-0 -mt-6 -mr-6 w-24 h-24 bg-emerald-500/5 rounded-full blur-xl group-hover:bg-emerald-500/10 transition-colors"></div>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 relative z-10">
+                    <div class="lg:col-span-2">
+                        <span class="text-[10px] text-emerald-400 font-mono uppercase tracking-widest font-bold">Business Brief</span>
+                        <h4 class="text-white font-bold text-base mt-1 mb-2 font-poppins">Detecting Financial Anomalies & Transactional Risks</h4>
+                        <p class="text-gray-400 text-xs leading-relaxed font-poppins">Proyek Machine Learning end-to-end ini dirancang untuk mendeteksi transaksi finansial yang mencurigakan (Fraud) guna melindungi ekosistem transaksi digital dari kerugian finansial. Implementasi menggabungkan metode Unsupervised Learning (K-Means Clustering) untuk memetakan kluster anomali tanpa label, dan Supervised Learning (Random Forest Classifier) untuk melakukan prediksi klasifikasi fraud secara presisi berdasarkan fitur riwayat transaksi konsumen. Dilengkapi dengan simulator penguji parameter interaktif.</p>
+                    </div>
+                    <div class="flex flex-col justify-between">
+                        <div>
+                            <span class="text-[10px] text-emerald-400 font-mono uppercase tracking-widest font-bold">Technologies Used</span>
+                            <div class="flex flex-wrap gap-1.5 mt-2">
+                                <span class="px-2.5 py-0.5 rounded text-[10px] font-mono font-bold bg-base text-gray-400 border border-white/5">Python (Scikit-Learn)</span>
+                                <span class="px-2.5 py-0.5 rounded text-[10px] font-mono font-bold bg-base text-gray-400 border border-white/5">Random Forest</span>
+                                <span class="px-2.5 py-0.5 rounded text-[10px] font-mono font-bold bg-base text-gray-400 border border-white/5">K-Means Clustering</span>
+                                <span class="px-2.5 py-0.5 rounded text-[10px] font-mono font-bold bg-base text-gray-400 border border-white/5">Pandas & NumPy</span>
+                                <span class="px-2.5 py-0.5 rounded text-[10px] font-mono font-bold bg-base text-gray-400 border border-white/5">Chart.js</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 border-t border-white/5 pt-3 flex gap-4 text-[10px] font-mono text-gray-400">
+                            <div>Accuracy: <span class="text-emerald-400 font-bold font-mono">96.02%</span></div>
+                            <div>Approach: <span class="text-white font-bold font-mono">Clustering & RF</span></div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="glass-panel rounded-3xl p-1 overflow-hidden relative">
@@ -3472,59 +3744,212 @@
             } 
 
             const ctxTrend = document.getElementById('trendChart').getContext('2d');
+            const salesGrad = ctxTrend.createLinearGradient(0, 0, 0, 300);
+            salesGrad.addColorStop(0, '#8B5CF6');
+            salesGrad.addColorStop(1, '#A78BFA');
+
+            const profitGrad = ctxTrend.createLinearGradient(0, 0, 0, 300);
+            profitGrad.addColorStop(0, 'rgba(14, 165, 233, 0.25)');
+            profitGrad.addColorStop(1, 'rgba(34, 211, 238, 0.01)');
+
             new Chart(ctxTrend, {
                 type: 'bar',
-                data: { labels: data.trend.labels, datasets: [{ label: 'Profit ($)', data: data.trend.profit, type: 'line', borderColor: '#0EA5E9', backgroundColor: 'rgba(14, 165, 233, 0.1)', borderWidth: 3, tension: 0.4, pointRadius: 3, yAxisID: 'y1' }, { label: 'Sales ($)', data: data.trend.sales, backgroundColor: '#8B5CF6', borderRadius: 4, yAxisID: 'y' }] },
-                options: { responsive: true, maintainAspectRatio: false, interaction: { mode: 'index', intersect: false }, plugins: { legend: { labels: { color: '#94a3b8', font: { family: 'Poppins' } } } }, scales: { y: { type: 'linear', display: true, position: 'left', grid: { color: '#1E293B' }, ticks: { color: '#94a3b8', font: { family: 'Poppins' }, callback: function(value) { return '$' + value/1000 + 'k'; } } }, y1: { type: 'linear', display: true, position: 'right', grid: { drawOnChartArea: false }, ticks: { color: '#0EA5E9', font: { family: 'Poppins' } } }, x: { grid: { display: false }, ticks: { color: '#94a3b8', font: { family: 'Poppins' } } } } }
+                data: { 
+                    labels: data.trend.labels, 
+                    datasets: [
+                        { label: 'Profit ($)', data: data.trend.profit, type: 'line', borderColor: '#0EA5E9', backgroundColor: profitGrad, fill: true, borderWidth: 3, tension: 0.4, pointRadius: 3, yAxisID: 'y1' }, 
+                        { label: 'Sales ($)', data: data.trend.sales, backgroundColor: salesGrad, borderRadius: 4, yAxisID: 'y' }
+                    ] 
+                },
+                options: { 
+                    responsive: true, 
+                    maintainAspectRatio: false, 
+                    interaction: { mode: 'index', intersect: false }, 
+                    plugins: { 
+                        legend: { labels: { color: '#94a3b8', font: { family: 'Poppins' } } },
+                        tooltip: {
+                            backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                            titleColor: '#fff',
+                            bodyColor: '#cbd5e1',
+                            borderColor: 'rgba(255, 255, 255, 0.1)',
+                            borderWidth: 1,
+                            padding: 10,
+                            cornerRadius: 8,
+                            displayColors: true
+                        }
+                    }, 
+                    scales: { 
+                        y: { type: 'linear', display: true, position: 'left', grid: { color: 'rgba(255, 255, 255, 0.03)' }, ticks: { color: '#94a3b8', font: { family: 'Poppins' }, callback: function(value) { return '$' + value/1000 + 'k'; } } }, 
+                        y1: { type: 'linear', display: true, position: 'right', grid: { drawOnChartArea: false }, ticks: { color: '#0EA5E9', font: { family: 'Poppins' } } }, 
+                        x: { grid: { display: false }, ticks: { color: '#94a3b8', font: { family: 'Poppins' } } } 
+                    } 
+                }
             });
 
             const ctxSeg = document.getElementById('segmentChart').getContext('2d');
             new Chart(ctxSeg, {
                 type: 'doughnut',
                 data: { labels: data.segment.labels, datasets: [{ data: data.segment.data, backgroundColor: ['#8B5CF6', '#0EA5E9', '#6366F1'], borderWidth: 0 }] },
-                options: { responsive: true, cutout: '75%', plugins: { legend: { position: 'bottom', labels: { color: '#94a3b8', font: { family: 'Poppins' } } } } }
+                options: { 
+                    responsive: true, 
+                    cutout: '75%', 
+                    plugins: { 
+                        legend: { position: 'bottom', labels: { color: '#94a3b8', font: { family: 'Poppins' } } },
+                        tooltip: {
+                            backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                            titleColor: '#fff',
+                            bodyColor: '#cbd5e1',
+                            borderColor: 'rgba(255, 255, 255, 0.1)',
+                            borderWidth: 1,
+                            padding: 10,
+                            cornerRadius: 8
+                        }
+                    } 
+                }
             });
 
             // Additional charts
             if (data.category) {
                 const ctxCat = document.getElementById('categoryChart')?.getContext('2d');
-                if (ctxCat) new Chart(ctxCat, {
-                    type: 'bar',
-                    data: { labels: data.category.labels, datasets: [{ label: 'Sales ($)', data: data.category.sales, backgroundColor: ['#8B5CF6', '#0EA5E9', '#6366F1'] }] },
-                    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { ticks: { color: '#94a3b8' } }, y: { ticks: { color: '#94a3b8', callback: v => '$' + (v/1000) + 'k' }, grid: { color: '#1E293B' } } } }
-                });
+                if (ctxCat) {
+                    const catGrad = ctxCat.createLinearGradient(0, 0, 0, 300);
+                    catGrad.addColorStop(0, '#8B5CF6');
+                    catGrad.addColorStop(1, '#A78BFA');
+                    
+                    new Chart(ctxCat, {
+                        type: 'bar',
+                        data: { labels: data.category.labels, datasets: [{ label: 'Sales ($)', data: data.category.sales, backgroundColor: catGrad, borderRadius: 4 }] },
+                        options: { 
+                            responsive: true, 
+                            maintainAspectRatio: false, 
+                            plugins: { 
+                                legend: { display: false },
+                                tooltip: {
+                                    backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                                    titleColor: '#fff',
+                                    bodyColor: '#cbd5e1',
+                                    borderColor: 'rgba(255, 255, 255, 0.1)',
+                                    borderWidth: 1,
+                                    padding: 10,
+                                    cornerRadius: 8
+                                }
+                            }, 
+                            scales: { 
+                                x: { ticks: { color: '#94a3b8' } }, 
+                                y: { ticks: { color: '#94a3b8', callback: v => '$' + (v/1000) + 'k' }, grid: { color: 'rgba(255, 255, 255, 0.03)' } } 
+                            } 
+                        }
+                    });
+                }
             }
 
             if (data.subCategory) {
                 const ctxSub = document.getElementById('subCategoryChart')?.getContext('2d');
-                if (ctxSub) new Chart(ctxSub, {
-                    type: 'bar',
-                    data: { labels: data.subCategory.labels, datasets: [{ label: 'Profit ($)', data: data.subCategory.profit, backgroundColor: '#0EA5E9' }] },
-                    options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { ticks: { color: '#94a3b8', callback: v => '$' + (v/1000) + 'k' }, grid: { color: '#1E293B' } }, y: { ticks: { color: '#94a3b8' } } } }
-                });
+                if (ctxSub) {
+                    const subGrad = ctxSub.createLinearGradient(0, 0, 300, 0);
+                    subGrad.addColorStop(0, '#0EA5E9');
+                    subGrad.addColorStop(1, '#22D3EE');
+                    
+                    new Chart(ctxSub, {
+                        type: 'bar',
+                        data: { labels: data.subCategory.labels, datasets: [{ label: 'Profit ($)', data: data.subCategory.profit, backgroundColor: subGrad, borderRadius: 4 }] },
+                        options: { 
+                            indexAxis: 'y', 
+                            responsive: true, 
+                            maintainAspectRatio: false, 
+                            plugins: { 
+                                legend: { display: false },
+                                tooltip: {
+                                    backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                                    titleColor: '#fff',
+                                    bodyColor: '#cbd5e1',
+                                    borderColor: 'rgba(255, 255, 255, 0.1)',
+                                    borderWidth: 1,
+                                    padding: 10,
+                                    cornerRadius: 8
+                                }
+                            }, 
+                            scales: { 
+                                x: { ticks: { color: '#94a3b8', callback: v => '$' + (v/1000) + 'k' }, grid: { color: 'rgba(255, 255, 255, 0.03)' } }, 
+                                y: { ticks: { color: '#94a3b8' } } 
+                            } 
+                        }
+                    });
+                }
             }
 
             if (data.region) {
                 const ctxRegion = document.getElementById('regionChart')?.getContext('2d');
-                if (ctxRegion) new Chart(ctxRegion, {
-                    type: 'bar',
-                    data: { labels: data.region.labels, datasets: [{ label: 'Sales ($)', data: data.region.sales, backgroundColor: '#8B5CF6' }] },
-                    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { ticks: { color: '#94a3b8' } }, y: { ticks: { color: '#94a3b8', callback: v => '$' + (v/1000) + 'k' }, grid: { color: '#1E293B' } } } }
-                });
+                if (ctxRegion) {
+                    const regionGrad = ctxRegion.createLinearGradient(0, 0, 0, 300);
+                    regionGrad.addColorStop(0, '#8B5CF6');
+                    regionGrad.addColorStop(1, '#A78BFA');
+                    
+                    new Chart(ctxRegion, {
+                        type: 'bar',
+                        data: { labels: data.region.labels, datasets: [{ label: 'Sales ($)', data: data.region.sales, backgroundColor: regionGrad, borderRadius: 4 }] },
+                        options: { 
+                            responsive: true, 
+                            maintainAspectRatio: false, 
+                            plugins: { 
+                                legend: { display: false },
+                                tooltip: {
+                                    backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                                    titleColor: '#fff',
+                                    bodyColor: '#cbd5e1',
+                                    borderColor: 'rgba(255, 255, 255, 0.1)',
+                                    borderWidth: 1,
+                                    padding: 10,
+                                    cornerRadius: 8
+                                }
+                            }, 
+                            scales: { 
+                                x: { ticks: { color: '#94a3b8' } }, 
+                                y: { ticks: { color: '#94a3b8', callback: v => '$' + (v/1000) + 'k' }, grid: { color: 'rgba(255, 255, 255, 0.03)' } } 
+                            } 
+                        }
+                    });
+                }
 
                 const ctxState = document.getElementById('stateChart')?.getContext('2d');
-                if (ctxState) new Chart(ctxState, {
-                    type: 'bar',
-                    data: { labels: data.state.labels, datasets: [{ label: 'Profit ($)', data: data.state.profit, backgroundColor: '#6366F1' }] },
-                    options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { ticks: { color: '#94a3b8', callback: v => '$' + (v/1000) + 'k' }, grid: { color: '#1E293B' } }, y: { ticks: { color: '#94a3b8' } } } }
-                });
+                if (ctxState) {
+                    const stateGrad = ctxState.createLinearGradient(0, 0, 300, 0);
+                    stateGrad.addColorStop(0, '#6366F1');
+                    stateGrad.addColorStop(1, '#8B5CF6');
+                    
+                    new Chart(ctxState, {
+                        type: 'bar',
+                        data: { labels: data.state.labels, datasets: [{ label: 'Profit ($)', data: data.state.profit, backgroundColor: stateGrad, borderRadius: 4 }] },
+                        options: { 
+                            indexAxis: 'y', 
+                            responsive: true, 
+                            maintainAspectRatio: false, 
+                            plugins: { 
+                                legend: { display: false },
+                                tooltip: {
+                                    backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                                    titleColor: '#fff',
+                                    bodyColor: '#cbd5e1',
+                                    borderColor: 'rgba(255, 255, 255, 0.1)',
+                                    borderWidth: 1,
+                                    padding: 10,
+                                    cornerRadius: 8
+                                }
+                            }, 
+                            scales: { 
+                                x: { ticks: { color: '#94a3b8', callback: v => '$' + (v/1000) + 'k' }, grid: { color: 'rgba(255, 255, 255, 0.03)' } }, 
+                                y: { ticks: { color: '#94a3b8' } } 
+                            } 
+                        }
+                    });
+                }
             }
 
             if (data.ship) {
                 const ctxShip = document.getElementById('shipModeChart')?.getContext('2d');
                 if (ctxShip) new Chart(ctxShip, {
                     type: 'pie',
-                    data: { labels: data.ship.labels, datasets: [{ data: data.ship.orders, backgroundColor: ['#8B5CF6', '#0EA5E9', '#6366F1', '#22D3EE'] }] },
+                    data: { labels: data.ship.labels, datasets: [{ data: data.ship.orders, backgroundColor: ['#8B5CF6', '#0EA5E9', '#6366F1', '#22D3EE'], borderWidth: 0 }] },
                     options: {
                         responsive: true,
                         maintainAspectRatio: false,
@@ -3533,17 +3958,51 @@
                             legend: {
                                 position: 'bottom',
                                 labels: { color: '#94a3b8', boxWidth: 12, padding: 10 }
+                            },
+                            tooltip: {
+                                backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                                titleColor: '#fff',
+                                bodyColor: '#cbd5e1',
+                                borderColor: 'rgba(255, 255, 255, 0.1)',
+                                borderWidth: 1,
+                                padding: 10,
+                                cornerRadius: 8
                             }
                         }
                     }
                 });
 
                 const ctxShipMonthly = document.getElementById('shipMonthlyChart')?.getContext('2d');
-                if (ctxShipMonthly) new Chart(ctxShipMonthly, {
-                    type: 'line',
-                    data: { labels: data.trend.labels, datasets: [{ label: 'Shipped ($)', data: data.ship.monthlySales, borderColor: '#22D3EE', backgroundColor: 'rgba(34, 211, 238, 0.2)', tension: 0.4 }] },
-                    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: '#94a3b8' } } }, scales: { x: { ticks: { color: '#94a3b8' } }, y: { ticks: { color: '#94a3b8', callback: v => '$' + (v/1000) + 'k' }, grid: { color: '#1E293B' } } } }
-                });
+                if (ctxShipMonthly) {
+                    const shipMonthlyGrad = ctxShipMonthly.createLinearGradient(0, 0, 0, 300);
+                    shipMonthlyGrad.addColorStop(0, 'rgba(34, 211, 238, 0.25)');
+                    shipMonthlyGrad.addColorStop(1, 'rgba(14, 165, 233, 0.01)');
+                    
+                    new Chart(ctxShipMonthly, {
+                        type: 'line',
+                        data: { labels: data.trend.labels, datasets: [{ label: 'Shipped ($)', data: data.ship.monthlySales, borderColor: '#22D3EE', backgroundColor: shipMonthlyGrad, fill: true, tension: 0.4 }] },
+                        options: { 
+                            responsive: true, 
+                            maintainAspectRatio: false, 
+                            plugins: { 
+                                legend: { labels: { color: '#94a3b8' } },
+                                tooltip: {
+                                    backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                                    titleColor: '#fff',
+                                    bodyColor: '#cbd5e1',
+                                    borderColor: 'rgba(255, 255, 255, 0.1)',
+                                    borderWidth: 1,
+                                    padding: 10,
+                                    cornerRadius: 8
+                                }
+                            }, 
+                            scales: { 
+                                x: { ticks: { color: '#94a3b8' } }, 
+                                y: { ticks: { color: '#94a3b8', callback: v => '$' + (v/1000) + 'k' }, grid: { color: 'rgba(255, 255, 255, 0.03)' } } 
+                            } 
+                        }
+                    });
+                }
             }
 
             if (data.topProducts) {
@@ -3559,11 +4018,36 @@
                 }
 
                 const ctxSegBar = document.getElementById('segmentBarChart')?.getContext('2d');
-                if (ctxSegBar) new Chart(ctxSegBar, {
-                    type: 'bar',
-                    data: { labels: data.segment.labels, datasets: [{ label: 'Sales ($)', data: data.segment.data, backgroundColor: '#8B5CF6' }] },
-                    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { ticks: { color: '#94a3b8' } }, y: { ticks: { color: '#94a3b8', callback: v => '$' + (v/1000) + 'k' }, grid: { color: '#1E293B' } } } }
-                });
+                if (ctxSegBar) {
+                    const segBarGrad = ctxSegBar.createLinearGradient(0, 0, 0, 300);
+                    segBarGrad.addColorStop(0, '#8B5CF6');
+                    segBarGrad.addColorStop(1, '#6366F1');
+                    
+                    new Chart(ctxSegBar, {
+                        type: 'bar',
+                        data: { labels: data.segment.labels, datasets: [{ label: 'Sales ($)', data: data.segment.data, backgroundColor: segBarGrad, borderRadius: 4 }] },
+                        options: { 
+                            responsive: true, 
+                            maintainAspectRatio: false, 
+                            plugins: { 
+                                legend: { display: false },
+                                tooltip: {
+                                    backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                                    titleColor: '#fff',
+                                    bodyColor: '#cbd5e1',
+                                    borderColor: 'rgba(255, 255, 255, 0.1)',
+                                    borderWidth: 1,
+                                    padding: 10,
+                                    cornerRadius: 8
+                                }
+                            }, 
+                            scales: { 
+                                x: { ticks: { color: '#94a3b8' } }, 
+                                y: { ticks: { color: '#94a3b8', callback: v => '$' + (v/1000) + 'k' }, grid: { color: 'rgba(255, 255, 255, 0.03)' } } 
+                            } 
+                        }
+                    });
+                }
             }
 
             // Basic tabs logic
@@ -3616,7 +4100,7 @@
             const rig = document.getElementById('rig-dashboard');
             const siagaai = document.getElementById('siagaai-dashboard');
             const bmlp = document.getElementById('bmlp-dashboard');
-            const tabBtns = document.querySelectorAll('.project-tab');
+            const tabCards = document.querySelectorAll('.project-card');
             
             // Hide all dashboards first
             superstore.classList.add('hidden');
@@ -3625,17 +4109,15 @@
             siagaai?.classList.add('hidden');
             bmlp?.classList.add('hidden');
             
-            // Style all tabs as inactive
-            tabBtns.forEach(btn => {
-                btn.classList.remove('bg-primary', 'text-white', 'hover:bg-violet-600');
-                btn.classList.add('bg-dark', 'border', 'border-gray-700', 'text-gray-300', 'hover:border-primary', 'hover:text-primary');
+            // Style all card selectors as inactive
+            tabCards.forEach(card => {
+                card.classList.remove('active');
             });
             
-            // Activate selected tab
-            tabBtns.forEach(btn => {
-                if (btn.dataset.project === project) {
-                    btn.classList.remove('bg-dark', 'border', 'border-gray-700', 'text-gray-300', 'hover:border-primary', 'hover:text-primary');
-                    btn.classList.add('bg-primary', 'text-white', 'hover:bg-violet-600');
+            // Activate selected card
+            tabCards.forEach(card => {
+                if (card.dataset.project === project) {
+                    card.classList.add('active');
                 }
             });
 
@@ -3873,10 +4355,32 @@
             if (!ctx) return;
             const labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
             const impressions = data.monthlyStats.map(m => Math.round(m.impressions / 1000));
+            const grad = ctx.createLinearGradient(0, 0, 0, 300);
+            grad.addColorStop(0, 'rgba(96, 165, 250, 0.25)');
+            grad.addColorStop(1, 'rgba(96, 165, 250, 0.0)');
             new Chart(ctx, {
                 type: 'line',
-                data: { labels, datasets: [{ label: 'Impressions (K)', data: impressions, borderColor: '#60a5fa', backgroundColor: 'rgba(96, 165, 250, 0.2)', tension: 0.4, pointRadius: 4 }] },
-                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: '#cbd5e1', font: { family: 'Poppins' } } } }, scales: { x: { ticks: { color: '#94a3b8' } }, y: { ticks: { color: '#94a3b8', callback: v => v + 'K' }, grid: { color: '#1E293B' } } } }
+                data: { labels, datasets: [{ label: 'Impressions (K)', data: impressions, borderColor: '#60a5fa', backgroundColor: grad, fill: true, tension: 0.4, pointRadius: 4 }] },
+                options: { 
+                    responsive: true, 
+                    maintainAspectRatio: false, 
+                    plugins: { 
+                        legend: { labels: { color: '#cbd5e1', font: { family: 'Poppins' } } },
+                        tooltip: {
+                            backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                            titleColor: '#fff',
+                            bodyColor: '#cbd5e1',
+                            borderColor: 'rgba(255, 255, 255, 0.1)',
+                            borderWidth: 1,
+                            padding: 10,
+                            cornerRadius: 8
+                        }
+                    }, 
+                    scales: { 
+                        x: { ticks: { color: '#94a3b8' } }, 
+                        y: { ticks: { color: '#94a3b8', callback: v => v + 'K' }, grid: { color: 'rgba(255, 255, 255, 0.03)' } } 
+                    } 
+                }
             });
         }
 
@@ -3885,10 +4389,32 @@
             if (!ctx) return;
             const labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
             const ctrData = data.monthlyStats.map((m, i) => m.impressions > 0 ? ((m.clicks / m.impressions) * 100).toFixed(2) : 0);
+            const grad = ctx.createLinearGradient(0, 0, 0, 300);
+            grad.addColorStop(0, 'rgba(52, 211, 153, 0.25)');
+            grad.addColorStop(1, 'rgba(52, 211, 153, 0.0)');
             new Chart(ctx, {
                 type: 'line',
-                data: { labels, datasets: [{ label: 'CTR (%)', data: ctrData, borderColor: '#34d399', backgroundColor: 'rgba(52, 211, 153, 0.2)', tension: 0.4, pointRadius: 4 }] },
-                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: '#cbd5e1' } } }, scales: { x: { ticks: { color: '#94a3b8' } }, y: { ticks: { color: '#94a3b8', callback: v => v + '%' }, grid: { color: '#1E293B' } } } }
+                data: { labels, datasets: [{ label: 'CTR (%)', data: ctrData, borderColor: '#34d399', backgroundColor: grad, fill: true, tension: 0.4, pointRadius: 4 }] },
+                options: { 
+                    responsive: true, 
+                    maintainAspectRatio: false, 
+                    plugins: { 
+                        legend: { labels: { color: '#cbd5e1' } },
+                        tooltip: {
+                            backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                            titleColor: '#fff',
+                            bodyColor: '#cbd5e1',
+                            borderColor: 'rgba(255, 255, 255, 0.1)',
+                            borderWidth: 1,
+                            padding: 10,
+                            cornerRadius: 8
+                        }
+                    }, 
+                    scales: { 
+                        x: { ticks: { color: '#94a3b8' } }, 
+                        y: { ticks: { color: '#94a3b8', callback: v => v + '%' }, grid: { color: 'rgba(255, 255, 255, 0.03)' } } 
+                    } 
+                }
             });
         }
 
@@ -3899,8 +4425,23 @@
             const impressions = channels.map(c => data.channelStats[c].impressions);
             new Chart(ctx, {
                 type: 'doughnut',
-                data: { labels: channels, datasets: [{ data: impressions, backgroundColor: ['#8B5CF6', '#0EA5E9', '#6366F1', '#22D3EE', '#34d399'] }] },
-                options: { responsive: true, cutout: '75%', plugins: { legend: { labels: { color: '#94a3b8' } } } }
+                data: { labels: channels, datasets: [{ data: impressions, backgroundColor: ['#8B5CF6', '#0EA5E9', '#6366F1', '#22D3EE', '#34d399'], borderWidth: 0 }] },
+                options: { 
+                    responsive: true, 
+                    cutout: '75%', 
+                    plugins: { 
+                        legend: { labels: { color: '#94a3b8' } },
+                        tooltip: {
+                            backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                            titleColor: '#fff',
+                            bodyColor: '#cbd5e1',
+                            borderColor: 'rgba(255, 255, 255, 0.1)',
+                            borderWidth: 1,
+                            padding: 10,
+                            cornerRadius: 8
+                        }
+                    } 
+                }
             });
         }
 
@@ -3909,10 +4450,32 @@
             if (!ctx) return;
             const channels = Object.keys(data.channelStats);
             const clicks = channels.map(c => data.channelStats[c].clicks);
+            const grad = ctx.createLinearGradient(0, 0, 0, 300);
+            grad.addColorStop(0, '#8B5CF6');
+            grad.addColorStop(1, '#A78BFA');
             new Chart(ctx, {
                 type: 'bar',
-                data: { labels: channels, datasets: [{ label: 'Clicks', data: clicks, backgroundColor: '#8B5CF6' }] },
-                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { ticks: { color: '#94a3b8' } }, y: { ticks: { color: '#94a3b8' }, grid: { color: '#1E293B' } } } }
+                data: { labels: channels, datasets: [{ label: 'Clicks', data: clicks, backgroundColor: grad, borderRadius: 4 }] },
+                options: { 
+                    responsive: true, 
+                    maintainAspectRatio: false, 
+                    plugins: { 
+                        legend: { display: false },
+                        tooltip: {
+                            backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                            titleColor: '#fff',
+                            bodyColor: '#cbd5e1',
+                            borderColor: 'rgba(255, 255, 255, 0.1)',
+                            borderWidth: 1,
+                            padding: 10,
+                            cornerRadius: 8
+                        }
+                    }, 
+                    scales: { 
+                        x: { ticks: { color: '#94a3b8' } }, 
+                        y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255, 255, 255, 0.03)' } } 
+                    } 
+                }
             });
         }
 
@@ -3922,10 +4485,38 @@
             const channels = Object.keys(data.channelStats);
             const impressions = channels.map(c => Math.round(data.channelStats[c].impressions / 1000));
             const clicks = channels.map(c => Math.round(data.channelStats[c].clicks / 1000));
+            
+            const impGrad = ctx.createLinearGradient(0, 0, 0, 300);
+            impGrad.addColorStop(0, '#60a5fa');
+            impGrad.addColorStop(1, '#3b82f6');
+            
+            const clickGrad = ctx.createLinearGradient(0, 0, 0, 300);
+            clickGrad.addColorStop(0, '#34d399');
+            clickGrad.addColorStop(1, '#10b981');
+            
             new Chart(ctx, {
                 type: 'bar',
-                data: { labels: channels, datasets: [{ label: 'Impressions (K)', data: impressions, backgroundColor: '#60a5fa' }, { label: 'Clicks (K)', data: clicks, backgroundColor: '#34d399' }] },
-                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: '#cbd5e1' } } }, scales: { x: { ticks: { color: '#94a3b8' } }, y: { ticks: { color: '#94a3b8' }, grid: { color: '#1E293B' } } } }
+                data: { labels: channels, datasets: [{ label: 'Impressions (K)', data: impressions, backgroundColor: impGrad, borderRadius: 4 }, { label: 'Clicks (K)', data: clicks, backgroundColor: clickGrad, borderRadius: 4 }] },
+                options: { 
+                    responsive: true, 
+                    maintainAspectRatio: false, 
+                    plugins: { 
+                        legend: { labels: { color: '#cbd5e1' } },
+                        tooltip: {
+                            backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                            titleColor: '#fff',
+                            bodyColor: '#cbd5e1',
+                            borderColor: 'rgba(255, 255, 255, 0.1)',
+                            borderWidth: 1,
+                            padding: 10,
+                            cornerRadius: 8
+                        }
+                    }, 
+                    scales: { 
+                        x: { ticks: { color: '#94a3b8' } }, 
+                        y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255, 255, 255, 0.03)' } } 
+                    } 
+                }
             });
         }
 
@@ -3937,10 +4528,32 @@
                 const ctrArray = data.channelStats[c].ctr;
                 return ((ctrArray.reduce((a, b) => a + b) / ctrArray.length) * 100).toFixed(2);
             });
+            const grad = ctx.createLinearGradient(0, 0, 0, 300);
+            grad.addColorStop(0, '#a78bfa');
+            grad.addColorStop(1, '#8B5CF6');
             new Chart(ctx, {
                 type: 'bar',
-                data: { labels: channels, datasets: [{ label: 'Avg CTR (%)', data: ctrData, backgroundColor: '#a78bfa' }] },
-                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { ticks: { color: '#94a3b8' } }, y: { ticks: { color: '#94a3b8' }, grid: { color: '#1E293B' } } } }
+                data: { labels: channels, datasets: [{ label: 'Avg CTR (%)', data: ctrData, backgroundColor: grad, borderRadius: 4 }] },
+                options: { 
+                    responsive: true, 
+                    maintainAspectRatio: false, 
+                    plugins: { 
+                        legend: { display: false },
+                        tooltip: {
+                            backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                            titleColor: '#fff',
+                            bodyColor: '#cbd5e1',
+                            borderColor: 'rgba(255, 255, 255, 0.1)',
+                            borderWidth: 1,
+                            padding: 10,
+                            cornerRadius: 8
+                        }
+                    }, 
+                    scales: { 
+                        x: { ticks: { color: '#94a3b8' } }, 
+                        y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255, 255, 255, 0.03)' } } 
+                    } 
+                }
             });
         }
 
@@ -3962,10 +4575,32 @@
             if (!ctx) return;
             const content = Object.keys(data.contentStats);
             const impressions = content.map(c => Math.round(data.contentStats[c].impressions / 1000));
+            const grad = ctx.createLinearGradient(0, 0, 0, 300);
+            grad.addColorStop(0, '#60a5fa');
+            grad.addColorStop(1, '#3b82f6');
             new Chart(ctx, {
                 type: 'bar',
-                data: { labels: content, datasets: [{ label: 'Impressions (K)', data: impressions, backgroundColor: '#60a5fa' }] },
-                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { ticks: { color: '#94a3b8' } }, y: { ticks: { color: '#94a3b8' }, grid: { color: '#1E293B' } } } }
+                data: { labels: content, datasets: [{ label: 'Impressions (K)', data: impressions, backgroundColor: grad, borderRadius: 4 }] },
+                options: { 
+                    responsive: true, 
+                    maintainAspectRatio: false, 
+                    plugins: { 
+                        legend: { display: false },
+                        tooltip: {
+                            backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                            titleColor: '#fff',
+                            bodyColor: '#cbd5e1',
+                            borderColor: 'rgba(255, 255, 255, 0.1)',
+                            borderWidth: 1,
+                            padding: 10,
+                            cornerRadius: 8
+                        }
+                    }, 
+                    scales: { 
+                        x: { ticks: { color: '#94a3b8' } }, 
+                        y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255, 255, 255, 0.03)' } } 
+                    } 
+                }
             });
         }
 
@@ -3977,10 +4612,32 @@
                 const ctrArray = data.contentStats[c].ctr;
                 return ((ctrArray.reduce((a, b) => a + b) / ctrArray.length) * 100).toFixed(2);
             });
+            const grad = ctx.createLinearGradient(0, 0, 0, 300);
+            grad.addColorStop(0, '#a78bfa');
+            grad.addColorStop(1, '#8B5CF6');
             new Chart(ctx, {
                 type: 'bar',
-                data: { labels: content, datasets: [{ label: 'Avg CTR (%)', data: ctrData, backgroundColor: '#a78bfa' }] },
-                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { ticks: { color: '#94a3b8' } }, y: { ticks: { color: '#94a3b8' }, grid: { color: '#1E293B' } } } }
+                data: { labels: content, datasets: [{ label: 'Avg CTR (%)', data: ctrData, backgroundColor: grad, borderRadius: 4 }] },
+                options: { 
+                    responsive: true, 
+                    maintainAspectRatio: false, 
+                    plugins: { 
+                        legend: { display: false },
+                        tooltip: {
+                            backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                            titleColor: '#fff',
+                            bodyColor: '#cbd5e1',
+                            borderColor: 'rgba(255, 255, 255, 0.1)',
+                            borderWidth: 1,
+                            padding: 10,
+                            cornerRadius: 8
+                        }
+                    }, 
+                    scales: { 
+                        x: { ticks: { color: '#94a3b8' } }, 
+                        y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255, 255, 255, 0.03)' } } 
+                    } 
+                }
             });
         }
 
@@ -3988,10 +4645,33 @@
             const ctx = document.getElementById('marketing-topContentChart')?.getContext('2d');
             if (!ctx) return;
             const topContent = Object.entries(data.contentStats).map(([name, stats]) => ({ name, ctr: (stats.ctr.reduce((a, b) => a + b) / stats.ctr.length) * 100 })).sort((a, b) => b.ctr - a.ctr).slice(0, 5);
+            const grad = ctx.createLinearGradient(0, 0, 300, 0);
+            grad.addColorStop(0, '#34d399');
+            grad.addColorStop(1, '#10b981');
             new Chart(ctx, {
                 type: 'bar',
-                data: { labels: topContent.map(c => c.name), datasets: [{ label: 'CTR (%)', data: topContent.map(c => c.ctr.toFixed(2)), backgroundColor: '#34d399' }] },
-                options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { ticks: { color: '#94a3b8' }, grid: { color: '#1E293B' } }, y: { ticks: { color: '#94a3b8' } } } }
+                data: { labels: topContent.map(c => c.name), datasets: [{ label: 'CTR (%)', data: topContent.map(c => c.ctr.toFixed(2)), backgroundColor: grad, borderRadius: 4 }] },
+                options: { 
+                    indexAxis: 'y', 
+                    responsive: true, 
+                    maintainAspectRatio: false, 
+                    plugins: { 
+                        legend: { display: false },
+                        tooltip: {
+                            backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                            titleColor: '#fff',
+                            bodyColor: '#cbd5e1',
+                            borderColor: 'rgba(255, 255, 255, 0.1)',
+                            borderWidth: 1,
+                            padding: 10,
+                            cornerRadius: 8
+                        }
+                    }, 
+                    scales: { 
+                        x: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255, 255, 255, 0.03)' } }, 
+                        y: { ticks: { color: '#94a3b8' } } 
+                    } 
+                }
             });
         }
 
@@ -4000,10 +4680,32 @@
             if (!ctx) return;
             const languages = Object.keys(data.languageStats);
             const clicks = languages.map(l => data.languageStats[l].clicks);
+            const grad = ctx.createLinearGradient(0, 0, 0, 300);
+            grad.addColorStop(0, '#8B5CF6');
+            grad.addColorStop(1, '#6366F1');
             new Chart(ctx, {
                 type: 'bar',
-                data: { labels: languages, datasets: [{ label: 'Clicks', data: clicks, backgroundColor: '#8B5CF6' }] },
-                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { ticks: { color: '#94a3b8' } }, y: { ticks: { color: '#94a3b8' }, grid: { color: '#1E293B' } } } }
+                data: { labels: languages, datasets: [{ label: 'Clicks', data: clicks, backgroundColor: grad, borderRadius: 4 }] },
+                options: { 
+                    responsive: true, 
+                    maintainAspectRatio: false, 
+                    plugins: { 
+                        legend: { display: false },
+                        tooltip: {
+                            backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                            titleColor: '#fff',
+                            bodyColor: '#cbd5e1',
+                            borderColor: 'rgba(255, 255, 255, 0.1)',
+                            borderWidth: 1,
+                            padding: 10,
+                            cornerRadius: 8
+                        }
+                    }, 
+                    scales: { 
+                        x: { ticks: { color: '#94a3b8' } }, 
+                        y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255, 255, 255, 0.03)' } } 
+                    } 
+                }
             });
         }
 
@@ -4264,35 +4966,159 @@
             if (prodCtx) {
                 const labels = Object.keys(agg.prodByDate).sort();
                 const values = labels.map(k => agg.prodByDate[k]);
-                new Chart(prodCtx, { type: 'line', data: { labels, datasets: [{ label: 'Daily Meters', data: values, borderColor: '#0EA5E9', fill: false, tension: 0.3 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: '#cbd5e1' } } }, scales: { x: { ticks: { color: '#94a3b8' } }, y: { ticks: { color: '#94a3b8' }, grid: { color: '#1E293B' } } } } });
+                const grad = prodCtx.createLinearGradient(0, 0, 0, 300);
+                grad.addColorStop(0, 'rgba(14, 165, 233, 0.25)');
+                grad.addColorStop(1, 'rgba(14, 165, 233, 0.0)');
+                new Chart(prodCtx, { 
+                    type: 'line', 
+                    data: { labels, datasets: [{ label: 'Daily Meters', data: values, borderColor: '#0EA5E9', backgroundColor: grad, fill: true, tension: 0.3 }] }, 
+                    options: { 
+                        responsive: true, 
+                        maintainAspectRatio: false, 
+                        plugins: { 
+                            legend: { labels: { color: '#cbd5e1' } },
+                            tooltip: {
+                                backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                                titleColor: '#fff',
+                                bodyColor: '#cbd5e1',
+                                borderColor: 'rgba(255, 255, 255, 0.1)',
+                                borderWidth: 1,
+                                padding: 10,
+                                cornerRadius: 8
+                            }
+                        }, 
+                        scales: { 
+                            x: { ticks: { color: '#94a3b8' } }, 
+                            y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255, 255, 255, 0.03)' } } 
+                        } 
+                    } 
+                });
             }
             
             const fuelCtx = document.getElementById('rig-fuelEfficiency')?.getContext('2d');
             if (fuelCtx) {
                 const labels = agg.fuelEffArrByRig.map(r => r.rig);
                 const values = agg.fuelEffArrByRig.map(r => r.eff.toFixed(2));
-                new Chart(fuelCtx, { type: 'bar', data: { labels, datasets: [{ label: 'Fuel/Meter', data: values, backgroundColor: '#8B5CF6' }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { ticks: { color: '#94a3b8' } }, y: { ticks: { color: '#94a3b8' }, grid: { color: '#1E293B' } } } } });
+                const grad = fuelCtx.createLinearGradient(0, 0, 0, 300);
+                grad.addColorStop(0, '#F59E0B');
+                grad.addColorStop(1, '#F97316');
+                new Chart(fuelCtx, { 
+                    type: 'bar', 
+                    data: { labels, datasets: [{ label: 'Fuel/Meter', data: values, backgroundColor: grad, borderRadius: 4 }] }, 
+                    options: { 
+                        responsive: true, 
+                        maintainAspectRatio: false, 
+                        plugins: { 
+                            legend: { display: false },
+                            tooltip: {
+                                backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                                titleColor: '#fff',
+                                bodyColor: '#cbd5e1',
+                                borderColor: 'rgba(255, 255, 255, 0.1)',
+                                borderWidth: 1,
+                                padding: 10,
+                                cornerRadius: 8
+                            }
+                        }, 
+                        scales: { 
+                            x: { ticks: { color: '#94a3b8' } }, 
+                            y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255, 255, 255, 0.03)' } } 
+                        } 
+                    } 
+                });
             }
             
             const ddrTypesCtx = document.getElementById('rig-ddrTypes')?.getContext('2d');
             if (ddrTypesCtx) {
-                const labels = Object.keys(agg.ddrTypes).slice(0, 10);  // Top 10 for readability
+                const labels = Object.keys(agg.ddrTypes).slice(0, 10);
                 const values = labels.map(k => agg.ddrTypes[k]);
-                new Chart(ddrTypesCtx, { type: 'doughnut', data: { labels, datasets: [{ data: values, backgroundColor: ['#60a5fa','#34d399','#a78bfa','#f59e0b','#ef4444','#22D3EE','#F59E0B','#10B981','#06B6D4','#8B5CF6'] }] }, options: { responsive: true, maintainAspectRatio: false, cutout: '60%', plugins: { legend: { position: 'right', labels: { color: '#cbd5e1' } } } } });
+                new Chart(ddrTypesCtx, { 
+                    type: 'doughnut', 
+                    data: { labels, datasets: [{ data: values, backgroundColor: ['#60a5fa','#34d399','#a78bfa','#f59e0b','#ef4444','#22D3EE','#F59E0B','#10B981','#06B6D4','#8B5CF6'], borderWidth: 0 }] }, 
+                    options: { 
+                        responsive: true, 
+                        maintainAspectRatio: false, 
+                        cutout: '60%', 
+                        plugins: { 
+                            legend: { position: 'right', labels: { color: '#cbd5e1' } },
+                            tooltip: {
+                                backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                                titleColor: '#fff',
+                                bodyColor: '#cbd5e1',
+                                borderColor: 'rgba(255, 255, 255, 0.1)',
+                                borderWidth: 1,
+                                padding: 10,
+                                cornerRadius: 8
+                            }
+                        } 
+                    } 
+                });
             }
             
             const ddrDurCtx = document.getElementById('rig-ddrDurations')?.getContext('2d');
             if (ddrDurCtx) {
-                const labels = Object.keys(agg.ddrDurations).slice(0, 10);  // Top 10 for readability
+                const labels = Object.keys(agg.ddrDurations).slice(0, 10);
                 const values = labels.map(k => agg.ddrDurations[k].toFixed(1));
-                new Chart(ddrDurCtx, { type: 'bar', data: { labels, datasets: [{ label: 'Total Hours', data: values, backgroundColor: '#34d399' }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { ticks: { color: '#94a3b8' } }, y: { ticks: { color: '#94a3b8' }, grid: { color: '#1E293B' } } } } });
+                const grad = ddrDurCtx.createLinearGradient(0, 0, 0, 300);
+                grad.addColorStop(0, '#F59E0B');
+                grad.addColorStop(1, '#D97706');
+                new Chart(ddrDurCtx, { 
+                    type: 'bar', 
+                    data: { labels, datasets: [{ label: 'Total Hours', data: values, backgroundColor: grad, borderRadius: 4 }] }, 
+                    options: { 
+                        responsive: true, 
+                        maintainAspectRatio: false, 
+                        plugins: { 
+                            legend: { display: false },
+                            tooltip: {
+                                backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                                titleColor: '#fff',
+                                bodyColor: '#cbd5e1',
+                                borderColor: 'rgba(255, 255, 255, 0.1)',
+                                borderWidth: 1,
+                                padding: 10,
+                                cornerRadius: 8
+                            }
+                        }, 
+                        scales: { 
+                            x: { ticks: { color: '#94a3b8' } }, 
+                            y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255, 255, 255, 0.03)' } } 
+                        } 
+                    } 
+                });
             }
             
             const dailyCtx = document.getElementById('rig-productivityDaily')?.getContext('2d');
             if (dailyCtx) {
-                const labels = Object.keys(agg.prodByDate).sort().slice(-30);  // Last 30 days
+                const labels = Object.keys(agg.prodByDate).sort().slice(-30);
                 const values = labels.map(k => agg.prodByDate[k]);
-                new Chart(dailyCtx, { type: 'bar', data: { labels, datasets: [{ label: 'Daily Output (m)', data: values, backgroundColor: '#22D3EE' }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { ticks: { color: '#94a3b8' } }, y: { ticks: { color: '#94a3b8' }, grid: { color: '#1E293B' } } } } });
+                const grad = dailyCtx.createLinearGradient(0, 0, 0, 300);
+                grad.addColorStop(0, '#0EA5E9');
+                grad.addColorStop(1, '#22D3EE');
+                new Chart(dailyCtx, { 
+                    type: 'bar', 
+                    data: { labels, datasets: [{ label: 'Daily Output (m)', data: values, backgroundColor: grad, borderRadius: 4 }] }, 
+                    options: { 
+                        responsive: true, 
+                        maintainAspectRatio: false, 
+                        plugins: { 
+                            legend: { display: false },
+                            tooltip: {
+                                backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                                titleColor: '#fff',
+                                bodyColor: '#cbd5e1',
+                                borderColor: 'rgba(255, 255, 255, 0.1)',
+                                borderWidth: 1,
+                                padding: 10,
+                                cornerRadius: 8
+                            }
+                        }, 
+                        scales: { 
+                            x: { ticks: { color: '#94a3b8' } }, 
+                            y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255, 255, 255, 0.03)' } } 
+                        } 
+                    } 
+                });
             }
             
             const fuelConsCtx = document.getElementById('rig-fuelConsumption')?.getContext('2d');
@@ -4304,14 +5130,66 @@
                 });
                 const labels = Object.keys(fuelByDate).sort();
                 const values = labels.map(k => fuelByDate[k]);
-                new Chart(fuelConsCtx, { type: 'line', data: { labels, datasets: [{ label: 'Daily Fuel', data: values, borderColor: '#0EA5E9', fill: false, tension: 0.3 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: '#cbd5e1' } } }, scales: { x: { ticks: { color: '#94a3b8' } }, y: { ticks: { color: '#94a3b8' }, grid: { color: '#1E293B' } } } } });
+                const grad = fuelConsCtx.createLinearGradient(0, 0, 0, 300);
+                grad.addColorStop(0, 'rgba(249, 115, 22, 0.25)');
+                grad.addColorStop(1, 'rgba(249, 115, 22, 0.0)');
+                new Chart(fuelConsCtx, { 
+                    type: 'line', 
+                    data: { labels, datasets: [{ label: 'Daily Fuel', data: values, borderColor: '#F97316', backgroundColor: grad, fill: true, tension: 0.3 }] }, 
+                    options: { 
+                        responsive: true, 
+                        maintainAspectRatio: false, 
+                        plugins: { 
+                            legend: { labels: { color: '#cbd5e1' } },
+                            tooltip: {
+                                backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                                titleColor: '#fff',
+                                bodyColor: '#cbd5e1',
+                                borderColor: 'rgba(255, 255, 255, 0.1)',
+                                borderWidth: 1,
+                                padding: 10,
+                                cornerRadius: 8
+                            }
+                        }, 
+                        scales: { 
+                            x: { ticks: { color: '#94a3b8' } }, 
+                            y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255, 255, 255, 0.03)' } } 
+                        } 
+                    } 
+                });
             }
             
             const fuelByRigCtx = document.getElementById('rig-fuelByRig')?.getContext('2d');
             if (fuelByRigCtx) {
                 const labels = agg.fuelEffArrByRig.map(r => r.rig);
                 const values = agg.fuelEffArrByRig.map(r => r.fuel);
-                new Chart(fuelByRigCtx, { type: 'bar', data: { labels, datasets: [{ label: 'Total Fuel', data: values, backgroundColor: '#a78bfa' }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { ticks: { color: '#94a3b8' } }, y: { ticks: { color: '#94a3b8' }, grid: { color: '#1E293B' } } } } });
+                const grad = fuelByRigCtx.createLinearGradient(0, 0, 0, 300);
+                grad.addColorStop(0, '#f59e0b');
+                grad.addColorStop(1, '#f97316');
+                new Chart(fuelByRigCtx, { 
+                    type: 'bar', 
+                    data: { labels, datasets: [{ label: 'Total Fuel', data: values, backgroundColor: grad, borderRadius: 4 }] }, 
+                    options: { 
+                        responsive: true, 
+                        maintainAspectRatio: false, 
+                        plugins: { 
+                            legend: { display: false },
+                            tooltip: {
+                                backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                                titleColor: '#fff',
+                                bodyColor: '#cbd5e1',
+                                borderColor: 'rgba(255, 255, 255, 0.1)',
+                                borderWidth: 1,
+                                padding: 10,
+                                cornerRadius: 8
+                            }
+                        }, 
+                        scales: { 
+                            x: { ticks: { color: '#94a3b8' } }, 
+                            y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255, 255, 255, 0.03)' } } 
+                        } 
+                    } 
+                });
             }
             const utilCtx = document.getElementById('rig-utilization')?.getContext('2d');
             if (utilCtx) {
@@ -4322,7 +5200,29 @@
                     const score = 100 - Math.min(100, eff * 10);
                     return Math.max(0, score);
                 });
-                new Chart(utilCtx, { type: 'radar', data: { labels, datasets: [{ label: 'Efficiency Score', data: values, borderColor: '#6366F1', backgroundColor: 'rgba(99,102,241,0.2)' }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { r: { angleLines: { color: '#1E293B' }, grid: { color: '#1E293B' }, pointLabels: { color: '#94a3b8' }, ticks: { color: '#94a3b8' } } } } });
+                new Chart(utilCtx, { 
+                    type: 'radar', 
+                    data: { labels, datasets: [{ label: 'Efficiency Score', data: values, borderColor: '#F59E0B', backgroundColor: 'rgba(245,158,11,0.15)' }] }, 
+                    options: { 
+                        responsive: true, 
+                        maintainAspectRatio: false, 
+                        plugins: { 
+                            legend: { display: false },
+                            tooltip: {
+                                backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                                titleColor: '#fff',
+                                bodyColor: '#cbd5e1',
+                                borderColor: 'rgba(255, 255, 255, 0.1)',
+                                borderWidth: 1,
+                                padding: 10,
+                                cornerRadius: 8
+                            }
+                        }, 
+                        scales: { 
+                            r: { angleLines: { color: 'rgba(255,255,255,0.05)' }, grid: { color: 'rgba(255,255,255,0.05)' }, pointLabels: { color: '#94a3b8' }, ticks: { color: '#94a3b8', backdropColor: 'transparent' } } 
+                        } 
+                    } 
+                });
             }
         }
 
@@ -5584,12 +6484,20 @@
             if (bmlpModelChart) bmlpModelChart.destroy();
 
             var labels = ['Accuracy', 'Precision', 'Recall', 'F1-Score'];
+            var canvasCtx = ctx.getContext('2d');
+
             var datasets = Object.keys(BMLP_MODELS).map(function(key) {
                 var m = BMLP_MODELS[key];
+                var grad = m.color + '33';
+                if (canvasCtx) {
+                    grad = canvasCtx.createLinearGradient(0, 0, 0, 300);
+                    grad.addColorStop(0, m.color);
+                    grad.addColorStop(1, 'rgba(0, 0, 0, 0.1)');
+                }
                 return {
                     label: m.name,
                     data: [m.acc * 100, m.prec * 100, m.rec * 100, m.f1 * 100],
-                    backgroundColor: m.color + '33',
+                    backgroundColor: grad,
                     borderColor: m.color,
                     borderWidth: 2,
                     borderRadius: 4,
@@ -5605,11 +6513,20 @@
                     responsive: true,
                     maintainAspectRatio: false,
                     plugins: {
-                        legend: { position: 'top', labels: { color: '#e2e8f0', font: { size: 11 }, usePointStyle: true, pointStyle: 'rectRounded' } },
-                        tooltip: { callbacks: { label: function(c) { return c.dataset.label + ': ' + c.raw.toFixed(2) + '%'; } } }
+                        legend: { position: 'top', labels: { color: '#e2e8f0', font: { size: 11, family: 'Poppins' }, usePointStyle: true, pointStyle: 'rectRounded' } },
+                        tooltip: { 
+                            backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                            titleColor: '#fff',
+                            bodyColor: '#cbd5e1',
+                            borderColor: 'rgba(255, 255, 255, 0.1)',
+                            borderWidth: 1,
+                            padding: 10,
+                            cornerRadius: 8,
+                            callbacks: { label: function(c) { return c.dataset.label + ': ' + c.raw.toFixed(2) + '%'; } } 
+                        }
                     },
                     scales: {
-                        y: { min: 90, max: 100, grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#9CA3AF', callback: function(v) { return v + '%'; } } },
+                        y: { min: 90, max: 100, grid: { color: 'rgba(255,255,255,0.03)' }, ticks: { color: '#9CA3AF', callback: function(v) { return v + '%'; } } },
                         x: { grid: { display: false }, ticks: { color: '#9CA3AF' } }
                     }
                 }
