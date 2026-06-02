@@ -1518,6 +1518,39 @@
                 color: black !important;
             }
         }
+
+        /* Workspace Dropdown specific behavior */
+        .workspace-projects-dropdown:hover .dropdown-panel,
+        .workspace-projects-dropdown:focus-within .dropdown-panel {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) scale(1);
+        }
+        
+        /* Premium Project Switcher Animations */
+        .project-content {
+            transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+        
+        .project-content.switching-out {
+            opacity: 0;
+            transform: translateY(15px) scale(0.98);
+            pointer-events: none;
+            position: absolute; /* Prevent layout shift while fading out */
+            width: 100%;
+        }
+        
+        .project-content.switching-in {
+            opacity: 0;
+            transform: translateY(-15px) scale(0.98);
+            pointer-events: none;
+        }
+        
+        @keyframes shimmer {
+            100% { transform: translateX(100%); }
+        }
     </style>
 </head>
 
@@ -1886,259 +1919,44 @@
                     <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
                 </span>
                 <div class="flex items-center gap-1.5 font-mono text-xs">
-                    <span class="text-gray-500 font-bold">WORKSPACE</span>
-                    <span class="text-gray-600">/</span>
+                    <span class="text-gray-500 font-bold hidden sm:inline">WORKSPACE</span>
+                    <span class="text-gray-600 hidden sm:inline">/</span>
                     <span class="text-white font-bold font-poppins" id="workspace-active-title">-</span>
                 </div>
             </div>
 
-            <!-- Middle: Quick Workspace Switcher Tabs -->
-            <div class="hidden lg:flex items-center gap-1 bg-dark/40 p-1 rounded-xl border border-white/5">
-                <button onclick="switchProject('superstore')" class="workspace-nav-tab" data-workspace-tab="superstore">
-                    <i class="fas fa-store text-primary text-xs"></i>
-                    <span>SuperStore</span>
+            <!-- Middle: Unified Dropdown Switcher -->
+            <div class="dropdown-group workspace-projects-dropdown z-[9999]">
+                <button class="px-5 py-2 rounded-xl bg-dark/60 border border-white/10 hover:bg-white/10 hover:border-white/20 text-white transition-all flex items-center gap-3 text-sm font-medium shadow-xl backdrop-blur-md">
+                    <i class="fas fa-layer-group text-primary opacity-80"></i>
+                    <span>Pilih Project</span>
+                    <i class="fas fa-chevron-down text-[10px] opacity-70"></i>
                 </button>
-                <button onclick="switchProject('marketing')" class="workspace-nav-tab" data-workspace-tab="marketing">
-                    <i class="fas fa-chart-line text-secondary text-xs"></i>
-                    <span>Marketing</span>
-                </button>
-                <button onclick="switchProject('rig')" class="workspace-nav-tab" data-workspace-tab="rig">
-                    <i class="fas fa-industry text-amber-400 text-xs"></i>
-                    <span>Rig Ops</span>
-                </button>
-                <button onclick="switchProject('siagaai')" class="workspace-nav-tab" data-workspace-tab="siagaai">
-                    <i class="fas fa-shield-alt text-cyan-400 text-xs"></i>
-                    <span>SiagaAI</span>
-                </button>
-                <button onclick="switchProject('bmlp')" class="workspace-nav-tab" data-workspace-tab="bmlp">
-                    <i class="fas fa-brain text-emerald-400 text-xs"></i>
-                    <span>Fraud ML</span>
-                </button>
-                <button onclick="switchProject('beasiswa')" class="workspace-nav-tab" data-workspace-tab="beasiswa">
-                    <i class="fas fa-graduation-cap text-violet-400 text-xs"></i>
-                    <span>Beasiswa</span>
-                </button>
-            </div>
-
-            <!-- Right: Exit Button -->
-            <div class="flex items-center gap-3">
-                <!-- Dropdown selector for mobile workspace switching -->
-                <select onchange="switchProject(this.value)" class="lg:hidden bg-dark/80 text-white font-mono text-[10px] py-1.5 px-2.5 border border-white/10 rounded-xl focus:outline-none" id="workspace-mobile-select">
-                    <option value="superstore">SuperStore</option>
-                    <option value="marketing">Marketing</option>
-                    <option value="rig">Rig Ops</option>
-                    <option value="siagaai">SiagaAI</option>
-                    <option value="bmlp">Fraud ML</option>
-                    <option value="beasiswa">Beasiswa</option>
-                </select>
-                
-                <button onclick="exitWorkspaceMode()" class="px-3.5 py-1.5 rounded-full bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-bold font-mono hover:bg-red-500 hover:text-white transition-all flex items-center gap-1.5 shadow-lg shadow-red-500/5 active:scale-[0.98]">
-                    <i class="fas fa-times"></i>
-                    <span>Exit Focus</span>
-                </button>
-            </div>
-        </div>
-
-        <!-- PROJECT SWITCHER TABS -->
-        <div class="mb-12 bg-dark/85 backdrop-blur-md p-4 rounded-3xl border border-gray-800 shadow-2xl">
-            <div class="flex flex-col gap-3">
-                <div class="flex items-center justify-between px-2">
-                    <span
-                        class="text-gray-400 text-xs font-mono uppercase tracking-widest font-bold flex items-center gap-2">
-                        <span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span> Select Workspace /
-                        Project
-                    </span>
-                    <span class="text-[10px] text-gray-500 font-mono hidden md:inline">Interactive Live
-                        Dashboards</span>
-                </div>
-                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
-                    <!-- Card 1: SuperStore -->
-                    <div onclick="switchProject('superstore')"
-                        class="project-card active group relative p-4 rounded-2xl border border-white/5 cursor-pointer transition-all duration-300 hover:border-primary/30"
-                        data-project="superstore">
-                        <div
-                            class="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl">
-                        </div>
-                        <div class="relative flex flex-col h-full justify-between gap-3">
-                            <div class="flex justify-between items-start">
-                                <div
-                                    class="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary text-sm group-hover:scale-110 transition-transform">
-                                    <i class="fas fa-store"></i>
-                                </div>
-                                <span
-                                    class="text-[8px] bg-primary/20 text-violet-300 px-1.5 py-0.5 rounded font-mono font-bold uppercase tracking-wider">BI
-                                    Hub</span>
-                            </div>
-                            <div>
-                                <h4 class="text-white font-bold text-xs group-hover:text-primary transition-colors">
-                                    SuperStore Analytics</h4>
-                                <p class="text-[9px] text-gray-500 mt-0.5 leading-normal font-poppins">Sales dynamics &
-                                    profit margins.</p>
-                            </div>
-                            <div
-                                class="flex justify-between items-center border-t border-white/5 pt-2 mt-0.5 text-[9px] font-mono text-gray-400">
-                                <span>Revenue:</span>
-                                <span class="text-white font-bold">$1.94M</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Card 2: Marketing -->
-                    <div onclick="switchProject('marketing')"
-                        class="project-card group relative p-4 rounded-2xl border border-white/5 cursor-pointer transition-all duration-300 hover:border-secondary/30"
-                        data-project="marketing">
-                        <div
-                            class="absolute inset-0 bg-gradient-to-br from-secondary/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl">
-                        </div>
-                        <div class="relative flex flex-col h-full justify-between gap-3">
-                            <div class="flex justify-between items-start">
-                                <div
-                                    class="w-8 h-8 rounded-lg bg-secondary/10 flex items-center justify-center text-secondary text-sm group-hover:scale-110 transition-transform">
-                                    <i class="fas fa-chart-line"></i>
-                                </div>
-                                <span
-                                    class="text-[8px] bg-secondary/20 text-secondary-300 px-1.5 py-0.5 rounded font-mono font-bold uppercase tracking-wider">Marketing</span>
-                            </div>
-                            <div>
-                                <h4 class="text-white font-bold text-xs group-hover:text-secondary transition-colors">
-                                    Marketing Campaigns</h4>
-                                <p class="text-[9px] text-gray-500 mt-0.5 leading-normal font-poppins">Funnel and
-                                    conversion statistics.</p>
-                            </div>
-                            <div
-                                class="flex justify-between items-center border-t border-white/5 pt-2 mt-0.5 text-[9px] font-mono text-gray-400">
-                                <span>Clicks:</span>
-                                <span class="text-white font-bold">14.8k</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Card 3: Rig Operations -->
-                    <div onclick="switchProject('rig')"
-                        class="project-card group relative p-4 rounded-2xl border border-white/5 cursor-pointer transition-all duration-300 hover:border-amber-500/30"
-                        data-project="rig">
-                        <div
-                            class="absolute inset-0 bg-gradient-to-br from-amber-500/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl">
-                        </div>
-                        <div class="relative flex flex-col h-full justify-between gap-3">
-                            <div class="flex justify-between items-start">
-                                <div
-                                    class="w-8 h-8 rounded-lg bg-amber-500/10 flex items-center justify-center text-amber-500 text-sm group-hover:scale-110 transition-transform">
-                                    <i class="fas fa-industry"></i>
-                                </div>
-                                <span
-                                    class="text-[8px] bg-amber-500/20 text-amber-300 px-1.5 py-0.5 rounded font-mono font-bold uppercase tracking-wider">Telemetry</span>
-                            </div>
-                            <div>
-                                <h4 class="text-white font-bold text-xs group-hover:text-amber-500 transition-colors">
-                                    Rig Operations</h4>
-                                <p class="text-[9px] text-gray-500 mt-0.5 leading-normal font-poppins">DDR parsing & oil
-                                    rig metrics.</p>
-                            </div>
-                            <div
-                                class="flex justify-between items-center border-t border-white/5 pt-2 mt-0.5 text-[9px] font-mono text-gray-400">
-                                <span>Rig State:</span>
-                                <span class="text-amber-400 font-bold">Connected</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Card 4: SiagaAI -->
-                    <div onclick="switchProject('siagaai')"
-                        class="project-card group relative p-4 rounded-2xl border border-white/5 cursor-pointer transition-all duration-300 hover:border-cyan-400/30"
-                        data-project="siagaai">
-                        <div
-                            class="absolute inset-0 bg-gradient-to-br from-cyan-400/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl">
-                        </div>
-                        <div class="relative flex flex-col h-full justify-between gap-3">
-                            <div class="flex justify-between items-start">
-                                <div
-                                    class="w-8 h-8 rounded-lg bg-cyan-400/10 flex items-center justify-center text-cyan-400 text-sm group-hover:scale-110 transition-transform">
-                                    <i class="fas fa-shield-alt"></i>
-                                </div>
-                                <span
-                                    class="text-[8px] bg-cyan-400/20 text-cyan-300 px-1.5 py-0.5 rounded font-mono font-bold uppercase tracking-wider">Groq
-                                    AI</span>
-                            </div>
-                            <div>
-                                <h4 class="text-white font-bold text-xs group-hover:text-cyan-400 transition-colors">
-                                    SiagaAI Platform</h4>
-                                <p class="text-[9px] text-gray-500 mt-0.5 leading-normal font-poppins">BMKG Monitor &
-                                    LLaMA 3.3.</p>
-                            </div>
-                            <div
-                                class="flex justify-between items-center border-t border-white/5 pt-2 mt-0.5 text-[9px] font-mono text-gray-400">
-                                <span>Status:</span>
-                                <span class="text-cyan-400 font-bold flex items-center gap-1"><span
-                                        class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"></span>Live</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Card 5: ML Fraud -->
-                    <div onclick="switchProject('bmlp')"
-                        class="project-card group relative p-4 rounded-2xl border border-white/5 cursor-pointer transition-all duration-300 hover:border-emerald-400/30"
-                        data-project="bmlp">
-                        <div
-                            class="absolute inset-0 bg-gradient-to-br from-emerald-400/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl">
-                        </div>
-                        <div class="relative flex flex-col h-full justify-between gap-3">
-                            <div class="flex justify-between items-start">
-                                <div
-                                    class="w-8 h-8 rounded-lg bg-emerald-400/10 flex items-center justify-center text-emerald-400 text-sm group-hover:scale-110 transition-transform">
-                                    <i class="fas fa-brain"></i>
-                                </div>
-                                <span
-                                    class="text-[8px] bg-emerald-400/20 text-emerald-300 px-1.5 py-0.5 rounded font-mono font-bold uppercase tracking-wider">Machine
-                                    Learning</span>
-                            </div>
-                            <div>
-                                <h4 class="text-white font-bold text-xs group-hover:text-emerald-400 transition-colors">
-                                    ML Fraud Detection</h4>
-                                <p class="text-[9px] text-gray-500 mt-0.5 leading-normal font-poppins">K-Means & Random
-                                    Forest.</p>
-                            </div>
-                            <div
-                                class="flex justify-between items-center border-t border-white/5 pt-2 mt-0.5 text-[9px] font-mono text-gray-400">
-                                <span>Accuracy:</span>
-                                <span class="text-emerald-400 font-bold">96.02%</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Card 6: Sistem Beasiswa -->
-                    <div onclick="switchProject('beasiswa')"
-                        class="project-card group relative p-4 rounded-2xl border border-white/5 cursor-pointer transition-all duration-300 hover:border-violet-400/30"
-                        data-project="beasiswa">
-                        <div
-                            class="absolute inset-0 bg-gradient-to-br from-violet-400/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl">
-                        </div>
-                        <div class="relative flex flex-col h-full justify-between gap-3">
-                            <div class="flex justify-between items-start">
-                                <div
-                                    class="w-8 h-8 rounded-lg bg-violet-400/10 flex items-center justify-center text-violet-400 text-sm group-hover:scale-110 transition-transform">
-                                    <i class="fas fa-graduation-cap"></i>
-                                </div>
-                                <span
-                                    class="text-[8px] bg-violet-400/20 text-violet-300 px-1.5 py-0.5 rounded font-mono font-bold uppercase tracking-wider">SAW Method</span>
-                            </div>
-                            <div>
-                                <h4 class="text-white font-bold text-xs group-hover:text-violet-400 transition-colors">
-                                    Sistem Beasiswa</h4>
-                                <p class="text-[9px] text-gray-500 mt-0.5 leading-normal font-poppins">Decision Science & YBM BRI.</p>
-                            </div>
-                            <div
-                                class="flex justify-between items-center border-t border-white/5 pt-2 mt-0.5 text-[9px] font-mono text-gray-400">
-                                <span>Method:</span>
-                                <span class="text-violet-400 font-bold">SAW Rating</span>
-                            </div>
-                        </div>
-                    </div>
+                <div class="dropdown-panel absolute top-full left-1/2 -translate-x-1/2 mt-3 w-60 space-y-1.5 bg-[#0a0a0f]/95 border border-white/10 backdrop-blur-2xl p-2.5 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.7)] opacity-0 invisible transition-all duration-300 origin-top transform scale-95 z-[9999]">
+                    <button onclick="switchProject('superstore')" class="w-full text-left px-4 py-3 rounded-xl text-gray-300 hover:bg-white/10 hover:text-white flex items-center gap-3 text-sm transition-colors group"><i class="fas fa-store text-primary w-4 group-hover:scale-110 transition-transform"></i> SuperStore</button>
+                    <button onclick="switchProject('marketing')" class="w-full text-left px-4 py-3 rounded-xl text-gray-300 hover:bg-white/10 hover:text-white flex items-center gap-3 text-sm transition-colors group"><i class="fas fa-chart-line text-secondary w-4 group-hover:scale-110 transition-transform"></i> Marketing</button>
+                    <button onclick="switchProject('rig')" class="w-full text-left px-4 py-3 rounded-xl text-gray-300 hover:bg-white/10 hover:text-white flex items-center gap-3 text-sm transition-colors group"><i class="fas fa-industry text-amber-400 w-4 group-hover:scale-110 transition-transform"></i> Rig Ops</button>
+                    <div class="my-1 border-t border-white/5"></div>
+                    <button onclick="switchProject('siagaai')" class="w-full text-left px-4 py-3 rounded-xl text-gray-300 hover:bg-white/10 hover:text-white flex items-center justify-between text-sm transition-colors group">
+                        <div class="flex items-center gap-3"><i class="fas fa-shield-alt text-cyan-400 w-4 group-hover:scale-110 transition-transform"></i> SiagaAI</div>
+                        <span class="text-[9px] font-bold bg-cyan-500/20 text-cyan-300 px-2 py-0.5 rounded-full">LIVE</span>
+                    </button>
+                    <button onclick="switchProject('bmlp')" class="w-full text-left px-4 py-3 rounded-xl text-gray-300 hover:bg-white/10 hover:text-white flex items-center gap-3 text-sm transition-colors group"><i class="fas fa-brain text-emerald-400 w-4 group-hover:scale-110 transition-transform"></i> Fraud ML</button>
+                    <button onclick="switchProject('beasiswa')" class="w-full text-left px-4 py-3 rounded-xl text-gray-300 hover:bg-white/10 hover:text-white flex items-center justify-between text-sm transition-colors group">
+                        <div class="flex items-center gap-3"><i class="fas fa-graduation-cap text-violet-400 w-4 group-hover:scale-110 transition-transform"></i> Beasiswa</div>
+                        <span class="text-[9px] font-bold bg-violet-500/20 text-violet-300 px-2 py-0.5 rounded-full">LIVE</span>
+                    </button>
                 </div>
             </div>
-        </div>
 
-        <!-- SUPERSTORE ANALYTICS DASHBOARD (Default View) -->
+            <!-- Right: Prominent Back Button -->
+            <button onclick="exitWorkspaceMode()" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-red-500/20 to-rose-500/10 border border-red-500/30 text-red-400 text-xs sm:text-sm font-bold font-mono hover:from-red-500 hover:to-rose-600 hover:text-white hover:border-red-400 transition-all duration-300 flex items-center gap-2.5 shadow-lg shadow-red-500/10 active:scale-95 group overflow-hidden relative">
+                <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:animate-shimmer"></div>
+                <i class="fas fa-arrow-left group-hover:-translate-x-1 transition-transform relative z-10"></i>
+                <span class="hidden sm:inline relative z-10">Kembali ke Portfolio</span>
+                <span class="sm:hidden relative z-10">Kembali</span>
+            </button>
+        </div>
         <div id="superstore-dashboard" class="project-content">
             <div class="flex flex-col md:flex-row justify-between items-end mb-8 gap-4">
                 <div>
@@ -5016,6 +4834,39 @@
             printWindow.document.write('.list-none { list-style-type: none; padding-left: 0; }');
             printWindow.document.write('.space-y-1 > * + * { margin-top: 0.25rem; }');
             printWindow.document.write('@page { size: A4; margin: 1.8cm 1.5cm; }');
+
+        /* Workspace Dropdown specific behavior */
+        .workspace-projects-dropdown:hover .dropdown-panel,
+        .workspace-projects-dropdown:focus-within .dropdown-panel {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) scale(1);
+        }
+        
+        /* Premium Project Switcher Animations */
+        .project-content {
+            transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+        
+        .project-content.switching-out {
+            opacity: 0;
+            transform: translateY(15px) scale(0.98);
+            pointer-events: none;
+            position: absolute; /* Prevent layout shift while fading out */
+            width: 100%;
+        }
+        
+        .project-content.switching-in {
+            opacity: 0;
+            transform: translateY(-15px) scale(0.98);
+            pointer-events: none;
+        }
+        
+        @keyframes shimmer {
+            100% { transform: translateX(100%); }
+        }
             printWindow.document.write('</style>');
             printWindow.document.write('</head><body class="p-4">');
             printWindow.document.write(cvContents);
@@ -5560,101 +5411,113 @@
         }
 
         // ========== PROJECT SWITCHER FUNCTION ==========
+
+        let isSwitchingProject = false;
         function switchProject(project) {
-            const superstore = document.getElementById('superstore-dashboard');
-            const marketing = document.getElementById('marketing-dashboard');
-            const rig = document.getElementById('rig-dashboard');
-            const siagaai = document.getElementById('siagaai-dashboard');
-            const bmlp = document.getElementById('bmlp-dashboard');
-            const beasiswa = document.getElementById('beasiswa-dashboard');
+            if (isSwitchingProject) return;
+            
+            const dashboards = {
+                'superstore': document.getElementById('superstore-dashboard'),
+                'marketing': document.getElementById('marketing-dashboard'),
+                'rig': document.getElementById('rig-dashboard'),
+                'siagaai': document.getElementById('siagaai-dashboard'),
+                'bmlp': document.getElementById('bmlp-dashboard'),
+                'beasiswa': document.getElementById('beasiswa-dashboard')
+            };
+            
             const tabCards = document.querySelectorAll('.project-card');
-
-            // Hide all dashboards first
-            superstore.classList.add('hidden');
-            marketing.classList.add('hidden');
-            rig?.classList.add('hidden');
-            siagaai?.classList.add('hidden');
-            bmlp?.classList.add('hidden');
-            beasiswa?.classList.add('hidden');
-
-            // Style all card selectors as inactive
-            tabCards.forEach(card => {
-                card.classList.remove('active');
+            
+            // Find currently visible dashboard
+            let currentActive = null;
+            Object.values(dashboards).forEach(db => {
+                if (db && !db.classList.contains('hidden')) {
+                    currentActive = db;
+                }
             });
 
-            // Activate selected card
+            const targetDashboard = dashboards[project];
+            if (!targetDashboard || currentActive === targetDashboard) {
+                // If clicking the same project or entering workspace mode initially
+                document.body.classList.add('workspace-focus-active');
+                if (targetDashboard) targetDashboard.classList.remove('hidden');
+                
+                // Update workspace title
+                updateWorkspaceTitle(project);
+                
+                // Scroll to top of project wrapper cleanly
+                setTimeout(() => {
+                    const wrapper = document.getElementById('dashboard-wrapper');
+                    if (wrapper) {
+                        const y = wrapper.getBoundingClientRect().top + window.scrollY - 100;
+                        window.scrollTo({ top: y, behavior: 'smooth' });
+                    }
+                }, 100);
+                return;
+            }
+
+            isSwitchingProject = true;
+            document.body.classList.add('workspace-focus-active');
+
+            // Style all card selectors as inactive (underlying portfolio)
             tabCards.forEach(card => {
+                card.classList.remove('active');
                 if (card.dataset.project === project) {
                     card.classList.add('active');
                 }
             });
 
-            if (project === 'superstore') {
-                superstore.classList.remove('hidden');
-            } else if (project === 'marketing') {
-                marketing.classList.remove('hidden');
-                if (!window.marketingDataLoaded) {
-                    marketingFetchData();
-                    window.marketingDataLoaded = true;
-                }
-            } else if (project === 'rig') {
-                rig?.classList.remove('hidden');
-                if (!window.rigDataLoaded) {
-                    rigInit();
-                    window.rigDataLoaded = true;
-                }
-            } else if (project === 'siagaai') {
-                siagaai?.classList.remove('hidden');
-                if (!window.siagaaiDataLoaded) {
-                    siagaaiInit();
-                    window.siagaaiDataLoaded = true;
-                }
-            } else if (project === 'bmlp') {
-                bmlp?.classList.remove('hidden');
-                if (!window.bmlpDataLoaded) {
-                    bmlpInit();
-                    window.bmlpDataLoaded = true;
-                }
-            } else if (project === 'beasiswa') {
-                beasiswa?.classList.remove('hidden');
-                if (!window.beasiswaDataLoaded) {
-                    beasiswaInit();
-                    window.beasiswaDataLoaded = true;
-                }
+            updateWorkspaceTitle(project);
+
+            // Execute Premium Transition Animation
+            if (currentActive) {
+                // Prepare container for absolute positioning during crossfade
+                const container = currentActive.parentElement;
+                container.style.position = 'relative';
+                
+                currentActive.classList.add('switching-out');
+                
+                // Prepare new element
+                targetDashboard.classList.remove('hidden');
+                targetDashboard.classList.add('switching-in');
+                
+                // Force browser reflow to apply initial animation state
+                void targetDashboard.offsetWidth;
+                
+                // Trigger entry animation
+                targetDashboard.classList.remove('switching-in');
+                
+                setTimeout(() => {
+                    currentActive.classList.add('hidden');
+                    currentActive.classList.remove('switching-out');
+                    container.style.position = ''; // Reset
+                    isSwitchingProject = false;
+                }, 500); // 500ms matches CSS transition duration
+            } else {
+                targetDashboard.classList.remove('hidden');
+                isSwitchingProject = false;
             }
-
-            // Enable Focused Workspace Mode
-            document.body.classList.add('workspace-focus-active');
             
-            // Set active title in Workspace Bar
-            const titles = {
-                superstore: 'SuperStore Intelligence',
-                marketing: 'Omnichannel Marketing Analytics',
-                rig: 'Rig Operations & Performance Tracker',
-                siagaai: 'SiagaAI - Disaster Assistant Platform',
-                bmlp: 'ML Fraud Detection System',
-                beasiswa: 'Sistem Pendukung Keputusan Seleksi Beasiswa (Metode SAW)'
-            };
-            const activeTitle = document.getElementById('workspace-active-title');
-            if (activeTitle) activeTitle.textContent = titles[project] || '-';
-
-            // Highlight Workspace Tab
-            document.querySelectorAll('.workspace-nav-tab').forEach(tab => {
-                if (tab.dataset.workspaceTab === project) {
-                    tab.classList.add('active');
-                } else {
-                    tab.classList.remove('active');
-                }
-            });
-
-            // Synchronize mobile select option
-            const mobSelect = document.getElementById('workspace-mobile-select');
-            if (mobSelect) mobSelect.value = project;
-
-            // Smooth scroll to top of dashboard
-            document.getElementById('dashboard')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            // Scroll neatly to top
+            const wrapper = document.getElementById('dashboard-wrapper');
+            if (wrapper) {
+                const y = wrapper.getBoundingClientRect().top + window.scrollY - 100;
+                window.scrollTo({ top: y, behavior: 'smooth' });
+            }
         }
 
+        function updateWorkspaceTitle(project) {
+            const titleEl = document.getElementById('workspace-active-title');
+            if (!titleEl) return;
+            const titles = {
+                'superstore': 'SuperStore Analytics',
+                'marketing': 'Marketing Dashboard',
+                'rig': 'Rig Operations',
+                'siagaai': 'SiagaAI Offline App',
+                'bmlp': 'Fraud Detect ML',
+                'beasiswa': 'Sistem Beasiswa (SAW)'
+            };
+            titleEl.textContent = titles[project] || 'Project';
+        }
         function exitWorkspaceMode() {
             document.body.classList.remove('workspace-focus-active');
             // Remove active style from switcher cards
