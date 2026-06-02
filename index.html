@@ -1436,7 +1436,6 @@
         }
 
         body.workspace-focus-active #workspace-control-bar {
-            display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 16px;
@@ -1909,6 +1908,145 @@
 
     <!-- Dashboard -->
     <section id="dashboard" class="py-24 max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-36">
+
+                <!-- PROJECT SWITCHER TABS -->
+        <div class="mb-12 bg-dark/85 backdrop-blur-md p-4 rounded-3xl border border-gray-800 shadow-2xl">
+            <div class="flex flex-col gap-3">
+                <div class="flex items-center justify-between px-2">
+                    <span class="text-gray-400 text-xs font-mono uppercase tracking-widest font-bold flex items-center gap-2">
+                        <span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span> Select Workspace / Project
+                    </span>
+                    <span class="text-[10px] text-gray-500 font-mono hidden md:inline">Interactive Live Dashboards</span>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+                    <!-- Card 1: SuperStore -->
+                    <div onclick="switchProject('superstore')" class="project-card active group relative p-4 rounded-2xl border border-white/5 cursor-pointer transition-all duration-300 hover:border-primary/30" data-project="superstore">
+                        <div class="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl"></div>
+                        <div class="relative flex flex-col h-full justify-between gap-3">
+                            <div class="flex justify-between items-start">
+                                <div class="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary text-sm group-hover:scale-110 transition-transform">
+                                    <i class="fas fa-store"></i>
+                                </div>
+                                <span class="text-[8px] bg-primary/20 text-primary-300 px-1.5 py-0.5 rounded font-mono font-bold uppercase tracking-wider">Analytics</span>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-bold text-xs group-hover:text-primary transition-colors">SuperStore Intelligence</h4>
+                                <p class="text-[9px] text-gray-500 mt-0.5 leading-normal font-poppins">Live global sales analysis parsed dynamically via Google Sheets CSV.</p>
+                            </div>
+                            <div class="flex justify-between items-center border-t border-white/5 pt-2 mt-0.5 text-[9px] font-mono text-gray-400">
+                                <span>Gross Revenue:</span>
+                                <span class="text-white font-bold font-mono">$2.3M</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 2: Marketing -->
+                    <div onclick="switchProject('marketing')" class="project-card group relative p-4 rounded-2xl border border-white/5 cursor-pointer transition-all duration-300 hover:border-secondary/30" data-project="marketing">
+                        <div class="absolute inset-0 bg-gradient-to-br from-secondary/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl"></div>
+                        <div class="relative flex flex-col h-full justify-between gap-3">
+                            <div class="flex justify-between items-start">
+                                <div class="w-8 h-8 rounded-lg bg-secondary/10 flex items-center justify-center text-secondary text-sm group-hover:scale-110 transition-transform">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                                <span class="text-[8px] bg-secondary/20 text-secondary-300 px-1.5 py-0.5 rounded font-mono font-bold uppercase tracking-wider">Marketing</span>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-bold text-xs group-hover:text-secondary transition-colors">Marketing Campaigns</h4>
+                                <p class="text-[9px] text-gray-500 mt-0.5 leading-normal font-poppins">Funnel and conversion statistics.</p>
+                            </div>
+                            <div class="flex justify-between items-center border-t border-white/5 pt-2 mt-0.5 text-[9px] font-mono text-gray-400">
+                                <span>Clicks:</span>
+                                <span class="text-white font-bold">14.8k</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 3: Rig Operations -->
+                    <div onclick="switchProject('rig')" class="project-card group relative p-4 rounded-2xl border border-white/5 cursor-pointer transition-all duration-300 hover:border-amber-500/30" data-project="rig">
+                        <div class="absolute inset-0 bg-gradient-to-br from-amber-500/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl"></div>
+                        <div class="relative flex flex-col h-full justify-between gap-3">
+                            <div class="flex justify-between items-start">
+                                <div class="w-8 h-8 rounded-lg bg-amber-500/10 flex items-center justify-center text-amber-400 text-sm group-hover:scale-110 transition-transform">
+                                    <i class="fas fa-industry"></i>
+                                </div>
+                                <span class="text-[8px] bg-amber-500/20 text-amber-300 px-1.5 py-0.5 rounded font-mono font-bold uppercase tracking-wider">Operations</span>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-bold text-xs group-hover:text-amber-400 transition-colors">Rig Operations</h4>
+                                <p class="text-[9px] text-gray-500 mt-0.5 leading-normal font-poppins">Real-time drilling telemetry and active status reporting.</p>
+                            </div>
+                            <div class="flex justify-between items-center border-t border-white/5 pt-2 mt-0.5 text-[9px] font-mono text-gray-400">
+                                <span>Active Rigs:</span>
+                                <span class="text-white font-bold font-mono">12</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 4: SiagaAI -->
+                    <div onclick="switchProject('siagaai')" class="project-card group relative p-4 rounded-2xl border border-white/5 cursor-pointer transition-all duration-300 hover:border-cyan-400/30" data-project="siagaai">
+                        <div class="absolute inset-0 bg-gradient-to-br from-cyan-400/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl"></div>
+                        <div class="relative flex flex-col h-full justify-between gap-3">
+                            <div class="flex justify-between items-start">
+                                <div class="w-8 h-8 rounded-lg bg-cyan-400/10 flex items-center justify-center text-cyan-400 text-sm group-hover:scale-110 transition-transform">
+                                    <i class="fas fa-shield-alt"></i>
+                                </div>
+                                <span class="text-[8px] bg-cyan-500/20 text-cyan-300 px-1.5 py-0.5 rounded font-mono font-bold uppercase tracking-wider">Emergency AI</span>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-bold text-xs group-hover:text-cyan-400 transition-colors">SiagaAI Offline App</h4>
+                                <p class="text-[9px] text-gray-500 mt-0.5 leading-normal font-poppins">Offline-first emergency preparation assistant app.</p>
+                            </div>
+                            <div class="flex justify-between items-center border-t border-white/5 pt-2 mt-0.5 text-[9px] font-mono text-gray-400">
+                                <span>BMKG Status:</span>
+                                <span class="text-cyan-400 font-bold flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"></span>Live</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 5: ML Fraud -->
+                    <div onclick="switchProject('bmlp')" class="project-card group relative p-4 rounded-2xl border border-white/5 cursor-pointer transition-all duration-300 hover:border-emerald-400/30" data-project="bmlp">
+                        <div class="absolute inset-0 bg-gradient-to-br from-emerald-400/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl"></div>
+                        <div class="relative flex flex-col h-full justify-between gap-3">
+                            <div class="flex justify-between items-start">
+                                <div class="w-8 h-8 rounded-lg bg-emerald-400/10 flex items-center justify-center text-emerald-400 text-sm group-hover:scale-110 transition-transform">
+                                    <i class="fas fa-brain"></i>
+                                </div>
+                                <span class="text-[8px] bg-emerald-400/20 text-emerald-300 px-1.5 py-0.5 rounded font-mono font-bold uppercase tracking-wider">Machine Learning</span>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-bold text-xs group-hover:text-emerald-400 transition-colors">ML Fraud Detection</h4>
+                                <p class="text-[9px] text-gray-500 mt-0.5 leading-normal font-poppins">Real-time transaction fraud checking with model metrics.</p>
+                            </div>
+                            <div class="flex justify-between items-center border-t border-white/5 pt-2 mt-0.5 text-[9px] font-mono text-gray-400">
+                                <span>Accuracy:</span>
+                                <span class="text-white font-bold font-mono">98.4%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 6: Beasiswa -->
+                    <div onclick="switchProject('beasiswa')" class="project-card group relative p-4 rounded-2xl border border-white/5 cursor-pointer transition-all duration-300 hover:border-violet-500/30" data-project="beasiswa">
+                        <div class="absolute inset-0 bg-gradient-to-br from-violet-500/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl"></div>
+                        <div class="relative flex flex-col h-full justify-between gap-3">
+                            <div class="flex justify-between items-start">
+                                <div class="w-8 h-8 rounded-lg bg-violet-500/10 flex items-center justify-center text-violet-400 text-sm group-hover:scale-110 transition-transform">
+                                    <i class="fas fa-graduation-cap"></i>
+                                </div>
+                                <span class="text-[8px] bg-violet-500/20 text-violet-300 px-1.5 py-0.5 rounded font-mono font-bold uppercase tracking-wider">Decision Science</span>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-bold text-xs group-hover:text-violet-400 transition-colors">Sistem Beasiswa (SAW)</h4>
+                                <p class="text-[9px] text-gray-500 mt-0.5 leading-normal font-poppins">Scholarship awardee selection using Simple Additive Weighting (SAW).</p>
+                            </div>
+                            <div class="flex justify-between items-center border-t border-white/5 pt-2 mt-0.5 text-[9px] font-mono text-gray-400">
+                                <span>Status:</span>
+                                <span class="text-violet-400 font-bold flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-violet-400 animate-pulse"></span>Live</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- WORKSPACE CONTROL BAR (Only visible in Focus Mode) -->
         <div id="workspace-control-bar" class="reveal">
