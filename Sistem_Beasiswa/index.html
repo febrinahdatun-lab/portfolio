@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Pembiayaan Beasiswa Reguler - Lembaga Zakat Baitul Maal BRI</title>
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='80'>🎓</text></svg>">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+
+<body>
+
+    <!-- ==================== LOGIN PAGE ==================== -->
+    <div id="loginPage" class="login-page">
+        <div class="login-container">
+            <div class="login-header">
+                <div class="login-logo">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Sistem Pembiayaan Beasiswa</h1>
+                <p>Lembaga Zakat Baitul Maal - Bank Rakyat Indonesia</p>
+            </div>
+            <form id="loginForm" class="login-form" autocomplete="off">
+                <p style="text-align:center;color:#64748b;margin-bottom:20px;font-size:14px;">Silakan login menggunakan
+                    akun Google yang telah terdaftar</p>
+                <div id="googleSignInBtn" style="display:flex;justify-content:center;margin-bottom:16px;"></div>
+                <div style="text-align:center;margin-bottom:16px;">
+                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+                        <hr style="flex:1;border:none;border-top:1px solid #e2e8f0;">
+                        <span style="color:#94a3b8;font-size:12px;">atau</span>
+                        <hr style="flex:1;border:none;border-top:1px solid #e2e8f0;">
+                    </div>
+                    <button type="button" onclick="enterAsGuest()" class="btn-guest">
+                        <i class="fas fa-flask"></i> Coba Mode Demo
+                    </button>
+                </div>
+                <div id="loginError"
+                    style="display:none;background:#fef2f2;color:#dc2626;padding:12px 16px;border-radius:8px;font-size:13px;text-align:center;">
+                    <i class="fas fa-exclamation-circle"></i> <span id="loginErrorMsg"></span>
+                </div>
+                <div id="loginLoading" style="display:none;text-align:center;padding:16px;color:#64748b;">
+                    <i class="fas fa-spinner fa-spin"></i> Memverifikasi akun...
+                </div>
+            </form>
+            <div class="login-footer">
+                <p>&copy; 2026 Lembaga Zakat Baitul Maal - BRI Kantor Pusat</p>
+                <p style="font-size:11px;color:#94a3b8;margin-top:4px;">Dikembangkan berdasarkan Skripsi Febri Nahdatun
+                    — Universitas Indraprasta PGRI</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== MAIN APP ==================== -->
+    <div id="mainApp" class="main-app" style="display:none;">
+        <!-- Sidebar -->
+        <aside id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>SISTEM BEASISWA BAITUL MAAL BRI</span>
+                </div>
+                <button class="sidebar-toggle" onclick="toggleSidebar()">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li class="nav-item active" data-page="dashboard">
+                        <a href="#"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a>
+                    </li>
+                    <li class="nav-item" data-page="pendaftar">
+                        <a href="#"><i class="fas fa-users"></i><span>Data Pendaftar</span></a>
+                    </li>
+                    <li class="nav-item" data-page="seleksi" data-roles="admin,pic,guest">
+                        <a href="#"><i class="fas fa-check-double"></i><span>Seleksi (SAW)</span></a>
+                    </li>
+                    <li class="nav-item" data-page="pencairan" data-roles="admin,pic">
+                        <a href="#"><i class="fas fa-money-bill-wave"></i><span>Pencairan</span></a>
+                    </li>
+                    <li class="nav-separator" data-roles="admin">
+                        <span>Master Data</span>
+                    </li>
+                    <li class="nav-item" data-page="kanwil" data-roles="admin">
+                        <a href="#"><i class="fas fa-building"></i><span>Kantor Wilayah</span></a>
+                    </li>
+                    <li class="nav-item" data-page="tingkatan" data-roles="admin">
+                        <a href="#"><i class="fas fa-layer-group"></i><span>Tingkatan</span></a>
+                    </li>
+                    <li class="nav-item" data-page="kriteria" data-roles="admin,pic">
+                        <a href="#"><i class="fas fa-balance-scale"></i><span>Kriteria & Bobot</span></a>
+                    </li>
+                    <li class="nav-separator" data-roles="admin,pic">
+                        <span>Laporan</span>
+                    </li>
+                    <li class="nav-item" data-page="laporan" data-roles="admin,pic">
+                        <a href="#"><i class="fas fa-chart-bar"></i><span>Laporan</span></a>
+                    </li>
+                    <li class="nav-separator">
+                        <span>Informasi</span>
+                    </li>
+                    <li class="nav-item" data-page="tentang">
+                        <a href="#"><i class="fas fa-book-open"></i><span>Tentang Sistem</span></a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Bar -->
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button class="sidebar-toggle-mobile" onclick="toggleSidebar()">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h2 id="pageTitle">Dashboard</h2>
+                </div>
+                <div class="topbar-right">
+                    <div class="user-info">
+                        <span id="userDisplayName">Admin</span>
+                        <span class="user-badge" id="userLevelBadge">Admin</span>
+                    </div>
+                    <div class="topbar-actions">
+                        <button class="btn-icon btn-danger" onclick="handleLogout()" title="Keluar">
+                            <i class="fas fa-sign-out-alt"></i>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Content Area -->
+            <div id="guestBanner" class="guest-banner" style="display:none;">
+                <i class="fas fa-flask"></i>
+                <span><strong>Mode Demo</strong> — Anda menggunakan data contoh. Data tersimpan terpisah dari data
+                    utama.</span>
+                <button class="btn btn-sm btn-primary" onclick="handleLogout()" style="margin-left:auto;">
+                    <i class="fas fa-sign-in-alt"></i> Login sebagai Admin
+                </button>
+            </div>
+            <div class="content-area">
+                <!-- ===== DASHBOARD ===== -->
+                <div id="page-dashboard" class="page active">
+                    <!-- Welcome Card -->
+                    <div class="welcome-card" id="welcomeCard">
+                        <div class="welcome-content">
+                            <h2 id="welcomeMsg">Selamat Datang!</h2>
+                            <p>Sistem Pembiayaan Beasiswa Reguler - Lembaga Zakat Baitul Maal BRI</p>
+                            <button class="btn btn-sm" onclick="startGuidedTour()"
+                                style="margin-top:10px;background:rgba(255,255,255,0.2);color:white;border:1px solid rgba(255,255,255,0.3);">
+                                <i class="fas fa-route"></i> Panduan Interaktif
+                            </button>
+                        </div>
+                        <div class="welcome-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="stat-card stat-primary">
+                            <div class="stat-icon"><i class="fas fa-users"></i></div>
+                            <div class="stat-info">
+                                <h3 id="statTotal">0</h3>
+                                <p>Total Pendaftar</p>
+                            </div>
+                        </div>
+                        <div class="stat-card stat-success">
+                            <div class="stat-icon"><i class="fas fa-user-check"></i></div>
+                            <div class="stat-info">
+                                <h3 id="statAktif">0</h3>
+                                <p>Pendaftar Aktif</p>
+                            </div>
+                        </div>
+                        <div class="stat-card stat-warning">
+                            <div class="stat-icon"><i class="fas fa-clock"></i></div>
+                            <div class="stat-info">
+                                <h3 id="statPending">0</h3>
+                                <p>Pending</p>
+                            </div>
+                        </div>
+                        <div class="stat-card stat-danger">
+                            <div class="stat-icon"><i class="fas fa-user-times"></i></div>
+                            <div class="stat-info">
+                                <h3 id="statDitolak">0</h3>
+                                <p>Ditolak</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="charts-grid">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3><i class="fas fa-chart-pie"></i> Distribusi Status Pendaftar</h3>
+                            </div>
+                            <div class="card-body chart-container">
+                                <canvas id="chartStatusPie"></canvas>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <h3><i class="fas fa-chart-bar"></i> Pendaftar Per Kanwil</h3>
+                            </div>
+                            <div class="card-body chart-container">
+                                <canvas id="chartKanwilBar"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="charts-grid">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3><i class="fas fa-chart-line"></i> Tren Pendaftar Bulanan</h3>
+                            </div>
+                            <div class="card-body chart-container">
+                                <canvas id="chartMonthlyTrend"></canvas>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <h3><i class="fas fa-chart-bar"></i> Distribusi Per Tingkatan</h3>
+                            </div>
+                            <div class="card-body chart-container">
+                                <canvas id="chartTingkatanBar"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-table"></i> Rekapitulasi Penyaluran Per Kanwil</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="data-table" id="tablePenyaluranDashboard">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Kantor Wilayah</th>
+                                            <th>Wilayah Kerja</th>
+                                            <th>Target</th>
+                                            <th>Realisasi</th>
+                                            <th>Saldo</th>
+                                            <th>Prosentase</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="bodyPenyaluranDashboard"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===== PENDAFTAR ===== -->
+                <div id="page-pendaftar" class="page">
+                    <div class="page-actions">
+                        <button class="btn btn-primary" onclick="showAddPendaftar()" data-roles="admin">
+                            <i class="fas fa-plus"></i> Tambah Pendaftar
+                        </button>
+                        <button class="btn btn-secondary" onclick="exportTable('pendaftar')">
+                            <i class="fas fa-file-export"></i> Export
+                        </button>
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="searchPendaftar" placeholder="Cari pendaftar..."
+                                oninput="filterTable('tablePendaftar', this.value)">
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="data-table" id="tablePendaftar">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>No. Registrasi</th>
+                                            <th>Nama Pendaftar</th>
+                                            <th>Tingkat</th>
+                                            <th>Kanwil</th>
+                                            <th>Status</th>
+                                            <th>Tanggal Daftar</th>
+                                            <th>Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="bodyPendaftar"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===== SELEKSI (SAW) ===== -->
+                <div id="page-seleksi" class="page">
+                    <div class="page-actions">
+                        <button class="btn btn-primary" onclick="showAddSeleksi()">
+                            <i class="fas fa-plus"></i> Input Nilai Seleksi
+                        </button>
+                        <button class="btn btn-success" onclick="runSAWCalculation()">
+                            <i class="fas fa-calculator"></i> Hitung SAW
+                        </button>
+                        <button class="btn btn-secondary" onclick="exportTable('seleksi')">
+                            <i class="fas fa-file-export"></i> Export
+                        </button>
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="searchSeleksi" placeholder="Cari..."
+                                oninput="filterTable('tableSeleksi', this.value)">
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="data-table" id="tableSeleksi">
+                                    <thead>
+                                        <tr>
+                                            <th><input type="checkbox" id="selectAllSeleksi"
+                                                    onchange="toggleSelectAll(this, 'seleksiCheck')"></th>
+                                            <th>No</th>
+                                            <th>Nama Pendaftar</th>
+                                            <th>C1 (Nilai)</th>
+                                            <th>C2 (Penghasilan)</th>
+                                            <th>C3 (Psikotes)</th>
+                                            <th>C4 (Survey)</th>
+                                            <th>C5 (Umur)</th>
+                                            <th>C6 (Tanggungan)</th>
+                                            <th>Skor SAW</th>
+                                            <th>Ranking</th>
+                                            <th>Status</th>
+                                            <th>Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="bodySeleksi"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===== PENCAIRAN ===== -->
+                <div id="page-pencairan" class="page">
+                    <div class="page-actions">
+                        <button class="btn btn-primary" onclick="showAddPencairan()" data-roles="admin">
+                            <i class="fas fa-plus"></i> Tambah Pencairan
+                        </button>
+                        <button class="btn btn-success" onclick="generateSalaryCrediting()" data-roles="admin">
+                            <i class="fas fa-file-invoice-dollar"></i> Generate Salary Crediting
+                        </button>
+                        <button class="btn btn-secondary" onclick="exportTable('pencairan')">
+                            <i class="fas fa-file-export"></i> Export
+                        </button>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="data-table" id="tablePencairan">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Nama Pendaftar</th>
+                                            <th>Jenis Rek.</th>
+                                            <th>No. Rekening</th>
+                                            <th>Kanwil</th>
+                                            <th>Tingkatan</th>
+                                            <th>Nominal</th>
+                                            <th>Bulan</th>
+                                            <th>Status</th>
+                                            <th>Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="bodyPencairan"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===== KANWIL ===== -->
+                <div id="page-kanwil" class="page">
+                    <div class="page-actions">
+                        <button class="btn btn-primary" onclick="showAddKanwil()">
+                            <i class="fas fa-plus"></i> Tambah Kanwil
+                        </button>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="data-table" id="tableKanwil">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>ID Kanwil</th>
+                                            <th>Nama Kanwil</th>
+                                            <th>Wilayah Kerja</th>
+                                            <th>Target Penyaluran</th>
+                                            <th>Status</th>
+                                            <th>Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="bodyKanwil"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===== TINGKATAN ===== -->
+                <div id="page-tingkatan" class="page">
+                    <div class="page-actions">
+                        <button class="btn btn-primary" onclick="showAddTingkatan()">
+                            <i class="fas fa-plus"></i> Tambah Tingkatan
+                        </button>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="data-table" id="tableTingkatan">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>ID Tingkatan</th>
+                                            <th>Nama Tingkatan</th>
+                                            <th>Besaran Nominal</th>
+                                            <th>Status</th>
+                                            <th>Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="bodyTingkatan"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===== KRITERIA & BOBOT ===== -->
+                <div id="page-kriteria" class="page">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-balance-scale"></i> Kriteria & Bobot SAW (Simple Additive Weighting)
+                            </h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="info-box info-blue">
+                                <i class="fas fa-info-circle"></i>
+                                <div>
+                                    <strong>Metode SAW:</strong> Mencari penjumlahan terbobot dari rating kinerja pada
+                                    setiap alternatif dari semua atribut.
+                                    Total bobot harus = 1.00
+                                    <br>
+                                    <strong>Benefit:</strong> Semakin besar nilainya semakin baik |
+                                    <strong>Cost:</strong> Semakin kecil nilainya semakin baik
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="data-table" id="tableKriteria">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Kode</th>
+                                            <th>Nama Kriteria</th>
+                                            <th>Bobot</th>
+                                            <th>Tipe</th>
+                                            <th>Keterangan</th>
+                                            <th>Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="bodyKriteria"></tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="3"><strong>Total Bobot</strong></td>
+                                            <td id="totalBobot"><strong>0</strong></td>
+                                            <td colspan="3"></td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===== LAPORAN ===== -->
+                <div id="page-laporan" class="page">
+                    <div class="page-actions">
+                        <select id="laporanType" class="form-select" onchange="loadLaporan()">
+                            <option value="pendaftar">Laporan Data Pendaftar</option>
+                            <option value="seleksi">Laporan Hasil Seleksi</option>
+                            <option value="pencairan">Laporan Pencairan Beasiswa</option>
+                            <option value="penyaluran">Laporan Penyaluran Per Kanwil</option>
+                        </select>
+                        <button class="btn btn-secondary" onclick="exportLaporan()">
+                            <i class="fas fa-file-export"></i> Export Laporan
+                        </button>
+                        <button class="btn btn-info" onclick="printLaporan()">
+                            <i class="fas fa-print"></i> Print
+                        </button>
+                    </div>
+                    <div class="card" id="laporanCard">
+                        <div class="card-header">
+                            <h3 id="laporanTitle"><i class="fas fa-file-alt"></i> Laporan Data Pendaftar</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive" id="laporanContent"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===== USER MANAGEMENT ===== -->
+                <div id="page-users" class="page">
+                    <div class="page-actions">
+                        <button class="btn btn-primary" onclick="showAddUser()">
+                            <i class="fas fa-user-plus"></i> Tambah User
+                        </button>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="data-table" id="tableUsers">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Username</th>
+                                            <th>Nama Lengkap</th>
+                                            <th>Level</th>
+                                            <th>Kanwil</th>
+                                            <th>Email</th>
+                                            <th>Status</th>
+                                            <th>Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="bodyUsers"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===== TENTANG SISTEM ===== -->
+                <div id="page-tentang" class="page">
+                    <!-- Thesis Identity Card -->
+                    <div class="about-hero">
+                        <div class="about-hero-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <h2>Sistem Rancangan Program Pembiayaan Beasiswa Reguler</h2>
+                        <p class="about-subtitle">Lembaga Zakat Baitul Maal — Bank Rakyat Indonesia (BRI) Kantor Pusat
+                        </p>
+                        <div class="about-meta">
+                            <span><i class="fas fa-user-graduate"></i> Febri Nahdatun</span>
+                            <span><i class="fas fa-university"></i> Universitas Indraprasta PGRI</span>
+                            <span><i class="fas fa-calendar"></i> 2019</span>
+                        </div>
+                        <button class="btn btn-primary btn-lg" onclick="startGuidedTour()" style="margin-top:16px;">
+                            <i class="fas fa-route"></i> Mulai Panduan Interaktif
+                        </button>
+                    </div>
+
+                    <!-- Latar Belakang -->
+                    <div class="card about-card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-lightbulb"></i> Latar Belakang</h3>
+                        </div>
+                        <div class="card-body">
+                            <p>Lembaga Zakat Baitul Maal BRI merupakan lembaga yang mengelola penyaluran dana zakat
+                                untuk program beasiswa reguler bagi pelajar dan mahasiswa dari keluarga kurang mampu di
+                                seluruh Indonesia melalui jaringan Kantor Wilayah BRI.</p>
+                            <div class="about-problems">
+                                <h4><i class="fas fa-exclamation-triangle" style="color:var(--warning);"></i>
+                                    Permasalahan yang Ditemukan</h4>
+                                <div class="problem-grid">
+                                    <div class="problem-item">
+                                        <div class="problem-icon"
+                                            style="background:var(--danger-light);color:var(--danger);">
+                                            <i class="fas fa-folder-open"></i>
+                                        </div>
+                                        <div>
+                                            <strong>Kehilangan Data Fisik</strong>
+                                            <p>Arsip dalam lemari menyebabkan 4–12% kehilangan dokumen per tahun
+                                                (2012–2019).</p>
+                                        </div>
+                                    </div>
+                                    <div class="problem-item">
+                                        <div class="problem-icon"
+                                            style="background:var(--warning-light);color:var(--warning);">
+                                            <i class="fas fa-hourglass-half"></i>
+                                        </div>
+                                        <div>
+                                            <strong>Proses Seleksi Manual Lambat</strong>
+                                            <p>Penilaian psikotes ±1 minggu, survey lapangan hanya 7 orang/hari, 100
+                                                pendaftar = 12 hari kerja.</p>
+                                        </div>
+                                    </div>
+                                    <div class="problem-item">
+                                        <div class="problem-icon"
+                                            style="background:var(--info-light);color:var(--info);">
+                                            <i class="fas fa-random"></i>
+                                        </div>
+                                        <div>
+                                            <strong>Tanpa Metode Penilaian Terstruktur</strong>
+                                            <p>Seleksi bersifat ad-hoc, hanya melihat nilai tertinggi tanpa pembobotan
+                                                formal.</p>
+                                        </div>
+                                    </div>
+                                    <div class="problem-item">
+                                        <div class="problem-icon"
+                                            style="background:var(--primary-light);color:var(--primary);">
+                                            <i class="fas fa-table"></i>
+                                        </div>
+                                        <div>
+                                            <strong>Ketergantungan pada Excel Manual</strong>
+                                            <p>Rawan kesalahan input, tidak terintegrasi, risiko kehilangan data akibat
+                                                crash.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Metode SAW -->
+                    <div class="card about-card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-calculator"></i> Metode SAW (Simple Additive Weighting)</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="info-box info-blue">
+                                <i class="fas fa-info-circle"></i>
+                                <div>
+                                    <strong>SAW</strong> adalah metode pengambilan keputusan multi-atribut (MADM) yang
+                                    mencari penjumlahan terbobot dari rating kinerja pada setiap alternatif di semua
+                                    atribut. Alternatif dengan nilai V<sub>i</sub> tertinggi adalah yang terbaik.
+                                </div>
+                            </div>
+
+                            <h4 style="margin:20px 0 12px;"><i class="fas fa-cogs"></i> Rumus Normalisasi</h4>
+                            <div class="saw-formulas">
+                                <div class="formula-card formula-benefit">
+                                    <span class="formula-label">Benefit (semakin besar semakin baik)</span>
+                                    <div class="formula-eq">R<sub>ij</sub> = X<sub>ij</sub> / max(X<sub>ij</sub>)</div>
+                                </div>
+                                <div class="formula-card formula-cost">
+                                    <span class="formula-label">Cost (semakin kecil semakin baik)</span>
+                                    <div class="formula-eq">R<sub>ij</sub> = min(X<sub>ij</sub>) / X<sub>ij</sub></div>
+                                </div>
+                            </div>
+                            <div class="formula-card"
+                                style="margin-top:12px;text-align:center;background:var(--primary-light);border-color:var(--primary);">
+                                <span class="formula-label" style="color:var(--primary);">Nilai Preferensi</span>
+                                <div class="formula-eq" style="font-size:1.2rem;">V<sub>i</sub> = Σ W<sub>j</sub> ×
+                                    R<sub>ij</sub></div>
+                            </div>
+
+                            <h4 style="margin:24px 0 12px;"><i class="fas fa-list-ol"></i> 6 Kriteria Penilaian</h4>
+                            <div class="table-responsive">
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Kode</th>
+                                            <th>Kriteria</th>
+                                            <th>Tipe</th>
+                                            <th>Keterangan</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><span class="badge badge-primary">C1</span></td>
+                                            <td>Nilai Akhir (Raport)</td>
+                                            <td><span class="badge badge-success">Benefit</span></td>
+                                            <td>Semakin tinggi semakin baik</td>
+                                        </tr>
+                                        <tr>
+                                            <td><span class="badge badge-primary">C2</span></td>
+                                            <td>Total Penghasilan Orang Tua</td>
+                                            <td><span class="badge badge-danger">Cost</span></td>
+                                            <td>Semakin rendah semakin diprioritaskan</td>
+                                        </tr>
+                                        <tr>
+                                            <td><span class="badge badge-primary">C3</span></td>
+                                            <td>Nilai Tes Psikologi</td>
+                                            <td><span class="badge badge-success">Benefit</span></td>
+                                            <td>Semakin tinggi semakin baik</td>
+                                        </tr>
+                                        <tr>
+                                            <td><span class="badge badge-primary">C4</span></td>
+                                            <td>Nilai Survey Lapangan</td>
+                                            <td><span class="badge badge-success">Benefit</span></td>
+                                            <td>Semakin tinggi semakin baik</td>
+                                        </tr>
+                                        <tr>
+                                            <td><span class="badge badge-primary">C5</span></td>
+                                            <td>Umur Pendaftar</td>
+                                            <td><span class="badge badge-danger">Cost</span></td>
+                                            <td>Semakin muda semakin diprioritaskan</td>
+                                        </tr>
+                                        <tr>
+                                            <td><span class="badge badge-primary">C6</span></td>
+                                            <td>Jumlah Tanggungan Keluarga</td>
+                                            <td><span class="badge badge-success">Benefit</span></td>
+                                            <td>Semakin banyak semakin diprioritaskan</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Alur Proses Bisnis -->
+                    <div class="card about-card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-project-diagram"></i> Alur Proses Bisnis</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="process-timeline">
+                                <div class="process-step" data-step="1">
+                                    <div class="step-number">1</div>
+                                    <div class="step-content">
+                                        <h4><i class="fas fa-file-alt"></i> Pendaftaran</h4>
+                                        <p>Calon penerima beasiswa mengajukan formulir pendaftaran beserta berkas
+                                            persyaratan: fotokopi raport, KTP orang tua, kartu keluarga, pas foto, surat
+                                            keterangan aktif sekolah, dan SKTM.</p>
+                                        <div class="step-tag">Menu: <strong>Data Pendaftar</strong> → Tambah Pendaftar
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="process-step" data-step="2">
+                                    <div class="step-number">2</div>
+                                    <div class="step-content">
+                                        <h4><i class="fas fa-clipboard-check"></i> Verifikasi</h4>
+                                        <p>Admin memeriksa kelengkapan dokumen. Status pendaftar menjadi <em>aktif</em>,
+                                            <em>pending</em>, atau <em>ditolak</em>. Pendaftar wajib memperbarui data
+                                            setiap semester.</p>
+                                        <div class="step-tag">Status di halaman <strong>Data Pendaftar</strong></div>
+                                    </div>
+                                </div>
+                                <div class="process-step" data-step="3">
+                                    <div class="step-number">3</div>
+                                    <div class="step-content">
+                                        <h4><i class="fas fa-balance-scale"></i> Seleksi dengan Metode SAW</h4>
+                                        <p>PIC Program menginput nilai 6 kriteria (C1–C6) untuk setiap pendaftar. Sistem
+                                            melakukan normalisasi matriks keputusan dan menghitung skor SAW. Ranking
+                                            otomatis dihasilkan berdasarkan nilai preferensi tertinggi.</p>
+                                        <div class="step-tag">Menu: <strong>Seleksi (SAW)</strong> → Input Nilai →
+                                            Hitung SAW</div>
+                                    </div>
+                                </div>
+                                <div class="process-step" data-step="4">
+                                    <div class="step-number">4</div>
+                                    <div class="step-content">
+                                        <h4><i class="fas fa-gavel"></i> Penentuan Kelulusan</h4>
+                                        <p>Keputusan akhir berdasarkan ranking dan kuota yang tersedia. Keputusan
+                                            bersifat final. Notifikasi dikirim melalui e-mail kepada pendaftar yang
+                                            lulus maupun tidak lulus.</p>
+                                        <div class="step-tag">Aksi: <strong>Luluskan</strong> / <strong>Tolak</strong>
+                                            di halaman Seleksi</div>
+                                    </div>
+                                </div>
+                                <div class="process-step" data-step="5">
+                                    <div class="step-number">5</div>
+                                    <div class="step-content">
+                                        <h4><i class="fas fa-money-bill-wave"></i> Pencairan Dana</h4>
+                                        <p>Penerima yang terverifikasi aktif menerima tunjangan bulanan sesuai
+                                            tingkatan: SD (Rp 150.000), SMP (Rp 200.000), SMA (Rp 250.000), Perguruan
+                                            Tinggi (Rp 500.000). Pencairan melalui rekening BRI.</p>
+                                        <div class="step-tag">Menu: <strong>Pencairan</strong> → Generate Salary
+                                            Crediting</div>
+                                    </div>
+                                </div>
+                                <div class="process-step" data-step="6">
+                                    <div class="step-number">6</div>
+                                    <div class="step-content">
+                                        <h4><i class="fas fa-chart-bar"></i> Laporan & Monitoring</h4>
+                                        <p>Seluruh data pendaftaran, hasil seleksi, dan pencairan dapat diakses melalui
+                                            menu Laporan untuk keperluan audit dan monitoring realisasi penyaluran per
+                                            Kantor Wilayah.</p>
+                                        <div class="step-tag">Menu: <strong>Laporan</strong> → Pilih jenis laporan</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tingkatan Beasiswa -->
+                    <div class="card about-card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-layer-group"></i> Tingkatan & Nominal Beasiswa</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="tingkatan-grid">
+                                <div class="tingkatan-card" style="border-left:4px solid var(--info);">
+                                    <div class="tingkatan-icon" style="background:var(--info-light);color:var(--info);">
+                                        <i class="fas fa-child"></i></div>
+                                    <h4>SD / Sederajat</h4>
+                                    <p class="tingkatan-nominal">Rp 150.000<span>/bulan</span></p>
+                                </div>
+                                <div class="tingkatan-card" style="border-left:4px solid var(--success);">
+                                    <div class="tingkatan-icon"
+                                        style="background:var(--success-light);color:var(--success);"><i
+                                            class="fas fa-book-reader"></i></div>
+                                    <h4>SMP / Sederajat</h4>
+                                    <p class="tingkatan-nominal">Rp 200.000<span>/bulan</span></p>
+                                </div>
+                                <div class="tingkatan-card" style="border-left:4px solid var(--warning);">
+                                    <div class="tingkatan-icon"
+                                        style="background:var(--warning-light);color:var(--warning);"><i
+                                            class="fas fa-user-graduate"></i></div>
+                                    <h4>SMA / Sederajat</h4>
+                                    <p class="tingkatan-nominal">Rp 250.000<span>/bulan</span></p>
+                                </div>
+                                <div class="tingkatan-card" style="border-left:4px solid var(--primary);">
+                                    <div class="tingkatan-icon"
+                                        style="background:var(--primary-light);color:var(--primary);"><i
+                                            class="fas fa-university"></i></div>
+                                    <h4>Perguruan Tinggi</h4>
+                                    <p class="tingkatan-nominal">Rp 500.000<span>/bulan</span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tentang Penulis -->
+                    <div class="card about-card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-user"></i> Tentang Penulis</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="author-card">
+                                <div class="author-avatar">
+                                    <i class="fas fa-user-graduate"></i>
+                                </div>
+                                <div class="author-info">
+                                    <h4>Febri Nahdatun</h4>
+                                    <p>NPM: 201643579117</p>
+                                    <p>Program Studi Informatika — Fakultas Teknik dan Ilmu Komputer</p>
+                                    <p><strong>Universitas Indraprasta PGRI (UNINDRA)</strong></p>
+                                    <div class="author-details">
+                                        <span><i class="fas fa-chalkboard-teacher"></i> Pembimbing Materi: Suranto
+                                            Saputra, M.Kom</span>
+                                        <span><i class="fas fa-chalkboard-teacher"></i> Pembimbing Teknik: Rayung Wulan,
+                                            M.Kom</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="info-box info-blue" style="margin-top:16px;">
+                                <i class="fas fa-quote-left"></i>
+                                <div>
+                                    <em>Tujuan dari penelitian ini adalah memberikan solusi dari permasalahan pada
+                                        pengolaan data pembiayaan beasiswa yang terdapat pada Lembaga Zakat Baitul Maal
+                                        - Bank Rakyat Indonesia (BRI) Kantor Pusat, serta meningkatkan efektifitas dan
+                                        efisiensi dalam hal tenaga dan waktu sehingga bisa mengoptimalkan
+                                        pelayanan.</em>
+                                    <br><br>— Abstrak Skripsi
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- ==================== GUIDED TOUR ==================== -->
+    <div id="tourOverlay" class="tour-overlay" style="display:none;"></div>
+    <div id="tourTooltip" class="tour-tooltip" style="display:none;">
+        <div class="tour-tooltip-header">
+            <span class="tour-step-indicator" id="tourStepIndicator">1 / 7</span>
+            <button class="tour-close" onclick="endTour()" title="Tutup"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="tour-tooltip-body" id="tourBody">
+            <h4 id="tourTitle">Welcome</h4>
+            <p id="tourDesc">Deskripsi langkah</p>
+        </div>
+        <div class="tour-tooltip-footer">
+            <button class="btn btn-sm btn-secondary" id="tourPrevBtn" onclick="tourPrev()"><i
+                    class="fas fa-arrow-left"></i> Sebelumnya</button>
+            <button class="btn btn-sm btn-primary" id="tourNextBtn" onclick="tourNext()">Selanjutnya <i
+                    class="fas fa-arrow-right"></i></button>
+        </div>
+    </div>
+
+    <!-- ==================== MODAL ==================== -->
+    <div id="modalOverlay" class="modal-overlay" onclick="closeModal()"></div>
+    <div id="modal" class="modal">
+        <div class="modal-header">
+            <h3 id="modalTitle">Modal</h3>
+            <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="modal-body" id="modalBody"></div>
+        <div class="modal-footer" id="modalFooter"></div>
+    </div>
+
+    <!-- ==================== TOAST ==================== -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- ==================== LOADING OVERLAY ==================== -->
+    <div id="loadingOverlay" class="loading-overlay" style="display:none;">
+        <div class="spinner"></div>
+        <p id="loadingText">Memuat data...</p>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/pendaftar.js"></script>
+    <script src="js/seleksi.js"></script>
+    <script src="js/pencairan.js"></script>
+    <script src="js/master.js"></script>
+    <script src="js/laporan.js"></script>
+    <script src="js/tour.js"></script>
+</body>
+
+</html>
