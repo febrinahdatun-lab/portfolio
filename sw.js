@@ -6,7 +6,7 @@
  *   - Apps Script API:     network-only (jangan di-cache → data harus live)
  */
 
-const VERSION = 'fnp-v1.0.0';
+const VERSION = 'fnp-v1.0.1';
 const STATIC_CACHE = `${VERSION}-static`;
 const RUNTIME_CACHE = `${VERSION}-runtime`;
 
