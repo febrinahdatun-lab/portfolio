@@ -5176,7 +5176,7 @@
                 console.error("Fetch Error:", error);
                 document.getElementById('status-indicator').innerText = 'Connection Failed (Sim)';
                 document.getElementById('status-indicator').classList.replace('text-yellow-400', 'text-red-400');
-                return { kpi: { sales: 0, profit: 0, orders: 0, discount: "0%" }, trend: { labels: [], sales: [], profit: [] }, segment: { labels: [], data: [] } };
+                return { kpi: { sales: 0, profit: 0, orders: 0, discount: "0%" }, trend: { labels: [], sales: [], profit: [] }, segment: { labels: [], data: [] }, state: { labels: [], profit: [] } };
             }
         }
 
@@ -5367,7 +5367,7 @@
                 }
 
                 const ctxState = document.getElementById('stateChart')?.getContext('2d');
-                if (ctxState) {
+                if (ctxState && data.state) {
                     const stateGrad = ctxState.createLinearGradient(0, 0, 300, 0);
                     stateGrad.addColorStop(0, '#6366F1');
                     stateGrad.addColorStop(1, '#8B5CF6');
@@ -7438,8 +7438,12 @@
                 REMOTE_CSV_URL = CSV_URLS.superstore;
                 CSV_URL = REMOTE_CSV_URL;
             }
-            const data = await fetchDashboardData();
-            renderDashboard(data);
+            try {
+                const data = await fetchDashboardData();
+                renderDashboard(data);
+            } catch (err) {
+                console.error("Dashboard initial render failed:", err);
+            }
         });
 
         // ========== SIAGAAI — LIVE INTEGRATION ==========
