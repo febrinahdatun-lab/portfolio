@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
 import { Project } from '../models';
+import { I18nService } from '../shared/i18n.service';
 
 const TINTS: Record<string, string> = {
   'Aplikasi Operasional': '#c4f36b',
@@ -28,13 +29,14 @@ const TINTS: Record<string, string> = {
             <li>{{ s }}</li>
           }
         </ul>
-        <span class="cover-note">Screenshot segera ditambahkan</span>
+        <span class="cover-note">{{ t().work.soon }}</span>
       </div>
     }
   `,
   host: { class: 'project-cover' },
 })
 export class ProjectCover {
+  protected readonly t = inject(I18nService).t;
   readonly project = input.required<Project>();
   protected readonly shot = computed(() => this.project().screenshots?.[0] ?? null);
   protected readonly count = computed(() => this.project().screenshots?.length ?? 0);

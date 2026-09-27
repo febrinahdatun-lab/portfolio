@@ -101,6 +101,10 @@ em { font-family: var(--serif); font-weight: 400; color: var(--lime); }
 .main-nav { display: flex; align-items: center; gap: 28px; font-size: 14px; }
 .main-nav a { color: var(--muted); transition: color .2s; }
 .main-nav a:hover { color: var(--ink); }
+.lang-switch { display: inline-flex; border: 1px solid var(--line-2); border-radius: 8px; padding: 2px; }
+.lang-switch button { font: 600 12px var(--mono); letter-spacing: .06em; padding: 6px 9px; border-radius: 6px; color: var(--dim); transition: color .2s, background .2s; }
+.lang-switch button:hover { color: var(--ink); }
+.lang-switch button.is-active { background: var(--panel-2); color: var(--lime); }
 .menu-toggle { display: none; width: 44px; height: 44px; border: 1px solid var(--line-2); border-radius: 10px; align-items: center; justify-content: center; }
 
 @media (max-width: 899px) {
@@ -113,6 +117,7 @@ em { font-family: var(--serif); font-weight: 400; color: var(--lime); }
   .main-nav.is-open { display: flex; }
   .main-nav a { padding: 14px 0; border-bottom: 1px solid var(--line); font-size: 16px; }
   .nav-cv { margin-top: 16px; justify-content: center; }
+  .lang-switch { align-self: flex-start; margin-top: 16px; }
 }
 
 /* Hero ------------------------------------------------------------------- */

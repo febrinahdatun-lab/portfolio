@@ -1,7 +1,9 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, computed, inject, signal } from '@angular/core';
 import { CERTIFICATIONS } from '../data/cv';
+import { taglineFor } from '../data/content';
 import { EXPERTISE, PROFILE } from '../data/profile';
 import { PROJECTS } from '../data/projects';
+import { I18nService } from '../shared/i18n.service';
 import { Icon } from '../shared/icon';
 import { MediaService, driveImage } from '../shared/media.service';
 import { NavService } from '../shared/nav.service';
@@ -18,15 +20,13 @@ const SLIDE_MS = 5500;
       <div class="hero-grid">
         <div class="hero-copy" appReveal>
           <p class="eyebrow"><span class="status-dot"></span> {{ profile.name.toUpperCase() }} · {{ profile.role.toUpperCase() }}</p>
-          <h1 id="hero-title">Dari pekerjaan berulang, menjadi <em>sistem yang bekerja.</em></h1>
+          <h1 id="hero-title">{{ t().hero.title }} <em>{{ t().hero.titleEm }}</em></h1>
           <p class="lead">
-            Lebih dari 10 tahun menjembatani <strong>infrastruktur enterprise</strong> (Google &amp; Microsoft)
-            dengan <strong>data intelligence</strong> — membangun pipeline data otomatis, dashboard BI interaktif, aplikasi
-            operasional, dan Knowledge Management System.
+            {{ t().hero.lead[0] }}<strong>{{ t().hero.lead[1] }}</strong>{{ t().hero.lead[2] }}<strong>{{ t().hero.lead[3] }}</strong>{{ t().hero.lead[4] }}
           </p>
           <div class="hero-actions">
-            <a class="button lime" href="#karya">Jelajahi karya <app-icon name="arrow" /></a>
-            <button type="button" class="button" (click)="nav.openCv()"><app-icon name="file" /> Lihat CV</button>
+            <a class="button lime" href="#karya">{{ t().hero.explore }} <app-icon name="arrow" /></a>
+            <button type="button" class="button" (click)="nav.openCv()"><app-icon name="file" /> {{ t().viewCv }}</button>
             <a class="button ghost" [href]="profile.contact.linkedin" target="_blank" rel="noopener noreferrer">
               <app-icon name="linkedin" /> LinkedIn
             </a>
@@ -34,7 +34,7 @@ const SLIDE_MS = 5500;
         </div>
         <figure class="hero-photo" appReveal>
           <div class="photo-stage" (contextmenu)="$event.preventDefault()">
-            <img class="photo-slide is-base" [src]="profile.photo" [alt]="'Foto ' + profile.name" width="480" height="480" draggable="false" />
+            <img class="photo-slide is-base" [src]="profile.photo" [alt]="t().hero.photo + ' ' + profile.name" width="480" height="480" draggable="false" />
             @for (p of slides(); track p.id; let i = $index) {
               <img
                 class="photo-slide"
@@ -59,21 +59,24 @@ const SLIDE_MS = 5500;
           }
           <figcaption>
             <span>{{ profile.location }}</span>
-            <span>{{ profile.tagline }}</span>
+            <span>{{ tagline() }}</span>
           </figcaption>
         </figure>
       </div>
       <dl class="hero-stats" appReveal>
-        <div><dt>Tahun pengalaman</dt><dd>{{ profile.yearsExperience }}</dd></div>
-        <div><dt>Studi kasus</dt><dd>{{ projectCount }}</dd></div>
-        <div><dt>Sertifikasi</dt><dd>{{ certCount }}</dd></div>
-        <div><dt>Bidang keahlian</dt><dd>{{ expertiseCount }}</dd></div>
+        <div><dt>{{ t().hero.stats[0] }}</dt><dd>{{ profile.yearsExperience }}</dd></div>
+        <div><dt>{{ t().hero.stats[1] }}</dt><dd>{{ projectCount }}</dd></div>
+        <div><dt>{{ t().hero.stats[2] }}</dt><dd>{{ certCount }}</dd></div>
+        <div><dt>{{ t().hero.stats[3] }}</dt><dd>{{ expertiseCount }}</dd></div>
       </dl>
     </section>
   `,
 })
 export class Hero {
   protected readonly nav = inject(NavService);
+  private readonly i18n = inject(I18nService);
+  protected readonly t = this.i18n.t;
+  protected readonly tagline = computed(() => taglineFor(this.i18n.lang()));
   private readonly mediaService = inject(MediaService);
   protected readonly profile = PROFILE;
   protected readonly projectCount = PROJECTS.length;

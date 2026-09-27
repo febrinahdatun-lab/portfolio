@@ -54,6 +54,12 @@ npm run preview         # pratinjau hasil build → http://localhost:4300/portfo
 
 **Sebelum mengunggah screenshot:** pastikan tidak ada nama, NIK/No. KK, nomor rekening, email, atau data penerima manfaat yang asli. Gunakan mode demo atau samarkan (blur) terlebih dahulu.
 
+## Dua bahasa (ID / EN)
+
+- Default **Bahasa Indonesia**; tombol **ID | EN** di header. Pilihan tersimpan di browser, dan bisa ditautkan langsung dengan `?lang=en`.
+- Teks antarmuka: `src/app/data/i18n.ts`. Konten Inggris (proyek, keahlian, eksplorasi): `src/app/data/content.en.ts`. CV dua bahasa: `src/app/data/cv.ts`.
+- Saat menambah proyek baru di `projects.ts`, tambahkan juga terjemahannya di `PROJECTS_EN` (jika tidak ada, versi Indonesia yang tampil).
+
 ## Media otomatis dari Google Drive
 
 | Konten | Perilaku |

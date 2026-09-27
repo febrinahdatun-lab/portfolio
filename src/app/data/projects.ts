@@ -67,13 +67,13 @@ export const PROJECTS: Project[] = [
       'Informasi gempa dan panduan keselamatan sering tersebar dan sulit dipahami cepat oleh masyarakat saat situasi darurat.',
     approach: [
       'Menampilkan data gempa terkini dan riwayat gempa BMKG melalui relay backend.',
-      'Menyediakan asisten AI (LLaMA 3.3 70B via Groq) dengan pertanyaan cepat seputar kesiapsiagaan.',
+      'Menyediakan asisten AI (Google Gemini dengan failover API key otomatis) dan pertanyaan cepat seputar kesiapsiagaan.',
       'Menyusun panduan praktis untuk gempa, tsunami, banjir, longsor, dan kebakaran.',
     ],
     output: 'Aplikasi web publik beserta repositori source code di GitHub.',
-    stack: ['JavaScript', 'BMKG Open Data', 'Groq LLaMA 3.3', 'Apps Script'],
+    stack: ['JavaScript', 'BMKG Open Data', 'Google Gemini', 'Apps Script'],
     screenshots: [
-      { src: 'assets/screenshots/siagaai/01-siagaai.jpg', alt: 'SiagaAI: arsitektur sistem, monitor gempa BMKG, dan chat AI', caption: 'Arsitektur (frontend → proxy Apps Script → BMKG & Groq), monitor gempa live, dan asisten AI.' },
+      { src: 'assets/screenshots/siagaai/01-siagaai.jpg', alt: 'SiagaAI: arsitektur sistem, monitor gempa BMKG, dan chat AI', caption: 'Arsitektur (frontend → proxy Apps Script → BMKG & AI), monitor gempa live, dan asisten AI.' },
       { src: 'assets/screenshots/siagaai/02-siagaai.jpg', alt: 'SiagaAI: daftar gempa terkini dan panduan kesiapsiagaan', caption: 'Riwayat gempa terkini dan panduan kesiapsiagaan untuk 5 jenis bencana.' },
     ],
     links: [

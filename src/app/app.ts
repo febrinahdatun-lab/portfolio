@@ -7,6 +7,7 @@ import { Hero } from './sections/hero';
 import { Overlays } from './sections/overlays';
 import { WorkSection } from './sections/work';
 import { Icon } from './shared/icon';
+import { I18nService } from './shared/i18n.service';
 import { MediaService, driveImage } from './shared/media.service';
 
 @Component({
@@ -15,7 +16,7 @@ import { MediaService, driveImage } from './shared/media.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="site-shell">
-      <a class="skip-link" href="#main">Langsung ke konten</a>
+      <a class="skip-link" href="#main">{{ t().skip }}</a>
       <app-header />
       <main id="main">
         <app-hero />
@@ -27,10 +28,10 @@ import { MediaService, driveImage } from './shared/media.service';
       </main>
       <footer class="site-footer wrap">
         <span>© {{ year }} {{ name }}</span>
-        <span>Dibangun dengan Angular · Dihosting di GitHub Pages</span>
-        <a href="#top">Kembali ke atas ↑</a>
+        <span>{{ t().footer }}</span>
+        <a href="#top">{{ t().backTop }} ↑</a>
       </footer>
-      <button type="button" class="to-top" [class.is-visible]="showTop()" (click)="toTop()" aria-label="Kembali ke atas">
+      <button type="button" class="to-top" [class.is-visible]="showTop()" (click)="toTop()" [attr.aria-label]="t().backTop">
         <app-icon name="arrow-up" [size]="20" />
       </button>
     </div>
@@ -41,6 +42,7 @@ export class App {
   protected readonly year = new Date().getFullYear();
   protected readonly name = PROFILE.name;
   protected readonly showTop = signal(false);
+  protected readonly t = inject(I18nService).t;
   private readonly media = inject(MediaService).media;
 
   constructor() {

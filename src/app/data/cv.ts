@@ -31,7 +31,7 @@ const SKILLS_EN = [
   {
     label: 'AI & Automation',
     value:
-      'Generative AI Integration (Azure OpenAI, Gemini, Groq LLaMA, ChatGPT), Prompt Engineering, RAG Chatbots, n8n Workflows, ETL/ELT Pipeline Automation.',
+      'Generative AI Integration (Google Gemini, Azure OpenAI, ChatGPT), Prompt Engineering, RAG Chatbots, n8n Workflows, ETL/ELT Pipeline Automation.',
   },
   {
     label: 'Security & Governance',
@@ -108,7 +108,7 @@ export const CV: Record<Lang, CvContent> = {
       { name: 'Corporate Governance Portal', stack: 'Angular, TypeScript, Apps Script', detail: 'Modular workspace unifying activity reports, account management, meeting minutes, and cloud monitoring.' },
       { name: 'Scholarship Information System', stack: 'JavaScript, Apps Script, Google Sheets', detail: 'End-to-end scholarship management with SAW ranking, disbursement files, printable reports, and demo mode.' },
       { name: 'Cloud Migration & Identity Management', stack: 'Python, Microsoft Graph, Google Drive API', detail: 'Resumable copy-only SharePoint → Google Shared Drive migration with checkpoints, verification, and monitoring.' },
-      { name: 'SiagaAI — IDCamp 2025 Developer Challenge', stack: 'JavaScript, BMKG Open Data, Groq LLaMA', detail: 'Disaster-preparedness web app with live earthquake data, AI assistant, and emergency guides.' },
+      { name: 'SiagaAI — IDCamp 2025 Developer Challenge', stack: 'JavaScript, BMKG Open Data, Google Gemini', detail: 'Disaster-preparedness web app with live earthquake data, AI assistant, and emergency guides.' },
       { name: 'Interactive BI Dashboards', stack: 'Chart.js, PapaParse, Google Sheets', detail: 'SuperStore, Marketing Omnichannel, and Rig Operations dashboards with KPIs, segmentation, and export.' },
       { name: 'ML Fraud Detection', stack: 'Python, scikit-learn', detail: 'K-Means labelling and Random Forest classification of 2,512 transactions (96.02% accuracy).' },
     ],
@@ -177,7 +177,7 @@ export const CV: Record<Lang, CvContent> = {
       { name: 'Corporate Governance Portal', stack: 'Angular, TypeScript, Apps Script', detail: 'Ruang kerja modular yang menyatukan laporan aktivitas, pengelolaan akun, risalah rapat, dan pemantauan cloud.' },
       { name: 'Sistem Informasi Beasiswa', stack: 'JavaScript, Apps Script, Google Sheets', detail: 'Pengelolaan beasiswa end-to-end dengan peringkat SAW, file pencairan, laporan siap cetak, dan mode demo.' },
       { name: 'Cloud Migration & Identity Management', stack: 'Python, Microsoft Graph, Google Drive API', detail: 'Migrasi copy-only SharePoint → Google Shared Drive yang dapat dilanjutkan, dengan checkpoint, verifikasi, dan pemantauan.' },
-      { name: 'SiagaAI — IDCamp 2025 Developer Challenge', stack: 'JavaScript, BMKG Open Data, Groq LLaMA', detail: 'Aplikasi kesiapsiagaan bencana dengan data gempa terkini, asisten AI, dan panduan darurat.' },
+      { name: 'SiagaAI — IDCamp 2025 Developer Challenge', stack: 'JavaScript, BMKG Open Data, Google Gemini', detail: 'Aplikasi kesiapsiagaan bencana dengan data gempa terkini, asisten AI, dan panduan darurat.' },
       { name: 'Interactive BI Dashboards', stack: 'Chart.js, PapaParse, Google Sheets', detail: 'Dashboard SuperStore, Marketing Omnichannel, dan Rig Operations dengan KPI, segmentasi, dan ekspor.' },
       { name: 'ML Fraud Detection', stack: 'Python, scikit-learn', detail: 'Pelabelan K-Means dan klasifikasi Random Forest atas 2.512 transaksi (akurasi 96,02%).' },
     ],

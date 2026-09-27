@@ -6,15 +6,19 @@ import {
   effect,
   inject,
   signal,
+  untracked,
   viewChild,
 } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { CERTIFICATIONS, CV } from '../data/cv';
+import { localizeProject } from '../data/content';
+import { localizeDate } from '../data/i18n';
 import { PROVIDERS } from '../data/media';
 import { PROFILE } from '../data/profile';
 import { PROJECTS } from '../data/projects';
 import { CertProvider, Lang } from '../models';
 import { Icon } from '../shared/icon';
+import { I18nService } from '../shared/i18n.service';
 import { MediaService, drivePreview } from '../shared/media.service';
 import { NavService } from '../shared/nav.service';
 import { ProjectCover } from './project-cover';
@@ -27,14 +31,14 @@ import { ProjectCover } from './project-cover';
     <dialog #dlg [class.is-cv]="overlay()?.kind === 'cv'" aria-labelledby="dialog-title" (cancel)="onCancel($event)" (click)="onBackdrop($event)">
       <div class="dialog-top">
         <span>{{ kicker() }}</span>
-        <button type="button" class="close-dialog" (click)="close()" aria-label="Tutup">Tutup <app-icon name="close" [size]="16" /></button>
+        <button type="button" class="close-dialog" (click)="close()" [attr.aria-label]="t().dialog.close">{{ t().dialog.close }} <app-icon name="close" [size]="16" /></button>
       </div>
 
       @switch (overlay()?.kind) {
         @case ('project') {
           @if (project(); as p) {
             <div class="case-header">
-              <p class="eyebrow">{{ p.subtitle ?? p.category }}</p>
+              <p class="eyebrow">{{ p.subtitle ?? p.categoryLabel }}</p>
               <h2 id="dialog-title">{{ p.title }}</h2>
               <p>{{ p.summary }}</p>
               <ul class="tech-tags">
@@ -59,12 +63,12 @@ import { ProjectCover } from './project-cover';
                     <figcaption>{{ shots()[shot()].caption }}</figcaption>
                   }
                   @if (shots().length > 1) {
-                    <button type="button" class="gallery-nav prev" (click)="step(-1)" aria-label="Screenshot sebelumnya"><app-icon name="chevron-left" [size]="22" /></button>
-                    <button type="button" class="gallery-nav next" (click)="step(1)" aria-label="Screenshot berikutnya"><app-icon name="chevron-right" [size]="22" /></button>
+                    <button type="button" class="gallery-nav prev" (click)="step(-1)" [attr.aria-label]="t().dialog.prev"><app-icon name="chevron-left" [size]="22" /></button>
+                    <button type="button" class="gallery-nav next" (click)="step(1)" [attr.aria-label]="t().dialog.next"><app-icon name="chevron-right" [size]="22" /></button>
                   }
                 </figure>
                 @if (shots().length > 1) {
-                  <div class="gallery-thumbs" role="tablist" aria-label="Pilih screenshot">
+                  <div class="gallery-thumbs" role="tablist" [attr.aria-label]="t().dialog.pick">
                     @for (s of shots(); track s.src; let i = $index) {
                       <button type="button" role="tab" [attr.aria-selected]="i === shot()" [class.is-active]="i === shot()" (click)="shot.set(i)">
                         <img [src]="s.src" alt="" loading="lazy" />
@@ -78,39 +82,39 @@ import { ProjectCover } from './project-cover';
             </div>
 
             <div class="case-content">
-              <section><h3>01 / Tantangan</h3><p>{{ p.problem }}</p></section>
+              <section><h3>{{ t().dialog.sections[0] }}</h3><p>{{ p.problem }}</p></section>
               <section>
-                <h3>02 / Pendekatan</h3>
+                <h3>{{ t().dialog.sections[1] }}</h3>
                 <ul>
-                  @for (a of p.approach; track a) {
+                  @for (a of p.approach; track $index) {
                     <li>{{ a }}</li>
                   }
                 </ul>
               </section>
-              <section><h3>03 / Hasil</h3><p>{{ p.output }}</p></section>
+              <section><h3>{{ t().dialog.sections[2] }}</h3><p>{{ p.output }}</p></section>
               @if (p.note) {
-                <section class="case-note"><h3>Catatan privasi</h3><p>{{ p.note }}</p></section>
+                <section class="case-note"><h3>{{ t().dialog.privacy }}</h3><p>{{ p.note }}</p></section>
               }
             </div>
           } @else {
             <div class="case-header">
-              <h2 id="dialog-title">Studi kasus tidak ditemukan.</h2>
-              <p>Tutup panel ini dan pilih proyek dari katalog.</p>
+              <h2 id="dialog-title">{{ t().dialog.notFound }}</h2>
+              <p>{{ t().dialog.notFoundHint }}</p>
             </div>
           }
         }
         @case ('cert') {
           <div class="case-header cert-header">
-            <p class="eyebrow">{{ certGroup()?.full ?? 'SERTIFIKAT' }}</p>
-            <h2 id="dialog-title">Sertifikat {{ certGroup()?.label }}</h2>
+            <p class="eyebrow">{{ certGroup()?.full }}</p>
+            <h2 id="dialog-title">{{ t().dialog.certTitle(certGroup()?.label ?? '') }}</h2>
             <ul class="cert-titles">
               @for (c of certItems(); track c.title) {
-                <li>{{ c.title }} <em>{{ c.date }}</em></li>
+                <li>{{ c.title }} <em>{{ date(c.date) }}</em></li>
               }
             </ul>
           </div>
           @if (certFiles().length > 1) {
-            <div class="segmented cert-tabs" role="tablist" aria-label="Pilih dokumen">
+            <div class="segmented cert-tabs" role="tablist" [attr.aria-label]="t().dialog.pickDoc">
               @for (f of certFiles(); track f.id; let i = $index) {
                 <button type="button" role="tab" [class.is-active]="i === certIndex()" [attr.aria-selected]="i === certIndex()" (click)="certIndex.set(i)">{{ f.name }}</button>
               }
@@ -119,20 +123,20 @@ import { ProjectCover } from './project-cover';
           @if (certSrc(); as src) {
             <div class="cert-viewer" (contextmenu)="$event.preventDefault()" (dragstart)="$event.preventDefault()">
               <!-- No allow-popups / allow-downloads: blocks Drive's pop-out and download actions. -->
-              <iframe [src]="src" title="Pratinjau sertifikat" sandbox="allow-scripts allow-same-origin" referrerpolicy="no-referrer" loading="lazy"></iframe>
-              <div class="cert-shield" aria-hidden="true"><span><app-icon name="lock" [size]="12" /> Mode lihat-saja</span></div>
+              <iframe [src]="src" [title]="t().dialog.certFrame" sandbox="allow-scripts allow-same-origin" referrerpolicy="no-referrer" loading="lazy"></iframe>
+              <div class="cert-shield" aria-hidden="true"><span><app-icon name="lock" [size]="12" /> {{ t().dialog.viewOnly }}</span></div>
             </div>
           } @else {
-            <p class="gallery-empty cert-empty">Dokumen sertifikat belum tersedia.</p>
+            <p class="gallery-empty cert-empty">{{ t().dialog.certEmpty }}</p>
           }
         }
         @case ('cv') {
           <div class="cv-toolbar">
-            <div class="segmented" role="group" aria-label="Bahasa CV">
+            <div class="segmented" role="group" [attr.aria-label]="t().dialog.cvLang">
               <button type="button" [class.is-active]="lang() === 'id'" [attr.aria-pressed]="lang() === 'id'" (click)="lang.set('id')">Indonesia</button>
               <button type="button" [class.is-active]="lang() === 'en'" [attr.aria-pressed]="lang() === 'en'" (click)="lang.set('en')">English</button>
             </div>
-            <button type="button" class="button small lime" (click)="print()"><app-icon name="print" [size]="16" /> Simpan sebagai PDF</button>
+            <button type="button" class="button small lime" (click)="print()"><app-icon name="print" [size]="16" /> {{ t().dialog.savePdf }}</button>
           </div>
           <article class="cv-paper" [attr.lang]="lang()">
             <header>
@@ -175,7 +179,7 @@ import { ProjectCover } from './project-cover';
               <h3>{{ cv().certTitle }}</h3>
               <ul class="cv-plain">
                 @for (c of certs; track c.title) {
-                  <li class="cv-line"><span><strong>{{ c.title }}</strong> | {{ c.issuer }}</span><em>{{ c.date }}</em></li>
+                  <li class="cv-line"><span><strong>{{ c.title }}</strong> | {{ c.issuer }}</span><em>{{ date(c.date, lang()) }}</em></li>
                 }
               </ul>
             </section>
@@ -194,6 +198,8 @@ import { ProjectCover } from './project-cover';
 })
 export class Overlays {
   private readonly nav = inject(NavService);
+  private readonly i18n = inject(I18nService);
+  protected readonly t = this.i18n.t;
   private readonly dlg = viewChild.required<ElementRef<HTMLDialogElement>>('dlg');
   private returnFocus: HTMLElement | null = null;
 
@@ -225,25 +231,28 @@ export class Overlays {
 
   protected readonly project = computed(() => {
     const o = this.overlay();
-    return o?.kind === 'project' ? (PROJECTS.find((p) => p.id === o.id) ?? null) : null;
+    const p = o?.kind === 'project' ? PROJECTS.find((x) => x.id === o.id) : undefined;
+    return p ? localizeProject(p, this.i18n.lang()) : null;
   });
   protected readonly shots = computed(() => this.project()?.screenshots ?? []);
   protected readonly kicker = computed(() => {
     const o = this.overlay();
+    const t = this.t().dialog;
     if (o?.kind === 'cv') return 'CURRICULUM VITAE';
-    if (o?.kind === 'cert') return 'SERTIFIKASI / LIHAT-SAJA';
+    if (o?.kind === 'cert') return t.certKicker;
     const p = this.project();
-    return p ? 'STUDI KASUS / ' + p.category.toUpperCase() : 'STUDI KASUS';
+    return p ? t.caseStudy + ' / ' + p.categoryLabel.toUpperCase() : t.caseStudy;
   });
 
   constructor() {
     effect(() => {
       const dialog = this.dlg().nativeElement;
-      const open = this.overlay() !== null;
-      this.project();
-      this.certKey();
+      const kind = this.overlay()?.kind;
+      const open = !!kind;
+      this.overlay();
       this.shot.set(0);
       this.certIndex.set(0);
+      if (kind === 'cv') this.lang.set(untracked(this.i18n.lang));
       if (open && !dialog.open) {
         this.returnFocus = document.activeElement as HTMLElement | null;
         dialog.showModal();
@@ -288,5 +297,9 @@ export class Overlays {
 
   protected print(): void {
     window.print();
+  }
+
+  protected date(d: string, lang: Lang = this.i18n.lang()): string {
+    return localizeDate(d, lang);
   }
 }
