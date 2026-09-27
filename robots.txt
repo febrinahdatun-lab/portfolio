@@ -1,5 +1,0 @@
-User-agent: *
-Allow: /
-Disallow: /sw.js
-
-Sitemap: https://febrinahdatun-lab.github.io/sitemap.xml

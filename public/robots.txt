@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://febrinahdatun-lab.github.io/portfolio/sitemap.xml
