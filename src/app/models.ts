@@ -48,12 +48,32 @@ export interface Expertise {
   description: string;
 }
 
+export type CertProvider = 'dicoding' | 'dqlab' | 'taalenta' | 'bnsp';
+
 export interface Certification {
   title: string;
   issuer: string;
+  provider: CertProvider;
   date: string;
   highlight?: boolean;
-  credentialUrl?: string;
+}
+
+export interface DriveFile {
+  id: string;
+  name: string;
+  mime: string;
+}
+
+export interface CertGroup {
+  key: string;
+  label: string;
+  files: DriveFile[];
+}
+
+export interface MediaData {
+  photos: DriveFile[];
+  favicon: DriveFile | null;
+  certificates: CertGroup[];
 }
 
 export interface Experience {
@@ -90,4 +110,5 @@ export type IconName =
   | 'sitemap'
   | 'code'
   | 'award'
-  | 'search';
+  | 'search'
+  | 'lock';

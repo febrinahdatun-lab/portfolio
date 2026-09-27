@@ -1,6 +1,6 @@
 import { Injectable, signal } from '@angular/core';
 
-export type Overlay = { kind: 'project'; id: string } | { kind: 'cv' } | null;
+export type Overlay = { kind: 'project'; id: string } | { kind: 'cert'; provider: string } | { kind: 'cv' } | null;
 
 /** Hash-based deep links (#project=<id>, #cv) — works on GitHub Pages without SPA fallback. */
 @Injectable({ providedIn: 'root' })
@@ -20,6 +20,10 @@ export class NavService {
     location.hash = 'cv';
   }
 
+  openCert(provider: string): void {
+    location.hash = 'sertifikat=' + encodeURIComponent(provider);
+  }
+
   close(returnTo = 'karya'): void {
     if (this.overlay()) {
       history.replaceState(null, '', location.pathname + location.search + '#' + returnTo);
@@ -31,6 +35,8 @@ export class NavService {
     const hash = location.hash.slice(1);
     if (hash.startsWith('project=')) {
       this.overlay.set({ kind: 'project', id: decodeURIComponent(hash.slice(8)) });
+    } else if (hash.startsWith('sertifikat=')) {
+      this.overlay.set({ kind: 'cert', provider: decodeURIComponent(hash.slice(11)) });
     } else if (hash === 'cv') {
       this.overlay.set({ kind: 'cv' });
     } else {

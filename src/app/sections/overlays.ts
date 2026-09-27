@@ -8,11 +8,14 @@ import {
   signal,
   viewChild,
 } from '@angular/core';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { CERTIFICATIONS, CV } from '../data/cv';
+import { PROVIDERS } from '../data/media';
 import { PROFILE } from '../data/profile';
 import { PROJECTS } from '../data/projects';
-import { Lang } from '../models';
+import { CertProvider, Lang } from '../models';
 import { Icon } from '../shared/icon';
+import { MediaService, drivePreview } from '../shared/media.service';
 import { NavService } from '../shared/nav.service';
 import { ProjectCover } from './project-cover';
 
@@ -96,6 +99,33 @@ import { ProjectCover } from './project-cover';
             </div>
           }
         }
+        @case ('cert') {
+          <div class="case-header cert-header">
+            <p class="eyebrow">{{ certGroup()?.full ?? 'SERTIFIKAT' }}</p>
+            <h2 id="dialog-title">Sertifikat {{ certGroup()?.label }}</h2>
+            <ul class="cert-titles">
+              @for (c of certItems(); track c.title) {
+                <li>{{ c.title }} <em>{{ c.date }}</em></li>
+              }
+            </ul>
+          </div>
+          @if (certFiles().length > 1) {
+            <div class="segmented cert-tabs" role="tablist" aria-label="Pilih dokumen">
+              @for (f of certFiles(); track f.id; let i = $index) {
+                <button type="button" role="tab" [class.is-active]="i === certIndex()" [attr.aria-selected]="i === certIndex()" (click)="certIndex.set(i)">{{ f.name }}</button>
+              }
+            </div>
+          }
+          @if (certSrc(); as src) {
+            <div class="cert-viewer" (contextmenu)="$event.preventDefault()" (dragstart)="$event.preventDefault()">
+              <!-- No allow-popups / allow-downloads: blocks Drive's pop-out and download actions. -->
+              <iframe [src]="src" title="Pratinjau sertifikat" sandbox="allow-scripts allow-same-origin" referrerpolicy="no-referrer" loading="lazy"></iframe>
+              <div class="cert-shield" aria-hidden="true"><span><app-icon name="lock" [size]="12" /> Mode lihat-saja</span></div>
+            </div>
+          } @else {
+            <p class="gallery-empty cert-empty">Dokumen sertifikat belum tersedia.</p>
+          }
+        }
         @case ('cv') {
           <div class="cv-toolbar">
             <div class="segmented" role="group" aria-label="Bahasa CV">
@@ -124,6 +154,14 @@ import { ProjectCover } from './project-cover';
                   </ul>
                 </div>
               }
+            </section>
+            <section>
+              <h3>{{ cv().projectsTitle }}</h3>
+              <ul class="cv-plain">
+                @for (p of cv().projects; track p.name) {
+                  <li><strong>{{ p.name }}</strong><span class="cv-stack">&nbsp;({{ p.stack }})</span> — {{ p.detail }}</li>
+                }
+              </ul>
             </section>
             <section>
               <h3>{{ cv().skillsTitle }}</h3>
@@ -165,6 +203,25 @@ export class Overlays {
   protected readonly lang = signal<Lang>('id');
   protected readonly cv = computed(() => CV[this.lang()]);
   protected readonly shot = signal(0);
+  protected readonly certIndex = signal(0);
+  private readonly sanitizer = inject(DomSanitizer);
+  private readonly media = inject(MediaService).media;
+
+  protected readonly certKey = computed(() => {
+    const o = this.overlay();
+    return o?.kind === 'cert' && o.provider in PROVIDERS ? (o.provider as CertProvider) : null;
+  });
+  protected readonly certGroup = computed(() => {
+    const k = this.certKey();
+    return k ? PROVIDERS[k] : null;
+  });
+  protected readonly certItems = computed(() => CERTIFICATIONS.filter((c) => c.provider === this.certKey()));
+  protected readonly certFiles = computed(() => this.media().certificates.find((g) => g.key === this.certKey())?.files ?? []);
+  protected readonly certSrc = computed<SafeResourceUrl | null>(() => {
+    const f = this.certFiles()[this.certIndex()];
+    // IDs are validated in MediaService (^[A-Za-z0-9_-]+$) before reaching this point.
+    return f ? this.sanitizer.bypassSecurityTrustResourceUrl(drivePreview(f.id)) : null;
+  });
 
   protected readonly project = computed(() => {
     const o = this.overlay();
@@ -174,6 +231,7 @@ export class Overlays {
   protected readonly kicker = computed(() => {
     const o = this.overlay();
     if (o?.kind === 'cv') return 'CURRICULUM VITAE';
+    if (o?.kind === 'cert') return 'SERTIFIKASI / LIHAT-SAJA';
     const p = this.project();
     return p ? 'STUDI KASUS / ' + p.category.toUpperCase() : 'STUDI KASUS';
   });
@@ -183,7 +241,9 @@ export class Overlays {
       const dialog = this.dlg().nativeElement;
       const open = this.overlay() !== null;
       this.project();
+      this.certKey();
       this.shot.set(0);
+      this.certIndex.set(0);
       if (open && !dialog.open) {
         this.returnFocus = document.activeElement as HTMLElement | null;
         dialog.showModal();
@@ -198,7 +258,8 @@ export class Overlays {
   }
 
   protected close(): void {
-    this.nav.close(this.overlay()?.kind === 'cv' ? 'profil' : 'karya');
+    const kind = this.overlay()?.kind;
+    this.nav.close(kind === 'cv' ? 'profil' : kind === 'cert' ? 'sertifikasi' : 'karya');
   }
 
   protected onCancel(event: Event): void {

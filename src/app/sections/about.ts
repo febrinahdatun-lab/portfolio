@@ -1,6 +1,8 @@
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { CERTIFICATIONS, CV } from '../data/cv';
+import { PROVIDERS } from '../data/media';
 import { PROFILE } from '../data/profile';
+import { CertProvider } from '../models';
 import { Icon } from '../shared/icon';
 import { NavService } from '../shared/nav.service';
 import { Reveal } from '../shared/reveal.directive';
@@ -62,38 +64,43 @@ export class ExperienceSection {
         </div>
         <h2 id="cert-title">Belajar tidak<br />pernah selesai.</h2>
       </div>
-      <div class="cert-highlight">
-        @for (c of highlights; track c.title) {
-          <article class="cert-card" appReveal>
-            <app-icon name="award" [size]="26" />
-            <h3>{{ c.title }}</h3>
-            <p>{{ c.issuer }}</p>
-            <span>{{ c.date }}</span>
+      <div class="provider-grid">
+        @for (g of groups; track g.key) {
+          <article class="provider-card" appReveal>
+            <header>
+              <span class="provider-badge">{{ g.label.slice(0, 2).toUpperCase() }}</span>
+              <div>
+                <h3>{{ g.label }}</h3>
+                <p>{{ g.full }}</p>
+              </div>
+              <span class="provider-count">{{ g.items.length }}</span>
+            </header>
+            <ul>
+              @for (c of g.items.slice(0, 5); track c.title) {
+                <li><span>{{ c.title }}</span><em>{{ c.date }}</em></li>
+              }
+              @if (g.items.length > 5) {
+                <li class="provider-more">+{{ g.items.length - 5 }} sertifikat lainnya</li>
+              }
+            </ul>
+            <button type="button" class="button small lime" (click)="nav.openCert(g.key)">
+              <app-icon name="award" [size]="16" /> Lihat sertifikat
+            </button>
           </article>
         }
       </div>
-      <div class="cert-list" appReveal>
-        @for (c of visible(); track c.title) {
-          <div class="cert-row">
-            <strong>{{ c.title }}</strong>
-            <span>{{ c.issuer }}</span>
-            <span class="cert-date">{{ c.date }}</span>
-          </div>
-        }
-      </div>
-      @if (certs.length > 6) {
-        <button type="button" class="button small" (click)="expanded.set(!expanded())" [attr.aria-expanded]="expanded()">
-          {{ expanded() ? 'Tampilkan lebih sedikit' : 'Tampilkan semua (' + certs.length + ')' }}
-        </button>
-      }
+      <p class="cert-note"><app-icon name="lock" [size]="14" /> Dokumen ditampilkan dalam mode lihat-saja.</p>
     </section>
   `,
 })
 export class CertificationsSection {
+  protected readonly nav = inject(NavService);
   protected readonly certs = CERTIFICATIONS;
-  protected readonly highlights = CERTIFICATIONS.filter((c) => c.highlight);
-  protected readonly expanded = signal(false);
-  protected readonly visible = computed(() => (this.expanded() ? this.certs : this.certs.slice(0, 6)));
+  protected readonly groups = (Object.keys(PROVIDERS) as CertProvider[]).map((key) => ({
+    key,
+    ...PROVIDERS[key],
+    items: CERTIFICATIONS.filter((c) => c.provider === key),
+  }));
 }
 
 @Component({

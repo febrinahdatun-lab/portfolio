@@ -9,7 +9,7 @@ import { NavService } from '../shared/nav.service';
   template: `
     <header class="site-header" [class.is-scrolled]="scrolled()">
       <div class="wrap header-inner">
-        <a class="wordmark" href="#top" aria-label="Febri Nahdatun — kembali ke atas">fn<span>/</span></a>
+        <a class="wordmark" href="#top" aria-label="Febri Nahdatun — kembali ke atas">Febri Nahdatun<span>.</span></a>
         <nav id="main-nav" class="main-nav" [class.is-open]="open()" aria-label="Navigasi utama">
           @for (link of links; track link.href) {
             <a [href]="link.href" (click)="open.set(false)">{{ link.label }}</a>

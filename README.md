@@ -54,6 +54,18 @@ npm run preview         # pratinjau hasil build → http://localhost:4300/portfo
 
 **Sebelum mengunggah screenshot:** pastikan tidak ada nama, NIK/No. KK, nomor rekening, email, atau data penerima manfaat yang asli. Gunakan mode demo atau samarkan (blur) terlebih dahulu.
 
+## Media otomatis dari Google Drive
+
+| Konten | Perilaku |
+|---|---|
+| Foto profil | Semua gambar di folder foto tampil bergantian (crossfade) otomatis |
+| Favicon | Gambar terbaru di folder favicon dipakai sebagai ikon tab |
+| Sertifikat | Dikelompokkan per penyedia (Dicoding, DQLab, Taalenta, BNSP) berdasarkan nama file/subfolder |
+
+- Daftar file diambil dari **Portfolio Media API** (Apps Script, read-only, cache 10 menit). Hanya file yang dibagikan *"Siapa saja yang memiliki link"* yang ikut tampil.
+- Jika API tidak tersedia, situs memakai daftar cadangan di `src/app/data/media.ts`.
+- Sertifikat dibuka dalam iframe sandbox (tanpa pop-out/download) + lapisan pelindung; unduh/cetak/salin juga dinonaktifkan di sisi Google Drive.
+
 ## Deploy
 
 Setiap `git push` ke branch `main` menjalankan workflow **Deploy to GitHub Pages**: install → build → security scan → deploy.

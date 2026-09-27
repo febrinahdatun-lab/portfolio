@@ -6,9 +6,12 @@ import { join, extname } from 'node:path';
 const TARGETS = ['dist', 'src', 'public'].filter((d) => existsSync(d));
 const TEXT_EXT = new Set(['.html', '.js', '.mjs', '.css', '.json', '.ts', '.txt', '.xml', '.webmanifest', '.md', '.svg']);
 
+// Public, read-only endpoints that are intentionally shipped (they expose only publicly shared Drive files).
+const ALLOWED_DEPLOYMENTS = ['AKfycbwS24ni0MjdKx66VqrFbVYKp3OlFIsU24s9AINO5yqfhmaf5_PwvyCvQvDmSmjbkQtc'];
+
 const RULES = [
-  { name: 'Google Apps Script endpoint', re: /script\.google(usercontent)?\.com\/macros/i },
-  { name: 'Apps Script deployment id', re: /AKfy[a-zA-Z0-9_-]{20,}/ },
+  { name: 'Google Apps Script endpoint', re: /script\.google(usercontent)?\.com\/macros\/s\/[A-Za-z0-9_-]+/gi, allow: true },
+  { name: 'Apps Script deployment id', re: /AKfy[a-zA-Z0-9_-]{20,}/g, allow: true },
   { name: 'Base64 encoded URL (obfuscated endpoint)', re: /aHR0cHM6Ly9[a-zA-Z0-9+/=]{16,}/ },
   { name: 'Google API key', re: /AIza[0-9A-Za-z_-]{35}/ },
   { name: 'GitHub token', re: /gh[pousr]_[A-Za-z0-9]{30,}/ },
@@ -28,6 +31,11 @@ function walk(dir) {
     else if (TEXT_EXT.has(extname(name).toLowerCase()) && st.size < 5_000_000) {
       const text = readFileSync(path, 'utf8');
       for (const rule of RULES) {
+        if (rule.allow) {
+          const bad = [...text.matchAll(rule.re)].map((m) => m[0]).find((m) => !ALLOWED_DEPLOYMENTS.some((id) => m.includes(id)));
+          if (bad) findings.push(`${path}: ${rule.name} → "${bad.slice(0, 40)}"`);
+          continue;
+        }
         const m = text.match(rule.re);
         if (m) findings.push(`${path}: ${rule.name} → "${m[0].slice(0, 40)}"`);
       }

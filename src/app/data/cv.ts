@@ -5,6 +5,8 @@ interface CvContent {
   summary: string;
   experienceTitle: string;
   experience: Experience[];
+  projectsTitle: string;
+  projects: { name: string; stack: string; detail: string }[];
   skillsTitle: string;
   skills: { label: string; value: string }[];
   certTitle: string;
@@ -15,33 +17,46 @@ interface CvContent {
 const SKILLS_EN = [
   {
     label: 'Data Analytics & Visualization',
-    value: 'Power BI (Advanced DAX & Data Modeling), Google Looker Studio, SQL, Python (Pandas/NumPy), Advanced Excel, R.',
+    value: 'Power BI (Advanced DAX & Data Modeling), Google Looker Studio, SQL, Python (pandas/NumPy, scikit-learn), Chart.js, Advanced Excel, R.',
   },
   {
-    label: 'Workspace & Technical Integration',
-    value: 'Visual Studio Code, Angular, TypeScript, Microsoft Fabric, ETL/ELT Pipeline Automation.',
+    label: 'Web Application Development',
+    value: 'Angular, TypeScript, JavaScript, HTML/CSS, Google Apps Script (REST web apps), GitHub Actions & GitHub Pages.',
   },
   {
     label: 'Cloud & IT Infrastructure',
     value:
-      'Google Workspace Super Admin (Apps Script, AppSheet), Microsoft 365 (Admin Center, Entra ID/Azure, SharePoint, Power Platform), Email Routing, Storage Optimization, Cloud Data Migration.',
+      'Google Workspace Super Admin (Admin SDK, Apps Script, AppSheet), Microsoft 365 (Admin Center, Entra ID/Azure, SharePoint, Microsoft Graph, Power Platform), Cloud Data Migration, Microsoft Fabric.',
   },
   {
     label: 'AI & Automation',
     value:
-      'Generative AI Integration (Azure OpenAI, Gemini, ChatGPT), Prompt Engineering, RAG Chatbot Integration, n8n, Process Automation.',
+      'Generative AI Integration (Azure OpenAI, Gemini, Groq LLaMA, ChatGPT), Prompt Engineering, RAG Chatbots, n8n Workflows, ETL/ELT Pipeline Automation.',
+  },
+  {
+    label: 'Security & Governance',
+    value: 'Access Control & Identity (Entra ID, Google Identity), Data Privacy by Design, Content Security Policy, Data Governance.',
   },
   {
     label: 'Core Competencies',
-    value: 'Knowledge Management, Digital Transformation, Business Intelligence, Data Governance, Strategic Reporting.',
+    value: 'Knowledge Management, Digital Transformation, Business Intelligence, Strategic Reporting, Technical Documentation.',
   },
+];
+
+const SKILLS_ID = [
+  { label: 'Analitik & Visualisasi Data', value: SKILLS_EN[0].value },
+  { label: 'Pengembangan Aplikasi Web', value: SKILLS_EN[1].value },
+  { label: 'Cloud & Infrastruktur TI', value: SKILLS_EN[2].value },
+  { label: 'AI & Otomasi', value: SKILLS_EN[3].value },
+  { label: 'Keamanan & Tata Kelola', value: 'Kontrol akses & identitas (Entra ID, Google Identity), privasi data sejak desain, Content Security Policy, tata kelola data.' },
+  { label: 'Kompetensi Inti', value: 'Knowledge Management, Transformasi Digital, Business Intelligence, Pelaporan Strategis, Dokumentasi Teknis.' },
 ];
 
 export const CV: Record<Lang, CvContent> = {
   en: {
     summaryTitle: 'Professional Summary',
     summary:
-      'Tech & Data Specialist with over 10 years of experience in IT governance, organizational automation, and Business Intelligence (BI). Possesses deep expertise in transforming semi-manual workflows into data-driven automated systems leveraging Google and Microsoft ecosystems. Adept at serving as a technical bridge between strategic management and advanced data execution. Experienced in building rapid data pipelines using VS Code and Python, accelerated by AI assistants, to deliver custom data into internal division dashboards and Knowledge Management System (KMS) platforms.',
+      'Tech & Data Specialist with over 10 years of experience in IT governance, organizational automation, and Business Intelligence (BI). Transforms semi-manual workflows into secure, data-driven systems across the Google and Microsoft ecosystems — from Angular web applications and Apps Script backends to Power BI dashboards, cloud migrations, and AI-assisted automation. Acts as the technical bridge between strategic management and hands-on delivery, with a strong focus on data privacy, access control, and maintainable documentation.',
     experienceTitle: 'Experience',
     experience: [
       {
@@ -55,6 +70,8 @@ export const CV: Record<Lang, CvContent> = {
           'Utilized VS Code as the primary development environment to integrate custom data, process it via Python, and leverage AI Assistants to accelerate data cleaning before loading into Power BI.',
           'Served as the automation technical bridge in a semi-manual work environment, optimizing data collaboration between Microsoft SharePoint and Google Workspace.',
           'Designed and launched a centralized Knowledge Management portal, eliminating information silos and ensuring seamless document access for 100+ employees.',
+          'Built a modular Angular-based Corporate Governance Portal unifying activity reports, account management, meeting minutes, and cloud monitoring.',
+          'Developed a Scholarship Information System covering registration, SAW-based selection, disbursement, and reporting with Google sign-in and role-based access.',
           'Integrated Generative AI into organizational document workflows to enable instant summarization and data-driven search (chat-with-data).',
           'Developed interactive Business Intelligence dashboards to visualize operational metrics in real time for executive leadership.',
           'Created custom automation scripts using Google Apps Script, cutting annual administrative report preparation time by 40%.',
@@ -86,6 +103,15 @@ export const CV: Record<Lang, CvContent> = {
     ],
     skillsTitle: 'Technical Skills',
     skills: SKILLS_EN,
+    projectsTitle: 'Selected Projects',
+    projects: [
+      { name: 'Corporate Governance Portal', stack: 'Angular, TypeScript, Apps Script', detail: 'Modular workspace unifying activity reports, account management, meeting minutes, and cloud monitoring.' },
+      { name: 'Scholarship Information System', stack: 'JavaScript, Apps Script, Google Sheets', detail: 'End-to-end scholarship management with SAW ranking, disbursement files, printable reports, and demo mode.' },
+      { name: 'Cloud Migration & Identity Management', stack: 'Python, Microsoft Graph, Google Drive API', detail: 'Resumable copy-only SharePoint → Google Shared Drive migration with checkpoints, verification, and monitoring.' },
+      { name: 'SiagaAI — IDCamp 2025 Developer Challenge', stack: 'JavaScript, BMKG Open Data, Groq LLaMA', detail: 'Disaster-preparedness web app with live earthquake data, AI assistant, and emergency guides.' },
+      { name: 'Interactive BI Dashboards', stack: 'Chart.js, PapaParse, Google Sheets', detail: 'SuperStore, Marketing Omnichannel, and Rig Operations dashboards with KPIs, segmentation, and export.' },
+      { name: 'ML Fraud Detection', stack: 'Python, scikit-learn', detail: 'K-Means labelling and Random Forest classification of 2,512 transactions (96.02% accuracy).' },
+    ],
     certTitle: 'Training & Certifications',
     educationTitle: 'Education',
     education: {
@@ -99,7 +125,7 @@ export const CV: Record<Lang, CvContent> = {
   id: {
     summaryTitle: 'Ringkasan Profesional',
     summary:
-      'Tech & Data Specialist dengan pengalaman lebih dari 10 tahun di bidang tata kelola teknologi, otomatisasi organisasi, dan Business Intelligence (BI). Memiliki keahlian mentransformasi ekosistem kerja semi-manual menjadi sistem otomatis berbasis data menggunakan ekosistem Google dan Microsoft. Mahir menjadi jembatan teknis antara manajemen strategis dan eksekusi pengolahan data tingkat lanjut. Berpengalaman membangun data pipeline cepat menggunakan VS Code dan Python dengan akselerasi AI Assistant untuk dashboard divisi internal maupun platform Knowledge Management System (KMS).',
+      'Tech & Data Specialist dengan pengalaman lebih dari 10 tahun di bidang tata kelola teknologi, otomatisasi organisasi, dan Business Intelligence (BI). Mentransformasi alur kerja semi-manual menjadi sistem berbasis data yang aman di ekosistem Google dan Microsoft — mulai dari aplikasi web Angular dan backend Apps Script hingga dashboard Power BI, migrasi cloud, serta otomasi berbantuan AI. Berperan sebagai jembatan teknis antara manajemen strategis dan eksekusi, dengan fokus kuat pada privasi data, kontrol akses, dan dokumentasi yang mudah dipelihara.',
     experienceTitle: 'Pengalaman Kerja',
     experience: [
       {
@@ -113,6 +139,8 @@ export const CV: Record<Lang, CvContent> = {
           'Menggunakan VS Code sebagai lingkungan kerja utama untuk mengintegrasikan data kustom, mengolahnya via Python, dan memanfaatkan AI Assistant untuk mempercepat data cleaning sebelum ditarik ke Power BI.',
           'Menjadi jembatan teknis otomatisasi di lingkungan kerja semi-manual, terutama kolaborasi data antara Microsoft SharePoint dan Google Workspace.',
           'Merancang dan meluncurkan portal Knowledge Management terpusat yang menghilangkan sekat informasi bagi 100+ karyawan.',
+          'Membangun Corporate Governance Portal berbasis Angular yang menyatukan laporan aktivitas, pengelolaan akun, risalah rapat, dan pemantauan cloud.',
+          'Mengembangkan Sistem Informasi Beasiswa: pendaftaran, seleksi metode SAW, pencairan, dan laporan dengan login Google serta hak akses berbasis peran.',
           'Mengintegrasikan Generative AI ke alur kerja dokumen untuk ringkasan instan dan pencarian berbasis data (chat-with-data).',
           'Membangun dashboard Business Intelligence interaktif untuk memvisualisasikan metrik operasional bagi pimpinan.',
           'Membuat skrip otomatisasi Google Apps Script yang memangkas waktu penyusunan laporan administrasi tahunan hingga 40%.',
@@ -143,7 +171,16 @@ export const CV: Record<Lang, CvContent> = {
       },
     ],
     skillsTitle: 'Keahlian Teknis',
-    skills: SKILLS_EN,
+    skills: SKILLS_ID,
+    projectsTitle: 'Proyek Pilihan',
+    projects: [
+      { name: 'Corporate Governance Portal', stack: 'Angular, TypeScript, Apps Script', detail: 'Ruang kerja modular yang menyatukan laporan aktivitas, pengelolaan akun, risalah rapat, dan pemantauan cloud.' },
+      { name: 'Sistem Informasi Beasiswa', stack: 'JavaScript, Apps Script, Google Sheets', detail: 'Pengelolaan beasiswa end-to-end dengan peringkat SAW, file pencairan, laporan siap cetak, dan mode demo.' },
+      { name: 'Cloud Migration & Identity Management', stack: 'Python, Microsoft Graph, Google Drive API', detail: 'Migrasi copy-only SharePoint → Google Shared Drive yang dapat dilanjutkan, dengan checkpoint, verifikasi, dan pemantauan.' },
+      { name: 'SiagaAI — IDCamp 2025 Developer Challenge', stack: 'JavaScript, BMKG Open Data, Groq LLaMA', detail: 'Aplikasi kesiapsiagaan bencana dengan data gempa terkini, asisten AI, dan panduan darurat.' },
+      { name: 'Interactive BI Dashboards', stack: 'Chart.js, PapaParse, Google Sheets', detail: 'Dashboard SuperStore, Marketing Omnichannel, dan Rig Operations dengan KPI, segmentasi, dan ekspor.' },
+      { name: 'ML Fraud Detection', stack: 'Python, scikit-learn', detail: 'Pelabelan K-Means dan klasifikasi Random Forest atas 2.512 transaksi (akurasi 96,02%).' },
+    ],
     certTitle: 'Pelatihan & Sertifikasi',
     educationTitle: 'Pendidikan',
     education: {
@@ -157,19 +194,28 @@ export const CV: Record<Lang, CvContent> = {
 };
 
 export const CERTIFICATIONS: Certification[] = [
-  { title: 'Belajar Machine Learning untuk Pemula', issuer: 'Dicoding × Google Developers', date: 'Mar 2026', highlight: true },
-  { title: 'Membangun Aplikasi Gen AI dengan Microsoft Azure', issuer: 'Dicoding × Microsoft', date: 'Mar 2026', highlight: true },
-  { title: 'Belajar Penerapan Data Science dengan Microsoft Fabric', issuer: 'Dicoding × Microsoft', date: 'Mar 2026' },
-  { title: 'Data Science Track: Probability & Statistics', issuer: 'Dicoding', date: 'Okt 2025' },
-  { title: 'Belajar Dasar AI', issuer: 'Dicoding', date: 'Okt 2025' },
-  { title: 'Data Analyst Career Track', issuer: 'DQLab', date: 'Okt 2025', highlight: true },
-  { title: 'Machine Learning & AI for Beginner Bootcamp', issuer: 'DQLab', date: 'Okt 2025' },
-  { title: 'Data Analyst with SQL & Python Bootcamp', issuer: 'DQLab', date: 'Okt 2025' },
-  { title: 'Data Analyst with Excel Bootcamp', issuer: 'DQLab', date: 'Okt 2025' },
-  { title: 'Mini Bootcamp: Introduction to Data Analytics', issuer: 'DQLab', date: '2025' },
-  { title: 'Sertifikasi Kompetensi Ahli Amil Zakat (Level 3)', issuer: 'BNSP', date: 'Jul 2025', highlight: true },
-  { title: 'DevCoach 159: Database 101', issuer: 'Dicoding', date: 'Jul 2024' },
-  { title: 'AI & ChatGPT untuk Akademik dan Perkantoran', issuer: 'Taalenta', date: 'Des 2023' },
-  { title: 'Memulai Pemrograman dengan Python', issuer: 'Dicoding', date: 'Sep 2023' },
-  { title: 'Belajar Dasar Structured Query Language (SQL)', issuer: 'Dicoding', date: 'Sep 2023' },
+  { title: 'Belajar Dasar Cloud dan Gen AI di AWS', issuer: 'Dicoding × AWS', provider: 'dicoding', date: 'Sep 2026', highlight: true },
+  { title: 'Spec-Driven Development dengan Kiro', issuer: 'Dicoding', provider: 'dicoding', date: 'Sep 2026' },
+  { title: 'Belajar Machine Learning untuk Pemula', issuer: 'Dicoding × Google Developers', provider: 'dicoding', date: 'Mar 2026', highlight: true },
+  { title: 'Membangun Aplikasi Gen AI dengan Microsoft Azure', issuer: 'Dicoding × Microsoft', provider: 'dicoding', date: 'Mar 2026', highlight: true },
+  { title: 'Belajar Penerapan Data Science dengan Microsoft Fabric', issuer: 'Dicoding × Microsoft', provider: 'dicoding', date: 'Mar 2026' },
+  { title: 'Microsoft Elevate Training Center — Sertifikat Apresiasi (14 jam)', issuer: 'Microsoft Indonesia × Dicoding', provider: 'dicoding', date: 'Mar 2026' },
+  { title: 'Data Science Track: Probability & Statistics', issuer: 'Dicoding', provider: 'dicoding', date: 'Okt 2025' },
+  { title: 'Belajar Dasar AI', issuer: 'Dicoding', provider: 'dicoding', date: 'Okt 2025' },
+  { title: 'DevCoach 159: Database 101', issuer: 'Dicoding', provider: 'dicoding', date: 'Jul 2024' },
+  { title: 'Memulai Pemrograman dengan Python', issuer: 'Dicoding', provider: 'dicoding', date: 'Sep 2023' },
+  { title: 'Belajar Dasar Structured Query Language (SQL)', issuer: 'Dicoding', provider: 'dicoding', date: 'Sep 2023' },
+  { title: 'Belajar Dasar Data Science', issuer: 'Dicoding', provider: 'dicoding', date: 'Sep 2023' },
+  { title: 'Dicoding Developer Coaching #15: Android', issuer: 'Dicoding Event', provider: 'dicoding', date: 'Des 2020' },
+  { title: 'BEKRAF Developer Day 2017 — Bogor', issuer: 'Kemenparekraf × Dicoding', provider: 'dicoding', date: 'Mar 2017' },
+  { title: 'Data Analyst Career Track', issuer: 'DQLab', provider: 'dqlab', date: 'Okt 2025', highlight: true },
+  { title: 'Bootcamp Data Analyst with SQL & Python in Google Platform (Batch 20)', issuer: 'DQLab', provider: 'dqlab', date: '2025' },
+  { title: 'Study Case Bootcamp: Machine Learning & AI for Beginner', issuer: 'DQLab', provider: 'dqlab', date: 'Okt 2025' },
+  { title: 'Study Case Bootcamp: Data Analyst with SQL & Python', issuer: 'DQLab', provider: 'dqlab', date: 'Okt 2025' },
+  { title: 'Study Case Bootcamp: Data Analyst with Excel', issuer: 'DQLab', provider: 'dqlab', date: 'Okt 2025' },
+  { title: 'Guide to Learn R with AI at DQLab', issuer: 'DQLab', provider: 'dqlab', date: 'Okt 2025' },
+  { title: 'Introduction to Data Science with R', issuer: 'DQLab', provider: 'dqlab', date: 'Apr 2025' },
+  { title: 'Mini Bootcamp: Introduction to Data Analytics (Batch 3 & 8)', issuer: 'DQLab', provider: 'dqlab', date: '2025' },
+  { title: 'AI & ChatGPT untuk Akademik dan Perkantoran (Batch 4, 6 JP)', issuer: 'PT Taalenta Digital Inteleksia', provider: 'taalenta', date: 'Des 2023' },
+  { title: 'Sertifikasi Kompetensi Ahli Amil Zakat (Level 3)', issuer: 'BNSP', provider: 'bnsp', date: 'Jul 2025', highlight: true },
 ];

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, HostListener, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostListener, effect, inject, signal } from '@angular/core';
 import { PROFILE } from './data/profile';
 import { CertificationsSection, ContactSection, ExperienceSection } from './sections/about';
 import { ExpertiseSection } from './sections/expertise';
@@ -7,6 +7,7 @@ import { Hero } from './sections/hero';
 import { Overlays } from './sections/overlays';
 import { WorkSection } from './sections/work';
 import { Icon } from './shared/icon';
+import { MediaService, driveImage } from './shared/media.service';
 
 @Component({
   selector: 'app-root',
@@ -40,6 +41,26 @@ export class App {
   protected readonly year = new Date().getFullYear();
   protected readonly name = PROFILE.name;
   protected readonly showTop = signal(false);
+  private readonly media = inject(MediaService).media;
+
+  constructor() {
+    effect(() => {
+      const fav = this.media().favicon;
+      if (!fav) return;
+      const probe = new Image();
+      probe.referrerPolicy = 'no-referrer';
+      probe.onload = () => {
+        for (const [rel, size] of [['icon', 64], ['apple-touch-icon', 192]] as const) {
+          const link = document.querySelector<HTMLLinkElement>(`link[rel="${rel}"]`);
+          if (link) {
+            link.removeAttribute('type');
+            link.href = driveImage(fav.id, size);
+          }
+        }
+      };
+      probe.src = driveImage(fav.id, 64);
+    });
+  }
 
   @HostListener('window:scroll')
   protected onScroll(): void {
